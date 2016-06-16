@@ -24,19 +24,20 @@
                         <span class="error" ng-show="(registerForm.$submitted && registerForm.registerDataemail.$error.required)">Email Address Required.</span>
                         <span class="error" ng-show="(registerForm.$submitted && registerForm.registerDataemail.$error.email)">Please Enter Valid Email Address.</span>
                         <div id="fordiv1" style="display:none; color:red;">Email already exist!</div>
-                    </div><div class="clear">&nbsp; </div>
-                    <div class=" form-group passport">
+                    </div>
+                    <!--<div class="clear">&nbsp; </div>-->
+                    <!--<div class=" form-group passport">
                         <label for="login-email" class="sr-only">Your Passport No./ID<span class="red">*</span> :</label>
                         <input type="text" placeholder="Passport NO." id="Passport" maxlength="300" class="form-control" name="Passport" ng-model="registerData.passportno"> 
-                    </div><div class="clear">&nbsp; </div>
-                    <div class="form-group mobile">
+                    </div><div class="clear">&nbsp; </div>-->
+                    <!--<div class="form-group mobile">
                         <label for="login-mobile" class="sr-only">Mobile</label>
                         <input name="registerDatamobilenumber" valid-number required="required" placeholder="Mobile Number*" class="form-control" ng-maxlength="14" ng-minlength="6" maxlength="14" type="text" id="registerDatamobilenumber" ng-model="registerData.mobilenumber">
                         <span class="error" ng-show="(registerForm.$submitted && registerForm.registerDatamobilenumber.$error.required)">Mobile Number Required.</span>
                         <span class="error" ng-show="registerForm.registerDatamobilenumber.$error.minlength">Min Length 6.</span>
                         <span class="error" ng-show="registerForm.registerDatamobilenumber.$error.maxlength">Max Length 14.</span>
 
-                    </div>
+                    </div>-->
                     <div class="clear">&nbsp;</div>
                     <div class="form-group password">
                         <label for="login-password" class="sr-only">Password</label>

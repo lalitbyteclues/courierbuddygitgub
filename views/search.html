@@ -6,8 +6,8 @@
                 <div class="row">
                     <div class="search-r-p-form">
                         <div class="search-r-opt">
-                            <a href="javascript:void(0);" ng-click="updatesearchtype('Sender')" class="{{type=='Sender'?'active':''}}" id="src-send">Sender</a>
-                            <a href="javascript:void(0);" ng-click="updatesearchtype('Transporter')" class="{{type=='Transporter'?'active':''}}" id="src-trans">Transporter</a>
+                            <a href="javascript:void(0);" ng-hide="(authuser.isAuth && type=='Transporter')" ng-click="updatesearchtype('Sender')" class="{{type=='Sender'?'active':''}}" id="src-send">Sender</a>
+                            <a href="javascript:void(0);" ng-hide="(authuser.isAuth && type=='Sender')" ng-click="updatesearchtype('Transporter')" class="{{type=='Transporter'?'active':''}}" id="src-trans">Transporter</a>
                         </div>
                         <form name="searchform" class="stdform" id="srch-trans-frm" enctype="multipart/form-data" method="post" accept-charset="utf-8">
                             <div class="clear clear1">

@@ -2,14 +2,21 @@ angular.module('courier').controller("searchController", function ($scope, $loca
     $scope.transporters = [];
     $scope.classsetactive = 2;
     $scope.senders = [];
+    $scope.authuser = AuthService.authentication;
     $scope.countries = []; 
-    if (RESOURCES.searchcriteria.datefrom != "")
+    if (RESOURCES.searchcriteria.datefrom != "" && RESOURCES.searchcriteria.datefrom !="Invalid Date")
     {
         $scope.dateFrom = RESOURCES.searchcriteria.datefrom;
     }
-    if (RESOURCES.searchcriteria.dateto != "")
+    else
+    {
+        RESOURCES.searchcriteria.datefrom = "";
+    }
+    if (RESOURCES.searchcriteria.dateto != "" && RESOURCES.searchcriteria.dateto != "Invalid Date")
     {
         $scope.dateTo = RESOURCES.searchcriteria.dateto;
+    } else {
+        RESOURCES.searchcriteria.dateto = "";
     }
     $scope.locationfrom = RESOURCES.searchcriteria.locationfrom;
     $scope.locationto = RESOURCES.searchcriteria.locationto;

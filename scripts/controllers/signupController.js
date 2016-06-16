@@ -14,7 +14,7 @@ angular.module('courier').controller("signupcontroller", function ($scope, $root
             $scope.errorRegisterDescription = "Please, fill out all fields!";
             return;
         }
-        $scope.registerData.countrycode = $('#registerDatamobilenumber').intlTelInput("getSelectedCountryData").dialCode;
+        //$scope.registerData.countrycode = $('#registerDatamobilenumber').intlTelInput("getSelectedCountryData").dialCode;
         AuthService.saveRegistration($scope.registerData).then(function (response) { 
             if ((response.data.status == "success")) {
                 var return_url = sessionStorage.getItem("return_url");
