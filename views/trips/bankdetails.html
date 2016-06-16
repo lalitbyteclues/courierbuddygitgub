@@ -1,0 +1,87 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div ng-controller="BankdetailsController">
+    <div class="wrapper">
+        <div class="container">
+            <div class="tab-form-new">
+                <div ng-include="'views/dashboardmenu.html'"></div>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                        <div class="row">
+                            <div class="col-md-12 inner-tab-form-new">
+<div class="row">
+    <div class="col-md-2">
+        <div ng-include="'views/trips/transportermenu.html'"></div>
+    </div>
+    <div class="col-md-7">
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <div class="alert alert-danger" role="alert" ng-hide='!errormessage'>{{errormessage}}</div>
+                <div class="alert alert-success" role="alert" ng-hide='!successMessage'>{{successMessage}}</div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane" id="myTrips">...</div>
+            <div role="tabpanel" class="tab-pane active" id="addTrips">
+                <h1>Bank Details</h1>
+                <form class="stdform" id="bnkdet-frm" ng-submit="updatebankdetails(frmbankdetails.$valid)" enctype="multipart/form-data" name="frmbankdetails" method="post" accept-charset="utf-8" novalidate="novalidate">
+                    <div class="form-group">
+                        <div class="col-md-4 control-label"><label>Account No <span class="red">*</span></label></div>
+                        <div class="col-md-8">
+                            <input name="bank_act_no" class="form-control input-md" ng-model="userdetails.bank_act_no" valid-number required="required" maxlength="25" type="text" value="" id="UserBankActNo" placeholder="(eg. 054789562434578)" />
+                            <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.bank_act_no.$error.required)">Required.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 control-label"><label>Bank Name <span class="red">*</span></label></div>
+                        <div class="col-md-8">
+                            <input name="bank_name" class="form-control input-md" ng-model="userdetails.bank_name" placeholder="(eg. ICICI,HDFC)" required="required" no-special-char maxlength="100" type="text" value="" id="UserBankName" />
+                            <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.bank_name.$error.required)">Required.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 control-label"><label>Account Holder Name <span class="red">*</span></label></div>
+                        <div class="col-md-8">
+                            <input name="bank_act_name" class="form-control input-md" placeholder="(eg. Raj Mathur)" ng-model="userdetails.bank_act_name" required="required" no-special-char maxlength="100" type="text" value="" id="UserBankActName" />
+                            <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.bank_act_name.$error.required)">Required.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 control-label"><label>IFSC Code <span class="red">*</span></label></div>
+                        <div class="col-md-8">
+                            <input name="bank_ifsc" no-special-char class="form-control input-md" placeholder="(eg. HDFC0003819)" ng-model="userdetails.bank_ifsc" required="required" maxlength="25" type="text" value="" id="UserBankIfsc">
+                            <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.bank_ifsc.$error.required)">Required.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 control-label"><label>SWIFT <span class="red">*</span></label></div>
+                        <div class="col-md-8">
+                            <input name="bank_swift_code" class="form-control input-md" placeholder="(eg. HDFCINBBDEL)" ng-model="userdetails.bank_swift_code" required="required" no-special-char maxlength="25" type="text" id="UserBankSwiftCode">
+                            <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.bank_swift_code.$error.required)">Required.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 control-label"><label></label></div>
+                        <div class="col-md-8"><input style="float:right;width:90px;background: #3b5998;border: 0;color: #fff;margin-right: 15px;height: 29px;" type="submit" value="Save"></div>
+                    </div>
+                </form>
+            </div>
+            <div id="bank" class="pop-up-display-content">
+                <div class="thanku regstr">
+                    <h6>Bank details added successfully</h6>
+                </div>
+            </div><div class="clear">&nbsp;&nbsp;</div>
+        </div>
+    </div><div class="col-md-3 inner-tab-form-image">
+        <img src="images/trip.png" style="width:100%; max-height:500px; margin-top:20px;" />
+    </div>
+</div>
+</div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

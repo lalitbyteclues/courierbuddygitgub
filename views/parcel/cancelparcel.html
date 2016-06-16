@@ -1,0 +1,56 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div ng-controller="CancelParcelController">
+    <div class="wrapper">
+        <div class="container">
+            <div class="tab-form-new">
+                <div ng-include="'views/dashboardmenu.html'"></div>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                        <div class="row">
+                            <div class="col-md-12 inner-tab-form-new">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div ng-include="'views/parcel/sendermenu.html'"></div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                                    <thead>
+                                                    <th>ID</th>
+                                                    <th>From</a></th>
+                                                    <th>To</th>
+                                                    <th>Type</th>
+                                                    <th>Weight</th>
+                                                    <th>Transporter</th>
+                                                    <th>Receiver</th>
+                                                    <th>Status</th>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            $(document).ready(function () {
+                                                $('#example').DataTable({
+                                                    searching: false
+                                                });
+                                            });
+                                        </script>
+                                        <style>
+                                            .dataTables_length, .dataTables_info {
+                                                text-align: left;
+                                            }
+                                        </style>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

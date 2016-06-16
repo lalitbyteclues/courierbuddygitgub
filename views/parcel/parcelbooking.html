@@ -1,0 +1,106 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div class="container" ng-controller="parcelbookingController">
+    <div class="tab-form-new">
+        <div ng-include="'views/dashboardmenu.html'"></div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                <h1>Book Now</h1>
+                <div id="login-modal" class="modal-login">
+                    <div class="modal-dialog">
+                        <div class="alert alert-success" role="alert" ng-hide='!successMessage' data-ng-bind-html="successMessage"> </div>
+                        
+                        <div class="modal-content" ng-hide='successMessage'>
+                            <div class="modal-header">
+                                <h4 class="modal-title text-center" id="loginModalLabel">Parcel Details:</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="login-form-container">
+                                    <table id="example1" class="table table-striped table-bordered dt-responsive nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>From </th>
+                                                <th>To</th>
+                                                <th>Deliver Date</th>
+                                                <th>Weight (kg)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>P{{parcel.id}}</td>
+                                                <td>{{parcel.source}}</td>
+                                                <td>{{parcel.destination}}</td>
+                                                <td>
+                                                    {{parcel.till_date}}
+                                                </td>
+                                                <td>{{parcel.weight}}kg.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-header">
+                                <h4 class="modal-title text-center" id="loginModalLabel">Trip Matches:</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="login-form-container">
+                                    <table ng-hide="tripsmatch.length==0" id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>From </th>
+                                                <th>To</th>
+                                                <th>Dep Time</th>
+                                                <th>Arrival Time</th>
+                                                <th>Capacity (kg.)</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table> 
+                                    <div ng-show="tripsmatch.length==0" class="gridsystem">
+                                        <div class="row">
+                                            <center>
+                                                <div class="alert-error"><b>No Trips Found!!</b></div>
+                                                <a class="btn btn-primary" ui-sref="addtrip">Add Trip</a>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.quote_date').Zebra_DatePicker({
+        direction: true, format: 'd-m-Y'
+    });
+    $('.quote_datesearch').Zebra_DatePicker({
+        direction: true, format: 'd-m-Y'
+    });
+    $('.quote_datesearch1').Zebra_DatePicker({
+        direction: true, format: 'd-m-Y'
+    });
+    $('#setTimeExample').timepicker();
+</script>
+<style>
+    fieldset {margin: 0 10px 12px 11px;        padding-bottom: 5px;    }
+    .modal-dialog {        width: 100%;    }
+    .input-group, span.Zebra_DatePicker_Icon_Wrapper {        width: 100%;    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example1').DataTable({ searching: false, "paging": false });
+        
+    });
+    function senderbooknow(id) {
+        console.log(id);
+        angular.element('.container').scope().senderbooknow(id);
+    }
+</script>

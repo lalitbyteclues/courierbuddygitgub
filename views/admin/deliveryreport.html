@@ -1,0 +1,197 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div ng-controller="admindeliveryreportmanagerController">
+    <div class="wrapper">
+        <div class="search-result trans-dash">
+            <div class="tog"><i class="fa fa-bars"></i></div>
+            <div class="wrapper">
+                <div ng-include="'views/admin/adminmenu.html'"></div>
+                <div class="dash-cntnt">
+                    <div id="payment-h" class="p-all10 ">
+                        <div class="pay-h-s">
+                            <form action="/dashboard/trans_search_payment" class="stdform" id="search-trans-pay" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                <div style="display:none;"><input type="hidden" name="_method" value="POST"></div><div class="f-left">
+                                    <label>Trip ID</label><input name="t_id" ng-model="TransporterID" type="text" id="TripTId">
+                                </div>
+                                <div class="f-left" style="width:37%;">
+                                    <label>Departure At</label>
+                                    <p class="input-group">
+                                        <input name="data[Trip][a_date]" class="quote_date" ng-model="departureat" min-date="dt" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" datepicker-popup="dd-MM-yyyy" is-open="status0.opened" close-text="Close" />
+                                        <span class="input-group-btn"> <button type="button" class="btn btn-default" ng-click="open0($event)"><i class="glyphicon glyphicon-calendar"></i></button> </span>
+                                    </p>
+                                </div>
+                                <div class="f-left">
+                                    <label>Status</label>
+                                    <select name="data[Trip][status]" ng-model="status" id="TripStatus">
+                                        <option value="">Select Status</option>
+                                        <option value="0">Pending</option>
+                                        <option value="1">Approved</option>
+                                        <option value="2">Booking Request Sent</option>
+                                        <option value="3">Booked</option>
+                                        <option value="6">Delivered</option>
+                                        <option value="7">Undelivered</option>
+                                    </select>
+                                </div>
+                                <div class="f-left">
+                                    <label>&nbsp;</label>
+                                    <input type="submit" value="Search">
+                                </div>
+                            </form>
+                        </div>
+                        <div id="pay-content">
+                            <div class="src-r-b" ng-repeat="trip in tripslist | filter: search ">
+                                <div class="s-t-info">
+                                    <b>Trip Id</b>
+                                    <table border="0" width="100%"> <tbody> <tr> <td colspan="3">T{{trip.id}}</td> </tr>  </tbody> </table>
+                                </div>
+                                <div class="s-t-info">
+                                    <b>Trip Details</b>
+                                    <table border="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>{{trip.source}}</td>
+                                                <td width="15%"><i class="fa fa-plane"></i> </td>
+                                                <td>{{trip.destination}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{trip.dep_time | date:'dd MMM' }} </td>
+                                                <td width="15%"></td>
+                                                <td>{{trip.arrival_time | date:'dd MMM' }} </td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{trip.dep_time | date:'h:mma' }} </td>
+                                                <td width="15%"></td>
+                                                <td>{{trip.arrival_time | date:'h:mma' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="s-t-info">
+                                    <b>Flight Details</b>
+                                    <table border="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>Flight No. </td>
+                                                <td width="15%">- -</td>
+                                                <td> {{trip.flight_no}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>PNR/Booking Reference No. </td>
+                                                <td width="15%">- -</td>
+                                                <td> {{trip.pnr}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="s-t-info">
+                                    <b>Capacity</b>
+                                    <table border="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="50%">Tot. Capacity</td>
+                                                <td width="12%">- -</td>
+                                                <td>{{trip.capacity}}</td>
+                                            </tr>
+                                            <tr>
+
+                                                <td width="50%">Avail. Capacity</td>
+                                                <td width="12%">- -</td>
+                                                <td>{{trip.capacity}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="s-t-info">
+                                    <b>Status</b>
+                                    {{trip.status==0?"Pending":trip.status==1?"Approved":trip.status==2?"Booking Request Sent":trip.status==3?"Booked":trip.status==6?"Delivered":"Undelivered"}}
+
+                                    <br><a href="/dashboard/index/viewbooking/11122" target="_blank">View Booking</a>
+                                    <br><a class="my-cancel-box" href="#cancel-box" data-item="11122">Cancel Trip</a>
+                                    <br><a class="my-ticket-upload" href="javascript:void(0);" data-item="11122">Upload Ticket</a>
+                                </div>
+                            </div>
+                            <div id="status-box" class="pop-up-display-content">
+                                <div class="popbox">
+                                    <div class="">
+                                        <form action="/dashboard/change_status" class="stdform" id="change-status-book" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                            <div style="display:none;"><input type="hidden" name="_method" value="POST"></div><div class="clear">
+                                                <div class="f-left"><label>Update Status</label></div>
+                                                <div class="f-right">
+                                                    <ul>
+                                                        <li class="cncel-opt-rad">
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="clear" id="pay">
+                                                <input type="submit" value="Submit">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="cancel-box" class="pop-up-display-content">
+                                <div class="popbox">
+                                    <div class="alrt">
+                                        Are you sure you want to cancel this trip request, If yes, press OK button
+                                        <br>
+                                        <input type="submit" value="Ok">
+                                        <input type="submit" value="Cancel">
+                                    </div>
+                                    <div class="cncel-rsn" style="display:none">
+                                        <form action="/dashboard/cancel_trans_booking" class="stdform" id="cancel-trans-book" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                            <div style="display:none;"><input type="hidden" name="_method" value="POST"></div><div class="clear">
+                                                <div class="f-left"><label>Cancel Reason</label></div>
+                                                <div class="f-right">
+                                                    <textarea name="data[Cancel][reason]" required="required" id="reason"></textarea><input type="hidden" name="data[Cancel][cancel_id]" required="required" id="cancel_id" class="cancel_id">
+                                                </div>
+                                            </div>
+                                            <div class="clear" id="pay">
+                                                <input type="submit" value="Submit">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="s-page-l" style="display:none;	">
+                            <span><a href="#"><i class="fa fa-angle-double-left"></i></a></span>
+                            <a href="#"> 1 </a>
+                            <a href="#"> 2 </a>
+                            <a href="#"> 3 </a>
+                            <a href="#"> 4 </a>
+                            <a href="#"> 5 </a>
+                            <a href="#"> 6 </a>
+                            <a href="#"> 7 </a>
+                            <a href="#"> 8 </a>
+                            <span><a href="#"><i class="fa fa-angle-double-right"></i></a></span>
+                        </div>
+                        <div id="message-box" class="pop-up-display-content">
+                            <div class="popbox">
+                                <form action="/dashboard/sendmessage" class="stdform" id="msg-to-sender" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                    <div style="display:none;"><input type="hidden" name="_method" value="POST"></div><div class="clear">
+                                        <div class="f-left"><label>Your Message</label></div>
+                                        <div class="f-right">
+                                            <textarea name="data[Message][message]" required="required" id="message"></textarea><input type="hidden" name="data[Message][m_id]" required="required" id="m_id">
+                                        </div>
+                                    </div>
+                                    <div class="clear" id="pay">
+                                        <input type="submit" value="Submit">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="booking-box" class="pop-up-display-content">
+                        <div class="popbox">
+                            <div class="vwbuking">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

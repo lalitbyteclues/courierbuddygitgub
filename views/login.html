@@ -1,0 +1,51 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div class="login-container blank" ng-controller="Login">
+    <div class="wrapper">
+        <div id="login-modal" class="modal-login">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-center" id="loginModalLabel">Log in to your account</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="login-form-container">
+                            <form class="stdform" id="log_in-frm" enctype="multipart/form-data" name="loginForm" ng-submit="login(loginForm.$valid)" novalidate accept-charset="utf-8">
+                                <div class="form-group email">
+                                    <label for="login-email" class="sr-only">Your Email<span class="red">*</span> :</label>
+                                    <input type="email" placeholder="Your email" title="Please enter you email" required name="loginDatauserName" maxlength="200" id="loginDatauserName" ng-model="loginData.userName" class="form-control login-email">
+                                    <span class="error" ng-show="(loginForm.$submitted && loginForm.loginDatauserName.$error.required)">Email Address Required.</span>
+                                    <span class="error" ng-show="(loginForm.$submitted && loginForm.loginDatauserName.$error.email)">Enter Valid Email Address.</span>
+                                </div>
+                                <div class="clear">&nbsp;</div>
+                                <div class="form-group password">
+                                    <label for="login-password" class="sr-only">Password</label>
+                                    <input type="password" maxlength="12" title="Please enter your password" placeholder="Password" required name="loginDatapassword" id="loginDatapassword" ng-model="loginData.password" class="form-control login-password">
+                                    <span class="error" ng-show="(loginForm.$submitted && loginForm.loginDatapassword.$error.required)">Password Required.</span>
+                                    <p class="forgot-password"> <a ui-sref="forgetpassword">Forgot Password?</a> </p>
+                                </div>
+                                <input class="btn btn-block btn-cta-primary" type="submit" value="Log in">
+                                <div class="checkbox remember">
+                                    <label>
+                                        <input type="checkbox">  Remember me
+                                    </label>
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <div class="alert alert-danger" role="alert" ng-hide='!errorLoginDescription'>{{errorLoginDescription}}</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <p>If you are a new user <a ui-sref="register" id="signup-link" class="signup-link">Sign up now</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="color-line"></div>
+</div>
+<style>
+    .modal-dialog {
+        max-width: 360px;
+    }
+</style>

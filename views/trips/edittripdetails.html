@@ -1,0 +1,196 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div class="container" ng-controller="edittripsController">
+    <div class="tab-form-new">
+        <div ng-include="'views/dashboardmenu.html'"></div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                <div class="row">
+                    <div class="col-md-12 inner-tab-form-new">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div ng-include="'views/trips/transportermenu.html'"></div>
+                                <form name="searchcouriers" ng-submit="search()" class="stdform" id="srch-trans-frm" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                    <h1>Search Sender</h1>
+                                    <div style="background:#3b5998 none repeat scroll 0 0;float:left;color:#ffffff;width:100%;">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label" for="textinput">From</label>
+                                            <div class="col-md-12">
+                                                <input id="textinput" maxlength="200" name="textinput" ng-model="searchfromlocation" ui-autocomplete="locationStateOption" placeholder="(eg :Jaipur)" class="form-control input-md" type="text" />
+                                            </div>
+                                            <label class="col-md-12 control-label" for="textinput">To</label>
+                                            <div class="col-md-12">
+                                                <input id="textinput" maxlength="200" name="textinput" ng-model="searchtolocation" ui-autocomplete="locationStateOption" placeholder="(eg :New Delhi)" class="form-control input-md" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label" for="textinput">From Date</label>
+                                            <div class="col-md-12">
+                                                <div class='input-group date' id='datetimepicker1'>
+                                                    <input type='text' maxlength="100" name="data" placeholder="DD-MM-YYYY" value="{{ dateFromsearch | date:'dd-MM-yyyy' }}" class="quote_datesearch form-control" />
+                                                </div>
+                                            </div>
+
+                                            <label class="col-md-12 control-label" for="textinput">To Date</label>
+                                            <div class="col-md-12">
+                                                <div class='input-group date' id='datetimepicker1'>
+                                                    <input type='text' name="data" maxlength="100" value="{{ dateTosearch | date:'dd-MM-yyyy' }}" placeholder="DD-MM-YYYY" class="quote_datesearch1 form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input class="customsearchbutton" style="font-size:15px; width:100%;text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);  color:#fff;font-family: 'proxima_novasemibold'; text-transform:uppercase;    background: -moz-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(144,193,81,1)), color-stop(100%, rgba(107,162,35,1)));     background: -webkit-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: -o-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);      background: -ms-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: linear-gradient(180deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#90c151', endColorstr='#6ba223',GradientType=0 ); " type="submit" value="Search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="clear">&nbsp;&nbsp;</div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane" id="myTrips">...</div>
+                                    <div role="tabpanel" class="tab-pane active" id="addTrips">
+                                        <h1>Update Trips</h1>
+<form class="stdform" id="addtrans-frm" ng-submit="addtripsdata(addtripform.$valid)" enctype="multipart/form-data" method="post" accept-charset="utf-8" novalidate="novalidate" name="addtripform">
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <div class="alert alert-danger" role="alert" ng-hide='!errormessage'>{{errormessage}}</div>
+            <div class="alert alert-success" role="alert" ng-hide='!successaddtripMessage' data-ng-bind-html="successaddtripMessage"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput">From<span class="red">*</span></label>
+        <div class="col-md-8">
+            <input type="text" ng-change="changedurationwithoutjavascript()" name="source" maxlength="200" required="required" class="form-control input-md" ng-model="locationfrom" ng-blur="checklocation()" ui-autocomplete="locationStateOption" placeholder="(eg :Jaipur)" id="textinput">
+            <span class="error" ng-show="(addtripform.$submitted && addtripform.source.$error.required)">Required.</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput">To<span class="red">*</span></label>
+        <div class="col-md-8">
+            <input type="text" ng-change="changedurationwithoutjavascript()" required="required" maxlength="200" name="destination" ng-required="true" class="form-control input-md" ng-blur="checklocation()" ng-model="locationto" ui-autocomplete="locationStateOption" placeholder="eg : New Delhi">
+            <span class="error" ng-show="(addtripform.$submitted && addtripform.destination.$error.required)">Required.</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="filebutton">Departure On<span class="red">*</span></label>
+        <div class="col-md-8">
+            <div class="col-md-9" style="padding-left:0;padding-right:0;">
+                <input name="d_date"  placeholder="DD-MM-YYYY" maxlength="100" class="quote_date form-control" value="{{ departureon | date:'dd-MM-yyyy'}}" id="dtt1" type="text" />
+                <span class="error" ng-show="(addtripform.$submitted && addtripform.d_date.$error.required)">Required.</span>
+            </div>
+            <div class="col-md-3" style="padding-right:0;padding-left:5px;">
+                <input id="setTimeExample" ng-change="changedurationwithoutjavascript()" ng-model="dtime" maxlength="100" placeholder="HH:MM:A" type="text" class="time ui-timepicker-input form-control" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="filebutton">Trip Duration<span class="red">*</span></label>
+        <div class="col-md-8">
+            <div id="durationPicker"></div>
+            <input type="number" style="display:none;" id="seconds" class="form-control" ng-required="true" ng-model="tripduration" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput">Arrival On<span class="red">*</span></label>
+        <div class="col-md-8">
+            <div class="col-md-9" style="padding-left:0;padding-right:0;">
+                <input readonly name="a_date" placeholder="DD-MM-YYYY" class="quote_date1 form-control" id="dtt2" value="{{arrivalon | date:'dd-MM-yyyy'}}" type="text" />
+                <span class="error" ng-show="(addtripform.$submitted && addtripform.a_date.$error.required)">Required.</span>
+            </div>
+            <div class="col-md-3" style="padding-right:0;padding-left:5px;">
+                <input readonly name="atime" id="setTimeExample1" value="{{arrivalon | date:'h:mma'}}" style="padding:6px 7px;" placeholder="HH:MM:A" type="text" class="time ui-timepicker-input form-control" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput">Flight No.<span class="red">*</span></label>
+        <div class="col-md-8">
+            <input required="required" maxlength="25" placeholder="eg:AI 411" class="form-control input-md" name="flightno" ng-model="flightno" type="text" id="TripFlightNo">
+            <span class="error" ng-show="(addtripform.$submitted && addtripform.flightno.$error.required)">Required.</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput">PNR /Booking Reference <span class="red">*</span></label>
+        <div class="col-md-8">
+            <input name="pnr" placeholder="eg:L5W4NW" maxlength="25" class="form-control input-md" required="required" ng-model="bookingpnr" type="text" id="TripPnr">
+            <span class="error" ng-show="(addtripform.$submitted && addtripform.pnr.$error.required)">Required.</span>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput"> Capacity (kg)<span class="red">*</span></label>
+        <div class="col-md-8">
+            <input name="capacity" placeholder="Package carrying capacity in KG" required="required" class="form-control input-md" ng-model="capacity" type="number" min="0.01" step="0.01" max="10" id="TripCapacity" />
+            <span class="error" ng-show="(addtripform.$submitted && addtripform.capacity.$error.required)">Required.</span>
+            <span class="error" ng-show="addtripform.capacity.$error.min">Min 0.01 Kg.</span>
+            <span class="error" ng-show="addtripform.capacity.$error.max">Max 10 Kg.</span>
+
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput">
+            Add Comment
+        </label>
+        <div class="col-md-8">
+            <textarea name="data[Trip][comment]" rows="2" cols="52" class="form-control" ng-model="tripcomment" id="TripComment"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <a ui-sref="transporter" style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:0px 0px 0 8px;" title="Cancel Edit">Cancel</a>
+        <input type="submit" value="Save" style="float:right;width:90px;background: #3b5998;border: 0;color: #fff;margin-right: 15px;height: 29px;" />
+    </div>
+</form>
+
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="cancelledTrips">...</div>
+                                    <div role="tabpanel" class="tab-pane" id="withdraw">...</div>
+                                </div><div class="clear">&nbsp;&nbsp;</div>
+                            </div>
+                            <div class="col-md-3 inner-tab-form-image">
+                                <img src="/images/bantripn.png" style="margin-top:20px;" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="Transport">...</div>
+            <div role="tabpanel" class="tab-pane" id="Sender">...</div>
+            <div role="tabpanel" class="tab-pane" id="Receiver">...</div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.quote_date').Zebra_DatePicker({
+        direction: true, format: 'd-m-Y', onSelect: function (view, elements) {
+            angular.element('.container').scope().changeduration();
+        }
+    }); 
+    $('.quote_datesearch').Zebra_DatePicker({
+        direction: true, pair: $('.quote_datesearch1'), format: 'd-m-Y'
+    });
+    $('.quote_datesearch1').Zebra_DatePicker({
+        direction: true, format: 'd-m-Y'
+    });
+    $('#setTimeExample').timepicker();
+    $('#setTimeExample1').timepicker();
+</script>
+<style>
+    .input-group, span.Zebra_DatePicker_Icon_Wrapper {
+        width: 100%;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#durationPicker").durationPicker()
+          .change(function () {
+              var seconds = $("#durationPicker").durationPicker("seconds");
+              $("#seconds").val(seconds);
+              angular.element('.container').scope().changeduration();
+              angular.element('.container').scope().tripduration = seconds;
+
+          });
+    });
+</script>

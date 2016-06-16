@@ -1,0 +1,7 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteCond %{REQUEST_URI} !pay.php
+  RewriteCond %{REQUEST_URI} !success.php
+  RewriteCond %{REQUEST_URI} !failure.php
+RewriteRule . index.html [L]

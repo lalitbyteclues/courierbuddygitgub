@@ -1,0 +1,113 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div class="container" ng-controller="uploadtripsticketController">
+
+    <div class="tab-form-new">
+        <div ng-include="'views/dashboardmenu.html'"></div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                <div class="row">
+                    <div class="col-md-12 inner-tab-form-new">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div ng-include="'views/trips/transportermenu.html'"></div>
+                                <form name="searchcouriers" ng-submit="search()" class="stdform" id="srch-trans-frm" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                    <h1>Search Sender</h1>
+                                    <div style="background:#3b5998 none repeat scroll 0 0;float:left;color:#ffffff;width:100%;">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label" for="textinput">From</label>
+                                            <div class="col-md-12">
+                                                <input id="textinput" maxlength="200" name="textinput" ng-model="searchfromlocation" ui-autocomplete="locationStateOption" placeholder="(eg :Jaipur)" class="form-control input-md" type="text" />
+                                            </div>
+                                            <label class="col-md-12 control-label" for="textinput">To</label>
+                                            <div class="col-md-12">
+                                                <input id="textinput" maxlength="200" name="textinput" ng-model="searchtolocation" ui-autocomplete="locationStateOption" placeholder="(eg :New Delhi)" class="form-control input-md" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label" for="textinput">From Date</label>
+                                            <div class="col-md-12">
+                                                <div class='input-group date' id='datetimepicker1'>
+                                                    <input type='text' maxlength="100" name="data" placeholder="DD-MM-YYYY" value="{{ dateFromsearch | date:'dd-MM-yyyy' }}" class="quote_datesearch form-control" />
+                                                </div>
+                                            </div>
+
+                                            <label class="col-md-12 control-label" for="textinput">To Date</label>
+                                            <div class="col-md-12">
+                                                <div class='input-group date' id='datetimepicker1'>
+                                                    <input type='text' name="data" maxlength="100" value="{{ dateTosearch | date:'dd-MM-yyyy' }}" placeholder="DD-MM-YYYY" class="quote_datesearch1 form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input class="customsearchbutton" style="font-size:15px; width:100%;text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);  color:#fff;font-family: 'proxima_novasemibold'; text-transform:uppercase;    background: -moz-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(144,193,81,1)), color-stop(100%, rgba(107,162,35,1)));     background: -webkit-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: -o-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);      background: -ms-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: linear-gradient(180deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#90c151', endColorstr='#6ba223',GradientType=0 ); " type="submit" value="Search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="clear">&nbsp;&nbsp;</div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane" id="myTrips">...</div>
+                                    <div role="tabpanel" class="tab-pane active" id="addTrips">
+                                        <h1>Upload Ticket</h1>
+                                        <form class="stdform" id="addtrans-frm" ng-submit="addtripsdata(addtripform.$valid)" enctype="multipart/form-data" method="post" accept-charset="utf-8" novalidate="novalidate" name="addtripform">
+                                            <div class="row">
+                                                <div class="form-group col-sm-12">
+                                                    <div class="alert alert-danger" role="alert" ng-hide='!errormessage'>{{errormessage}}</div>
+                                                    <div class="alert alert-success" role="alert" ng-hide='!successaddtripMessage'>{{successaddtripMessage}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="filebutton">Upload Your Ticket</label>
+                                                <div class="col-md-8">
+                                                    <input type="file" name="ticket" class="input-file" ng-model="ticket" base-sixty-four-input accept="image/*">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="submit" value="Add Ticket" style="float:right;width:90px;background: #3b5998;border: 0;color: #fff;margin-right: 15px;height: 29px;" />
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="cancelledTrips">...</div>
+                                    <div role="tabpanel" class="tab-pane" id="withdraw">...</div>
+                                </div><div class="clear">&nbsp;&nbsp;</div>
+                            </div>
+                            <div class="col-md-3 inner-tab-form-image">
+                                <img src="/images/bantripn.png" style="margin-top:20px;" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="Transport">...</div>
+            <div role="tabpanel" class="tab-pane" id="Sender">...</div>
+            <div role="tabpanel" class="tab-pane" id="Receiver">...</div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.quote_date').Zebra_DatePicker({
+        direction: true, pair: $('.quote_date1'), format: 'd-m-Y'
+    });
+    $('.quote_date1').Zebra_DatePicker({
+        direction: true, format: 'd-m-Y'
+    });
+    $('.quote_datesearch').Zebra_DatePicker({
+        direction: true, pair: $('.quote_datesearch1'), format: 'd-m-Y'
+    });
+    $('.quote_datesearch1').Zebra_DatePicker({
+        direction: true, format: 'd-m-Y'
+    });
+    $('#setTimeExample').timepicker();
+    $('#setTimeExample1').timepicker();
+</script>
+<style>
+    .input-group, span.Zebra_DatePicker_Icon_Wrapper {
+        width: 100%;
+    }
+</style>

@@ -1,0 +1,20 @@
+﻿<aside class="left-tab-cont">
+    <ul>
+        <li id="my-book-t" ng-class="isActive('/admin/dashboard')?'active':''"> <a ui-sref="admindashboard"  >Dashboard</a> </li>
+        <li ng-class="isActive('/admin/userlist')?'active':''"><a ui-sref="adminuserslist">User Manager</a> </li>
+        <li ng-class="isActive('/admin/tripslist')?'active':''"><a ui-sref="admintripslist">Trip Manager </a> </li>
+        <li ng-class="isActive('/admin/parcellist')?'active':''"><a ui-sref="adminparcellist">Parcel Manager </a></li>
+        <li ng-class="isActive('/admin/bookings')?'active':''"><a ui-sref="adminbookings">Booking Manager</a></li>
+        <li ng-class="isActive('/admin/payments')?'active':''"><a ui-sref="adminpayments">Payment Manager</a></li>
+        <!--<li ng-class="isActive('/admin/reports')?'active':''"> <a ui-sref="adminreports">Report Manager </a> </li>
+        <li ng-class="isActive('/admin/deliveryreports')?'active':''"><a ui-sref="admindeliveryreports">Delivery Report </a></li>-->
+        <li ng-class="isActive('/admin/airportslist')?'active':''"><a ui-sref="adminairportslist">Airport Manager</a></li>
+        <li ng-class="isActive('/admin/seomanager')?'active':''"><a ui-sref="adminseomanager">Seo Manager</a></li> 
+        <li ng-class="isActive('/admin/feedbackslist')?'active':''"><a ui-sref="adminfeedbackslist">Feedback Manager</a></li>
+        <li ng-class="isActive('/admin/newsletters')?'active':''"><a ui-sref="adminnewsletters">Newsletter Manager</a></li>
+        <li ng-class="isActive('/admin/pricelist')?'active':''"><a ui-sref="adminpricelist">Zone Price List</a></li>
+    </ul>
+</aside> 
+<style>
+    .dash-cntnt{min-height:721px;}
+</style>

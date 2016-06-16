@@ -1,0 +1,38 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div   ng-controller="contactController">
+    <div class="contact-us">
+        <div class="wrapper">
+            <div class="alert alert-danger" role="alert" ng-hide='!errorDescription'>{{errorDescription}}</div>
+            <form class="stdform" ng-show="successmessage==''" ng-submit="submitformdata(contactForm.$valid)"  method="post"   name="contactForm">
+                <div class="form-group">
+                    <input name="name" ng-model="name" class="form-control" placeholder="Name" ng-required="true" maxlength="255" type="text" id="ContactName" />
+                    <span class="error" ng-show="(contactForm.$submitted && contactForm.name.$error.required)">Name Number Required.</span>
+                </div>
+                <div class="form-group">
+                    <input name="email" ng-model="email" class="form-control" placeholder="Email" ng-required="true" type="email" id="ContactEmail" />
+                    <span class="error" ng-show="(contactForm.$submitted && contactForm.email.$error.required)">Email Address Required.</span>
+                    <span class="error" ng-show="(contactForm.$submitted && contactForm.email.$error.email)">Please Enter Valid Email Address.</span>
+                </div>
+                <div class="form-group">
+                    <input name="phone" ng-model="phone" class=" form-control" placeholder="Phone" ng-required="true" id="phone" valid-number type="text" />
+                    <span class="error" ng-show="(contactForm.$submitted && contactForm.phone.$error.required)">Phone Number Required.</span>
+                    <span class="error" ng-show="contactForm.phone.$error.minlength">Min Length 6.</span>
+                    <span class="error" ng-show="contactForm.phone.$error.maxlength">Max Length 14.</span>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" ng-model="message" class="form-control" placeholder="Message" cols="30" ng-required="true" rows="6" id="ContactMessage"></textarea>
+                    <span class="error" ng-show="(contactForm.$submitted && contactForm.message.$error.required)">Message Number Required.</span>
+                </div>
+                <div class="form-group">
+                    <div vc-recaptcha key="publicKey"></div>
+                </div>
+                <div class="clear">
+                    <input type="submit" value="Send">
+                </div>
+            </form>
+            <div class="form-group col-sm-12"> 
+                <div class="alert alert-success" role="alert" ng-hide='!successmessage'>{{successmessage}}</div>
+            </div> 
+        </div>
+    </div>
+</div>

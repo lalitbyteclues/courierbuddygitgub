@@ -1,0 +1,247 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div ng-controller="editparcelController">
+    <div class="wrapper">
+        <div class="container">
+            <div class="tab-form-new">
+                <div ng-include="'views/dashboardmenu.html'"></div>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                        <div class="row">
+                            <div class="col-md-12 inner-tab-form-new">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div ng-include="'views/parcel/sendermenu.html'"></div>
+                                        <div class="clear">&nbsp;&nbsp;</div>
+                                        <form name="searchcouriers" ng-submit="search()" class="stdform" id="srch-trans-frm" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                            <h1>Search Trip</h1>
+                                            <div style="background:#3b5998 none repeat scroll 0 0;float:left;color:#ffffff;width:100%;">
+                                                <div class="form-group">
+                                                    <label class="col-md-12 control-label" for="textinput">From</label>
+                                                    <div class="col-md-12">
+                                                        <input id="textinput" maxlength="200" name="textinput" ng-model="searchfromlocation" ui-autocomplete="locationStateOption" placeholder="eg :Jaipur" class="form-control input-md" type="text" />
+                                                    </div>
+                                                    <label class="col-md-12 control-label" for="textinput">To</label>
+                                                    <div class="col-md-12">
+                                                        <input id="textinput" maxlength="200" name="textinput" ng-model="searchtolocation" ui-autocomplete="locationStateOption" placeholder="eg :New Delhi" class="form-control input-md" type="text" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-12 control-label" for="textinput">From Date</label>
+                                                    <div class="col-md-12">
+                                                        <div class='input-group date' id='datetimepicker1'>
+                                                            <input type='text' maxlength="100" name="data" placeholder="DD-MM-YYYY" value="{{ dateFromsearch | date:'dd-MM-yyyy' }}" class="quote_datesearch form-control" />
+                                                        </div>
+                                                    </div>
+
+                                                    <label class="col-md-12 control-label" for="textinput">To Date</label>
+                                                    <div class="col-md-12">
+                                                        <div class='input-group date' id='datetimepicker1'>
+                                                            <input type='text' maxlength="100" name="data" value="{{ dateTosearch | date:'dd-MM-yyyy' }}" placeholder="DD-MM-YYYY" class="quote_datesearch1 form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <input class="customsearchbutton" style="font-size:15px; width:100%;text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);  color:#fff;font-family: 'proxima_novasemibold'; text-transform:uppercase;    background: -moz-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(144,193,81,1)), color-stop(100%, rgba(107,162,35,1)));     background: -webkit-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: -o-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);      background: -ms-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: linear-gradient(180deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#90c151', endColorstr='#6ba223',GradientType=0 ); " type="submit" value="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="clear">&nbsp;&nbsp;</div>
+                                    </div>
+                                    <div class="col-md-7" ng-hide="issummary">
+                                        <h1>Edit Parcel #{{parcel.id}}</h1>
+                                        <form   class="stdform" id="addbook-frm" ng-submit="paynow(frmaddparcel.$valid)" enctype="multipart/form-data" method="post" accept-charset="utf-8" novalidate="novalidate" name="frmaddparcel">
+                                            <div class="row">
+                                                <div class="form-group col-sm-12">
+                                                    <div class="alert alert-danger" role="alert" ng-hide='!errormessage'>{{errormessage}}</div>
+                                                    <div class="alert alert-success" role="alert" ng-hide='!successaddtripMessage' ng-bind-html="successaddtripMessage"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="textinput">From <span class="red">*</span></label>
+                                                <div class="col-md-8 p-reltv">
+                                                    <input maxlength="200" type="text" placeholder="eg :Jaipur" name="source" ui-autocomplete="locationStateOption" required="required" class="form-control input-md" ng-model="parcelfromloation" no-special-char autocomplete="off">
+                                                    <span class="error" ng-show="(frmaddparcel.$submitted && frmaddparcel.source.$error.required)">Required.</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="textinput">To <span class="red">*</span></label>
+                                                <div class="col-md-8 p-reltv">
+                                                    <input maxlength="200" name="destination" class="form-control input-md" ui-autocomplete="locationStateOption" type="text" required="required" autocomplete="off" ng-model="parceltoloation" no-special-char placeholder="eg : New Delhi">
+                                                    <span class="error" ng-show="(frmaddparcel.$submitted && frmaddparcel.destination.$error.required)">Required.</span>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="textinput">Parcel type <span class="red">*</span></label>
+                                                <div class="col-md-8">
+      <select name="Parceltype" class="form-control input-md" ng-model="parceltype" placeholder="Select Parcel Type You Have To Send" required="required" ng-change="checkdimensions()" id="typchkk">
+                                                        <option value="">Select Parcel Type</option>
+                                                        <option value="B">Box</option>
+                                                        <option value="E">Envelope</option>
+                                                        <option value="P">Packet</option>
+                                                    </select>
+                                                    <span class="error" ng-show="(frmaddparcel.$submitted && frmaddparcel.Parceltype.$error.required)">Required.</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group p-size" ng-show="showheight || showwidth || showlength">
+                                                <label class="col-md-4 control-label" for="textinput">Dimension(inches) <span class="red">*</span></label>
+                                                <div class="col-md-8">
+                                                    <div class="col-md-4" style="padding-left:0;">
+                                                        <input maxlength="3" name="height" placeholder="Height" class="form-control input-md" ng-show="showheight" valid-number ng-model="ParcelHeight" type="text" id="ParcelHeight">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input maxlength="3" name="width" placeholder="Width" class="form-control input-md" ng-show="showwidth" valid-number type="text" id="ParcelWidth" ng-model="ParcelWidth">
+                                                    </div>
+                                                    <div class="col-md-4" style="padding-right:0;">
+                                                        <input maxlength="3" name="length" placeholder="length" class="form-control input-md" ng-show="showlength" valid-number type="text" id="ParcelLength" ng-model="ParcelLength" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group p-size">
+                                                <label class="col-md-4 control-label" for="textinput">Size (kg) <span class="red">*</span></label>
+                                                <div class="col-md-8">
+                                                    <input maxlength="3" name="weight" class="form-control input-md" required="required" placeholder="Weight" step="0.01" min="0.01" max="10" type="number" ng-model="ParcelWeight" id="ParcelWeight" />
+                                                    <span class="error" ng-show="frmaddparcel.weight.$error.min">Min 0.01 Kg.</span>
+                                                    <span class="error" ng-show="frmaddparcel.weight.$error.max">Max 10 Kg.</span>
+                                                    <span class="error" ng-show="(frmaddparcel.$submitted && frmaddparcel.weight.$error.required)">Required.</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="textinput">Deliver Till <span class="red">*</span></label>
+                                                <div class="col-md-8">
+                                                    <input name="data" maxlength="200" class="form-control quote_date" value="{{ deliverytill | date:'dd-MM-yyyy' }}" type="text" placeholder="Aproxx Time When You Want Parcel To Be Delivered" />
+                                                    <span class="error" ng-show="(frmaddparcel.$submitted && frmaddparcel.data.$error.required)">Required.</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="textinput">Parcel Description <span class="red">*</span></label>
+                                                <div class="col-md-8">
+                                                    <textarea maxlength="300" name="description" ng-model="parceldecsription" placeholder="Short Description Of The Parcel" required="required" class="form-control" id="ParcelDescription"></textarea>
+                                                    <span class="error" ng-show="(frmaddparcel.$submitted && frmaddparcel.description.$error.required)">Required.</span>
+                                                </div>
+                                            </div> 
+                                            <h1>Receiver Details </h1>
+                                            <div ng-show="usersearchvisible">
+                                                <div class="form-group n-find">
+                                                    <div class="col-md-8">
+                                                        <label>Choose Receivers Details</label>
+                                                    </div>
+                                                    <div id="book-radio" class="col-md-8 a-left">
+                                                        <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType1" ng-model="value1" required="required" value="true" checked="true" />
+                                                        Existing User
+                                                        <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType2" ng-model="value1" required="required" value="false" /> New User
+                                                    </div>
+                                                </div>
+                                                <div id="exist" ng-show="value1=='true'" ng-hide="value1=='false'">
+                                                    <div class="form-group n-find">
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 control-label" for="textinput">Mobile Number</label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" name="mob_num" id="mob_num" class="form-control" ng-model="exitingmobilenumber" maxlength="15" placeholder=" Type Number" valid-number placeholder="Search Receiver By Mobile Number" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 control-label" for="textinput"> Email ID</label>
+                                                            <div class="col-md-8">
+                                                                <input type="email" maxlength="200" name="receml" id="receml" ng-model="exitingemail" class="form-control" placeholder="Search Receiver By Email ID" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <a href="javascript:void(0);" ng-click="searchuser()" class="f-btn" style="float:right;background: #3b5998;border: 0;color: #fff;padding:6px 15px;" id="find">Search</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="invite" ng-hide="value1=='true'" ng-show="value1=='false'">
+                                                    <div class="clear n-find">
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 control-label" for="textinput"> Name <span class="red">*</span></label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" maxlength="200" ng-model="registername" class="form-control" name="name" id="name" placeholder="Enter Name Of New User">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 control-label" for="textinput"> Number (M)</label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" maxlength="15" class="form-control" ng-model="registermobile" name="number" id="number" placeholder=" Mobile Number" valid-number>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 control-label" for="textinput"> Email ID <span class="red">*</span></label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" maxlength="200" class="form-control" ng-model="registeremail" name="emil" id="emil" placeholder=" Email Address">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 control-label" for="textinput">Message</label>
+                                                            <div class="col-md-8">
+                                                                <textarea class="form-control" maxlength="500" name="imsgg" ng-model="registermessage" id="imsgg" placeholder="Any Additional Message You Want To Send"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <a href="javascript:void(0);" style="float:right;background: #3b5998;border: 0;color: #fff;margin-right:0;text-decoration:none;padding:5px 10px" class="f-btn" ng-click="sendinviteuser()">Send Invite</a>
+                                                        </div>
+                                                        <span id="emsg"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="com-det">
+                                                <table border="0" cellpadding="4" ng-show="userlist.length>0" width="100%">
+                                                    <tbody>
+                                                        <tr ng-repeat="user in userlist">
+                                                            <td style="text-transform:uppercase;"><b>MCB Id</b>{{user.id}}</td>
+                                                            <td><b>Email</b>{{user.username}}</td>
+                                                            <td><b>Name</b>{{user.name}} </td>
+                                                            <td><b>Phone</b>{{user.mobile}}</td>
+                                                            <td>
+                                                                <b>&nbsp;</b>
+                                                                <a href="javascript:void(0);" ng-click="changereceiveruser()">Change</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="clear">&nbsp;</div>
+                                                <div ng-show="userlist.length==0 && usersearchclicked">
+                                                    <div class="alert alert-danger" role="alert">No receiver found </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-top8" ng-show="userlist.length>0" id="pay">
+                                                <a ui-sref="sender" style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:0px 0px 0 12px;" title="Cancel Edit">Cancel</a>
+                                                   <input type="submit" style="float:right;width:90px;background: #3b5998;border: 0;color: #fff;margin-right:0;height: 29px;" value="Submit">
+                                               
+                                            </div>
+                                        </form> 
+                                        <div class="clear">&nbsp;&nbsp;</div>
+                                    </div> 
+                                    <div class="col-md-3 inner-tab-form-image">
+                                        <img src="images/slideparcel.png" style="width:100%; max-height:500px; margin-top:20px;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.quote_date').Zebra_DatePicker({
+        direction: true, pair: $('.quote_date1'), format: 'd-m-Y'
+    });
+    $('.quote_datesearch').Zebra_DatePicker({
+        direction: true, pair: $('.quote_datesearch1'), format: 'd-m-Y'
+    });
+    $('.quote_datesearch1').Zebra_DatePicker({
+        direction: true, format: 'd-m-Y'
+    });
+    $('#setTimeExample').timepicker();
+    $('#setTimeExample1').timepicker();
+</script>
+<style>
+    .input-group, span.Zebra_DatePicker_Icon_Wrapper {
+        width: 100%;
+    }
+</style>

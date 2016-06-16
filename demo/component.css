@@ -1,0 +1,193 @@
+/* General styles for all menus */
+.cbp-spmenu {
+	background: #000;
+	position: fixed;
+}
+/* click */
+#showLeftPush { display:none;
+  position: absolute;
+  left: 0;
+  top: 205px;
+  width: 25px;
+  background-color: #746b39;
+  	webkit-border-radius:0 5px 5px 0;
+	-moz-border-radius: 0 5px 5px 0;
+	border-radius: 0 5px 5px 0;
+  z-index:99;-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+/*#showLeftPush.active{ left:260px;}*/
+#showLeftPush .cd-menu-icon {
+  /* this span is the central line in the menu menu */
+  display: inline-block;
+  vertical-align:top;
+  margin-left:10px;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  width: 12px;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0);
+  /* these are the upper and lower lines in the menu menu */
+}
+#showLeftPush .cd-menu-icon::before, #showLeftPush .cd-menu-icon:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: inherit;
+  left: 0;
+  background-color: #FFF;
+}
+#showLeftPush .cd-menu-icon::before {
+  bottom: 4px;
+    -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+#showLeftPush .cd-menu-icon::after {
+  top: 4px;
+    -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+#showLeftPush.active .cd-menu-icon {
+  background-color: rgba(255, 255, 255, 0);
+}
+#showLeftPush.active .cd-menu-icon::before, #showLeftPush.active .cd-menu-icon::after {
+  background-color: white;
+}
+#showLeftPush.active .cd-menu-icon::before {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+#showLeftPush.active .cd-menu-icon::after {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+/* Orientation-dependent styles for the content of the menu */
+
+.cbp-spmenu-vertical {
+	width: 260px;
+	height: 100%;
+	top: 0;
+	z-index: 1000;
+}
+
+.cbp-spmenu-vertical a {
+	border-bottom: 1px solid #258ecd;
+	padding: 1em;
+}
+
+
+
+/* Vertical menu that slides from the left or right */
+
+.cbp-spmenu-left {
+	left: -260px;
+}
+
+.cbp-spmenu-right {
+	right: -260px;
+}
+
+.cbp-spmenu-left.cbp-spmenu-open {
+	left: 0px;
+}
+
+.cbp-spmenu-right.cbp-spmenu-open {
+	right: 0px;
+}
+
+
+
+/* Push classes applied to the body */
+
+.cbp-spmenu-push {
+	overflow-x: hidden;
+	position: relative;
+	left: 0;
+}
+
+.cbp-spmenu-push-toright {
+	left: 260px;
+}
+
+.cbp-spmenu-push-toleft {
+	left: -260px;
+}
+
+/* Transitions */
+
+.cbp-spmenu,
+.cbp-spmenu-push {
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+/* Inner Content */
+.cbp-spmenu-left h1{ font-size:24px; margin:20px 0;}
+.cbp-spmenu-left form{ padding:0 10px; height:auto; overflow: scroll}
+.cbp-spmenu-left input{ padding:5px; width:95%; border:none; margin-bottom:15px;}
+.cbp-spmenu-left .captr input{     display: inline-block;
+    width: 40%;
+    margin: 0 0 0 10px;
+    padding: 12px 5px;}
+.cbp-spmenu-left .trm input, .cbp-spmenu-left input[type="submit"]{ width:auto}
+.cbp-spmenu-left .trm{ text-align:left; margin-top:20px;}
+
+/* Example media queries */
+
+@media screen and (max-width: 55.1875em){
+
+	.cbp-spmenu-horizontal {
+		/*font-size: 75%;*/
+		height: 110px;
+	}
+
+	.cbp-spmenu-top {
+		top: -110px;
+	}
+
+	.cbp-spmenu-bottom {
+		bottom: -110px;
+	}
+
+}
+
+@media screen and (max-height: 26.375em){
+
+	.cbp-spmenu-vertical {
+		/*font-size: 90%;*/
+		width: 190px;
+	}
+/*#showLeftPush.active{ left:190px;}*/
+	.cbp-spmenu-left,
+	.cbp-spmenu-push-toleft {
+		left: -190px;
+	}
+
+	.cbp-spmenu-right {
+		right: -190px;
+	}
+
+	.cbp-spmenu-push-toright {
+		left: 190px;
+	}
+}

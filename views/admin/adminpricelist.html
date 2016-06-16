@@ -1,0 +1,89 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div class="container" ng-controller="adminpricelistController">
+
+    <div ng-include="'views/admin/adminmenu.html'"></div>
+    <div class="dash-cntnt">
+        <h1>Update Zone Price List</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <fieldset>
+                    <legend>Search:</legend>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <label> From Zone</label>
+                            <select data-ng-model="searchfromzoneid" class="form-control">
+                                <option ng-repeat="price in zonelist" ng-selected="data.zonelistid==price.id" value="{{price.id}}">{{price.Zonename}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            To
+                        </div>
+                        <div class="col-md-3">
+                            <label> To Zone</label><select data-ng-model="searchtozoneid" class="form-control">
+                                <option ng-repeat="price in zonelist" ng-selected="data.zonelistid==price.id" value="{{price.id}}">{{price.Zonename}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="button" ng-click="checkgridlist()" class="btn btn-primary" value="Get List" />
+                        </div>
+                    </div>
+                    <div class="clear">&nbsp;</div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div ng-show="successmessage.length" class="alert alert-success">{{successmessage}}</div>
+            <div ng-show="errormessage.length" class="alert alert-danger">{{errormessage}}</div> 
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12" ng-show="filteredItems > 0">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr> 
+                            <th>
+                                Weight Range(kg.)&nbsp;<a ng-click="sort_by('weightrangename');">
+    <i class="glyphicon glyphicon-sort"></i>
+</a>
+                            </th>
+                            <th>
+                                Price&nbsp;<a ng-click="sort_by('price');">
+                                    <i class="glyphicon glyphicon-sort"></i>
+                                </a>
+                            </th>  
+                            <th>
+                                Transporter Share
+                                &nbsp;<a ng-click="sort_by('transportershare');">
+    <i class="glyphicon glyphicon-sort"></i>
+</a>
+                            </th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in filtered = (list | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                            <td>
+                                <span>{{data.weightrangename}}</span> 
+                            </td>
+                            <td> 
+                                <input type="number" step="0.01" placeholder="{{data.weightrangename }} Price" class="form-control" data-ng-model="data.price" data-ng-required />
+                            </td>  
+                            <td>
+                                <input type="number" step="0.01" placeholder="{{data.weightrangename }} Transporter Share" class="form-control" data-ng-model="data.transportershare" data-ng-required />
+                            </td>  
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <input type="button" class="btn btn-primary" ng-show="list.length > 0" value="Save Records" data-ng-click="Savepricelist()" />
+            <div class="col-md-12" ng-show="filteredItems == 0">
+                <div class="col-md-12">
+                    <h4>No Record found</h4>
+                </div>
+            </div>  
+            <!--<div class="col-md-12" ng-show="filteredItems > 0">
+                <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+
+            </div>-->
+        </div>
+    </div>
+</div> 
