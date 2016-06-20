@@ -14,7 +14,7 @@
                             </div>
                             <div class="col-md-7" ng-hide="issummary">
                                 <h1>Book Now</h1>
-                                <form ng-hide='successaddtripMessage' class="stdform" id="addbook-frm" ng-submit="paynow(frmaddparcel.$valid)" enctype="multipart/form-data" method="post" accept-charset="utf-8" novalidate="novalidate" name="frmaddparcel">
+                                <form   class="stdform" id="addbook-frm" ng-submit="paynow(frmaddparcel.$valid)" enctype="multipart/form-data" method="post" accept-charset="utf-8" novalidate="novalidate" name="frmaddparcel">
                                     <div class="row">
                                         <div class="form-group col-sm-12">
                                             <div class="alert alert-danger" role="alert" ng-hide='!errormessage'>{{errormessage}}</div>
@@ -95,7 +95,7 @@
                                                 <label>Choose Receivers Details</label>
                                             </div>
                                             <div id="book-radio" class="col-md-8 a-left">
-                                                <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType1" ng-model="value1" required="required" value="true" checked="true" />
+                                                <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType1" ng-model="value1" required="required" value="true" checked="checked" />
                                                 Existing User
                                                 <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType2" ng-model="value1" required="required" value="false" /> New User
                                             </div>
@@ -176,7 +176,7 @@
                                         <input type="submit" style="float:right;width:90px;background: #3b5998;border: 0;color: #fff;margin-right: 15px;height: 29px;" value="Submit">
                                     </div>
                                 </form>
-                                <div ng-hide='!successaddtripMessage' class="tab-content">
+                                <!--<div ng-hide='!successaddtripMessage' class="tab-content">
                                     <div class="row">
                                         <div class="clear">&nbsp;&nbsp;&nbsp;&nbsp;</div>
                                         <div class="form-group col-sm-12">
@@ -184,7 +184,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div><div class="clear">&nbsp;&nbsp;</div>
+                                </div>-->
+                                <div class="clear">&nbsp;&nbsp;</div>
                                 <div class="clear">&nbsp;&nbsp;</div>
                             </div>
                             <div class="col-md-7" ng-show="issummary"> 

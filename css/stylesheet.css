@@ -533,3 +533,6 @@ box-shadow: 10px 10px 5px 0px rgba(217,210,217,0.17);width:100%;}
  .nav-tabs li.active .fa-transporter, .nav-tabs a:hover .fa-transporter{background-image:url(../images/transactive.png);background-color:rgb(59, 89, 152);height:18px;width:25px;}
   .nav-tabs .fa-receiver{background-image:url(../images/recv.png);background-color:rgb(59, 89, 152);height:18px;width:25px;}
  .nav-tabs li.active .fa-receiver, .nav-tabs a:hover .fa-receiver{background-image:url(../images/recvactive.png);background-color:rgb(59, 89, 152);height:18px;width:25px;}
+ .nav-tabs .fa-wallet{background-image:url(../images/walleticonactive.png);background-color:rgb(59, 89, 152);height:20px;width:20px;}
+ .nav-tabs li.active .fa-wallet, .nav-tabs a:hover .fa-wallet{background-image:url(../images/walleticon.png);background-color:rgb(59, 89, 152);height:20px;width:20px;}
+

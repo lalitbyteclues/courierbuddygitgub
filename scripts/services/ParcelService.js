@@ -1,5 +1,6 @@
 /**
  * Created by Lalit 16.05.2016.
+ *Modify by Lalit   18.06.2016 --added wallet statement service
  */
 angular.module('courier').factory('ParcelService', ['$http', '$q', 'RESOURCES', 'ValiDatedTokenObject', function ($http, $q, RESOURCES, ValiDatedTokenObject) {
     ValiDatedTokenObject.setValiDatedTokenObject(JSON.parse(sessionStorage.getItem("ValiDatedTokenObject")));
@@ -96,6 +97,13 @@ angular.module('courier').factory('ParcelService', ['$http', '$q', 'RESOURCES', 
             return results;
         });
     };
+    var _getwalletstatement = function (UserID) {
+        return $http.get(serviceBase + 'api/getwalletstatement/' + UserID, {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (results) {
+            return results;
+        });
+    };
     var _getrefundedParcelList = function (UserID) {
         return $http.get(serviceBase + 'api/refundedparcellist/' + UserID, {
             headers: { 'Content-Type': 'application/json' }
@@ -118,6 +126,7 @@ angular.module('courier').factory('ParcelService', ['$http', '$q', 'RESOURCES', 
     ParcelServiceFactory.contactslist = _contactslist;
     ParcelServiceFactory.getcalcelledParcelList = _getcalcelledParcelList;
     ParcelServiceFactory.getrefundedParcelList = _getrefundedParcelList;
+    ParcelServiceFactory.getwalletstatement = _getwalletstatement;
     ParcelServiceFactory.updatestatus = _updatestatus;
     ParcelServiceFactory.usrupdatestatus = _usrupdatestatus;
     ParcelServiceFactory.deletetrip = _deletetrip;

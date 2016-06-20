@@ -34,15 +34,27 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
         $scope.usersearchvisible = true;
     }
     $scope.sendinviteuser = function () {
-        $scope.successaddtripMessage = "";
         $scope.errormessage = "";
-        var data = { "email": $scope.registeremail, "name": $scope.registername, "number": $scope.registermobile, "message": $scope.registermessage, "UserID": AuthService.authentication.UserId };
-        AuthService.inviteuser(data).then(function (results) {
+        $scope.successaddtripMessage = "";
+        AuthService.getuserdetails(AuthService.authentication.UserId).then(function (results) {
             if (results.status == 200) {
-               // $scope.successaddtripMessage = "User Invited Successfully";
-                $scope.userlist = results.data.response;
-                if ($scope.userlist.length > 0) {
-                    $scope.usersearchvisible = false;
+                if (results.data.response[0].status == "Y") {
+                    $scope.successaddtripMessage = "";
+                    $scope.errormessage = "";
+                    var data = { "email": $scope.registeremail, "name": $scope.registername, "number": $scope.registermobile, "message": $scope.registermessage, "UserID": AuthService.authentication.UserId };
+                    AuthService.inviteuser(data).then(function (results) {
+                        if (results.status == 200) {
+                            // $scope.successaddtripMessage = "User Invited Successfully";
+                            $scope.userlist = results.data.response;
+                            if ($scope.userlist.length > 0) {
+                                $scope.usersearchvisible = false;
+                            }
+                        }
+                    });
+                }
+                else {
+                    $scope.errormessage = "Please verify your email before adding Parcel ! ";
+                    return;
                 }
             }
         });
@@ -84,7 +96,7 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
                         });
                     }
                     else {
-                        $scope.errormessage = "Verification Email Sent on your Email please verify.";
+                        $scope.errormessage = "Please verify your email before adding Parcel ! ";
                         return;
                     }
                 }
@@ -98,19 +110,30 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
     $scope.showlength = false;
     $scope.exitingemail = ""; $scope.exitingmobilenumber = ""; $scope.value1 = 'true';
     $scope.searchuser = function () {
-        $scope.usersearchclicked = false;
-        if ((typeof $scope.exitingemail === 'undefined' || $scope.exitingemail === '' || $scope.exitingemail == null) && (typeof $scope.exitingmobilenumber === 'undefined' || $scope.exitingmobilenumber === '' || $scope.exitingmobilenumber == null)) {
+        $scope.errormessage = "";
+        $scope.successaddtripMessage = "";
+        AuthService.getuserdetails(AuthService.authentication.UserId).then(function (results) {
+            if (results.status == 200) {
+                if (results.data.response[0].status == "Y") {
+                    $scope.usersearchclicked = false;
+                    if ((typeof $scope.exitingemail === 'undefined' || $scope.exitingemail === '' || $scope.exitingemail == null) && (typeof $scope.exitingmobilenumber === 'undefined' || $scope.exitingmobilenumber === '' || $scope.exitingmobilenumber == null)) {
 
-        } else { 
-            searchService.searchuser($scope.exitingmobilenumber, $scope.exitingemail, AuthService.authentication.UserId).then(function (response) {
-                $scope.userlist = response.data.response;
-                if ($scope.userlist.length > 0)
-                {
-                    $scope.usersearchvisible = false;
+                    } else {
+                        searchService.searchuser($scope.exitingmobilenumber, $scope.exitingemail, AuthService.authentication.UserId).then(function (response) {
+                            $scope.userlist = response.data.response;
+                            if ($scope.userlist.length > 0) {
+                                $scope.usersearchvisible = false;
+                            }
+                            $scope.usersearchclicked = true;
+                        });
+                    }
                 }
-                $scope.usersearchclicked = true;
-            });
-        }
+                else {
+                    $scope.errormessage = "Please verify your email before adding Parcel ! ";
+                    return;
+                }
+            }
+        });
     };
     $scope.checkdimensions = function () {
         if ($scope.parceltype == "B") {

@@ -10,8 +10,14 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
     $http.get(RESOURCES.API_BASE_PATH + 'api/getcountries', { headers: { 'Content-Type': 'application/json' }, }).then(function (results) {
         $scope.countries = results.data.response;
     });
+    var dat = $location.url();
+    if (dat.match("#matches")) {
+        $('html, body').animate({
+            scrollTop:300
+        }, 'slow');
+    }
     $scope.parcellist = [];
-    sender = $('#example1').DataTable();
+    sender = $('#example1').DataTable(); 
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
@@ -24,6 +30,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
             if (AuthService.authentication.UserId != $scope.transporter.t_id) {
                 $state.transitionTo('home');
             }
+            $('#example2').DataTable({ searching: false, paging: false });
             var deptime = $scope.transporter.dep_time.split(" ");
             $scope.transporter.dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]).getTime();
             var arrtime = $scope.transporter.arrival_time.split(" ");
@@ -37,7 +44,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
             } else {
                 $scope.parcellist = [];
             }
-            if ($scope.transporter.status == 3) {
+            if ($scope.transporter.status == 3 || $scope.transporter.status == 6) {
                 $scope.parcel = response.data.parcel; 
             }
             $scope.transporter.link = "<a target='" + ($scope.transporter.image.length > 0 ? "_blank" : "_self") + "' href='" + ($scope.transporter.image.length > 0 ? RESOURCES.API_BASE_PATH + $scope.transporter.image : "/uploadtripticket/" + $scope.transporter.id) + "'  title='" + ($scope.transporter.image.length > 0 ? "View Ticket" : "Upload Ticket") + "'>" + ($scope.transporter.image.length > 0 ? "View Ticket" : "Upload Ticket") + "</a>";
@@ -62,7 +69,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
                                 } else {
                                     $scope.parcellist = [];
                                 }
-                                if ($scope.transporter.status == 3) {
+                                if ($scope.transporter.status == 3 || $scope.transporter.status == 6) {
                                     $scope.parcel = response.data.parcel;
                                 }
                                 $scope.successaddtripMessage = "Trip Successfully Updated.";
@@ -95,7 +102,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
                                 } else {
                                     $scope.parcellist = [];
                                 }
-                                if ($scope.transporter.status == 3) {
+                                if ($scope.transporter.status == 3 || $scope.transporter.status == 6) {
                                     $scope.parcel = response.data.parcel;
                                 }
                                 $scope.successaddtripMessage = "Parcel Updated Successfully";
@@ -127,7 +134,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
                                 } else {
                                     $scope.parcellist = [];
                                 }
-                                if ($scope.transporter.status == 3) {
+                                if ($scope.transporter.status == 3 || $scope.transporter.status == 6) {
                                     $scope.parcel = response.data.parcel;
                                 }
                                 $scope.successaddtripMessage = "Parcel Updated Successfully";

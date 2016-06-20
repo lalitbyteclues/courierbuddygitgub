@@ -51,16 +51,16 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Parcel ID</th>
+                                                            <th>Action</th>
                                                             <th>From</th>
-                                                            <th>To  </th>
-                                                            <th>Dep Date</th>
-                                                            <th>Arrival date</th>
+                                                            <th>To  </th>  
                                                             <th>Flight No</th>
                                                             <th>Weight</th>
                                                             <th>Status</th>
-                                                            <th>Transporter Details</th>
-                                                            <th>Sender Details</th>
-                                                            <th>Action</th>
+                                                            <th>Transporter Details(Transporting Parcel )</th>
+                                                            <th>Departure Date</th>
+                                                            <th>Arrival date</th>
+                                                            <th>Sender Details</th>  
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -114,8 +114,8 @@
     $('.quote_date').Zebra_DatePicker({
         direction: true, format: 'd-m-Y'
     });
-    function changestatusparcel(id) {
-        angular.element('.container').scope().changestatusparcel(id);
+    function changestatusparcel(id,status) {
+        angular.element('.container').scope().changestatusparcel(id,status);
     }
 </script>
 

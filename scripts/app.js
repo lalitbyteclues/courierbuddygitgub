@@ -21,8 +21,10 @@ var clientId = "P600Us6Y476QiK331u5yEzb22dpX_y6NS75!9I-a";
         , 'base64', 'naif.base64', 'vcRecaptcha'
     ]).constant('RESOURCES', (function () {
         var searchcriteria = { datefrom: "", dateto: "", locationfrom: "", locationto: "", type: "Transporter" };
+        var sendersearchcriteria = { TransporterID: "", departureat: "", status: "" };
+        var tripsearchcriteria = { TransporterID: "", departureat: "", status: "" };
         return {
-            searchcriteria: searchcriteria, API_BASE_PATH: apiBasePath, CLIENT_ID: clientId
+            searchcriteria: searchcriteria, sendersearchcriteria: sendersearchcriteria, tripsearchcriteria: tripsearchcriteria, API_BASE_PATH: apiBasePath, CLIENT_ID: clientId
         }
     })())
         .config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {

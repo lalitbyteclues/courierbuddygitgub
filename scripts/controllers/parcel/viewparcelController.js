@@ -10,12 +10,18 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
     $http.get(RESOURCES.API_BASE_PATH + 'api/getcountries', { headers: { 'Content-Type': 'application/json' }, }).then(function (results) {
         $scope.countries = results.data.response;
     });
+    var dat=$location.url();
+    if (dat.match("#matches"))
+    {
+        $('html, body').animate({
+            scrollTop:300
+        }, 'slow');
+    }
     $scope.usewalletamount = false;
     $scope.loginuser = ValiDatedTokenObject.getValiDatedTokenObject()[0];
     AuthService.getuserdetails($scope.loginuser.id).then(function (results) {
         $scope.loginuser = results.data.response[0]; 
-    });
-    console.log($scope.loginuser);
+    }); 
     trans = $('#example').DataTable();
     $scope.trip = [];
     $scope.tripsmatch = [];
@@ -34,6 +40,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                 $scope.userlist = results.data.response;
 
             });
+            $('#example2').DataTable({ searching: false, paging: false });
             if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
                 searchService.gettransporterdetails($scope.parcel.trans_id).then(function (response) {
                     if (response.data.status == "success") {

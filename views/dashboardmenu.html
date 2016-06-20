@@ -12,6 +12,11 @@
     <li role="presentation" ng-class="isActive('/dashboard') || isActive('/changepassword')?'active':''">
         <a ui-sref="dashboard" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
     </li>
+    <li role="presentation" ng-class="isActive('/mywallet') ?'active':''">
+        <a ui-sref="mywallet" aria-controls="settings" role="tab" data-toggle="tab">
+            <i class="fa fa-google-wallet" aria-hidden="true"></i>My Wallet
+        </a>
+    </li> 
 </ul>
 
 

@@ -72,7 +72,7 @@ angular.module('courier').controller("addtripsController", function ($rootScope,
                     }
                     else {
                         $scope.tripsavemessage = "";
-                        $scope.errormessage = "Verification Email Sent on your Email please verify.";
+                        $scope.errormessage = "Please verify your email before adding trip ! ";
                         return;
                     }
                 }

@@ -180,6 +180,12 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider, $loca
             data: {
                 pageTitle: 'Refund Parcel | My Courier Buddy',
             }
+        }).state('mywallet', {
+            url: "/mywallet",
+            templateUrl: "views/parcel/mywallet.html",
+            data: {
+                pageTitle: 'Refund Parcel | My Courier Buddy',
+            }
         }).state('transbooking', {
             url: "/transbooking/:id",
             templateUrl: "views/trips/transbooking.html",
