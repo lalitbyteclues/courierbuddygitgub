@@ -51,7 +51,12 @@
                             <div class="col-md-10" ng-hide="issummary">
                                 <h1>View Parcel #{{parcel.id}}</h1>
                                 <a href='/editparcel/{{parcel.id}}' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 0 5px 0;" title='Cancel Parcel'>Edit Parcel</a>
-                                <a ng-hide="parcel.status==7 || parcel.status==5" href='javascript:void(0);' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 25px 5px 0;" ng-click='cancelparcellist(parcel.id)' title='Cancel Parcel'>Cancel Parcel</a>
+                                <a ng-hide="parcel.status==7 || parcel.status==5" href='javascript:void(0);' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 5px 5px 0;" ng-click='cancelparcellist(parcel.id)' title='Cancel Parcel'>Cancel Parcel</a>
+                                <div ng-show="parcel.status == 4">
+                                     <a href='javascript:void(0);' ng-click='changestatusparcel(parcel.id,1)' title='Cancel Status' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 5px 5px 0;">Received</a> 
+                                   <a href='javascript:void(0);' ng-click='changestatusparcel(parcel.id, 0)' title='Cancel Status' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 5px 5px 0;">Not Received</a> 
+                                </div>
+                              
                                 <table id="example2" class="table table-striped table-bordered dt-responsive nowrap">
                                     <thead>
                                         <tr>
@@ -62,13 +67,9 @@
                                             <th><b>Weight(kg)</b></th>
                                             <th ng-show="parcel.type=='B'"><b>Dimension(inches)</b></th>
                                             <th><b>Parcel Description</b></th>
-                                            <th>&nbsp;<b>Status</b>&nbsp;</th>
-                                            <th>&nbsp;<b>Receiver Email ID</b>&nbsp;</th>
-                                            <th><b>Receiver Mobile</b></th>
-                                            <th><b>Receiver Name</b></th>
-                                            <th ng-hide='!parcel.reason'>{{ parcel.status == 0 ? "Parcel ID Created" : parcel.status == 1 ? "Created Payment Due" : parcel.status == 2 ? "Booked With TR" : parcel.status == 3 ? "Parcel Collected" : parcel.status == 4 ? "Parcel Delivered" : parcel.status == 5 ? "Delivery Complete" : parcel.status == 6 ? "Cancelled" : parcel.status == 7 ? "cancelled Paid" : "Undelivered"}} Reason</th> 
+                                            <th>&nbsp;<b>Status</b>&nbsp;</th> 
                                         </tr>
-                                    </thead> 
+                                    </thead>
                                     <tbody>
                                         <tr>
                                             <td>{{parcel.source}}</td>
@@ -79,15 +80,13 @@
                                             <td ng-show="parcel.type=='B'">{{parcel.height}}'' {{parcel.width}}'' {{parcel.length}}''</td>
                                             <td>{{parcel.description}}</td>
                                             <td>
-                                                <div class="alert-success" ng-show='parcel.status==2'><i class="fa fa-check fa-2x"></i>Booked With TR</div>
+                                                <div class="alert-success" ng-show='parcel.status==2'><i class="fa fa-check fa-2x">&nbsp;&nbsp;&nbsp;</i>{{ parcel.statusdescription }}</div>
                                                 <span ng-hide='parcel.status==2'>
-                                                    {{ parcel.status == 0 ? "Parcel ID Created" : parcel.status == 1 ? "Created Payment Due" : parcel.status == 2 ? "Booked With TR" : parcel.status == 3 ? "Parcel Collected" : parcel.status == 4 ? "Parcel Delivered" : parcel.status == 5 ? "Delivery Complete" : parcel.status == 6 ? "Cancelled" : parcel.status == 7 ? "cancelled Paid" : "Undelivered"}}
+                                                    &nbsp;
+                                                    {{ parcel.statusdescription }}&nbsp;
                                                 </span>
                                             </td>
-                                            <td>{{parcel.receiveremail}}</td>
-                                            <td>{{parcel.receivercountrycode == ''?'':'+'+parcel.receivercountrycode+'-'}}{{parcel.receivermobile}}</td>
-                                            <td>{{parcel.receivername}}</td>
-                                            <td ng-hide='!parcel.reason'>{{parcel.reason}}</td>
+                                            <!--<td ng-hide='!parcel.reason'>{{parcel.reason}}</td>-->
                                         </tr>
                                     </tbody>
                                 </table>
@@ -100,28 +99,32 @@
                                             <th><b>Name</b></th>
                                             <th><b>Departure Time</b></th>
                                             <th><b>Arrival Time</b></th>
-                                            <th><b>Flight No.</b></th> 
+                                            <th><b>Flight No.</b></th>
                                         </tr>
-                                        <tr> 
-                                            <td>{{trip[0].transporteremail}}</td> 
-                                            <td>{{trip[0].transportername}}</td> 
-                                            <td>{{trip[0].dep_time}}</td>  
-                                            <td>{{trip[0].arrival_time}}</td> 
+                                        <tr>
+                                            <td>{{trip[0].transporteremail}}</td>
+                                            <td>{{trip[0].transportername}}</td>
+                                            <td>{{trip[0].dep_time}}</td>
+                                            <td>{{trip[0].arrival_time}}</td>
                                             <td>{{trip[0].flight_no}}</td>
-                                        </tr> 
+                                        </tr>
                                     </table>
                                     <h4>Receiver Details</h4>
                                     <table class="table table-striped table-bordered dt-responsive nowrap">
-                                        <tr>
-                                           
-                                            <th><b>Name</b></th><th><b>Email</b></th>
-                                        </tr>
                                         <tr> 
-                                            <td>{{userlist[0].name}}</td>     <td>{{userlist[0].username}}</td> 
-                                           
+                                            <td><b>Name</b></td>
+                                            <td><b>Email</b></td>
+                                            <td>Mobile</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{userlist[0].name}}</td>
+                                            <td>{{userlist[0].username}}</td>
+                                            <td>
+                                                {{userlist[0].country_code == ''?'':'+'+parcel[0].country_code+'-'}}{{userlist[0].mobile}}
+                                            </td> 
                                         </tr>
                                     </table>
-                                </div> 
+                                </div>
                                 <div id="what" ng-hide="tripsmatch.length==0" class="gridsystem">
                                     <div class="row">
                                         <h1>Transporter's Match Found</h1>
@@ -142,8 +145,8 @@
                                     </div>
                                 </div>
                                 <div ng-show="tripsmatch.length==0 && parcel.status == 0" class="gridsystem">
-                                    <div class="alert alert-success" role="alert" >No Trip Found.<p>We have received your request we will find a match and inform you shortly. </p></div>
-                                   
+                                    <div class="alert alert-success" role="alert">No Trip Found.<p>We have received your request we will find a match and inform you shortly. </p></div>
+
                                 </div>
                                 <div class="clear">&nbsp;&nbsp;</div>
                             </div>
@@ -239,8 +242,8 @@
                                         <div class="clear">
                                         </div>
                                         <div ng-show="orderlist.length==0" class="form-group">
-                                            <div class="col-md-12" >
-                                                <input type="checkbox" id="voilet" ng-model="usewalletamount" ng-disabled="loginuser.wallet==0" />Use MCB Wallet Your awalable Amount {{loginuser.wallet | currency:"&#8377;"}} 
+                                            <div class="col-md-12">
+                                                <input type="checkbox" id="voilet" ng-model="usewalletamount" ng-disabled="loginuser.wallet==0" />Use MCB Wallet Your awalable Amount {{loginuser.wallet | currency:"&#8377;"}}
                                             </div>
                                             <div class="col-md-12">
                                                 <input class="customsearchbutton" style="font-size:15px;padding:10px 23px;float:right;text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);  color:#fff;font-family: 'proxima_novasemibold'; text-transform:uppercase;    background: -moz-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(144,193,81,1)), color-stop(100%, rgba(107,162,35,1)));     background: -webkit-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: -o-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);      background: -ms-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: linear-gradient(180deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#90c151', endColorstr='#6ba223',GradientType=0 ); " type="submit" value="{{parcel.status==7?'Confirm Now':'Pay Now'}}">
@@ -270,7 +273,7 @@
                                         </div>
                                     </div>
                                 </div><div class="clear">&nbsp;&nbsp;</div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -297,5 +300,5 @@
 <style>
     .input-group, span.Zebra_DatePicker_Icon_Wrapper {
         width: 100%;
-    }  
+    }
 </style>

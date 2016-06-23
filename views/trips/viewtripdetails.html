@@ -70,9 +70,7 @@
                                                 <th>Arrival On</th>
                                                 <th>Ticket</th>
                                                 <th>Flight No:</th>
-                                                <th>Capacity (kg) </th>
-                                                <th>Comment</th>
-                                                <th>PNR /Booking Reference</th>
+                                                <th>Capacity (kg) </th> 
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -84,49 +82,47 @@
                                                 <td>{{transporter.arrival_time | date:"dd/MM/yyyy 'at' h:mma"}}</td>
                                                 <td><div ng-bind-html="transporter.link"></div></td>
                                                 <td>{{transporter.flight_no}}</td>
-                                                <td>{{transporter.capacity}}</td>
-                                                <td>{{transporter.comment}}</td>
-                                                <td>{{transporter.pnr}}</td>
-                                                <td>{{ transporter.status==0?"Pending":transporter.status==1?"Approved":transporter.status==2?"Booking Request Sent":transporter.status==3?"Booked":transporter.status==4?"Cancelled":transporter.status == 6 ? "Delivered":"Undelivered"}}</td>
+                                                <td>{{transporter.capacity}}</td> 
+                                                <td>{{ transporter.statusdescription }}</td>
                                             </tr>
                                         </tbody>
-                                    </table>
+                                    </table> 
                                     <div ng-show="parcel.length>0"> 
                                         <h1>Booking Detail</h1> 
                                         <div class="col-md-12" ng-show="parcel.length>0">
                                             <h4>Parcel Details</h4>
                                             <table class="table table-striped table-bordered dt-responsive nowrap">
                                                 <tr>
-                                                    <th><b>Booking ID</b></th>
-                                                    <th><b>Type</b></th>
-                                                    <th><b>Pkg. Weight</b></th>
-                                                    <th><b>Dimensions</b></th>
-                                                    <th><b>Name</b></th>
-                                                    <th><b>Email</b></th>
-                                                    <th><b>Receiver Name</b></th>
-                                                    <th><b>Receiver Email</b></th>
-                                                    <th></th>
+                                                    <td><b>Booking ID</b></td>
+                                                    <td><b>Type</b></td>
+                                                    <td><b>Pkg. Weight</b></td>
+                                                    <td><b>Dimensions</b></td>
+                                                    <td><b>Sender</b></td>
+                                                    <td><b>Receiver</b></td>
+                                                    <td><b>Status</b></td> 
+                                                    <td ng-show="transporter.status==3">Next Action</td>
                                                 </tr>
                                                 <tr ng-repeat="par in parcel">
                                                     <td>{{par.BookingID}}</td>
                                                     <td>{{par.type=='E'?'Envelope':par.type=='B'?'Box':par.type=='P'?'Packet':par.type}} </td>
                                                     <td>{{par.weight}}KG</td>
-                                                    <td ><span ng-show="par.type=='B'"> Height:{{par.height}} <br />Width:{{par.width}} <br />Length:{{par.length}}</span></td>
-                                                    <td>{{par.sendername}}</td>
-                                                    <td>{{par.senderemail}}</td>
-                                                    <td>{{par.receiveremail}}</td>
-                                                    <td>{{par.receivername}}</td>
-                                                    <td style="text-align:center;">
-                                                        <a href='javascript:void(0);' ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
-                                                        <a href='javascript:void(0);' ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
+                                                    <td><span ng-show="par.type=='B'"> Height:{{par.height}} <br />Width:{{par.width}} <br />Length:{{par.length}}</span></td>
+                                                     <td><a href='javascript:void(0);' ng-click='viewuserdetails(par.usr_id)'>MCB{{par.usr_id}}</a></td>
+                                                    <td><a href='javascript:void(0);' ng-click='viewuserdetails(par.recv_id)'>MCB{{par.recv_id}}</a></td>
+                                                    <td> 
+                                                         {{ par.statusdescription}}
+                                                    </td> 
+                                                    <td style="text-align:center;" ng-show="transporter.status==3">
+                                                        <a href='javascript:void(0);' class="btn btn-primary"  ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
+                                                        <a href='javascript:void(0);' class="btn btn-primary" ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
                                                     </td>
                                                 </tr>
                                             </table>
                                         </div>
                                     </div>
                                 <div class="clear">&nbsp;</div>
-                                    <div ng-hide="parcellist.length==0 || transporter.awailableweight==0" class="gridsystem">
-                                        <div class="row">
+                                    <div ng-show="(transporter.status==1 || transporter.status==3) && transporter.awailableweight>0" class="gridsystem">
+                                        <div class="row" ng-show="parcellist.length>0">
                                             <h4>Sender's Match List</h4>
                                             <table id="example1" class="table table-striped table-bordered dt-responsive nowrap">
                                                 <thead>
@@ -135,20 +131,58 @@
                                                         <th>To</th>
                                                         <th>Delivered Till</th>
                                                         <th>Parcel Type</th>
+                                                        <th>Weight</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
                                             </table>
                                         </div>
+                                        <div ng-show="parcellist.length==0" class="gridsystem">
+                                            <div class="alert alert-success" role="alert">No Parcel Found.</div> 
+                                        </div>
                                     </div>
+
                                     <div role="tabpanel" class="tab-pane" id="cancelledTrips">...</div>
                                     <div role="tabpanel" class="tab-pane" id="withdraw">...</div>
                                 </div><div class="clear">&nbsp;&nbsp;</div>
                             </div>
                         </div>
                     </div>
+                    <div role="dialog" tabindex="-1" id="userdetails" class="modal modal-login">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table ng-hide="edit" id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tr>
+                                                    <th valign="top"><i class="fa fa-user fa-2x"></i>&nbsp;&nbsp;{{ userdetails.name}} &nbsp;{{ userdetails.l_name}}</th>
+                                                </tr>
+                                                <tr>
 
+                                                    <th valign="top"><i class="fa fa-envelope fa-2x"></i>&nbsp;&nbsp;{{ userdetails.username}} </th>
+                                                </tr>
+                                                <tr>
+
+                                                    <th valign="top">
+                                                        <i class="fa fa-mobile fa-2x"></i>&nbsp;&nbsp;
+                                                        {{userdetails.country_code == ''?'':'+'+userdetails.country_code+'-'}}{{userdetails.mobile}}
+                                                    </th>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div><div class="clear">&nbsp;</div>
+                    </div>
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="Transport">...</div>

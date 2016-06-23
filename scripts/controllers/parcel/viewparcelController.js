@@ -1,7 +1,7 @@
 /**
  * Created by Lalit on 21.05.2016.
  */
-angular.module('courier').controller("viewparcelController", function ($http, $scope, $state, $location, RESOURCES, AuthService, ParcelService, searchService, $stateParams, ValiDatedTokenObject) {
+angular.module('courier').controller("viewparcelController", function ($http, $scope, $state, $location, RESOURCES, AuthService, ParcelService, searchService, $stateParams, ValiDatedTokenObject, ReceiverService) {
     if (!AuthService.authentication.isAuth) {
         var path = $location.path();
         sessionStorage.setItem("return_url", path);
@@ -250,4 +250,111 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
+    $scope.changestatusparcel = function (id, status) {
+        $scope.successaddtripMessage = "";
+        if (status == 1) {
+            bootbox.prompt("Enter Feedback about Transporter.", function (result) {
+                if (result !== null) {
+                    var data = { "id": id, "status": 5, "process_by": sessionStorage.getItem("UserId"), "reason": result };
+                    ReceiverService.usrupdatestatus(data).then(function (results) {
+                        $scope.successaddtripMessage = "Updated Successfully";
+                        if (results.status == 200) {
+                            ParcelService.getparceldetail($stateParams.id).then(function (response) {
+                                if (response.data.status == "success") {
+                                    $scope.parcel = response.data.response[0];
+                                    if (AuthService.authentication.UserId != $scope.parcel.usr_id) {
+                                        $state.transitionTo('home');
+                                    }
+                                    $scope.trip = response.data.trip;
+                                    AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
+                                        $scope.userlist = results.data.response;
+
+                                    });
+                                     
+                                    if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
+                                        searchService.gettransporterdetails($scope.parcel.trans_id).then(function (response) {
+                                            if (response.data.status == "success") {
+                                                $scope.issummary = true;
+                                                $scope.transporter = response.data.response[0];
+                                            }
+                                        });
+                                    } else {
+
+                                        if (response.data.tripsmatch !== null && typeof response.data.tripsmatch !== 'undefined') {
+                                            $scope.tripsmatch = response.data.tripsmatch;
+                                            trans.clear().draw();
+                                            for (i = 0; i < $scope.tripsmatch.length; i++) {
+                                                var dat = $scope.tripsmatch[i].dep_time.split("-");
+                                                var day = dat[2].split(" ");
+                                                $scope.tripsmatch[i].dep_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                                                var dat = $scope.tripsmatch[i].arrival_time.split("-");
+                                                var day = dat[2].split(" ");
+                                                $scope.tripsmatch[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                                                trans.row.add(["T" + $scope.tripsmatch[i].id, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
+
+                                            }
+                                        } else {
+                                            $scope.tripsmatch = [];
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+        if (status == 0) {
+            bootbox.prompt("Enter Reason why Not Received?", function (result) {
+                if (result !== null) {
+                    var data = { "id": id, "status": 7, "process_by": sessionStorage.getItem("UserId"), "reason": result };
+                    ReceiverService.usrupdatestatus(data).then(function (results) {
+                        $scope.successaddtripMessage = "Updated Successfully";
+                        if (results.status == 200) {
+                             ParcelService.getparceldetail($stateParams.id).then(function (response) {
+        if (response.data.status == "success") {
+            $scope.parcel = response.data.response[0];
+            if (AuthService.authentication.UserId != $scope.parcel.usr_id) {
+                $state.transitionTo('home');
+            }
+            $scope.trip = response.data.trip;
+            AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
+                $scope.userlist = results.data.response;
+
+            });
+         
+            if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
+                searchService.gettransporterdetails($scope.parcel.trans_id).then(function (response) {
+                    if (response.data.status == "success") {
+                        $scope.issummary = true;
+                        $scope.transporter = response.data.response[0];
+                    }
+                });
+            } else {
+
+                if (response.data.tripsmatch !== null && typeof response.data.tripsmatch !== 'undefined') {
+                    $scope.tripsmatch = response.data.tripsmatch;
+                    trans.clear().draw();
+                    for (i = 0; i < $scope.tripsmatch.length; i++) {
+                        var dat = $scope.tripsmatch[i].dep_time.split("-");
+                        var day = dat[2].split(" ");
+                        $scope.tripsmatch[i].dep_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                        var dat = $scope.tripsmatch[i].arrival_time.split("-");
+                        var day = dat[2].split(" ");
+                        $scope.tripsmatch[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                        trans.row.add(["T" + $scope.tripsmatch[i].id, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
+
+                    }
+                } else {
+                    $scope.tripsmatch = [];
+                }
+            }
+        }
+    }); 
+                        }
+                    });
+                }
+            });
+        }
+    }
 });

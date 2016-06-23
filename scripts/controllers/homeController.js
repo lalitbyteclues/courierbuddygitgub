@@ -103,25 +103,33 @@ angular.module('courier').controller("homeController", function ($scope, ValiDat
     var date = new Date();
     $scope.dateFrom = date.setDate((new Date()).getDate() + 0);
     $scope.dateTo = date.setDate((new Date()).getDate() + 2);
-    $scope.setdate = function (days) {
+    $scope.setdate = function (days) { 
+        document.getElementsByClassName("quote_date").data.value = "";
+        document.getElementsByClassName("quote_date1").data.value = "";
         days = parseInt(days);
         if (days == 0) {
             $scope.classsetactive = 0;
             var date = new Date();
             $scope.dateFrom = new Date();
             $scope.dateTo = date.setDate((new Date()).getDate() + 0);
+            document.getElementsByClassName("quote_date").data.value =moment($scope.dateFrom).format("DD-MM-YYYY");
+            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
         }
         if (days == 2) {
             $scope.classsetactive = 2;
             var date = new Date();
             $scope.dateFrom = new Date();
-            $scope.dateTo = date.setDate((new Date()).getDate() + 2);
+            $scope.dateTo = date.setDate((new Date()).getDate() + 2); 
+            document.getElementsByClassName("quote_date").data.value = moment($scope.dateFrom).format("DD-MM-YYYY");
+            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
         }
         if (days == 5) {
             $scope.classsetactive = 5;
             var date = new Date();
             $scope.dateFrom = new Date();
-            $scope.dateTo = date.setDate((new Date()).getDate() + 5);
+            $scope.dateTo = date.setDate((new Date()).getDate() + 5); 
+            document.getElementsByClassName("quote_date").data.value = moment($scope.dateFrom).format("DD-MM-YYYY");
+            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
         }
     }
     $scope.dt = new Date();

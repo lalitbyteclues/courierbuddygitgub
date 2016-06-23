@@ -8,6 +8,7 @@ angular.module('courier').controller("ReceiverController", function ($rootScope,
         return viewLocation === $location.path();
     };
     $scope.idupdate = "";
+    $scope.parcelsingle = {};
     $scope.resaonoifupdate = "";
     $scope.list = [];
     $scope.mainlist = [];
@@ -26,7 +27,7 @@ angular.module('courier').controller("ReceiverController", function ($rootScope,
                 $scope.mainlist[i].arrival_time = new Date(arrtime[0].split("-")[1] + "/" + arrtime[0].split("-")[2] + "/" + arrtime[0].split("-")[0] + " " + arrtime[1]);
                 $scope.list[i].status = parseInt($scope.list[i].status);
                 $scope.mainlist[i].status = parseInt($scope.list[i].status);
-                dTable.row.add(["P" + $scope.mainlist[i].id, ($scope.mainlist[i].status != 5 ? "<a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",1)'   title='Cancel Status'>Delivered</a><br><a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",0)'   title='Cancel Status'>Not Delivered</a>" : ""), $scope.mainlist[i].source, $scope.mainlist[i].destination, $scope.mainlist[i].flight_no, $scope.mainlist[i].weight, $scope.mainlist[i].status == 0 ? "Parcel ID Created" : $scope.mainlist[i].status == 1 ? "Created Payment Due" : $scope.mainlist[i].status == 2 ? "Booked With TR" : $scope.mainlist[i].status == 3 ? "Parcel Collected" : $scope.mainlist[i].status == 4 ? "Parcel Delivered" : $scope.mainlist[i].status == 5 ? "Delivery Complete" : $scope.mainlist[i].status == 6 ? "Cancelled" : $scope.mainlist[i].status == 7 ? "cancelled Paid" : "Undelivered", "<b>Name:<b>" + $scope.mainlist[i].transportername + "<br>" + "<b>Email:<b>" + $scope.mainlist[i].transporteremail + "<br>" + "<b>Mobile:<b>" + $scope.mainlist[i].transportermobile, moment($scope.mainlist[i].dep_time).format("DD/MM/YYYY, h:mm a"), moment($scope.mainlist[i].arrival_time).format("DD/MM/YYYY, h:mm a"), "<br><b>Name:<b>" + $scope.mainlist[i].sendername + "<br>" + "<b>Email:<b>" + $scope.mainlist[i].senderemail + "<br>" + "<b>Mobile:<b>" + $scope.mainlist[i].sendermobile]).draw();
+                dTable.row.add(["<a href='javascript:void(0);' onclick='parceldetails(" + $scope.mainlist[i].id + ")'>P" + $scope.mainlist[i].id + "</a>", $scope.mainlist[i].flight_no, "<a href='javascript:void(0);' onclick='getuserdetails(" + $scope.mainlist[i].usr_id + ")'>MCB" + $scope.mainlist[i].usr_id + "</a>", "<a href='javascript:void(0);' onclick='getuserdetails(" + $scope.mainlist[i].Transporterid + ")'>MCB" + $scope.mainlist[i].Transporterid + "</a>", $scope.mainlist[i].statusdescription, (($scope.mainlist[i].status == 2 || $scope.mainlist[i].status == 3 || $scope.mainlist[i].status == 4) ? "<a href='javascript:void(0);'    onclick='changestatusparcel(" + $scope.mainlist[i].id + ",1)'   title='Received'>Received</a><br><a href='javascript:void(0);'    onclick='changestatusparcel(" + $scope.mainlist[i].id + ",0)'   title='Not Received'>Not Received</a>" : "")]).draw();
             }
         }
     });
@@ -36,12 +37,28 @@ angular.module('courier').controller("ReceiverController", function ($rootScope,
         for (i = 0; i < $scope.mainlist.length; i++) {
             if (($scope.mainlist[i].status == $scope.status || typeof $scope.status === 'undefined' || $scope.status === '' || $scope.status == null) && ($scope.mainlist[i].dep_time.getDate() == new Date($scope.departureat).getDate() || typeof $scope.departureat === 'undefined' || $scope.departureat === '' || $scope.departureat == null) && ($scope.mainlist[i].id.toLowerCase().indexOf($scope.TransporterID) != -1 || typeof $scope.TransporterID === 'undefined' || $scope.TransporterID === '' || $scope.TransporterID == null)) {
                 $scope.list.push($scope.mainlist[i]);
-                dTable.row.add(["P" + $scope.mainlist[i].id, ($scope.mainlist[i].status != 5 ? "<a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",1)'   title='Cancel Status'>Delivered</a><br><a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",0)'   title='Cancel Status'>Not Delivered</a>" : ""), $scope.mainlist[i].source, $scope.mainlist[i].destination, $scope.mainlist[i].flight_no, $scope.mainlist[i].weight, $scope.mainlist[i].status == 0 ? "Parcel ID Created" : $scope.mainlist[i].status == 1 ? "Created Payment Due" : $scope.mainlist[i].status == 2 ? "Booked With TR" : $scope.mainlist[i].status == 3 ? "Parcel Collected" : $scope.mainlist[i].status == 4 ? "Parcel Delivered" : $scope.mainlist[i].status == 5 ? "Delivery Complete" : $scope.mainlist[i].status == 6 ? "Cancelled" : $scope.mainlist[i].status == 7 ? "cancelled Paid" : "Undelivered", "<b>Name:<b>" + $scope.mainlist[i].transportername + "<br>" + "<b>Email:<b>" + $scope.mainlist[i].transporteremail + "<br>" + "<b>Mobile:<b>" + $scope.mainlist[i].transportermobile, moment($scope.mainlist[i].dep_time).format("DD/MM/YYYY, h:mm a"), moment($scope.mainlist[i].arrival_time).format("DD/MM/YYYY, h:mm a"), "<br><b>Name:<b>" + $scope.mainlist[i].sendername + "<br>" + "<b>Email:<b>" + $scope.mainlist[i].senderemail + "<br>" + "<b>Mobile:<b>" + $scope.mainlist[i].sendermobile]).draw();
+                dTable.row.add(["<a href='javascript:void(0);' onclick='parceldetails(" + $scope.mainlist[i].id + ")'>P" + $scope.mainlist[i].id + "</a>", $scope.mainlist[i].flight_no, "<a href='javascript:void(0);' onclick='getuserdetails(" + $scope.mainlist[i].usr_id + ")'>MCB" + $scope.mainlist[i].usr_id + "</a>", "<a href='javascript:void(0);' onclick='getuserdetails(" + $scope.mainlist[i].Transporterid + ")'>MCB" + $scope.mainlist[i].Transporterid + "</a>", $scope.mainlist[i].statusdescription, (($scope.mainlist[i].status == 2 || $scope.mainlist[i].status == 3 || $scope.mainlist[i].status == 4) ? "<a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",1)'   title='Received'>Received</a><br><a href='javascript:void(0);'    onclick='changestatusparcel(" + $scope.mainlist[i].id + ",0)'   title='Not Received'>Not Received</a>" : "")]).draw();
             }
         }
     };
     $scope.searchByFilter = function () {
-        _searchByFilter();
+        _searchByFilter();  
+    };
+    $scope.viewuserdetails = function (userid) {
+        AuthService.getuserdetails(userid).then(function (results) {
+            if (results.data.status != "Error") {
+                $scope.userdetails = results.data.response[0];
+                $("#userdetails").modal();
+            }
+        }); 
+    };
+    $scope.parceldetails = function (id) { 
+        $scope.parcelsingle = $.grep($scope.mainlist, function (parcel) { return parcel.id == id })[0];
+        if ($.grep($scope.mainlist, function (parcel) { return parcel.id == id }).length > 0)
+        {
+            $scope.$apply();
+            $("#parceldetails").modal();
+        }
     };
     $scope.changestatusparcel = function (id, status) {
         $scope.successaddtripMessage = "";
@@ -66,7 +83,7 @@ angular.module('courier').controller("ReceiverController", function ($rootScope,
                                         $scope.mainlist[i].arrival_time = new Date(arrtime[0].split("-")[1] + "/" + arrtime[0].split("-")[2] + "/" + arrtime[0].split("-")[0] + " " + arrtime[1]);
                                         $scope.list[i].status = parseInt($scope.list[i].status);
                                         $scope.mainlist[i].status = parseInt($scope.list[i].status);
-                                        dTable.row.add(["P" + $scope.mainlist[i].id, ($scope.mainlist[i].status != 5 ? "<a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",1)'   title='Cancel Status'>Delivered</a><br><a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",0)'   title='Cancel Status'>Not Delivered</a>" : ""), $scope.mainlist[i].source, $scope.mainlist[i].destination, $scope.mainlist[i].flight_no, $scope.mainlist[i].weight, $scope.mainlist[i].status == 0 ? "Parcel ID Created" : $scope.mainlist[i].status == 1 ? "Created Payment Due" : $scope.mainlist[i].status == 2 ? "Booked With TR" : $scope.mainlist[i].status == 3 ? "Parcel Collected" : $scope.mainlist[i].status == 4 ? "Parcel Delivered" : $scope.mainlist[i].status == 5 ? "Delivery Complete" : $scope.mainlist[i].status == 6 ? "Cancelled" : $scope.mainlist[i].status == 7 ? "cancelled Paid" : "Undelivered", "<b>Name:<b>" + $scope.mainlist[i].transportername + "<br>" + "<b>Email:<b>" + $scope.mainlist[i].transporteremail + "<br>" + "<b>Mobile:<b>" + $scope.mainlist[i].transportermobile, moment($scope.mainlist[i].dep_time).format("DD/MM/YYYY, h:mm a"), moment($scope.mainlist[i].arrival_time).format("DD/MM/YYYY, h:mm a"), "<br><b>Name:<b>" + $scope.mainlist[i].sendername + "<br>" + "<b>Email:<b>" + $scope.mainlist[i].senderemail + "<br>" + "<b>Mobile:<b>" + $scope.mainlist[i].sendermobile]).draw();
+                                        dTable.row.add(["<a href='javascript:void(0);' onclick='parceldetails(" + $scope.mainlist[i].id + ")'>P" + $scope.mainlist[i].id + "</a>", $scope.mainlist[i].flight_no, "<a href='javascript:void(0);' onclick='getuserdetails(" + $scope.mainlist[i].usr_id + ")'>MCB" + $scope.mainlist[i].usr_id + "</a>", "<a href='javascript:void(0);' onclick='getuserdetails(" + $scope.mainlist[i].Transporterid + ")'>MCB" + $scope.mainlist[i].Transporterid + "</a>", $scope.mainlist[i].statusdescription, (($scope.mainlist[i].status == 2 || $scope.mainlist[i].status == 3 || $scope.mainlist[i].status == 4) ? "<a href='javascript:void(0);'   onclick='changestatusparcel(" + $scope.mainlist[i].id + ",1)'   title='Received'>Received</a><br><a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",0)'     title='Not Received'>Not Received</a>" : "")]).draw();
                                     }
                                 }
                             });
@@ -76,7 +93,7 @@ angular.module('courier').controller("ReceiverController", function ($rootScope,
             });
         }
         if (status ==0) {
-            bootbox.prompt("Enter Reason why not delivered?", function (result) {
+            bootbox.prompt("Enter Reason why Not Received?", function (result) {
                 if (result !== null) {
                     var data = { "id": id, "status": 7, "process_by": sessionStorage.getItem("UserId"), "reason": result };
                     ReceiverService.usrupdatestatus(data).then(function (results) {
@@ -96,7 +113,7 @@ angular.module('courier').controller("ReceiverController", function ($rootScope,
                                         $scope.mainlist[i].arrival_time = new Date(arrtime[0].split("-")[1] + "/" + arrtime[0].split("-")[2] + "/" + arrtime[0].split("-")[0] + " " + arrtime[1]);
                                         $scope.list[i].status = parseInt($scope.list[i].status);
                                         $scope.mainlist[i].status = parseInt($scope.list[i].status);
-                                        dTable.row.add(["P" + $scope.mainlist[i].id, ($scope.mainlist[i].status != 5 ? "<a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",1)'   title='Cancel Status'>Delivered</a><br><a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",0)'   title='Cancel Status'>Not Delivered</a>" : ""), $scope.mainlist[i].source, $scope.mainlist[i].destination, $scope.mainlist[i].flight_no, $scope.mainlist[i].weight, $scope.mainlist[i].status == 0 ? "Parcel ID Created" : $scope.mainlist[i].status == 1 ? "Created Payment Due" : $scope.mainlist[i].status == 2 ? "Booked With TR" : $scope.mainlist[i].status == 3 ? "Parcel Collected" : $scope.mainlist[i].status == 4 ? "Parcel Delivered" : $scope.mainlist[i].status == 5 ? "Delivery Complete" : $scope.mainlist[i].status == 6 ? "Cancelled" : $scope.mainlist[i].status == 7 ? "cancelled Paid" : "Undelivered", "<b>Name:<b>" + $scope.mainlist[i].transportername + "<br>" + "<b>Email:<b>" + $scope.mainlist[i].transporteremail + "<br>" + "<b>Mobile:<b>" + $scope.mainlist[i].transportermobile, moment($scope.mainlist[i].dep_time).format("DD/MM/YYYY, h:mm a"), moment($scope.mainlist[i].arrival_time).format("DD/MM/YYYY, h:mm a"), "<br><b>Name:<b>" + $scope.mainlist[i].sendername + "<br>" + "<b>Email:<b>" + $scope.mainlist[i].senderemail + "<br>" + "<b>Mobile:<b>" + $scope.mainlist[i].sendermobile]).draw();
+                                        dTable.row.add(["<a href='javascript:void(0);' onclick='parceldetails(" + $scope.mainlist[i].id + ")'>P" + $scope.mainlist[i].id + "</a>", $scope.mainlist[i].flight_no, "<a href='javascript:void(0);' onclick='getuserdetails(" + $scope.mainlist[i].usr_id + ")'>MCB" + $scope.mainlist[i].usr_id + "</a>", "<a href='javascript:void(0);' onclick='getuserdetails(" + $scope.mainlist[i].Transporterid + ")'>MCB" + $scope.mainlist[i].Transporterid + "</a>", $scope.mainlist[i].statusdescription, (($scope.mainlist[i].status == 2 || $scope.mainlist[i].status == 3 || $scope.mainlist[i].status == 4) ? "<a href='javascript:void(0);'   onclick='changestatusparcel(" + $scope.mainlist[i].id + ",1)'   title='Received'>Received</a><br><a href='javascript:void(0);'  onclick='changestatusparcel(" + $scope.mainlist[i].id + ",0)'  title='Not Received'>Not Received</a>" : "")]).draw();
                                     }
                                 }
                             });

@@ -132,9 +132,8 @@
                                                 <td>
                                                     <span>{{data.pnr }}</span>
                                                 </td>
-                                                <td>
-
-                                                    {{data.status==0?"Pending":data.status==1?"Approved":data.status==2?"Booking Request Sent":data.status==3?"Booked":data.status==6?"Delivered":"Undelivered"}}
+                                                <td> 
+                                                    {{data.statusdescription}}
                                                 </td>
                                                 <td>
                                                     Link
@@ -189,44 +188,9 @@
                                                         </tr>
                                                         <tr>
                                                             <td valign="top">
-                                                                <svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-                                                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="25" height="25px"
-                                                                     viewBox="0 0 105 145.5" enable-background="new 0 0 105 145.5" xml:space="preserve">
-<g i:extraneous="self">
-<path fill="#231F20" stroke="#231F20" stroke-width="4" stroke-miterlimit="10" d="M95.137,108.058c0,6.627-5.373,12-12,12H21.296
-			c-6.627,0-12-5.373-12-12V18.783c0-6.627,5.373-12,12-12h61.841c6.627,0,12,5.373,12,12V108.058z" />
-<path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" d="M87.399,125.699
-			c0,7.229-5.08,11.954-11.287,10.566l-54.896-12.277c-5.578-1.247-10.058-7.73-10.058-14.491V18.426
-			c0-6.761,4.481-11.71,10.058-11.049l54.896,6.511c6.207,0.736,11.287,7.199,11.287,14.429V125.699z" />
-<path fill="#231F20" stroke="#231F20" stroke-width="4" stroke-miterlimit="10" d="M85.399,126.699
-			c0,7.229-5.08,11.954-11.287,10.566l-54.896-12.277c-5.578-1.247-10.058-7.73-10.058-14.491V19.426
-			c0-6.761,4.481-11.71,10.058-11.049l54.896,6.511c6.207,0.736,11.287,7.199,11.287,14.429V126.699z" />
-<path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" d="M75.668,97.762
-			c0,4.834-3.833,7.993-8.516,7.065l-41.417-8.21c-4.208-0.834-7.589-5.169-7.589-9.69V26.029c0-4.521,3.381-7.83,7.589-7.388
-			l41.417,4.354c4.683,0.492,8.516,4.814,8.516,9.648V97.762z" />
-<path fill="#231F20" stroke="#231F20" stroke-width="3" stroke-miterlimit="10" d="M67.131,104.925
-			c-0.052,1.582-2.951,2.293-6.44,1.599l-30.765-6.122c-3.117-0.62-5.604-2.316-5.584-3.795l0.266-20.122
-			c0.02-1.509,2.569-2.34,5.725-1.85l31.169,4.836c3.537,0.549,6.391,2.309,6.338,3.925L67.131,104.925z" />
-<line fill="none" stroke="#231F20" stroke-miterlimit="10" x1="68" y1="90.5" x2="68" y2="102.208" />
-<g>
-<g>
-<path fill="#FFFFFF" d="M58.838,93.695c-0.081,4.129-0.162,8.259-0.244,12.388c-0.013,0.645,0.987,0.644,1,0
-					c0.081-4.129,0.162-8.259,0.244-12.388C59.851,93.049,58.851,93.051,58.838,93.695L58.838,93.695z" />
-			</g>
-		</g>
-<g>
-<g>
-<path fill="#FFFFFF" d="M31.173,88.826c-0.081,4.129-0.162,8.259-0.244,12.388c-0.013,0.645,0.987,0.644,1,0
-					c0.081-4.129,0.162-8.259,0.244-12.388C32.185,88.181,31.185,88.182,31.173,88.826L31.173,88.826z" />
-			</g>
-		</g>
-<path fill="#231F20" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" d="M64.608,59.492
-			c0,11.394-8.156,19.702-17.775,18.607c-9.165-1.043-16.282-10.315-16.282-20.752s7.118-18.812,16.282-18.701
-			C56.453,38.762,64.608,48.098,64.608,59.492z" />
-	</g>
-</svg>
-                                                                &nbsp;&nbsp;{{ userdetails.passportno=="" || userdetails.passportno==null?"not available":userdetails.passportno}}
-                                                            </td>
+                                                                <img src="/images/user.png" alt="Passport/ID Proof" title="Passport/ID Proof" />
+                                                                    &nbsp;&nbsp;{{ userdetails.passportno=="" || userdetails.passportno==null?"not available":userdetails.passportno}}
+</td>
                                                         </tr>
                                                         <tr>
                                                             <td valign="top"><i class="fa fa-mobile fa-3x"></i>&nbsp;&nbsp;{{ userdetails.altr_mobile==""?"not available":userdetails.altr_mobile }}</td>
@@ -248,10 +212,10 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4>Trip #T{{transporter.id}} Details</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
                                         </div>
                                         <div class="modal-body">
+                                            <h4>Trip #T{{transporter.id}} Details</h4>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <table class="table table-striped table-bordered">
@@ -290,7 +254,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Status</td>
-                                                            <td>        {{transporter.status==0?"Pending":transporter.status==1?"Approved":transporter.status==2?"Booking Request Sent":transporter.status==3?"Booked":transporter.status==6?"Delivered":"Undelivered"}} </td>
+                                                            <td> {{transporter.statusdescription}} </td>
 
                                                         </tr>
                                                     </table>

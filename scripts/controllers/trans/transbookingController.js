@@ -8,10 +8,12 @@ angular.module('courier').controller("transbookingController", function (ParcelS
             $scope.transporter = response.data.response[0];
             $scope.parcelfromloation = $scope.transporter.source;
             $scope.parceltoloation = $scope.transporter.destination;
-            $scope.maxcapicity = $scope.transporter.capacity;
+            $scope.maxcapicity = $scope.transporter.awailableweight;
             $scope.deliverytill = $scope.transporter.arrival_time; 
         }
-    });  
+    });
+    $scope.registeremail = "";
+    $scope.registername = "";
     if (!AuthService.authentication.isAuth) {
         var path = $location.path();
         sessionStorage.setItem("return_url", path);
@@ -28,7 +30,17 @@ angular.module('courier').controller("transbookingController", function (ParcelS
     $scope.successaddtripMessage = "";
     $scope.totalamount = 0.00;
     $scope.sendinviteuser = function () {
+        var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/; 
         $scope.successaddtripMessage = "";
+        $scope.errormessageuser = "";
+        if ($scope.registeremail == "" || $scope.registername=="") {
+            $scope.errormessageuser = "Please fill all mandatory fields!";
+            return;
+        }
+        if (!EMAIL_REGEXP.test($scope.registeremail)) {
+            $scope.errormessageuser = "Please enter a valid Email ID !";
+            return;
+        }  
         var data = { "email": $scope.registeremail, "name": $scope.registername, "number": $scope.registermobile, "message": $scope.registermessage, "UserID": AuthService.authentication.UserId };
         AuthService.inviteuser(data).then(function (results) {
             if (results.status == 200) {

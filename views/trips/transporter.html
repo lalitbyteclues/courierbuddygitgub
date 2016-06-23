@@ -59,16 +59,13 @@
                                                         <tr>
                                                             <th>Trip ID</th>
                                                             <th>From</th>
-                                                            <th>To</th> 
-                                                            <th>Tot. Capacity</th>
+                                                            <th>To</th>  
                                                             <th>Avail. Capacity</th> 
                                                             <th>Status</th>
-                                                            <th>Possible Match</th>
-                                                            <th>Show Booked Parcels</th>
-                                                            <th>Action</th>
+                                                            <th>Possible Match</th>  
                                                             <th>Flight No</th>
                                                             <th>Dep Date</th>
-                                                            <th>Arrival date</th>
+                                                            <th>Arrival date</th><th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -113,7 +110,7 @@
                                                             <th><b>Email</b></th>
                                                             <th><b>Receiver Name</b></th>
                                                             <th><b>Receiver Email</b></th>
-                                                            <th></th>
+                                                            <th ng-show="transporter.status==3">Next Action</th>
                                                         </tr>
                                                         <tr ng-repeat="par in parcel">
                                                             <td>{{par.BookingID}}</td>
@@ -125,8 +122,8 @@
                                                             <td>{{par.receiveremail}}</td>
                                                             <td>{{par.receivername}}</td>
                                                             <td style="text-align:center;">
-                                                                <a href='javascript:void(0);' ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
-                                                                <a href='javascript:void(0);' ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
+                                                                <a href='javascript:void(0);' class="btn btn-primary" ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
+                                                                <a href='javascript:void(0);' class="btn btn-primary" ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
                                                             </td>
                                                         </tr>
                                                     </table>

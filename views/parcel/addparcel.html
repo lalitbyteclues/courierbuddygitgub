@@ -122,7 +122,7 @@
                                                 <label>Choose Receivers Details</label>
                                             </div>
                                             <div id="book-radio" class="col-md-8 a-left">
-                                                <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType1" ng-model="value1" required="required" value="true" checked="true" />
+                                                <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType1" ng-model="value1" required="required" value="true" checked="checked" />
                                                 Existing User
                                                 <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType2" ng-model="value1" required="required" value="false" /> New User
                                             </div>
@@ -155,15 +155,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-md-4 control-label" for="textinput"> Number (M)</label>
-                                                    <div class="col-md-8">
-                                                        <input type="text" maxlength="15" class="form-control" ng-model="registermobile" name="number" id="number" placeholder=" Mobile Number" valid-number>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
                                                     <label class="col-md-4 control-label" for="textinput"> Email ID <span class="red">*</span></label>
                                                     <div class="col-md-8">
                                                         <input type="text" maxlength="200" class="form-control" ng-model="registeremail" name="emil" id="emil" placeholder=" Email Address">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="textinput"> Number (M)</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" maxlength="15" class="form-control" ng-model="registermobile" name="number" id="number" placeholder=" Mobile Number" valid-number>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -179,6 +179,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="alert alert-danger" role="alert" ng-hide='!errormessageuser'>{{errormessageuser}}</div>
                                     <div class="com-det">
                                         <table border="0" cellpadding="4" ng-show="userlist.length>0" width="100%">
                                             <tbody>
@@ -186,8 +187,9 @@
                                                     <td style="text-transform:uppercase;"><b>MCB Id</b>{{user.id}}</td>
                                                     <td><b>Email</b>{{user.username}}</td>
                                                     <td><b>Name</b>{{user.name}} </td>
-                                                    <td><b>Phone</b>{{user.mobile}}</td>
-                                                    <td><b>&nbsp;</b>
+                                                    <td><b>Phone</b>{{user.mobile=="0"?"&nbsp;":user.mobile}}</td>
+                                                    <td>
+                                                        <b>&nbsp;</b>
                                                         <a href="javascript:void(0);" ng-click="changereceiveruser()">Change</a>
                                                     </td>
                                                 </tr>

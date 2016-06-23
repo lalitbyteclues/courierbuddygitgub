@@ -39,7 +39,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
                 $scope.parcellist = response.data.parcellist;
                 sender.clear().draw();
                 for (i = 0; i < $scope.parcellist.length; i++) {
-                    sender.row.add([$scope.parcellist[i].source, $scope.parcellist[i].destination, $scope.parcellist[i].till_date, $scope.parcellist[i].type == 'E' ? 'Envelope' : $scope.parcellist[i].type == 'B' ? 'Box' : $scope.parcellist[i].type == 'P' ? 'Packet' : $scope.parcellist[i].type, "<a href='javascript:void(0);' ng-click='senderbooknow(" + $scope.parcellist[i].id + ")' onclick='senderbooknow(" + $scope.parcellist[i].id + ")' class='btn btn-primary'>Book Now</a>"]).draw();
+                    sender.row.add([$scope.parcellist[i].source, $scope.parcellist[i].destination, $scope.parcellist[i].till_date, $scope.parcellist[i].type == 'E' ? 'Envelope' : $scope.parcellist[i].type == 'B' ? 'Box' : $scope.parcellist[i].type == 'P' ? 'Packet' : $scope.parcellist[i].type, $scope.parcellist[i].weight, "<a href='javascript:void(0);' ng-click='senderbooknow(" + $scope.parcellist[i].id + ")' onclick='senderbooknow(" + $scope.parcellist[i].id + ")' class='btn btn-primary'>Book Now</a>"]).draw();
                 }
             } else {
                 $scope.parcellist = [];
@@ -50,6 +50,15 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
             $scope.transporter.link = "<a target='" + ($scope.transporter.image.length > 0 ? "_blank" : "_self") + "' href='" + ($scope.transporter.image.length > 0 ? RESOURCES.API_BASE_PATH + $scope.transporter.image : "/uploadtripticket/" + $scope.transporter.id) + "'  title='" + ($scope.transporter.image.length > 0 ? "View Ticket" : "Upload Ticket") + "'>" + ($scope.transporter.image.length > 0 ? "View Ticket" : "Upload Ticket") + "</a>";
         }
     });
+    $scope.viewuserdetails = function (userid) {
+        AuthService.getuserdetails(userid).then(function (results) {
+            if (results.data.status != "Error") {
+                $scope.userdetails = results.data.response[0];
+                $("#userdetails").modal();
+            }
+        });
+
+    };
     $scope.canceltriplist = function (id) {
         $scope.successaddtripMessage = "";
         bootbox.prompt("Do you want to cancel this Trip? Give Reason.", function (result) {
@@ -147,7 +156,12 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
             }
         });
     }
-    $scope.senderbooknow = function (id) {
+    $scope.senderbooknow = function (id) { 
+        if (!($.grep($scope.parcellist, function (parcel) { return parcel.id == id })[0].weight <= (parseFloat($scope.transporter.awailableweight) + (parseFloat($scope.transporter.awailableweight) * .2)))) {
+            bootbox.alert("You can't book parcel having weight mare than 20% of your available capacity !", function () { 
+            });
+            return false;
+        } 
         AddTripsService.senderbookingrequest(id, $stateParams.id).then(function (results) {
             if (results.data.status == "success") {
                 $scope.successaddtripMessage = results.data.response;

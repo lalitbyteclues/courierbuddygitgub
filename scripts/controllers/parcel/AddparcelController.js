@@ -10,6 +10,8 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
     $http.get(RESOURCES.API_BASE_PATH + 'api/getcountries', { headers: { 'Content-Type': 'application/json' }, }).then(function (results) {
         $scope.countries = results.data.response;
     });
+    $scope.registeremail = "";
+    $scope.registername = "";
     $scope.usersearchclicked = false;
     $scope.usersearchvisible = true;
     $scope.deliverytill = new Date();
@@ -34,27 +36,24 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
         $scope.usersearchvisible = true;
     }
     $scope.sendinviteuser = function () {
-        $scope.errormessage = "";
+        var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
         $scope.successaddtripMessage = "";
-        AuthService.getuserdetails(AuthService.authentication.UserId).then(function (results) {
+        $scope.errormessageuser = "";
+        if ($scope.registeremail == "" || $scope.registername == "") {
+            $scope.errormessageuser = "Please fill all mandatory fields!";
+            return;
+        }
+        if (!EMAIL_REGEXP.test($scope.registeremail)) {
+            $scope.errormessageuser = "Please enter a valid Email ID !";
+            return;
+        }
+        var data = { "email": $scope.registeremail, "name": $scope.registername, "number": $scope.registermobile, "message": $scope.registermessage, "UserID": AuthService.authentication.UserId };
+        AuthService.inviteuser(data).then(function (results) {
             if (results.status == 200) {
-                if (results.data.response[0].status == "Y") {
-                    $scope.successaddtripMessage = "";
-                    $scope.errormessage = "";
-                    var data = { "email": $scope.registeremail, "name": $scope.registername, "number": $scope.registermobile, "message": $scope.registermessage, "UserID": AuthService.authentication.UserId };
-                    AuthService.inviteuser(data).then(function (results) {
-                        if (results.status == 200) {
-                            // $scope.successaddtripMessage = "User Invited Successfully";
-                            $scope.userlist = results.data.response;
-                            if ($scope.userlist.length > 0) {
-                                $scope.usersearchvisible = false;
-                            }
-                        }
-                    });
-                }
-                else {
-                    $scope.errormessage = "Please verify your email before adding Parcel ! ";
-                    return;
+                $scope.successaddtripMessage = "User Invited Successfully";
+                $scope.userlist = results.data.response;
+                if ($scope.userlist.length > 0) {
+                    $scope.usersearchvisible = false;
                 }
             }
         });
@@ -88,8 +87,7 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
                         var datapost = { "source": $scope.parcelfromloation, "destination": $scope.parceltoloation, "till_date": tilldate, "type": $scope.parceltype, "weight": parseFloat($scope.ParcelWeight), "height": $scope.ParcelHeight, "width": $scope.ParcelWidth, "length": $scope.ParcelLength, "created": new Date(), "usr_id": sessionStorage.getItem("UserId"), "recv_id": $scope.userlist[0].id, "status": 0, "description": $scope.parceldecsription, "payment": parseFloat(amount) };
                         ParcelService.AddParcelData(datapost).then(function (results) {
                             if (results.status == 200) {
-                                console.log(results);
-                                location = "/viewparcel/" + results.data.response.id;
+                                $state.go("viewparcel", { id: results.data.response.id });
                                 $scope.successaddtripMessage = 'Parcel Created Successfully.  <a style="float:right;" href="/viewparcel/' + results.data.response.id + '" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> View Parcel</a>';
                                 $scope.tripsavemessage = "Parcel Created Successfully.";
                             }

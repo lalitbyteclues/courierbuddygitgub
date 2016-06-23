@@ -3,7 +3,8 @@ angular.module('courier').controller("searchController", function ($scope, $loca
     $scope.classsetactive = 2;
     $scope.senders = [];
     $scope.authuser = AuthService.authentication;
-    $scope.countries = []; 
+    $scope.countries = [];
+    $scope.submitted = true;
     if (RESOURCES.searchcriteria.datefrom != "" && RESOURCES.searchcriteria.datefrom !="Invalid Date")
     {
         $scope.dateFrom = RESOURCES.searchcriteria.datefrom;
@@ -27,10 +28,12 @@ angular.module('courier').controller("searchController", function ($scope, $loca
     trans = $('#example').DataTable();
     sender = $('#example1').DataTable();
     var _searchByFilter = function () {
+        $scope.submitted = false;
         $scope.transporters = [];
         $scope.senders = [];
         searchService.searchAdvanced($scope.dateFrom, $scope.dateTo, $scope.locationfrom, $scope.locationto, $scope.type).then(function (results) {
             var res = results.data.response;
+            $scope.submitted = true;
             trans.clear().draw();
             sender.clear().draw();
             if ($scope.type == "Transporter") {
@@ -43,7 +46,7 @@ angular.module('courier').controller("searchController", function ($scope, $loca
                     var dat = $scope.transporters[i].arrival_time.split("-");
                     var day = dat[2].split(" ");
                     $scope.transporters[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
-                    trans.row.add(["T" + $scope.transporters[i].id, $scope.transporters[i].source, $scope.transporters[i].destination, moment($scope.transporters[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.transporters[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.transporters[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.transporters[i].id + ")' onclick='createcourierrequest(" + $scope.transporters[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
+                    trans.row.add(["T" + $scope.transporters[i].id, $scope.transporters[i].source, $scope.transporters[i].destination, moment($scope.transporters[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.transporters[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.transporters[i].capacity, $scope.transporters[i].capacity > 0 ? "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.transporters[i].id + ")' onclick='createcourierrequest(" + $scope.transporters[i].id + ")' class='btn btn-primary'>Create Courier Request</a>" : "<span class='alert-danger'>Fully Booked</span>"]).draw();
                     $compile($('#example').html())($scope);
                 }
 
@@ -51,7 +54,7 @@ angular.module('courier').controller("searchController", function ($scope, $loca
                 $scope.transporters = [];
                 $scope.senders = res;
                 for (i = 0; i < $scope.senders.length; i++) {
-                    sender.row.add([$scope.senders[i].source, $scope.senders[i].destination, $scope.senders[i].till_date, $scope.senders[i].type == 'E' ? 'Envelope' : $scope.senders[i].type == 'B' ? 'Box' : $scope.senders[i].type == 'P' ? 'Packet' : $scope.senders[i].type, "<a href='javascript:void(0);' ng-click='senderbooknow(" + $scope.senders[i].id + ")' onclick='senderbooknow(" + $scope.senders[i].id + ")' class='btn btn-primary'>Book Now</a>"]).draw();
+                    sender.row.add([$scope.senders[i].source, $scope.senders[i].destination, $scope.senders[i].till_date, $scope.senders[i].type == 'E' ? 'Envelope' : $scope.senders[i].type == 'B' ? 'Box' : $scope.senders[i].type == 'P' ? 'Packet' : $scope.senders[i].type, $scope.senders[i].weight, "<a href='javascript:void(0);' ng-click='senderbooknow(" + $scope.senders[i].id + ")' onclick='senderbooknow(" + $scope.senders[i].id + ")' class='btn btn-primary'>Book Now</a>"]).draw();
                     $compile($('#example1').html())($scope);
                 }
             }
@@ -73,7 +76,7 @@ angular.module('courier').controller("searchController", function ($scope, $loca
             $state.go('login');
         }
     }
-    $scope.search = function () {
+    $scope.search = function () { 
         var result = document.getElementsByClassName("quote_date");
         if (result.data.value.length > 0) {
             $scope.dateFrom = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
@@ -167,19 +170,25 @@ angular.module('courier').controller("searchController", function ($scope, $loca
             $scope.classsetactive = 0;
             var date = new Date();
             $scope.dateFrom = new Date();
-            $scope.dateTo = date.setDate((new Date()).getDate() + 0);
+            $scope.dateTo = date.setDate((new Date()).getDate() + 0); 
+            document.getElementsByClassName("quote_date").data.value = moment($scope.dateFrom).format("DD-MM-YYYY");
+            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
         }
         if (days == 2) {
             $scope.classsetactive = 2;
             var date = new Date();
             $scope.dateFrom = new Date();
-            $scope.dateTo = date.setDate((new Date()).getDate() + 2);
+            $scope.dateTo = date.setDate((new Date()).getDate() + 2); 
+            document.getElementsByClassName("quote_date").data.value = moment($scope.dateFrom).format("DD-MM-YYYY");
+            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
         }
         if (days == 5) {
             $scope.classsetactive = 5;
             var date = new Date();
             $scope.dateFrom = new Date();
-            $scope.dateTo = date.setDate((new Date()).getDate() + 5);
+            $scope.dateTo = date.setDate((new Date()).getDate() + 5); 
+            document.getElementsByClassName("quote_date").data.value = moment($scope.dateFrom).format("DD-MM-YYYY");
+            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
         }
     }
     $scope.dt = new Date();

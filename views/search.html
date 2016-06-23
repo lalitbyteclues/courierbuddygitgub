@@ -46,13 +46,13 @@
                         </form>
                     </div>
                     <div class="col-md-12">
-                        <div ng-show="transporters.length==0 && type == 'Transporter'">
+                        <div ng-show="transporters.length==0 && type == 'Transporter' && submitted">
                             <center>
                                 <div class="alert-error"><b>No Record Found!!</b></div>
                                 <a class="btn btn-primary" ui-sref="addparcel">Add Parcel</a>
                             </center>
                         </div>
-                        <div ng-show="type == 'Sender' && senders.length == 0">
+                        <div ng-show="type == 'Sender' && senders.length == 0 && submitted">
                             <center>
                                 <div class="alert-error"><b>No Record Found!!</b></div>
                                 <a class="btn btn-primary" ui-sref="addtrip">Add Trip</a>
@@ -87,6 +87,7 @@
                                             <th>To</th>
                                             <th>Delivered Till</th>
                                             <th>Parcel Type</th>
+                                            <th>Weight</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
