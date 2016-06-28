@@ -2,10 +2,8 @@
 <div   ng-controller="aboutusController">
     <div class="faq in-page">
         <div class="wrapper">
-            <div class="page-heading">About Us</div>
-            <p>About Us content here</p>
-
-            <p>&nbsp;</p> 
+            <div class="page-heading">{{content.title}}</div>
+            <div ng-bind-html="content.content"></div>
 
         </div>
     </div>

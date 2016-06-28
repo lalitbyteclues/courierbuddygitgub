@@ -1,0 +1,47 @@
+﻿<div ng-include="'admin/views/head.html'"></div>
+<div class="container" ng-controller="admindashboardController">
+    <div class="tab-form-new">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation">
+                    <a>Dashboard</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                <div class="col-md-2">
+                    <div ng-include="'admin/views/admin/adminmenu.html'"></div>
+                    <div class="clear">&nbsp;&nbsp;</div>
+                </div>
+                <div class="col-md-9">
+                    <div class="maincontentinner">
+                        <div style="height:200px;">
+                            <div class="contenttitle radiusbottom0">
+                                <h2 class="table">
+                                    <span> SETTINGS</span>
+                                </h2>
+                            </div>
+                            <div class="DashContent">
+                                <img src="/admin/images/ResetPass.png" alt="Reset Password" class="dashImg" title="Reset Password">
+                                <span class="Dashlink"><a ui-sref="adminprofile"   class="Dash-link">Your Detail</a></span>
+                                <br>
+                                <div class="link_body">
+                                    To View and Edit Your Details.
+                                </div>
+                            </div>
+                            <div class="DashContent">
+                                <img src="/admin/images/ChangePass.png" alt="Reset Password" class="dashImg" title="Reset Password">
+                                <span class="Dashlink"><a ui-sref="changepassword" class="Dash-link">Change Password</a></span>
+                                <br>
+                                <div class="link_body">
+                                    To Reset Your Password.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

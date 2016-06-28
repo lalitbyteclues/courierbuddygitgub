@@ -72,6 +72,42 @@ class Api_model extends CI_Model {
 			$json_response = json_encode($data); 
 			print_r($json_response); 
 	} 
+	function newsletterslist()
+	{ 	$data=new stdclass();
+			$query = $this->db->query("SELECT * from cms_letters"); 
+			$data->status="success";
+			$data->response=$query->result();		
+			$json_response = json_encode($data); 
+			print_r($json_response); 
+	}
+	function sendnewsletters($post)
+	{ 	    
+	$query = $this->db->query("SELECT * from cms_letters where id=".$post["id"]); 
+	$news=$query->result()[0]; 
+	foreach ($post["users"] as $aa) 
+	{ 	if($aa["selected"])
+		{
+				$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
+				$this->email->to($aa["username"].',info@mycourierbuddy.in'); 
+				$this->email->subject($news->title);   
+			 	$this->email->message($news->description);
+				$this->email->send();
+		}
+	}
+	        $data=new stdclass(); 
+			$data->status="success";
+			$data->response="send Successfully";		
+			$json_response = json_encode($data); 
+			print_r($json_response); 
+	}
+	function staticpageslist($id)
+	{ 	$data=new stdclass();
+			$query = $this->db->query("SELECT * from cms_statics where id=".$id." or ".$id."=0"); 
+			$data->status="success";
+			$data->response=$query->result();		
+			$json_response = json_encode($data); 
+			print_r($json_response); 
+	}
 	function receiverlist($userID) 
 	{   $query = $this->db->query("select a.id,a.usr_id,a.source,a.destination,a.till_date,a.type,a.height,a.width,a.weight,a.length,a.created,a.description,a.status,a.recv_id,a.recv_comment,a.processed_by,a.ParcelID,a.payment,a.trans_id,a.trans_comment,a.reason,recv.username receiveremail,recv.mobile receivermobile,recv.name receivername,send.username senderemail,send.mobile sendermobile,send.name sendername ,trans.username transporteremail,trans.mobile transportermobile,trans.name transportername,trans.id Transporterid,trans.UserID as MCBtransporterid,send.UserID as MCBSenderID,trip.flight_no,trip.arrival_time,trip.dep_time,trip.pnr,trip.TripID,book.id as BookingID,prstatus.status as statusdescription  from cms_parcels a  inner join cms_users recv on a.recv_id=recv.id  inner join cms_users send on a.usr_id=send.id  inner join cms_trips trip on a.trans_id=trip.id   inner join cms_users trans on trip.t_id=trans.id  inner join cms_bookings book on a.id=book.p_id left join cms_parcelstatus prstatus on a.status=prstatus.id where a.recv_id=".$userID." and a.status in(2,3,4,5,6)"); 
 		$data=new stdclass();
@@ -113,6 +149,16 @@ class Api_model extends CI_Model {
 			$data->total=$this->db->count_all('bookings');
 			$limit = explode('-', $datapost["limit"]); 
 			$query = $this->db->query("select a.*,b.payment,ps.status BookingStatus,trip.t_id as transporterID,b.usr_id,parceluser.UserID as SenderID,tripuser.UserID TransporteruserID  from cms_bookings a  inner join cms_trips trip on a.t_id=trip.id  left join cms_users tripuser on trip.t_id=tripuser.id  inner join cms_parcels  b on a.p_id =b.id left join cms_users parceluser on b.usr_id=parceluser.id inner join cms_parcelstatus ps on b.status=ps.id where (DATEDIFF(CURDATE(),a.created)<=".$datapost["period"]." or ".$datapost["period"]."=0 ) order by a.id desc Limit ".$limit[0].",".$limit[1]); 
+			$data->status="success";
+			$data->response=$query->result();		
+			$json_response = json_encode($data); 
+			print_r($json_response); 
+	}
+	function alldeliveryreportslist($datapost)
+	{    	$data=new stdclass();
+			$data->total=$this->db->count_all('bookings');
+			$limit = explode('-', $datapost["limit"]); 
+			$query = $this->db->query("select a.*,b.payment,ps.status BookingStatus,trip.t_id as transporterID,b.usr_id,parceluser.UserID as SenderID,tripuser.UserID TransporteruserID,a.status as BookingStatusdesc,recv.id ReceiverID,recv.UserID ReceiverMCBID  from cms_bookings a  inner join cms_trips trip on a.t_id=trip.id  left join cms_users tripuser on trip.t_id=tripuser.id  inner join cms_parcels  b on a.p_id =b.id left join cms_users recv on b.recv_id= recv.id left join cms_users parceluser on b.usr_id=parceluser.id inner join cms_parcelstatus ps on b.status=ps.id where (DATEDIFF(CURDATE(),a.created)<=".$datapost["period"]." or ".$datapost["period"]."=0 ) and ((".$datapost["status"]."=0 and a.status in(3,6)) or a.status=".$datapost["status"].")  order by a.id desc Limit ".$limit[0].",".$limit[1]); 
 			$data->status="success";
 			$data->response=$query->result();		
 			$json_response = json_encode($data); 
@@ -504,8 +550,92 @@ class Api_model extends CI_Model {
 			$json_response = json_encode($data); 
 		print_r($json_response);}
 		}
+		function addstatics($statics)
+		{ 
+		if(isset( $statics["id"]))
+		{
+			 $this->db->where('id', $statics["id"]);
+			$this->db->update('statics', $statics); 
+			$data=new stdclass();
+			$data->status="success";
+			$data->response="Updated Successfully"; 		
+			$json_response = json_encode($data); 
+			print_r($json_response);
+		}
+		else
+		{
+			$this->db->insert('statics', $statics); 
+			$data=new stdclass();
+			$data->status="success";
+			$data->response="You Request sent Successfully"; 		
+			$json_response = json_encode($data); 
+		print_r($json_response);}
+		}
+		function addnewsletter($letters)
+		{ 
+			if(isset( $letters["id"]))
+			{
+				 $this->db->where('id', $letters["id"]);
+				$this->db->update('letters', $letters); 
+				$data=new stdclass();
+				$data->status="success";
+				$data->response="Updated Successfully"; 		
+				$json_response = json_encode($data); 
+				print_r($json_response);
+			}
+			else
+			{
+				$this->db->insert('letters', $letters); 
+				$data=new stdclass();
+				$data->status="success";
+				$data->response="You letters Added Successfully"; 		
+				$json_response = json_encode($data); 
+				print_r($json_response);
+			}
+		}
 		function contactslist()
 		{   $query = $this->db->query("SELECT * FROM `cms_contacts` order by id"); 
+			$data=new stdclass();
+			$data->status="success";
+			$data->response=$query->result();
+			$json_response = json_encode($data);  
+			echo $json_response;   
+		}
+		function deletesliderimage($sliders)
+		{  if(isset( $sliders["id"]))
+			{   $this->db->where('id', $sliders["id"]);
+				$this->db->delete('sliders'); 
+				$data=new stdclass();
+				$data->status="success";
+				$data->response="Updated Successfully"; 		
+				$json_response = json_encode($data); 
+				print_r($json_response);
+			}
+		}
+		function addsliderimage($sliders)
+		{ 
+		if(isset( $sliders["id"]))
+		{
+			 $this->db->where('id', $sliders["id"]);
+			$this->db->update('sliders', $sliders); 
+			$data=new stdclass();
+			$data->status="success";
+			$data->response="Updated Successfully"; 		
+			$json_response = json_encode($data); 
+			print_r($json_response);
+		}
+		else
+		{
+			$this->db->insert('sliders', $sliders); 
+			$data=new stdclass();
+			$data->status="success";
+			$data->response="Created Successfully"; 		
+			$json_response = json_encode($data); 
+			print_r($json_response);
+			}
+		}
+		function sliderimagelist()
+		{   $query = $this->db->query("SELECT * FROM `cms_sliders` order by id"); 
 			$data=new stdclass();
 			$data->status="success";
 			$data->response=$query->result();

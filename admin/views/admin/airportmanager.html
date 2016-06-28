@@ -1,0 +1,139 @@
+﻿<div ng-include="'admin/views/head.html'"></div>
+<div class="container" ng-controller="adminairportmanagerController">
+    <div class="tab-form-new">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation">
+                    <a>Airport List</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                <div class="col-md-2">
+                    <div ng-include="'admin/views/admin/adminmenu.html'"></div>
+                    <div class="clear">&nbsp;&nbsp;</div>
+                </div>
+                <div class="col-md-10"><div class="clear">&nbsp;</div>
+                    <fieldset>
+                        <div class="clear">&nbsp;</div>
+                        <div class="col-md-2">
+                            PageSize:
+                            <select ng-model="entryLimit" class="form-control">
+                                <option>5</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            Filter:
+                            <input type="text" ng-model="search" ng-change="filter()" placeholder="Filter" class="form-control" />
+                        </div>
+                        <div class="col-md-3" style="padding-left:5px;padding-right:5px;text-align:left;">
+                            <a class="btn  btn-primary" style="margin-top:20px;" href="javascript:void(0);" ng-csv="list" filename="airports.csv" field-separator="," decimal-separator="." id="month">Export To CSV</a>
+                        </div>
+                        <div class="clear">&nbsp;</div>
+                    </fieldset><div class="clear">&nbsp;</div><h5>Filtered {{ filtered.length }} of {{ totalItems}} Total Airport</h5>
+                    <div ng-show="successmessage.length" class="alert alert-success">{{successmessage}}</div>
+                    <div ng-show="errormessage.length" class="alert alert-danger">{{errormessage}}</div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12" ng-show="filteredItems > 0">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Airport&nbsp;<a ng-click="sort_by('location');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            Zone&nbsp;<a ng-click="sort_by('zone');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            Category&nbsp;
+                                            <a ng-click="sort_by('type');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            Price Zone&nbsp;
+                                            <a ng-click="sort_by('Zonename');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            Status&nbsp;
+                                            <a ng-click="sort_by('status');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in filtered = (list | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                        <td>
+                                            <span data-ng-hide="editMode">{{data.location}}</span>
+                                            <input type="text" data-ng-show="editMode" class="form-control" data-ng-model="data.location" data-ng-required />
+                                        </td>
+                                        <td>
+                                            <span data-ng-hide="editMode">{{data.zone}}</span>
+                                            <input type="text" data-ng-show="editMode" class="form-control" data-ng-model="data.zone" data-ng-required />
+                                        </td>
+                                        <td>
+                                            <span data-ng-hide="editMode">{{data.type=='D'?"Domestic":data.type=='I'?"International":"Both" }}</span>
+
+                                            <select class="form-control" data-ng-show="editMode" data-ng-model="data.type" data-ng-required>
+                                                <optgroup label="Select Category"></optgroup>
+                                                <option ng-selected="data.type=='D'" value="D">Domestic</option>
+                                                <option ng-selected="data.type=='I'" value="I">International</option>
+                                                <option ng-selected="data.type=='B'" value="B">Both</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <span data-ng-hide="editMode">{{data.Zonename}}</span>
+                                            <select class="form-control" data-ng-show="editMode" data-ng-model="data.zonelistid" data-ng-required>
+                                                <optgroup label="Select Price Zone"></optgroup>
+                                                <option ng-repeat="price in zonelist" ng-selected="data.zonelistid==price.id" value="{{price.id}}">{{price.Zonename}}</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <span data-ng-hide="editMode">{{data.status}}</span>
+                                            <select class="form-control" data-ng-show="editMode" data-ng-model="data.status" data-ng-required>
+                                                <optgroup label="Select Status"></optgroup>
+                                                <option ng-selected="data.status=='Y'" value="Y">Yes</option>
+                                                <option ng-selected="data.status=='N'" value="N">No</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="submit" data-ng-hide="editMode" data-ng-click="editMode = true; editAppKey(data)" class="btn btn-primary">Edit</button>
+                                            <button type="submit" data-ng-hide="editMode" data-ng-click="deleterecords(data.id)" class="btn btn-primary">Delete</button>
+                                            <button type="submit" data-ng-show="editMode" data-ng-click="editMode = false ; saverecords(data)" class="btn btn-primary">Save</button>
+                                            <button type="submit" data-ng-show="editMode" data-ng-click="editMode = false; cancel()" class="btn btn-primary">Cancel</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <input type="button" class="btn btn-primary" value="Add Row" data-ng-click="addRow()" />
+                        <div class="col-md-12" ng-show="filteredItems == 0">
+                            <div class="col-md-12">
+                                <h4>No Record found</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="filteredItems > 0">
+                            <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,219 @@
+﻿<div ng-include="'admin/views/head.html'"></div>
+<div class="container" ng-controller="adminpaymentmanagerController">
+    <div class="tab-form-new">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation">
+                    <a>Admin Trip manager</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                <div class="col-md-2">
+                    <div ng-include="'admin/views/admin/adminmenu.html'"></div>
+                    <div class="clear">&nbsp;&nbsp;</div>
+                </div>
+                <div class="col-md-10">
+                    <form ng-submit="searchdatabyuser()"> 
+                        <fieldset>
+                            <legend>Search:</legend>
+                            <div class="col-md-2" style="padding-left:5px;padding-right:5px;">
+                                <label>User ID</label>
+                                <input name="t_id" ng-model="TransporterID" type="text" class="form-control" id="TripTId">
+                            </div>
+                            <div class="col-md-3" style="padding-left:5px;padding-right:5px;">
+                                <label>Created Date</label>
+                                <p class="input-group">
+                                    <input name="tilldate" id="tilldate" class="quote_date form-control" ng-model="departureat" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" datepicker-popup="dd-MM-yyyy" is-open="status0.opened" close-text="Close" />
+                                    <span class="input-group-btn"> <button type="button" class="btn btn-default" ng-click="open0($event)"><i class="glyphicon glyphicon-calendar"></i></button> </span>
+                                </p>
+                            </div>
+                            <div class="col-md-2" style="padding-left:5px;padding-right:5px;">
+                                <label>Status</label>
+                                <select name="data[Trip][status]" ng-model="status" id="ParcelStatus" class="form-control">
+                                    <option value="">Select Status</option>
+                                    <option value="Y">Approved</option>
+                                    <option value="N">Created Request</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2" style="padding-left:5px;padding-right:5px;text-align:left;">
+                                <a class="btn  btn-primary" style="margin-top:25px;" href="javascript:void(0);" ng-csv="listexportcsv" filename="payments.csv" field-separator="," decimal-separator="." id="month">Export To CSV</a>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-2">
+                            PageSize: <select ng-model="entryLimit" ng-change="pageSizeChanged()" class="form-control">
+                                <option>5</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Filtered {{ filtered.length }} of {{ totalItems}} Total Trips</h5>
+                        </div>
+                    </div>
+                    <div class="row" style="min-height:500px;">
+                        <div class="col-md-12" ng-show="filteredItems > 0">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            User ID<a ng-click="sort_by('UserID');">
+    <i class="glyphicon glyphicon-sort"></i>
+</a>
+                                        </th>
+                                        <th>
+                                            Bank Name<a ng-click="sort_by('bank_name');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            Amount<a ng-click="sort_by('amount');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            Acct No.<a ng-click="sort_by('acct_no');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            ifsc<a ng-click="sort_by('ifsc');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            swift_code<a ng-click="sort_by('swift_code');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            Name<a ng-click="sort_by('act_name');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            Date<a ng-click="sort_by('created');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            Status<a ng-click="sort_by('status');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in filtered = (tripslist | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                        <td>
+                                            <a href='javascript:void(0);;' ng-click="viewuserdetails(data.trans_id)">{{data.UserID }} </a>
+                                        </td>
+                                        <td>{{data.bank_name}}</td>
+                                        <td>{{data.amount}}</td>
+                                        <td>{{data.acct_no}}</td>
+                                        <td>{{data.ifsc}}</td>
+                                        <td>{{data.swift_code}}</td>
+                                        <td>   {{data.act_name}}</td>
+                                        <td>   {{data.created |date:"dd/MM/yyyy hh:mm a"}}</td>
+                                        <td>
+                                            {{data.status=='Y'?"Approved":"Request Sent"}}
+                                            <a href="javascript:void(0);" ng-hide="data.status=='Y'" ng-click="approvetrip(data)"><i class="fa fa-check-circle"></i>Approve</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12" ng-show="filteredItems == 0">
+                            <div class="col-md-12">
+                                <h4>No Trips found</h4>
+                            </div>
+                        </div>
+                        <div ng-show="totalItems>0" class="col-sm-12" style="">
+                            <pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="entryLimit"></pagination>
+                        </div>
+                        <div class="clear">&nbsp;</div>
+                    </div>
+                    <div role="dialog" tabindex="-1" id="userdetails" class="modal modal-login">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table ng-hide="edit" id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tr>
+                                                    <td valign="top"><i class="fa fa-user fa-2x"></i>&nbsp;&nbsp;{{ userdetails.name}} &nbsp;{{ userdetails.l_name}}</td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td valign="top"><i class="fa fa-envelope fa-2x"></i>&nbsp;&nbsp;{{ userdetails.username}} </td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td valign="top"><i class="fa fa-mobile fa-2x"></i>&nbsp;&nbsp;+{{ userdetails.country_code}}-{{ userdetails.mobile}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top"><i class="fa fa-phone fa-2x"></i>&nbsp;&nbsp;{{ userdetails.phone==""?"not available":userdetails.phone}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top">
+                                                        <img src="../images/user.png" alt="Passport/ID Proof" title="Passport/ID Proof" />
+                                                        &nbsp;&nbsp;{{ userdetails.passportno=="" || userdetails.passportno==null?"not available":userdetails.passportno}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top"><i class="fa fa-mobile fa-3x"></i>&nbsp;&nbsp;{{ userdetails.altr_mobile==""?"not available":userdetails.altr_mobile }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top"><i class="fa fa-location-arrow fa-2x"></i>&nbsp;&nbsp;{{ userdetails.addr1=="" && userdetails.addr2=="" && userdetails.addr3==""?"empty":userdetails.addr1+" "+userdetails.addr2+" "+userdetails.addr3}} </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div><div class="clear">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="clear">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    td, th {
+        padding: 8px 2px !important;
+        text-align: center;
+    }
+
+    .pay-h-s form input[type=submit], .dash-cntnt input[type=submit] {
+        margin: 0;
+        padding: 5px;
+    }
+
+    .left-tab-cont {
+        width: 90%;
+    }
+
+    .searchbar {
+        border: 1px solid #DDD;
+    }
+     #userdetails table tr td, #userdetails table tr th {
+        text-align: left;
+        padding-left: 10px;
+    }
+</style>

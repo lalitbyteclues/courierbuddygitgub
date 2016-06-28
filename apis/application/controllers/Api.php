@@ -175,7 +175,7 @@ class Api extends CI_Controller{
 					$imageData = base64_decode($input_data["ticket"]);
 					$source = imagecreatefromstring($imageData);
 					$rotate = imagerotate($source,0, 0); 
-					$new_name = rand(0,10000);
+					$new_name = uniqid();
 					$imageSave = imagejpeg($rotate,'./uploads/'.$new_name.'.jpg',100);
 					imagedestroy($source);
 					$input_data["ticket"]='/uploads/'.$new_name.'.jpg';  }
@@ -313,6 +313,124 @@ class Api extends CI_Controller{
 			echo $json_response;  
 		}
 	}
+	public function deletesliderimage()
+	{    try 
+			{ 
+			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
+			if(isset($input_data))
+			{  $this->api_model->deletesliderimage($input_data); 
+			}   
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="No Slider added";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
+	public function addsliderimage()
+	{    try 
+			{ 
+			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
+			if(isset($input_data))
+			{ 
+			if (in_array($input_data["name"], array(".png", ".jpg", ".gif")))
+			{
+	
+			}else{
+				 $imageData = base64_decode($input_data["name"]);
+						$source = imagecreatefromstring($imageData);
+						$rotate = imagerotate($source,0, 0); 
+						$new_name =uniqid();
+						$imageSave = imagejpeg($rotate,'./uploads/'.$new_name.'.jpg',100);
+						imagedestroy($source);
+						$input_data["name"]='/uploads/'.$new_name.'.jpg';  
+			}  
+					$this->api_model->addsliderimage($input_data); 
+			}else
+			{
+				$errormessage=new stdclass();
+				$errormessage->status="Error";
+				$errormessage->errorMessage="No Slider added";
+				$json_response = json_encode($errormessage); 
+				echo $json_response;  
+			}  
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="No Slider added";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
+	public function sliderimagelist()
+	{    try 
+		{ 
+		$this->api_model->sliderimagelist();  
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="No Result Found";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
+	public function addstatics()
+	{    try 
+			{ 
+			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
+			if(isset($input_data))
+			{ 
+				$this->api_model->addstatics($input_data); 
+			}else
+			{
+				$errormessage=new stdclass();
+				$errormessage->status="Error";
+				$errormessage->errorMessage="No statics added";
+				$json_response = json_encode($errormessage); 
+				echo $json_response;  
+			}  
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="No statics added";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
+	public function addnewsletter()
+	{    try 
+			{ 
+			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
+			if(isset($input_data))
+			{ 
+				$this->api_model->addnewsletter($input_data); 
+			}else
+			{
+				$errormessage=new stdclass();
+				$errormessage->status="Error";
+				$errormessage->errorMessage="No statics added";
+				$json_response = json_encode($errormessage); 
+				echo $json_response;  
+			}  
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="No statics added";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
 	public function contactslist()
 	{    try 
 		{ 
@@ -363,7 +481,7 @@ class Api extends CI_Controller{
 				$imageData = base64_decode($input_data["ticket"]);
 				$source = imagecreatefromstring($imageData);
 				$rotate = imagerotate($source,0, 0); 
-				$new_name = rand(0,10000);
+				$new_name = uniqid();
 				$imageSave = imagejpeg($rotate,'./uploads/'.$new_name.'.jpg',100);
 				imagedestroy($source);
 				$input_data["ticket"]='/uploads/'.$new_name.'.jpg';  } 
@@ -477,6 +595,50 @@ class Api extends CI_Controller{
 			echo $json_response;  
 		}
 	}
+   public function staticpageslist($id)
+   {  try 
+		{ 	$this->api_model->staticpageslist($id);  
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="NO record Found";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
+   public function sendnewsletters()
+   {  try 
+		{ 
+			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
+			if(isset($input_data))
+			{ 
+				$this->api_model->sendnewsletters($input_data);  
+			}
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="NO record Found";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+}
+   public function newsletterslist()
+   {  try 
+		{ 	$this->api_model->newsletterslist();  
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="NO record Found";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
 	public function allbookinglist()
     {   try 
 		{ 
@@ -484,6 +646,24 @@ class Api extends CI_Controller{
 			if(isset($input_data))
 			{ 
 			$this->api_model->allbookinglist($input_data);  
+			} 
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="NO record Found";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
+	public function alldeliveryreportslist()
+    {   try 
+		{ 
+			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
+			if(isset($input_data))
+			{ 
+			$this->api_model->alldeliveryreportslist($input_data);  
 			} 
 		}
 		catch (Exception $e)

@@ -1,10 +1,11 @@
 /**
  * Created by Lalit on 21.05.2016.
  */
-angular.module('courier').controller("homeController", function ($scope, ValiDatedTokenObject, $location, $http, $timeout, RESOURCES, $filter) {
+angular.module('courier').controller("homeController", function ($scope, ValiDatedTokenObject, $location, $http, $timeout, RESOURCES, $filter, UsersService) {
     $scope.classsetactive = 2;
     $scope.locationfrom = "";
-    $scope.locationto = "";
+    $scope.locationto = ""; 
+    $scope.serviceBase = RESOURCES.API_BASE_PATH;
     $http.get(RESOURCES.API_BASE_PATH + 'api/getcountries', { headers: { 'Content-Type': 'application/json' }, }).then(function (results) {
         $scope.countries = results.data.response;
         $scope.getLocation();
@@ -145,6 +146,16 @@ angular.module('courier').controller("homeController", function ($scope, ValiDat
         $scope.status0.opened = true;
 
     };
+    UsersService.getMysliderlist().then(function (results) {
+        var images = [];
+        for (i = 0; i < results.data.response.length; i++) { 
+            if(results.data.response[i].status=="Y")
+            {
+                images.push(results.data.response[i]);
+            } 
+        }
+        $scope.sliderimages = images;
+    });
     $scope.open1 = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();

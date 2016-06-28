@@ -1,0 +1,167 @@
+﻿<div ng-include="'admin/views/head.html'"></div>
+<div class="container" ng-controller="dashboardController">
+    <div class="tab-form-new">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation">
+                <a>Profile</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                <div class="row">
+                    <div class="col-md-12 inner-tab-form-new">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" ng-class="isActive('/admin/profile')?'active':''">
+                                        <a ui-sref="adminprofile" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-user" aria-hidden="true"></i>My Account</a>
+                                    </li>
+                                    <li role="presentation" ng-class="isActive('/admin/changepassword')?'active':''">
+                                        <a ui-sref="changepassword" aria-controls="home" role="tab" data-toggle="tab">
+                                            <i class="fa fa-key" aria-hidden="true"></i>Change Password
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane" id="myTrips">...</div>
+                                    <div role="tabpanel" class="tab-pane active" id="addTrips">
+                                        <h1>My Account</h1>
+                                        <form class="stdform" id="bnkdet-frm" ng-submit="updatebankdetails(frmbankdetails.$valid)" enctype="multipart/form-data" name="frmbankdetails" method="post" accept-charset="utf-8" novalidate="novalidate">
+                                            <a style="float:right;" href="javascript:void(0);" ng-hide="edit" ng-click="editform()" id="myedit">Edit Profile</a>
+                                            <table ng-hide="edit" id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tr>
+                                                    <td valign="top"><i class="fa fa-key fa-2x"></i>&nbsp;&nbsp;{{ userdetails.UserID}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top"><i class="fa fa-user fa-2x"></i>&nbsp;&nbsp;{{ userdetails.name}} &nbsp;{{ userdetails.l_name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top"><i class="fa fa-envelope fa-2x" style="font-size:23px;"></i>&nbsp;&nbsp;{{ userdetails.username}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top"><i class="fa fa-mobile fa-3x"></i>&nbsp;&nbsp;{{ userdetails.mobile==0?"not available":"+"+userdetails.country_code+"-"+userdetails.mobile}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top"><i class="fa fa-phone fa-2x"></i>&nbsp;&nbsp;{{ userdetails.phone==""?"not available":userdetails.phone}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top">
+                                                        <img src="../images/user.png" alt="Passport/ID Proof" title="Passport/ID Proof" />
+                                                        &nbsp;&nbsp;{{ userdetails.passportno=="" || userdetails.passportno==null?"not available":userdetails.passportno}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top"><i class="fa fa-location-arrow fa-2x"></i>&nbsp;&nbsp;{{ userdetails.addr1=="" && userdetails.addr2=="" && userdetails.addr3 && userdetails.altr_mobile==""?"empty":userdetails.addr1+", "+userdetails.addr2+", "+userdetails.addr3 +", "+userdetails.altr_mobile}} </td>
+                                                </tr>
+                                            </table>
+                                            <div ng-show="edit">
+                                                <div class="row">
+                                                    <div class="form-group col-sm-12">
+                                                        <div class="alert alert-danger" role="alert" ng-hide='!errormessage'>{{errormessage}}</div>
+                                                        <div class="alert alert-success" role="alert" ng-hide='!successMessage'>{{successMessage}}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"></div>
+                                                    <div class="f-right">
+                                                        <div class="f-right a-left">
+                                                            <input class="form-control input-md" type="submit" value="Save" style="float:right;width:90px;background: #3b5998;border: 0;color: #fff;margin-right: 15px;height: 29px;">
+                                                            <a href="javascript:void();" ng-click="canceleditform()" style="padding:5px 15px;float:right;background: #3b5998;border:0;color: #fff;margin-right: 15px; ">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"><label>First Name<span class="red">*</span> </label></div>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control input-md" no-special-char name="name" ng-model="userdetails.name" required="required" maxlength="50" type="text" value="" id="name" />
+                                                        <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.name.$error.required)">Required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"><label>Last Name<span class="red">*</span> </label></div>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control input-md" no-special-char name="l_name" ng-model="userdetails.l_name" required="required" maxlength="50" type="text" />
+                                                        <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.l_name.$error.required)">Required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"><label>Email<span class="red">*</span></label></div>
+                                                    <div class="col-md-8">  {{ userdetails.username}} </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"><label>Mobile<span class="red">*</span> </label></div>
+
+                                                    <div class="col-md-8">
+                                                        <input class="form-control input-md" valid-number name="mobile" ng-model="userdetails.mobile" required="required" ng-maxlength="14" ng-minlength="6" maxlength="15" type="text" value="" id="mobile" />
+                                                        <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.mobile.$error.required)">Required.</span>
+                                                        <span class="error" ng-show="registerForm.registerDatamobilenumber.$error.minlength">Min Length 6.</span>
+                                                        <span class="error" ng-show="registerForm.registerDatamobilenumber.$error.maxlength">Max Length 14.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"><label>Phone</label></div>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control input-md" valid-number name="phone" ng-model="userdetails.phone" maxlength="50" type="text" value="" id="phone" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"><label>Passport No./ID</label></div>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control input-md" name="passportno" ng-model="userdetails.passportno" maxlength="50" type="text" id="passportno" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"><label>Address ( line 1 ) </label></div>
+
+                                                    <div class="col-md-8">
+                                                        <input class="form-control input-md" name="addr1" ng-model="userdetails.addr1" maxlength="50" type="text" value="" id="addr1" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"><label>Address ( line 2 )</label></div>
+
+                                                    <div class="col-md-8">
+                                                        <input class="form-control input-md" name="addr2" ng-model="userdetails.addr2" maxlength="50" type="text" value="" id="addr2" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"><label>Address ( line 3 )</label></div>  <div class="col-md-8">
+                                                        <input class="form-control input-md" name="addr3" ng-model="userdetails.addr3" maxlength="50" type="text" value="" id="addr3" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-4 control-label"><label>Postal Code<span class="red">*</span></label></div>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control input-md" valid-number name="altr_mobile" required ng-model="userdetails.altr_mobile" maxlength="8" type="text" value="" id="altr_mobile" />
+                                                        <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.altr_mobile.$error.required)">Required.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div><div class="clear">&nbsp;&nbsp;</div>
+                            </div>
+                            <div class="col-md-3 inner-tab-form-image">
+                                <img src="images/trip.png" style="width:100%; max-height:500px; margin-top:20px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    td:last-child {
+        text-align: left;
+    }
+
+    .fa-2x, .fa-3x {
+        vertical-align: middle;
+    }
+</style>

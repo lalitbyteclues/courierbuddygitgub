@@ -25,10 +25,9 @@
 <![endif]-->
 <div ng-controller="homeController">
     <section id="slider">
-        <ul class="rslides" id="slider1">
-            <li><img src="/images/slide.jpg" alt=""></li>
-            <li><img src="/images/slide1.jpg" alt=""></li>
-        </ul>
+        <ul class="rslides" data-slider-class-selector="rslides" data-slider-refresh-on-watch="sliderimages" slider>
+            <li ng-repeat="image in sliderimages"><img ng-src="{{serviceBase+image.name}}" alt=""></li>
+        </ul> 
         <script>
             $(document).ready(function () {
                 // on load

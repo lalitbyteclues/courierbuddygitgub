@@ -1,0 +1,303 @@
+﻿<div ng-include="'admin/views/head.html'"></div>
+<div class="container" ng-controller="admintripmanagerController">
+    <div class="tab-form-new">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation">
+                    <a>Admin Feedback manager</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                <div class="col-md-2">
+                    <div ng-include="'admin/views/admin/adminmenu.html'"></div>
+                    <div class="clear">&nbsp;&nbsp;</div>
+                </div>
+                <div class="col-md-10">
+                    <div class="clear"><br />&nbsp;</div>
+                    <fieldset>
+                        <legend>Search:</legend>
+                        <div class="col-md-2" style="padding-left:5px;padding-right:5px;">
+                            <label>Trip ID</label><input name="t_id" ng-model="TransporterID" type="text" class="form-control" id="TripTId">
+                        </div>
+                        <div class="col-md-4" style="padding-left:5px;padding-right:5px;">
+                            <label>Departure At</label>
+                            <p class="input-group">
+                                <input name="data[Trip][a_date]" class="quote_date form-control" ng-model="departureat"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" datepicker-popup="dd-MM-yyyy" is-open="status0.opened" close-text="Close" />
+                                <span class="input-group-btn"> <button type="button" class="btn btn-default" ng-click="open0($event)"><i class="glyphicon glyphicon-calendar"></i></button> </span>
+                            </p>
+                        </div>
+                        <div class="col-md-4" style="padding-left:5px;padding-right:5px;">
+                            <label>Status</label>
+                            <select name="data[Trip][status]" ng-model="status" id="TripStatus" class="form-control">
+                                <option value="">Select Status</option>
+                                <option value="0">Pending</option>
+                                <option value="1">Approved</option>
+                                <option value="2">Booking Request Sent</option>
+                                <option value="3">Booked</option>
+                                <option value="4">Cancelled</option>
+                                <option value="5">Rejected</option>
+                                <option value="6">Delivered</option>
+                                <option value="7">Complete</option>
+                                <option value="8">On Hold</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" style="padding-left:5px;padding-right:5px;text-align:left;"> 
+                            <a class="btn  btn-primary" style="margin-top:25px;" href="javascript:void(0);" ng-csv="listexportcsv" filename="trips.csv" field-separator="," decimal-separator="." id="month">Export To CSV</a>
+                        </div>
+                    </fieldset>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-1" style="padding-left:5px;padding-right:5px;">
+                                PageSize: <select ng-model="entryLimit" ng-change="pageSizeChanged()" class="form-control">
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>20</option>
+                                    <option>50</option>
+                                    <option>100</option>
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                &nbsp;
+                            </div>
+                            <div class="col-md-3">
+                                <h5>Filtered {{ filtered.length }} of {{ totalItems}} Total Trips</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div   ng-show="filteredItems > 0">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                TripID<a ng-click="sort_by('id');">
+                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                MCBID<a ng-click="sort_by('UserID');">
+    <i class="glyphicon glyphicon-sort"></i>
+</a>
+                                            </th>
+                                            <th>
+                                                From<a ng-click="sort_by('source');">
+                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                To<a ng-click="sort_by('destination');">
+                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                Date<a ng-click="sort_by('dep_time');">
+                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                Flight No<a ng-click="sort_by('flight_no');">
+                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                PNR NO<a ng-click="sort_by('pnr');">
+                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                Status<a ng-click="sort_by('status');">
+                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                Link
+                                            </th>
+                                            <th>
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in filtered = (tripslist | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+
+                                            <td>
+                                                <a href='javascript:void(0);' ng-click="viewtripdetails(data.id)">{{data.TripID}} </a>
+                                            </td>
+                                            <td>
+                                                <a href='javascript:void(0);;' ng-click="viewuserdetails(data.t_id)">{{data.UserID }} </a>
+                                            </td>
+                                            <td>
+                                                <span>{{data.source }}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{data.destination }}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{data.dep_time  | date:"dd/MM/yyyy 'at' h:mma" }}</span>
+                                            </td>
+                                            <td>
+                                                <a target="_blank" href='{{data.airlinelink}}'>{{data.flight_no }}</a>
+                                            </td>
+                                            <td>
+                                                <span>{{data.pnr }}</span>
+                                            </td>
+                                            <td>
+                                                {{data.statusdescription}}
+                                            </td>
+                                            <td>
+                                                Link
+                                            </td>
+                                            <td>
+                                                <div class='dropdown'>
+                                                    <a href='javascript:void()' data-toggle='dropdown' class='dropdown-toggle'>Action<b class='caret'></b></a>
+                                                    <ul class='dropdown-menu'>
+                                                        <li><a href="javascript:void(0);" ng-show="data.status==0" ng-click="approvetrip(data.id,1)"><i class="fa fa-check-circle"></i>Approve</a> </li>
+                                                        <li><a href="javascript:void(0);" ng-show="data.status==0" ng-click="approvetrip(data.id,5)"><i class="fa fa-check-circle"></i>Reject</a> </li>
+                                                        <li><a href="javascript:void(0);" ng-show="data.status==0" ng-click="approvetrip(data.id,8)"><i class="fa fa-check-circle"></i>On Hold</a> </li>
+                                                        <li><a href="javascript:void(0);" ng-show="data.status==1" ng-click="approvetrip(data.id,0)"><i class="fa fa-ban"></i>DisApprove</a></li>
+                                                        <li><a href="javascript:void(0);" ng-click="delete(data.id)"><i class="fa fa-times"></i>Delete</a></li>
+                                                        <li><a href="{{data.image}}" target="_blank"><i class="fa fc-agenda-view"></i>View Ticket</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12" ng-show="filteredItems == 0">
+                                <div class="col-md-12">
+                                    <h4>No Trips found</h4>
+                                </div>
+                            </div>
+                            <div ng-show="totalItems>0" class="col-sm-12" style="">
+                                <pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="entryLimit"></pagination>
+                            </div>
+                        </div>
+                        <div role="dialog" tabindex="-1" id="userdetails" class="modal modal-login">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table ng-hide="edit" id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                                    <tr>
+                                                        <td valign="top"><i class="fa fa-user fa-2x"></i>&nbsp;&nbsp;{{ userdetails.name}} &nbsp;{{ userdetails.l_name}}</td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td valign="top"><i class="fa fa-envelope fa-2x"></i>&nbsp;&nbsp;{{ userdetails.username}} </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td valign="top"><i class="fa fa-mobile fa-2x"></i>&nbsp;&nbsp;+{{ userdetails.country_code}}-{{ userdetails.mobile}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><i class="fa fa-phone fa-2x"></i>&nbsp;&nbsp;{{ userdetails.phone==""?"not available":userdetails.phone}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top">
+                                                            <img src="/images/user.png" alt="Passport/ID Proof" title="Passport/ID Proof" />
+                                                            &nbsp;&nbsp;{{ userdetails.passportno=="" || userdetails.passportno==null?"not available":userdetails.passportno}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><i class="fa fa-mobile fa-3x"></i>&nbsp;&nbsp;{{ userdetails.altr_mobile==""?"not available":userdetails.altr_mobile }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><i class="fa fa-location-arrow fa-2x"></i>&nbsp;&nbsp;{{ userdetails.addr1=="" && userdetails.addr2=="" && userdetails.addr3==""?"empty":userdetails.addr1+" "+userdetails.addr2+" "+userdetails.addr3}} </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                            </div><div class="clear">&nbsp;</div>
+                        </div>
+                        <div role="dialog" tabindex="-1" id="tripdetails" class="modal modal-login">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>Trip #T{{transporter.id}} Details</h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-striped table-bordered">
+                                                    <tr>
+                                                        <td>ID</td>
+                                                        <td>T{{transporter.id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>From</td>
+                                                        <td>{{transporter.source}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>To</td>
+                                                        <td>{{transporter.destination}}</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Departure Time</td>
+                                                        <td>{{transporter.dep_time | date:"dd/MM/yyyy 'at' h:mma"}}</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Arrival Time</td>
+                                                        <td>{{transporter.arrival_time | date:"dd/MM/yyyy 'at' h:mma"}}</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Flight No</td>
+                                                        <td>{{transporter.flight_no}}</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Pnr/Reference NO</td>
+                                                        <td>{{transporter.pnr}}</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Status</td>
+                                                        <td> {{transporter.statusdescription}} </td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                            </div><div class="clear">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    td, th {
+        padding: 8px 2px !important;
+        text-align: center;
+    }
+
+    .pay-h-s form input[type=submit], .dash-cntnt input[type=submit] {
+        margin: 0;
+        padding: 5px;
+    }
+
+    #userdetails table tr td, #userdetails table tr th {
+        text-align: left;
+        padding-left: 10px;
+    }
+</style>

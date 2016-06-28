@@ -20,7 +20,27 @@ angular
     .directive('customOnChange', fileUploadHandler)
     .directive('back', backHandler)
     .directive("pwCheck", pwCheck)
-    .directive("validNumber", validNumber).directive('noSpecialChar', noSpecialChar)
+    .directive("validNumber", validNumber).directive('noSpecialChar', noSpecialChar).directive('slider', function () {
+        var linker = function (scope, element, attr) {
+            var selector = attr.sliderClassSelector;
+            var watchSelector = attr.sliderRefreshOnWatch;
+
+            scope.$watch(watchSelector, function () {
+                $('.' + selector).responsiveSlides({
+                    auto: true,
+                    pager: false,
+                    speed: 800,
+                    timeout: 2000,
+                    maxwidth: 1800
+                });
+            });
+
+        };
+        return {
+            restrict: "A",
+            link: linker
+        }
+    });
 function noSpecialChar(){ 
     return {
         require: 'ngModel',

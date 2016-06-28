@@ -2,59 +2,8 @@
  <div ng-controller="sendergoodpracticesController">
     <div class="pri_po faq in-page a-justify">
         <div class="wrapper">
-            <div class="page-heading">Senders Good Practice and Recommendation</div>
-
-            <i class="fa fa-plane"></i> Make sure you pack the goods in such a way that courier buddy can easily
-
-            inspect and aware about the content in package before he accepts the
-
-            package. This keep the mutual interest of both sender and courier buddy
-
-            intact.<br><br>
-
-            <i class="fa fa-plane"></i> Packing is very important for shipping your package safely without damage.
-
-            Avoid sending the goods which are fragile and easily damageable without the
-
-            consent and acceptance of your courier buddy.<br><br>
-
-            <i class="fa fa-plane"></i> You shall be informed, once your delivery order is accepted and matched
-
-            with your courier buddy. Coordinate with your courier buddy to handover the
-
-            package to courier buddy. Prefer to handover the package near to the
-
-            departure date and time of the courier buddy. <br><br>
-
-            <i class="fa fa-plane"></i> Send the photo of package and your courier buddy to receiver and inform the
-
-            receiver about the packing details.<br><br>
-
-            <i class="fa fa-plane"></i> Make sure the goods you are sending are not prohibited by law or other
-
-            regulations to be owned or distributed within country and across the borders
-
-            like Drugs, Illegal items, Weapons, Chemicals etc.<br><br>
-
-            <i class="fa fa-plane"></i> Different country have different customs guidelines and guidelines for
-
-            prohibited goods. Make sure you read the customs guidelines for the
-
-            destination country carefully and follow the guidelines.<br><br>
-
-            <i class="fa fa-plane"></i> Goods which are liable for customs in destination country shall be clearly
-
-            mentioned and bring in knowledge of your courier buddy. Make sure you
-
-            have agreement with your courier buddy to pay the customs duty and get the
-
-            goods clear. MCB is not directly responsible for any dispute involving
-
-            customs or customs duty payment.<br><br>
-
-            <i class="fa fa-plane"></i> Avoid sending fragile, difficult to handle, expensive and valuable items with
-
-            MCB.
+            <div class="page-heading">{{content.title}}</div>
+            <div ng-bind-html="content.content"></div>
         </div>
     </div>
 </div>

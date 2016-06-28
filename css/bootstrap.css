@@ -266,8 +266,51 @@ table.dataTable>tbody>tr.child ul{background:none !important;}
 }
 input{width:auto;}
 fieldset { background:#eee;} 
-legend {padding: 0.2em 0.5em!important;color:green!important;
+legend {padding: 0.2em 0.5em!important;color:#3b5998!important;
         text-align:left!important;width:auto!important;background:#eee;border-radius:5px;
-        -moz-border-radius:5px;-webkit-border-radius:5px; }
+        -moz-border-radius:5px;-webkit-border-radius:5px;border-bottom:0!important; }
 .dropdown-menu{min-width:89px !important;}
 .dropdown-menu > li > a{padding:3px 6px;}
+
+.Dashlink {    color: #3378A9;    display: inline-block;    font-size: 14px;    font-weight: bold;   margin-left: 10px;    padding-top: 9px;}
+.DashContent {    float: left;    margin: 10px 0 0;    padding: 10px 0 0;    width: 48%;}
+contenttitle {
+    background: #222;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+}
+.contenttitle h2 span {
+    display: block;
+    padding: 6px 0 6px 10px;
+    margin-left: 25px;
+    border-left: 1px solid #444;
+    background: #3b5998;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    text-shadow: 1px 1px #222;
+}
+.contenttitle h2.table {
+    background-position: -82px -480px;
+}
+.contenttitle h2 {
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    font-family: 'BebasNeueRegular', Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    padding: 0 0 0 10px;
+    background-repeat: no-repeat;
+    background-image: url(../images/sprites.png);
+    background-position: -154px -443px;
+    color: #fff;
+}
+.maincontentinner {
+    border: 1px solid #CCCCCC;
+}
+.contenttitle {
+    background:#3b5998;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+}

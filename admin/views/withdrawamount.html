@@ -1,0 +1,116 @@
+﻿<div ng-include="'views/head.html'"></div>
+<div class="container" ng-controller="WidrowamountController">
+    <div class="tab-form-new">
+        <div ng-include="'views/dashboardmenu.html'"></div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active row" id="Dashboard">
+                <div class="col-md-12 inner-tab-form-new">
+                    <div class="col-md-2">
+                        <div ng-include="'views/trips/transportermenu.html'"></div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane" id="myTrips">...</div>
+                            <div role="tabpanel" class="tab-pane active" id="addTrips">
+                                <br />
+                                <a href="javascript:void(0);" style="float:left;width:90px;background: #3b5998;border: 0;color: #fff;height: 29px;" class="login-trigger btn" data-toggle="modal" data-target="#login-modal"><span>Create New Request</span></a>
+                                <div class="clear">&nbsp;</div>
+                                <h1>Withdrawals Status</h1> 
+                                <table border="1" align="center" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td width="20%"><b>Bank Name</b></td>
+                                            <td width="20%"><b>Amount</b></td>
+                                            <td width="20%"><b>IFSC Code</b></td>
+                                            <td width="20%"><b>Status</b></td>
+                                            <td width="20%"><b>Processing date</b></td>
+                                        </tr>
+                                        <tr ng-show="paymentlist.length==0">
+                                            <td colspan="5"> No Pending Requests Available</td>
+                                        </tr>
+                                        <tr ng-repeat="data in paymentlist">
+                                            <td>{{data.bank_name}}</td>
+                                            <td>{{data.amount}}</td>
+                                            <td>{{data.ifsc}}</td>
+                                            <td>{{data.status=='Y'?"Approved":"Request Sent"}}</td>
+                                            <td>{{data.created}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="dialog" tabindex="-1" id="login-modal" class="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title text-center" id="loginModalLabel">Create Withdrawals Request</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="login-form-container">
+                                    <div class="alert alert-danger" role="alert" ng-hide='!errormessage'>{{errormessage}}</div>
+                                    <div class="alert alert-success" role="alert" ng-hide='!successMessage'>{{successMessage}}</div>
+                                    <form ng-submit="submitbankdetails(formwidrowamount.$valid)" class="login-form" method="post" name="formwidrowamount">
+                                        <div class="col-md-5"><label>Payment Method:</label></div>
+                                        <div class="col-md-7">Bank Transfer</div>
+                                        <div class="clear">&nbsp;</div>
+                                        <div class="col-md-5"><label>Withdraw Amount</label></div>
+                                        <div class="col-md-7">
+                                            <input name="widrowamount" class="form-control" required="required" placeholder="Amount" step="0.01" min="50" max="{{userdetails.wallet}}" type="number" ng-model="userdetails.targetamount" id="widrowamount" />
+                                            <label>( Your Balance : ₹<span id="balnce">{{userdetails.wallet}}</span>.00 )</label>
+                                            <span class="error" ng-show="formwidrowamount.widrowamount.$error.min">Min  ₹50.</span>
+                                            <span class="error" ng-show="formwidrowamount.widrowamount.$error.max">Current Balance ₹{{userdetails.wallet}}.</span>
+                                            <span class="error" ng-show="(formwidrowamount.$submitted && formwidrowamount.widrowamount.$error.required)">Required.</span>
+                                        </div>
+                                        <div class="clear">&nbsp;</div>
+
+                                        <div class="col-md-5"><label>Account No <span class="red">*</span></label></div>
+                                        <div class="col-md-7">
+                                            <input name="bank_act_no" class="form-control input-md" ng-model="userdetails.bank_act_no" valid-number required="required" maxlength="25" type="text" value="" id="UserBankActNo" placeholder="(eg. 054789562434578)" />
+                                            <span class="error" ng-show="(formwidrowamount.$submitted && formwidrowamount.bank_act_no.$error.required)">Required.</span>
+
+                                        </div>
+                                        <div class="clear">&nbsp;</div>
+                                        <div class="col-md-5"><label>Bank Name <span class="red">*</span></label></div>
+                                        <div class="col-md-7">
+                                            <input name="bank_name" class="form-control input-md" ng-model="userdetails.bank_name" placeholder="(eg. ICICI,HDFC)" required="required" no-special-char maxlength="100" type="text" value="" id="UserBankName" />
+                                            <span class="error" ng-show="(formwidrowamount.$submitted && formwidrowamount.bank_name.$error.required)">Required.</span>
+                                        </div>
+                                        <div class="clear">&nbsp;</div>
+                                        <div class="col-md-5"><label>Account Holder Name <span class="red">*</span></label></div>
+                                        <div class="col-md-7">
+                                            <input name="bank_act_name" class="form-control input-md" placeholder="(eg. Raj Mathur)" ng-model="userdetails.bank_act_name" required="required" no-special-char maxlength="100" type="text" value="" id="UserBankActName" />
+                                            <span class="error" ng-show="(formwidrowamount.$submitted && formwidrowamount.bank_act_name.$error.required)">Required.</span>
+                                        </div>
+                                        <div class="clear">&nbsp;</div>
+                                        <div class="col-md-5"><label>IFSC Code <span class="red">*</span></label></div>
+                                        <div class="col-md-7">
+                                            <input name="bank_ifsc" no-special-char class="form-control input-md" placeholder="(eg. HDFC0003819)" ng-model="userdetails.bank_ifsc" required="required" maxlength="25" type="text" value="" id="UserBankIfsc">
+                                            <span class="error" ng-show="(formwidrowamount.$submitted && formwidrowamount.bank_ifsc.$error.required)">Required.</span>
+                                        </div>
+                                        <div class="clear">&nbsp;</div>
+                                        <div class="col-md-5"><label>SWIFT <span class="red">*</span></label></div>
+                                        <div class="col-md-7">
+                                            <input name="bank_swift_code" class="form-control input-md" placeholder="(eg. HDFCINBBDEL)" ng-model="userdetails.bank_swift_code" required="required" no-special-char maxlength="25" type="text" id="UserBankSwiftCode">
+                                            <span class="error" ng-show="(formwidrowamount.$submitted && formwidrowamount.bank_swift_code.$error.required)">Required.</span>
+                                        </div>
+                                        <div class="clear">&nbsp;</div>
+                                        <div class="col-md-5"></div>
+                                        <div class="col-md-7"><button class="btn btn-primary" type="submit">Submit</button></div>
+                                        <div class="clear">&nbsp;</div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -8,7 +8,6 @@
             <a ng-hide="isAuth" ui-sref="login">Login</a>
             <a ng-hide="isAuth" ui-sref="register">Sign Up</a>  
             <a ng-show="isAuth && isUser" ui-sref="dashboard"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Welcome <span class="hd_us_nm">{{userName}}</span></a>
-            <a ng-show="isAuth && isAdministrator" ui-sref="admindashboard">Admin Panel</a>
             <a ng-show="isAuth" ui-sref="sender"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;My Dashboard</a>
             <a ng-show="isAuth" ui-sref="logout"><i class="fa fa-power-off" aria-hidden="true"></i>&nbsp;Logout</a>
         </div>

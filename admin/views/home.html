@@ -1,0 +1,364 @@
+﻿<div  ng-include="'views/head.html'"></div>
+<script src="/js/responsiveslides.min.js"></script>
+<script>
+    $(function () {
+        $("#slider1").responsiveSlides({
+            pager: false,
+            maxwidth: 1800,
+            speed: 800
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () { showModal('shw'); });
+    function showModal(id) {
+        $("." + id).fadeIn('slow');
+        $("." + id).fadeIn('slow');
+    }
+    function hideModal(id) {
+        setInterval(function () { $("." + id).fadeOut('slow'); }, 1000);
+    }
+    setInterval(function () { $(".shw").fadeOut('slow'); }, 15000);
+</script>
+<!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<div ng-controller="homeController">
+    <section id="slider">
+        <ul class="rslides" id="slider1">
+            <li><img src="/images/slide.jpg" alt=""></li>
+            <li><img src="/images/slide1.jpg" alt=""></li>
+        </ul>
+        <script>
+            $(document).ready(function () {
+                // on load
+                $("#src-send").removeClass('active');
+                $("#src-trans").addClass('active');
+                //$("#hom-frm-cntnt").load("/home/trans/trans");
+                $('#src-send').on('click', function () {
+                    $("#src-trans").removeClass('active');
+                    $("#src-send").addClass('active');
+                    //$("#hom-frm-cntnt").load("/home/trans/send");
+                });
+                $('#src-trans').on('click', function () {
+                    $("#src-send").removeClass('active');
+                    $("#src-trans").addClass('active');
+                    //$("#hom-frm-cntnt").load("/home/trans/trans");
+                });
+            });
+        </script>
+        <div class="">
+            <div class="search-form">
+                <div class="search-opt">
+                    <span>Search for :</span>
+                    <div class="sep-tab">
+                        <a href="javascript:void(0);" ng-click="updatesearchtype('Sender')" id="src-send">Sender</a>
+                        <a href="javascript:void(0);" ng-click="updatesearchtype('Transporter')" id="src-trans">Transporter</a>
+                    </div>
+                </div>
+                <div id="hom-frm-cntnt">
+                    <div id="hom-frm-cntnt">
+                        <form name="searchcouriers" ng-submit="search()" class="stdform" id="srch-trans-frm" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                            <div class="clear">
+                                <div class="f-left">
+                                    <label>From :</label>
+                                    <div class="p-reltv">
+                                        <input type="text" maxlength="200" ng-required="true" ng-blur="checklocation()" class="form-control" ng-model="locationfrom" ui-autocomplete="locationStateOption" placeholder="From Airport" />
+                                    </div>
+                                </div>
+                                <div class="f-right">
+                                    <label>To :</label>
+                                    <div class="p-reltv">
+                                        <input type="text" maxlength="200" ng-required="true" class="form-control" ng-blur="checklocation()" ng-model="locationto" ui-autocomplete="locationStateOption" placeholder="To Airport" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="clear">
+                                <span id="msgg" style="color:red"></span>
+                            </div>
+                            <div class="clear dy-btn3">
+                                <div class="f-left"><input type="button" ng-click="setdate(0)" ng-class="classsetactive==0?'active':''" class="s-btn" id="today" value="Today"></div>
+                                <div class="f-left">
+                                    <input type="button" class="s-btn" ng-class="classsetactive==2?'active':''" ng-click="setdate(2)" id="week" value="Next 2 Days">
+                                </div>
+                                <div class="f-right">
+                                    <input type="button" class="s-btn" id="week1" ng-class="classsetactive==5?'active':''" ng-click="setdate(5)" value="Next 5 Days"> 
+                                </div> 
+                            </div> 
+                            <div class="clear">
+                                <div class="f-left">
+                                    <label>From Date :</label>
+                                    <input name="data" class="quote_date dtt" required="required" id="dtt" value="{{ dateFrom | date:'dd-MM-yyyy' }}" type="text"  />
+                                </div>
+                                <div class="f-right">
+                                    <label>To Date :</label>
+                                    <input name="data" class="quote_date1 dtt" required="required" id="dtt" value="{{ dateTo | date:'dd-MM-yyyy' }}" type="text"  />
+                                </div>
+
+                            </div>
+                            <div class="clear"> 
+                                <input class="sub-btn" type="submit" value="search">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="how_it_work" id="howitwork">
+        <div class="how-it-bar">
+            <h1>We pioneered transportaion online. Now we're reinventing it again for mobile.</h1>
+        </div>
+        <section class="first w-setps">
+            <div class="wrapper">
+                <h3>How It Works</h3>
+                <div class="step-box">
+                    <i class="fa fa-check"></i>
+                    Post your parcel
+                </div>
+                <div class="abt-steps">
+                    <h2>BOOK YOUR PARCEL</h2>
+                    <p>
+                        Search for verified Transporters on MCB. Or
+                        Add your parcel request in easy steps.
+                    </p>
+                    <ul>
+                        <li>Add Parcel</li>
+                        <li>Fill Parcel Details</li>
+                        <li>Check Summary</li>
+                        <li>Save & Confirm</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="secnd w-setps">
+            <div class="wrapper">
+                <div class="step-box">
+                    <i class="fa fa-check"></i>
+                    Get alert about transporter
+                </div>
+                <div class="abt-steps">
+                    <h2>TRANSPORT YOUR PARCEL</h2>
+                    <p>Our verified transporters will take your parcel to Receiver. MCB will match you with our verified Transporters .</p>
+                    <ul>
+                        <li>Alert on Transporter Match</li>
+                        <li>Coordinate with Transporter</li>
+                        <li>Handover Parcel to Transporter</li>
+                        <li>Receiver gets Alert</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="third w-setps">
+            <div class="wrapper">
+                <div class="step-box">
+                    <i class="fa fa-check"></i>
+                    Buddy receive your courier
+                </div>
+                <div class="abt-steps">
+                    <h2>DELIVER PARCEL TO RECEIVER</h2>
+                    <p>MCB Transporter will handover the parcel to Receiver safely</p>
+                    <ul>
+                        <li>Receive the Parcel </li>
+                        <li>Confirm the Receipt</li>
+                        <li>Rate the Transporter</li>
+                        <li>Auto Alert to Sender</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </section>
+    <section class="six-benifits">
+        <div class="wrapper">
+            <ul>
+                <li class="tooltip tooltip-effect-2 tooltip-item">
+                    <i class="fa fa-paper-plane-o fa-2x "></i>
+                    <p>
+                        <strong>Fastest </strong><br>
+                        Delivery
+                        <span class="tooltip-content clearfix">
+                            MCB is the fastest way to deliver the parcels. We deliver parcels one to one via our verified Transporters. MCB delivers all parcels by Air only.
+                        </span>
+                    </p>
+                </li>
+                <li class="tooltip tooltip-effect-2 tooltip-item">
+                    <i class="fa fa-usd fa-2x"></i>
+                    <p>
+                        <strong>Cost </strong> <br>
+                        Saving
+                        <span class="tooltip-content clearfix">
+                            MCB is cheaper as compared to other Air cargo services in Market for same day delivery of parcels. All the parcels shall be delivered within 24 hours in the Country.
+                        </span>
+                    </p>
+                </li>
+                <li class="tooltip tooltip-effect-2 tooltip-item">
+                    <i class="fa fa-money fa-2x"></i>
+                    <p>
+                        <strong>Extra </strong> <br>
+                        Income
+                        <span class="tooltip-content clearfix">
+                            MCB is a social courier service, where the sender pays and Transporter receives. Money paid by sender is shared directly to Transporter. Become a transporter to earn additional income, while traveling.
+                        </span>
+                    </p>
+                </li>
+                <li class="tooltip tooltip-effect-2 tooltip-item">
+                    <i class="fa fa-bolt fa-2x"></i>
+                    <p>
+                        <strong>Efficient</strong> Transport <br>
+                        Channel
+                        <span class="tooltip-content clearfix">
+                            MCB is the most efficient transport channel. Sender always know When, How and Who will carry your parcel. You are always in touch with your parcel directly or indirectly.
+                        </span>
+                    </p>
+                </li>
+                <li class="tooltip tooltip-effect-2 tooltip-item">
+                    <i class="fa fa-users fa-2x"></i>
+                    <p>
+                        <strong>make New </strong><br>
+                        Friends
+                        <span class="tooltip-content clearfix">
+                            MCB helps to bring sender, transporter and receiver together, which brings people closer. You get opportunity to meet new people and make new friends, who may belong to your home town or travelling to your city frequently.
+                        </span>
+                    </p>
+                </li>
+
+                <li class="tooltip tooltip-effect-2 tooltip-item">
+                    <i class="fa fa-tachometer fa-2x"></i>
+                    <p>
+                        <strong>Collaboration  </strong><br>
+
+                        Mutual Benefit
+                        <span class="tooltip-content clearfix">
+
+                            MCB is a collaborative model, where the money is given to the transporter who provides the services. MCB brings sender and transporter together to help each other.
+                        </span>
+                    </p>
+
+                </li>
+
+            </ul>
+
+
+        </div>
+
+    </section>
+    <section class="send-trans">
+        <div class="wrapper">
+            <div class="opt-change">
+
+                <a class="send-b" href="javascript:void(0)">
+                    <i class="fa fa-user"></i>
+
+                    <span>Send </span>Your Parcel
+                </a>
+                <a class="trans-b" href="javascript:void(0)">
+                    <i class="fa fa-plane"></i>
+                    <span>Become A</span>
+                    Transporter
+                </a>
+            </div>
+            <div class="sender-li" style="display:none">
+                <div class="tras-box-block">
+                    <div class="stps"><span>1</span></div>
+                    <div class="tras-box-p">
+                        <h2>ADD PARCEL</h2>
+                        <p>Add your parcel booking in easy steps.</p>
+                        <ul>
+                            <li>Add Parcel</li>
+                            <li>Fill Parcel Details</li>
+                            <li>Check Summary</li>
+                            <li>Save & Confirm</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tras-box-block">
+                    <div class="stps"><span>2</span></div>
+                    <div class="tras-box-p">
+                        <h2>HANDOVER PARCEL</h2>
+                        <p>MCB will match Senders with our verified Transporters</p>
+                        <ul>
+                            <li>Alert on matching Parcel Booking</li>
+                            <li>Handover Parcel to Transporter</li>
+                            <li>Handover Parcel to Receiver</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tras-box-block">
+                    <div class="stps"><span>3</span></div>
+                    <div class="tras-box-p">
+                        <h2>DELIVER PARCEL TO RECEIVER</h2>
+                        <p>MCB Transporter will deliver the parcel to Receiver safely</p>
+                        <ul>
+                            <li>Receive the Parcel</li>
+                            <li>Rate the Transporter</li>
+                            <li>Auto Alert to Sender</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="transporter-li" style="display:none">
+                <div class="tras-box-block">
+                    <div class="stps"><span>1</span></div>
+                    <div class="tras-box-p">
+                        <h2>REGISTER & UPDATE TRIP</h2>
+                        <p>Register with MCB and become MCB Courier Buddy. Update your trip on MCB.</p>
+                        <ul>
+                            <li>Add Trip</li>
+                            <li>Upload Flight & Ticket details</li>
+                            <li>Admin Verifies and Approve</li>
+                            <li>Match with Senders Parcel Booking</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tras-box-block">
+                    <div class="stps"><span>2</span></div>
+                    <div class="tras-box-p">
+                        <h2>PICK & DELIVER PARCEL</h2>
+                        <p>Our verified transporters can pick parcel bookings for their trips. MCB will match Senders with our verified Transporters .</p>
+                        <ul>
+                            <li>Alert on matching Parcel Booking</li>
+                            <li>Coordinate & Pick Parcel</li>
+                            <li>Handover Parcel to Receiver</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tras-box-block">
+                    <div class="stps"><span>3</span></div>
+                    <div class="tras-box-p">
+                        <h2>GET PAID</h2>
+                        <p>Upon successful delivery for every booking, transporter will be credited with Money in Wallet. </p>
+                        <ul>
+                            <li>Confirm Parcel Receipt</li>
+                            <li>Money will be credited to Wallet</li>
+                            <li>Raise Request for Payment</li>
+                            <li>Amount Credited in Bank Account</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $('.quote_date').Zebra_DatePicker({
+                direction: true, pair: $('.quote_date1'), format: 'd-m-Y'
+            });
+            $('.quote_date1').Zebra_DatePicker({
+                direction: true, format: 'd-m-Y'
+            });
+            $(".trans-b").addClass('active');
+            $(".send-trans .transporter-li").show(1000);
+            $(".send-b").click(function () {
+                $(".send-trans .transporter-li").hide(1000);
+                $(".send-trans .sender-li").show(1000);
+                $(".send-b").addClass('active');
+                $(".trans-b").removeClass('active');
+            });
+            $(".trans-b").click(function () {
+                $(".send-trans .sender-li").hide(1000);
+                $(".send-trans .transporter-li").show(1000);
+                $(".trans-b").addClass('active');
+                $(".send-b").removeClass('active');
+            }); 
+        </script>
+    </section> 
+</div>
