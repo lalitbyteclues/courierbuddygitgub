@@ -31,25 +31,28 @@ angular.module('courier').controller("adminpaymentmanagerController", function (
          $scope.edit = true;
      }
      $scope.approvetrip = function (data) { 
-         console.log(data);
-         var datapost = { "id": data.id, "status":1};
-         searchService.createpaymentrequest(datapost).then(function (results) {
-             if (results.status == 200) {
-                 searchService.paymentrequestlist(0).then(function (results) {
+         bootbox.prompt("Enter Bank Transaction No?", function (result) {
+             if (result !== null) {
+                 var datapost = { "id": data.id, "status": 1, "TransactionID": result };
+                 searchService.createpaymentrequest(datapost).then(function (results) {
                      if (results.status == 200) {
-                         $scope.tripslist = results.data.response;
-                         for (i = 0; i < $scope.tripslist.length; i++) {
-                             var deptime = $scope.tripslist[i].created.split(" ");
-                             $scope.tripslist[i].created = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
-                         }
-                         $scope.currentPage = 1; //current page
-                         $scope.entryLimit = 10; //max no of items to display in a page
-                         $scope.filteredItems = $scope.tripslist.length; //Initially for no filter  
-                         $scope.totalItems = $scope.tripslist.length;
+                         searchService.paymentrequestlist(0).then(function (results) {
+                             if (results.status == 200) {
+                                 $scope.tripslist = results.data.response;
+                                 for (i = 0; i < $scope.tripslist.length; i++) {
+                                     var deptime = $scope.tripslist[i].created.split(" ");
+                                     $scope.tripslist[i].created = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
+                                 }
+                                 $scope.currentPage = 1; //current page
+                                 $scope.entryLimit = 10; //max no of items to display in a page
+                                 $scope.filteredItems = $scope.tripslist.length; //Initially for no filter  
+                                 $scope.totalItems = $scope.tripslist.length;
+                             }
+                         });
                      }
                  });
              }
-         });
+         }); 
      }
      $scope.viewuserdetails = function (userid)
      {

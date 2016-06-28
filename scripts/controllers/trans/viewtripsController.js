@@ -94,7 +94,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
     }
     $scope.parcelcollected = function (id) {
         $scope.successaddtripMessage = "";
-        bootbox.confirm("Are you Sure that you have Collected Parcel ?", function (result) {
+        bootbox.confirm("Are you sure you have collected the parcel?", function (result) {
             if (result) {
                 var data = { "id": $scope.transporter.id, "status": 3, "process_by": sessionStorage.getItem("UserId"), "reason": "Parcel Collected","parcelid":id };
                 AddTripsService.usrupdatestatus(data).then(function (results) {
@@ -126,7 +126,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
     }
     $scope.parceldelivered = function (id) {
         $scope.successaddtripMessage = "";
-        bootbox.confirm("Are you Sure that you have Delivered Parcel ?", function (result) {
+        bootbox.confirm("Are you sure you have delivered the parcel?", function (result) {
             if (result) {
                 var data = { "id": $scope.transporter.id, "status": 6, "process_by": sessionStorage.getItem("UserId"), "reason": "Parcel Delivered", "parcelid": id };
                 AddTripsService.usrupdatestatus(data).then(function (results) {

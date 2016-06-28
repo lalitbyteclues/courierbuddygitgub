@@ -24,7 +24,7 @@ angular.module('courier').controller("CancelledtripsController", function ($root
                 $scope.mainlist[i].arrival_time = new Date(arrtime[0].split("-")[1] + "/" + arrtime[0].split("-")[2] + "/" + arrtime[0].split("-")[0] + " " + arrtime[1]);
                 $scope.list[i].status = parseInt($scope.list[i].status);
                 $scope.mainlist[i].status = parseInt($scope.list[i].status);
-                dTable.row.add(["T" + $scope.mainlist[i].id, $scope.mainlist[i].source, $scope.mainlist[i].destination, $scope.mainlist[i].flight_no, $scope.mainlist[i].capacity, $scope.mainlist[i].capacity, $scope.mainlist[i].statusdescription]).draw();
+                dTable.row.add([$scope.mainlist[i].TripID, $scope.mainlist[i].source, $scope.mainlist[i].destination, $scope.mainlist[i].flight_no, $scope.mainlist[i].capacity, $scope.mainlist[i].capacity, $scope.mainlist[i].statusdescription]).draw();
             }
         }
     });  

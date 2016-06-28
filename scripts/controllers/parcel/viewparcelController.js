@@ -60,7 +60,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                         var dat = $scope.tripsmatch[i].arrival_time.split("-");
                         var day = dat[2].split(" ");
                         $scope.tripsmatch[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
-                        trans.row.add(["T" + $scope.tripsmatch[i].id, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
+                        trans.row.add([$scope.tripsmatch[i].TripID, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
 
                     }
                 } else {
@@ -90,7 +90,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                                         var dat = $scope.tripsmatch[i].arrival_time.split("-");
                                         var day = dat[2].split(" ");
                                         $scope.tripsmatch[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
-                                        trans.row.add(["T" + $scope.tripsmatch[i].id, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
+                                        trans.row.add([$scope.tripsmatch[i].TripID, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
                                     }
                                 }
                                 else {
@@ -290,7 +290,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                                                 var dat = $scope.tripsmatch[i].arrival_time.split("-");
                                                 var day = dat[2].split(" ");
                                                 $scope.tripsmatch[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
-                                                trans.row.add(["T" + $scope.tripsmatch[i].id, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
+                                                trans.row.add([$scope.tripsmatch[i].TripID, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
 
                                             }
                                         } else {
@@ -342,7 +342,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                         var dat = $scope.tripsmatch[i].arrival_time.split("-");
                         var day = dat[2].split(" ");
                         $scope.tripsmatch[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
-                        trans.row.add(["T" + $scope.tripsmatch[i].id, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
+                        trans.row.add([$scope.tripsmatch[i].TripID, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
 
                     }
                 } else {

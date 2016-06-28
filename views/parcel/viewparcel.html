@@ -49,7 +49,7 @@
                                 <div class="clear">&nbsp;&nbsp;</div>
                             </div>
                             <div class="col-md-10" ng-hide="issummary">
-                                <h1>View Parcel #{{parcel.id}}</h1>
+                                <h1>View Parcel {{parcel.ParcelID}}</h1>
                                 <a href='/editparcel/{{parcel.id}}' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 0 5px 0;" title='Cancel Parcel'>Edit Parcel</a>
                                 <a ng-hide="parcel.status==7 || parcel.status==5" href='javascript:void(0);' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 5px 5px 0;" ng-click='cancelparcellist(parcel.id)' title='Cancel Parcel'>Cancel Parcel</a>
                                 <div ng-show="parcel.status == 4">
@@ -209,7 +209,7 @@
                                             <table border="0" cellpadding="4" width="100%">
                                                 <tbody>
                                                     <tr ng-repeat="user in userlist">
-                                                        <td><b>MCB Id</b>{{user.id}}</td>
+                                                        <td><b>MCB Id</b>{{user.UserID}}</td>
                                                         <td><b>Email</b>{{user.username}}</td>
                                                         <td><b>Name</b>{{user.name}} </td>
                                                         <td><b>Phone</b>{{user.mobile}}</td>
@@ -226,7 +226,7 @@
                                             <table border="0" ng-show="userlist.length>0" cellpadding="4" width="100%">
                                                 <tbody>
                                                     <tr ng-repeat="user in userlist">
-                                                        <td><b>Trip Id</b>{{transporter.id}}</td>
+                                                        <td><b>Trip Id</b>{{transporter.TripID}}</td>
                                                         <td><b>Departure On</b>{{transporter.dep_time}}</td>
                                                         <td><b>Arrival On</b>{{transporter.arrival_time}} </td>
                                                         <td><b>Flight No</b>{{transporter.flight_no}}</td>

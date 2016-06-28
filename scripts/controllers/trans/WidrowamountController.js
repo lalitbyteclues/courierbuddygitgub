@@ -26,7 +26,7 @@ angular.module('courier').controller("WidrowamountController", function ($rootSc
             $scope.errormessage = "Please, fill out all fields!";
             return;
         }
-        var datapost = { "trans_id": sessionStorage.getItem("UserId"), "amount": $scope.userdetails.targetamount, "bank_name": $scope.userdetails.bank_name, "acct_no": $scope.userdetails.bank_act_no, "ifsc": $scope.userdetails.bank_ifsc, "status": 0, "created": new Date(), "swift_code": $scope.userdetails.bank_swift_code, "act_name": $scope.userdetails.bank_act_name };
+        var datapost = { "trans_id": sessionStorage.getItem("UserId"), "amount": $scope.userdetails.targetamount, "bank_name": $scope.userdetails.bank_name, "acct_no": $scope.userdetails.bank_act_no, "ifsc": $scope.userdetails.bank_ifsc, "status": "N", "created": new Date(), "swift_code": $scope.userdetails.bank_swift_code, "act_name": $scope.userdetails.bank_act_name };
         searchService.createpaymentrequest(datapost).then(function (results) {
             if (results.status == 200) {
                 searchService.paymentrequestlist(sessionStorage.getItem("UserId")).then(function (results) {

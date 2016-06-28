@@ -18,11 +18,12 @@
                                                         <tr>
                                                             <th>Trip ID</th>
                                                             <th>Parcel ID</th>
-                                                            <th>Comment</th>
-                                                            <th>Date</th>
-                                                            <th>Weight</th>
+                                                            <th>WithDrawID</th>
+                                                            <th>Date</th> 
                                                             <th>Earned Amount</th>
-                                                            <th>Used Amount</th> 
+                                                            <th>Used Amount</th>
+                                                            <th>Withraw Amount</th>
+                                                            <th>Status</th> 
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -46,6 +47,96 @@
                                     </div>
                                 </div>
                             </div>
+                            <div role="dialog" tabindex="-1" id="parceldetails" class="modal modal-login">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4>Parcel {{parcelsingle.ParcelID}}</h4>
+                                            <table ng-hide="edit" id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tr>
+                                                    <td>From</td>
+                                                    <td>{{parcelsingle.source}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>To</td>
+                                                    <td>{{parcelsingle.destination}}</td>
+                                                </tr> 
+                                                <tr>
+                                                    <td>Weight</td>
+                                                    <td>{{parcelsingle.weight}}Kg</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear">&nbsp;</div>
+                            </div>
+                            <div role="dialog" tabindex="-1" id="tripdetails" class="modal modal-login">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4>Trip {{tripsingle.TripID}}</h4>
+                                            <table ng-hide="edit" id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tr>
+                                                    <td>From</td>
+                                                    <td>{{tripsingle.source}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>To</td>
+                                                    <td>{{tripsingle.destination}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Weight</td>
+                                                    <td>{{tripsingle.capacity}}Kg</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear">&nbsp;</div>
+                            </div>
+                            <div role="dialog" tabindex="-1" id="paymentdetails" class="modal modal-login">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4>With Draw ID  {{paymentsingle.withdrawID}}</h4>
+                                            <table ng-hide="edit" id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tr>
+                                                    <td>Bank Name</td>
+                                                    <td>{{paymentsingle.bank_name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Bank Account No</td>
+                                                    <td>{{paymentsingle.acct_no}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>TransactionID</td>
+                                                    <td>{{paymentsingle.TransactionID}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear">&nbsp;</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,3 +145,8 @@
     </div>
 </div>
 
+<script>
+    function openpopup(id, status) { 
+        angular.element('.container').scope().openpopup(id, status);
+    }
+</script>

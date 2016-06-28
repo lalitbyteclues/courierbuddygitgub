@@ -315,7 +315,7 @@ $('.cncel-opt-rad').html('<input type="radio" value="Y" class="p-check" id="Stat
 }
 else
 {
-$('.cncel-opt-rad').html('<input type="radio" value="Y" class="p-check" id="StatusChoiceY" name="data[Status][choice]" required >Delivered<input type="radio" value="N" class="p-check" id="StatusChoiceN" name="data[Status][choice]" required>Not Delivered<input type="hidden" class="b_idd" id="b_id" required="required" name="data[Status][b_id]" value="'+item+'"><input type="hidden" class="b_idd" id="pgg"  name="data[Status][page]" value="'+page+'">  ');
+$('.cncel-opt-rad').html('<input type="radio" value="Y" class="p-check" id="StatusChoiceY" name="data[Status][choice]" required >Delivered<input type="radio" value="N" class="p-check" id="StatusChoiceN" name="data[Status][choice]" required>Not Received<input type="hidden" class="b_idd" id="b_id" required="required" name="data[Status][b_id]" value="'+item+'"><input type="hidden" class="b_idd" id="pgg"  name="data[Status][page]" value="'+page+'">  ');
 }
 
 $('.cncel-opt-rad').append('<div class="feed_bx" style="display:none"><label> Feedback</label><input type="textarea" name="data[Status][feed]" required id="feed" class="feed-req" ></div><div class="resn_bx" style="display:none"><label> Reason</label><input type="textarea" name="data[Status][reason]" required id="resn" class="res-req" ></div>');

@@ -112,7 +112,7 @@
                                 <td>{{data.swift_code}}</td>
                                 <td>   {{data.act_name}}</td>
                                 <td>{{data.status=='Y'?"Approved":"Request Sent"}}
-                                    <a href="javascript:void(0);" ng-show="data.status=='N'" ng-click="approvetrip(data)"><i class="fa fa-check-circle"></i>Approve</a>
+                                    <a href="javascript:void(0);" ng-hide="data.status=='Y'" ng-click="approvetrip(data)"><i class="fa fa-check-circle"></i>Approve</a>
                                 </td>
                             </tr>
                         </tbody>

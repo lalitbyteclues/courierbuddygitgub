@@ -3,7 +3,7 @@
     <li role="presentation" ng-class="isActive('/sender') || isActive('/addparcel') || isActive('/cancelparcel') || isActive('/refundparcel')?'active':''">
         <a ui-sref="sender" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-sender" aria-hidden="true">&nbsp;</i> Sender Dashboard</a>
     </li>
-    <li role="presentation" ng-class="isActive('/transporter')|| isActive('/transporter/addtrip') || isActive('/transporter/canceltrips') || isActive('/transporter/bankdetails') || isActive('/transporter/withdraw')?'active':''">
+    <li role="presentation" ng-class="isActive('/transporter')|| isActive('/transporter/addtrip') || isActive('/transporter/canceltrips') || isActive('/transporter/bankdetails')?'active':''">
         <a ui-sref="transporter" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-transporter" aria-hidden="true">&nbsp;</i> Transporter Dashboard</a>
     </li>
     <li role="presentation" id="main-rec" ng-class="isActive('/receiver')?'active':''">
@@ -17,6 +17,7 @@
             <i class="fa fa-google-wallet" aria-hidden="true"></i>My Wallet
         </a>
     </li> 
+    <li role="presentation" ng-class="isActive('/transporter/withdraw')?'active':''"><a ui-sref="withdraw" aria-controls="withdraw" role="tab" data-toggle="tab"><i class="fa fa-money" aria-hidden="true"></i> Withdraw</a></li>
 </ul>
 
 
