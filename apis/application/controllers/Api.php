@@ -1000,5 +1000,36 @@ public function updateuserdetails()
 		echo $json_response;  
 	 }  
  }
+ //Chat methods
+ public function chatsubmit()
+{
+	$this->form_validation->set_rules('channelid', '<b>channelid</b>', 'trim|required|max_length[100]');
+	$this->form_validation->set_rules('messageuserid', '<b>messageuserid</b>', 'trim|required|max_length[100]'); 
+	$this->form_validation->set_rules('message', '<b>message</b>', 'trim|required');
+	$arr['channelid'] = $this->input->post('channelid');
+	$arr['messageuserid'] = $this->input->post('messageuserid'); 
+	$arr['message'] = $this->input->post('message');
+	if ($this->form_validation->run() == FALSE) {
+		$arr['success'] = false;
+		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-danger alert-dismissable"><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . validation_errors() . '</div>';
+	} else {
+		$this->db->insert('chatmessages',$arr);
+		$detail = $this->db->select('*')->from('chatmessages')->where('id',$this->db->insert_id())->get()->row();
+		$arr['channelid'] = $detail->channelid;
+		$arr['messageuserid'] = $detail->email;
+		$arr['message'] = $detail->message;
+		$arr['created'] = $detail->created;
+		$arr['id'] = $detail->id;
+		$arr['new_count_message'] = $this->db->where('read_status',0)->count_all_results('message');
+		$arr['success'] = true;
+		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-success" role="alert"> <i class="fa fa-check"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Message sent ...</div>';
+	}
+	echo json_encode($arr);
+ }
+ public function getchannelmessageslist($channelid)
+ {  
+	$data['message'] = $this->db->select('*')->from('chatmessages')->where("channelid",$channelid)->order_by('id','desc')->get();
+	print_r(json_encode($data['message']->result_array()));
+ }
 }
 ?>
