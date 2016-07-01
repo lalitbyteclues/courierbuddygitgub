@@ -1019,8 +1019,12 @@ public function updateuserdetails()
 		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-danger alert-dismissable"><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . validation_errors() . '</div>';
 	} else {
 		$this->db->insert('chatmessages',$arr);
-		$detail =$this->db->query("select a.id,a.channelid,message,a.created,a.readstatus,a.messageuserid,u.name as username from cms_chatmessages a INNER JOIN cms_users u on a.messageuserid=u.id where a.id=".$this->db->insert_id()."")->result()[0];
+		$detail =$this->db->query("select a.id,a.channelid,message,a.created,a.readstatus,a.messageuserid,u.name as username,cchannel.parcelid,cchannel.senderid,cchannel.transporterid,cchannel.receiverid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where a.id=".$this->db->insert_id()."")->result()[0];
 		 $arr['channelid'] = $detail->channelid;
+		 $arr['parcelid'] = $detail->parcelid;
+		 $arr['senderid'] = $detail->senderid;
+		 $arr['transporterid'] = $detail->transporterid;
+		 $arr['receiverid'] = $detail->receiverid;
 		$arr['username'] = $detail->username;
 		$arr['message'] = $detail->message;
 		$arr['created'] = $detail->created;
@@ -1033,7 +1037,7 @@ public function updateuserdetails()
  }
  public function getchannelmessageslist($channelid)
  {   
-	$data['message'] =$this->db->query("select a.messageuserid as id,a.channelid,message,a.created,a.readstatus,u.name as username from cms_chatmessages a INNER JOIN cms_users u on a.messageuserid=u.id where channelid=".$channelid." ");
+	$data['message'] =$this->db->query("select a.messageuserid as id,a.channelid,message,a.created,a.readstatus,u.name as username,cchannel.parcelid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where channelid=".$channelid." ");
 	print_r(json_encode($data['message']->result()));
  }
 }

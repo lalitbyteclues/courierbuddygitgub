@@ -22,8 +22,8 @@ io.on('connection', function (socket) {
     });
   });
   socket.on('new_message', function( data ) {
-	  console.log('New Message %d', data.message);
-      io.sockets.emit( 'new_message', {channelid: data.channelid,username: data.username,message: data.message,created: data.created,id:data.id});
+	  console.log('New Message %d', data.id);
+      io.sockets.emit( 'new_message',data);
   });
   socket.on('get_history', function( channelid )
   {   

@@ -26,6 +26,13 @@ angular.module('courier').factory('ReceiverService', ['$http', '$q', 'RESOURCES'
             return response;
         });
     };
+    var _submitchat = function (data) {
+        return $http.post(serviceBase + 'api/chatsubmit', data, {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (response) {
+            return response;
+        });
+    };
     var _usrupdatestatus = function (data) {
         return $http.post(serviceBase + 'api/usrupdateParceltatus', data, {
             headers: { 'Content-Type': 'application/json' }
@@ -87,6 +94,7 @@ angular.module('courier').factory('ReceiverService', ['$http', '$q', 'RESOURCES'
     ReceiverServiceFactory.getcalcelledParcelList = _getcalcelledParcelList;
     ReceiverServiceFactory.getrefundedParcelList = _getrefundedParcelList;
     ReceiverServiceFactory.updatestatus = _updatestatus;
+    ReceiverServiceFactory.submitchat = _submitchat;
     ReceiverServiceFactory.usrupdatestatus = _usrupdatestatus;
     ReceiverServiceFactory.deletetrip = _deletetrip;
     ReceiverServiceFactory.getparceldetail = _getparceldetail;
