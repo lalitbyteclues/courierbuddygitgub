@@ -184,6 +184,13 @@ angular.module('courier').factory("AuthService", ['$http', '$q', 'ValiDatedToken
             return results;
         });
     };
+    var _getchatlist = function (channelid) {
+        return $http.get(serviceBase + 'api/getchannelmessageslist/' + channelid, {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (results) {
+            return results;
+        });
+    };
     var _resetPasswordToken = function (resetPasswordTokenData) {
         return $http.post(serviceBase + 'account/resetpasswordtoken', resetPasswordTokenData).then(function (response) {
             return response;
@@ -213,6 +220,7 @@ angular.module('courier').factory("AuthService", ['$http', '$q', 'ValiDatedToken
     authServiceFactory.externalAuthData = _externalAuthData;
     authServiceFactory.getuserdetails = _getuserdetails; 
     authServiceFactory.getuserslist = _getuserslist;
+    authServiceFactory.getchatlist = _getchatlist;
     authServiceFactory.resetPasswordToken = _resetPasswordToken;
     authServiceFactory.resetPassword = _resetPassword;
     authServiceFactory.changepassword = _changepassword;

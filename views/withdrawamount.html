@@ -64,12 +64,19 @@
                                             <span class="error" ng-show="formwidrowamount.widrowamount.$error.max">Current Balance ₹{{userdetails.wallet}}.</span>
                                             <span class="error" ng-show="(formwidrowamount.$submitted && formwidrowamount.widrowamount.$error.required)">Required.</span>
                                         </div>
-                                        <div class="clear">&nbsp;</div>
-
+                                        <div class="clear">&nbsp;</div> 
                                         <div class="col-md-5"><label>Account No <span class="red">*</span></label></div>
                                         <div class="col-md-7">
-                                            <input name="bank_act_no" class="form-control input-md" ng-model="userdetails.bank_act_no" valid-number required="required" maxlength="25" type="text" value="" id="UserBankActNo" placeholder="(eg. 054789562434578)" />
+                                            <input name="bank_act_no" class="form-control input-md" ng-model="userdetails.bank_act_no" valid-number required="required" maxlength="25" type="text" value="" id="bank_act_no" placeholder="(eg. 054789562434578)" />
                                             <span class="error" ng-show="(formwidrowamount.$submitted && formwidrowamount.bank_act_no.$error.required)">Required.</span>
+
+                                        </div>
+                                        <div class="clear">&nbsp;</div>
+                                        <div class="col-md-5"><label>Repeat Account No <span class="red">*</span></label></div>
+                                        <div class="col-md-7">
+                                            <input name="rbank_act_no" class="form-control input-md" pw-check="bank_act_no" ng-model="userdetails.rbank_act_no" valid-number required="required" maxlength="25" type="text" value="" id="UserBankActNo" placeholder="(eg. 054789562434578)" />
+                                            <span class="error" ng-show="(formwidrowamount.$submitted && formwidrowamount.rbank_act_no.$error.required)">Required.</span> 
+                                            <span class="error" ng-show="formwidrowamount.rbank_act_no.$error.pwmatch && userdetails.rbank_act_no.length>0">Account not Match.</span>
 
                                         </div>
                                         <div class="clear">&nbsp;</div>

@@ -1,5 +1,6 @@
 //var apiBasePath = 'http://localhost/'; //local 
-var apiBasePath = 'http://webservice9875.mycourierbuddy.in/'; //live 
+//var apiBasePath = 'http://webservice9875.mycourierbuddy.in/'; //live http://webservice.mycourierbuddy.com/
+var apiBasePath = 'http://webservice.mycourierbuddy.com/'; //live
 var clientId = "P600Us6Y476QiK331u5yEzb22dpX_y6NS75!9I-a";
 (function () {
     angular.module('courier', [

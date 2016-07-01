@@ -818,6 +818,11 @@ class Api extends CI_Controller{
 		$message = $this->api_model->usrupdate_trips_status($input_data);		 
 		 echo $message; 
 	} 
+	public function cancelparcelbytransporter()
+	{	$input_data = json_decode(trim(file_get_contents('php://input')), true);
+		$message = $this->api_model->cancel_parcel_by_transporter($input_data);		 
+		 echo $message; 
+	} 
 	public function updateParceltatus()
 	{	$input_data = json_decode(trim(file_get_contents('php://input')), true);
 		$message = $this->api_model->update_Parcel_status($input_data);		 
@@ -1014,22 +1019,22 @@ public function updateuserdetails()
 		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-danger alert-dismissable"><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . validation_errors() . '</div>';
 	} else {
 		$this->db->insert('chatmessages',$arr);
-		$detail = $this->db->select('*')->from('chatmessages')->where('id',$this->db->insert_id())->get()->row();
-		$arr['channelid'] = $detail->channelid;
-		$arr['messageuserid'] = $detail->email;
+		$detail =$this->db->query("select a.id,a.channelid,message,a.created,a.readstatus,a.messageuserid,u.name as username from cms_chatmessages a INNER JOIN cms_users u on a.messageuserid=u.id where a.id=".$this->db->insert_id()."")->result()[0];
+		 $arr['channelid'] = $detail->channelid;
+		$arr['username'] = $detail->username;
 		$arr['message'] = $detail->message;
 		$arr['created'] = $detail->created;
-		$arr['id'] = $detail->id;
-		$arr['new_count_message'] = $this->db->where('read_status',0)->count_all_results('message');
+		$arr['id'] = $detail->messageuserid;
+		$arr['new_count_message'] = $this->db->where('readstatus',0)->count_all_results('chatmessages');
 		$arr['success'] = true;
 		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-success" role="alert"> <i class="fa fa-check"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Message sent ...</div>';
 	}
 	echo json_encode($arr);
  }
  public function getchannelmessageslist($channelid)
- {  
-	$data['message'] = $this->db->select('*')->from('chatmessages')->where("channelid",$channelid)->order_by('id','desc')->get();
-	print_r(json_encode($data['message']->result_array()));
+ {   
+	$data['message'] =$this->db->query("select a.messageuserid as id,a.channelid,message,a.created,a.readstatus,u.name as username from cms_chatmessages a INNER JOIN cms_users u on a.messageuserid=u.id where channelid=".$channelid." ");
+	print_r(json_encode($data['message']->result()));
  }
 }
 ?>

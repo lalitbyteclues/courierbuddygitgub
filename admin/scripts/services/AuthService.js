@@ -105,6 +105,7 @@ angular.module('courier').factory("AuthService", ['$http', '$q', 'ValiDatedToken
     var _login = function (loginData) {  
         var deferred = $q.defer();
         $http({method: 'POST', url: serviceBase + "api/getloginuser", data: { 'email': loginData.userName, 'password': loginData.password },headers: { 'Content-Type': 'application/json' }}).success(function (response) {
+            console.log(response);
             if (response.status == "success" && (parseInt(response.response[0].role_id) == 1)) {
                 ValiDatedTokenObject.setValiDatedTokenObject(response.response);
                 sessionStorage.setItem("ValiDatedTokenObject", JSON.stringify(ValiDatedTokenObject.getValiDatedTokenObject())); 

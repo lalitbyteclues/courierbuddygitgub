@@ -27,6 +27,13 @@ angular.module('courier').factory('AddTripsService', ['$http', '$q', 'RESOURCES'
             return response;
         });
     };
+    var _cancelparcelbytransporter = function (data) {
+        return $http.post(serviceBase + 'api/cancelparcelbytransporter', data, {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (response) {
+            return response;
+        });
+    };
     var _updatestatus = function (data) {
         return $http.post(serviceBase + 'api/updatetripstatus', data, {
             headers: { 'Content-Type': 'application/json' }
@@ -83,6 +90,7 @@ angular.module('courier').factory('AddTripsService', ['$http', '$q', 'RESOURCES'
     AddTripsServiceFactory.getTripsListall = _getTripsListall;
     AddTripsServiceFactory.getcalcelledTripsList = _getcalcelledTripsList; 
     AddTripsServiceFactory.updatestatus = _updatestatus;
+    AddTripsServiceFactory.cancelparcelbytransporter = _cancelparcelbytransporter;
     AddTripsServiceFactory.usrupdatestatus = _usrupdatestatus;
     AddTripsServiceFactory.deletetrip = _deletetrip; 
     AddTripsServiceFactory.senderbookingrequest = _senderbookingrequest; 

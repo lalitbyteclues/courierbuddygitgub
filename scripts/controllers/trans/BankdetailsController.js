@@ -28,7 +28,7 @@ angular.module('courier').controller("BankdetailsController", function ($rootSco
     AuthService.getuserdetails(sessionStorage.getItem("UserId")).then(function (results) {
         if (results.status == 200) {
             $scope.userdetails = results.data.response[0];
-            console.log($scope.userdetails);
+            $scope.rbank_act_no = results.data.response[0].bank_act_no;
         }
     });
 });

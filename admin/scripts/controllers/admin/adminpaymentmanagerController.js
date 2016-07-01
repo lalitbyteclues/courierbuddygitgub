@@ -34,7 +34,7 @@ angular.module('courier').controller("adminpaymentmanagerController", function (
      $scope.approvetrip = function (data) { 
          bootbox.prompt("Enter Bank Transaction No?", function (result) {
              if (result !== null) {
-                 var datapost = { "id": data.id, "status": 1, "TransactionID": result };
+                 var datapost = { "id": data.id, "status": 1, "reason": result };
                  searchService.createpaymentrequest(datapost).then(function (results) {
                      if (results.status == 200) {
                          searchService.paymentrequestlist(0).then(function (results) {

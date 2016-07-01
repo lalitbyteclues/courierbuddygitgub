@@ -1,5 +1,5 @@
 ﻿<div ng-include="'views/head.html'"></div>
-<div class="container" ng-controller="transporterController"> 
+<div class="container" ng-controller="transporterController">
     <div class="tab-form-new">
         <div ng-include="'views/dashboardmenu.html'"></div>
         <!-- Tab panes -->
@@ -61,19 +61,20 @@
                                                         <tr>
                                                             <th>Trip ID</th>
                                                             <th>From</th>
-                                                            <th>To</th>  
-                                                            <th>Avail. Capacity</th> 
+                                                            <th>To</th>
+                                                            <th>Avail. Capacity</th>
                                                             <th>Status</th>
-                                                            <th>Possible Match</th>  
+                                                            <th>Possible Match</th>
                                                             <th>Flight No</th>
                                                             <th>Dep Date</th>
-                                                            <th>Arrival date</th><th>Action</th>
+                                                            <th>Arrival date</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
                                                 </table>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <script>
                                             $(document).ready(function () {
                                                 $('#example').DataTable({
@@ -85,8 +86,8 @@
                                             .dataTables_length, .dataTables_info {
                                                 text-align: left;
                                             }
-                                        </style>   
-                                    </div> 
+                                        </style>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +113,7 @@
                                                             <td><b>Sender Email</b></td>
                                                             <td><b>Receiver Name</b></td>
                                                             <td><b>Receiver Email</b></td>
-                                                            <td ng-show="transporter.status==3">Next Action</td>
+                                                            <td>Next Action</td>
                                                         </tr>
                                                         <tr ng-repeat="par in parcel">
                                                             <td>{{par.BookingID}}</td>
@@ -123,9 +124,11 @@
                                                             <td>{{par.senderemail}}</td>
                                                             <td>{{par.receivername}}</td>
                                                             <td>{{par.receiveremail}}</td>
-                                                            <td ng-show="transporter.status==3" style="text-align:center;">
+                                                            <td style="text-align:center;">
+                                                                <a href="javascript:void(0);" ng-show="par.channelid>0" ng-click="showchat(par.channelid)"><span class="glyphicon glyphicon-comment"></span> </a>
                                                                 <a href='javascript:void(0);' class="btn btn-primary" ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
                                                                 <a href='javascript:void(0);' class="btn btn-primary" ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
+                                                                <a href='javascript:void(0);' class="btn btn-primary" ng-click='cancelparcel(par.id)' ng-show="transporter.status==3" title='Cancel Booking'>Cancel</a>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -144,14 +147,83 @@
             </div>
         </div>
     </div>
-</div> 
+    <div style="display:none">
+        <div id="notif"></div>
+        <audio id="notif_audio">
+            <source src="/sounds/notify.ogg" type="audio/ogg">
+            <source src="/sounds/notify.mp3'" type="audio/mpeg">
+            <source src="/sounds/notify.wav" type="audio/wav">
+        </audio>
+    </div>
+    <div class="popup-box chat-popup" id="qnimate">
+        <div class="popup-head">
+            <div class="popup-head-left pull-left">Chat Message</div>
+            <div class="popup-head-right pull-right">
+                <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-off"></i></button>
+            </div>
+        </div>
+        <div class="popup-messages">
+            <div class="direct-chat-messages">
+                <div ng-repeat="mess in messages">
+                    <div class="chat-box-single-line">
+                        <abbr class="timestamp">{{mess.date | date:'MMM ,dd ,yyyy'}}</abbr>
+                    </div>
+                    <div ng-repeat="mo in mess.messages">
+                        <div class="direct-chat-msg doted-border" ng-hide="loginuserid==mo.id">
+                            <div class="direct-chat-info clearfix" ng-hide="$index>0 && mess.messages[$index-1].id==mess.messages[$index].id">
+                                <span class="direct-chat-name pull-left">{{mo.username}}</span>
+                            </div>
+                            <img alt="iamgurdeeposahan" src="/images/chatuser.png" class="direct-chat-img" ng-hide="$index>0 && mess.messages[$index-1].id==mess.messages[$index].id">
+                            <div class="direct-chat-text">
+                                {{mo.message}}
+                            </div>
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-timestamp pull-right">{{mo.created | date:"h:mma"}}</span>
+                            </div>
+                            <div class="direct-chat-info clearfix" ng-hide="$index>0 && mess.messages[$index].id==mess.messages[$index+1].id">
+                                <span class="direct-chat-img-reply-small pull-left">
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="direct-chat-msg doted-borderright" ng-show="loginuserid==mo.id">
+                            <div class="direct-chat-info clearfix" ng-hide="$index>0 && mess.messages[$index-1].id==mess.messages[$index].id">
+                                <span class="direct-chat-nameright pull-right">{{mo.username}}</span>
+                            </div>
+                            <img alt="iamgurdeeposahan" src="/images/chatuser.png" class="direct-chat-imgright" ng-hide="$index>0 && mess.messages[$index-1].id==mess.messages[$index].id">
+                            <div class="direct-chat-textright">
+                                {{mo.message}}
+                            </div>
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-timestamp pull-left">{{mo.created | date:"h:mma"}}</span>
+                            </div>
+                            <div class="direct-chat-info clearfix" ng-hide="$index>0 && mess.messages[$index].id==mess.messages[$index+1].id">
+                                <span class="direct-chat-img-reply-small pull-right">
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-messages-footer">
+            <form ng-submit="submitchat()">
+                <input type="text" id="status_message" autocomplete="off" ng-model="chatmessage" required placeholder="Type a message..." name="message" />
+                <div class="btn-footer">
+                    <button type="submit" class="bg_none pull-right"><i class="glyphicon glyphicon-send"></i> </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
     $('.quote_date').Zebra_DatePicker({
         direction: true, format: 'd-m-Y'
-    }); 
+    });
     function canceltriplist(id) {
         angular.element('.container').scope().canceltriplist(id);
-    } 
+    }
     function findmatchingparcels(id) {
         angular.element('.container').scope().findmatchingparcels(id);
     }
@@ -161,6 +233,11 @@
     function parceldelivered(id) {
         angular.element('.container').scope().parceldelivered(id);
     }
+    $(function () {
+        $("#removeClass").click(function () {
+            $('#qnimate').removeClass('popup-box-on');
+        });
+    })
 </script>
 
 <style>

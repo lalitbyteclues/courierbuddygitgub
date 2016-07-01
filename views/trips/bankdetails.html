@@ -28,10 +28,18 @@
                     <div class="form-group">
                         <div class="col-md-4 control-label"><label>Account No <span class="red">*</span></label></div>
                         <div class="col-md-8">
-                            <input name="bank_act_no" class="form-control input-md" ng-model="userdetails.bank_act_no" valid-number required="required" maxlength="25" type="text" value="" id="UserBankActNo" placeholder="(eg. 054789562434578)" />
+                            <input name="bank_act_no" class="form-control input-md" ng-model="userdetails.bank_act_no" valid-number required="required" maxlength="25" type="text" value="" id="bank_act_no" placeholder="(eg. 054789562434578)" />
                             <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.bank_act_no.$error.required)">Required.</span>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-md-4 control-label"><label>Repeat Account No <span class="red">*</span></label></div>
+                        <div class="col-md-8">
+                            <input name="rbank_act_no" pw-check="bank_act_no" class="form-control input-md" ng-model="rbank_act_no" valid-number required="required" maxlength="25" type="text" value="" id="UserBankActNo" placeholder="(eg. 054789562434578)" />
+                            <span class="error" ng-show="(frmbankdetails.$submitted && frmbankdetails.rbank_act_no.$error.required)">Required.</span>
+                            <span class="error" ng-show="frmbankdetails.rbank_act_no.$error.pwmatch && rbank_act_no.length>0">Account not Match.</span>
+                        </div>
+                    </div> 
                     <div class="form-group">
                         <div class="col-md-4 control-label"><label>Bank Name <span class="red">*</span></label></div>
                         <div class="col-md-8">

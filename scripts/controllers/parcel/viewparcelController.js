@@ -6,22 +6,21 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
         var path = $location.path();
         sessionStorage.setItem("return_url", path);
         $state.transitionTo('login');
-    }
+    } 
     $http.get(RESOURCES.API_BASE_PATH + 'api/getcountries', { headers: { 'Content-Type': 'application/json' }, }).then(function (results) {
         $scope.countries = results.data.response;
     });
-    var dat=$location.url();
-    if (dat.match("#matches"))
-    {
+    var dat = $location.url();
+    if (dat.match("#matches")) {
         $('html, body').animate({
-            scrollTop:300
+            scrollTop: 300
         }, 'slow');
     }
     $scope.usewalletamount = false;
     $scope.loginuser = ValiDatedTokenObject.getValiDatedTokenObject()[0];
     AuthService.getuserdetails($scope.loginuser.id).then(function (results) {
-        $scope.loginuser = results.data.response[0]; 
-    }); 
+        $scope.loginuser = results.data.response[0];
+    });
     trans = $('#example').DataTable();
     $scope.trip = [];
     $scope.tripsmatch = [];
@@ -39,6 +38,25 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
             AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
                 $scope.userlist = results.data.response;
 
+            });
+            AuthService.getchatlist($scope.parcel.channelid).then(function (response) {
+                var index = 0;
+                var datestore = "";
+                var namestore = "";
+                for (i = 0; i < response.data.length; i++) {
+                    var dat = response.data[i].created.split("-");
+                    var day = dat[2].split(" ");
+                    response.data[i].created = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                    response.data[i].created = calcTime(response.data[i].created.getTime(), 12.5);
+                    if (datestore != (dat[1] + "/" + day[0] + "/" + dat[0])) {
+                        $scope.messages.push({ "date": response.data[i].created, "messages": [response.data[i]] });
+                        index = index + 1;
+                        datestore = (dat[1] + "/" + day[0] + "/" + dat[0]);
+                    }
+                    else {
+                        $scope.messages[index - 1].messages.push(response.data[i]);
+                    }
+                }
             });
             $('#example2').DataTable({ searching: false, paging: false });
             if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
@@ -61,7 +79,6 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                         var day = dat[2].split(" ");
                         $scope.tripsmatch[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
                         trans.row.add([$scope.tripsmatch[i].TripID, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
-
                     }
                 } else {
                     $scope.tripsmatch = [];
@@ -69,6 +86,60 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
             }
         }
     });
+    $scope.chatmessage = "";
+    $scope.messages = []; 
+    var socket = io.connect('http://webservice.mycourierbuddy.com:3000'); 
+    $scope.submitchat = function () {
+        var dataString = { channelid: $scope.parcel.channelid, messageuserid: AuthService.authentication.UserId, message: $scope.chatmessage };
+        console.log(dataString);
+        $.ajax({
+            type: "POST", url: "http://webservice.mycourierbuddy.com/api/chatsubmit", data: dataString, dataType: "json", cache: false, success: function (data) {
+                $scope.chatmessage = "";
+                if (data.success == true) {
+                    $("#notif").html(data.notif);
+                    socket.emit('new_count_message', { new_count_message: data.new_count_message });
+                    socket.emit('new_message', { channelid: data.channelid, username: data.username, created: data.created, message: data.message, id: data.id }); 
+                } else if (data.success == false) {
+                    $("#notif").html(data.notif); 
+                }
+                $(".popup-messages").animate({ scrollTop: 9999999 }, 50);
+            }, error: function (xhr, status, error) {
+                console.log(error);
+            },
+        });
+    }
+    socket.on('new_count_message', function (data) {
+        //  $("#new_count_message").html(data.new_count_message);
+        $('#notif_audio')[0].play();
+    });
+    socket.on('update_count_message', function (data) {
+        //$("#new_count_message").html(data.update_count_message);
+    });
+    socket.on('new_message', function (data) {
+        if ($scope.parcel.channelid == data.channelid) {
+            var dat = data.created.split("-");
+            var day = dat[2].split(" ");
+            data.created = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+            data.created = calcTime(data.created.getTime(), 12.5); 
+            if ($.grep($scope.messages, function (a) { return moment(a.date).format('L') == moment(data.created).format('L') }).length > 0) {
+                $.grep($scope.messages, function (a) { return moment(a.date).format('L') == moment(data.created).format('L') })[0].messages.push(data);
+            } else {
+                $scope.messages.push({ "date": data.created, "messages": [data] });
+            }
+            $scope.$apply();
+            $("#no-message-notif").html('');
+            $(".popup-messages").animate({ scrollTop: 9999999 }, 50);
+            $("#new-message-notif").html('<div class="alert alert-success" role="alert"> <i class="fa fa-check"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>New message ...</div>');
+        }
+    });
+    socket.emit('get_history', 12);
+    socket.on('history', function (msg) {
+        console.log(msg);
+    }); 
+    function calcTime(utc, offset) {
+        var nd = new Date(utc + (3600000 * offset));
+        return nd;
+    }
     $scope.cancelparcellist = function (id) {
         $scope.successaddtripMessage = "";
         bootbox.prompt("Do you want to cancel this Parcel? Give Reason.", function (result) {
@@ -141,7 +212,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                 $scope.ordernumber = false;
                 ParcelService.getparceldetail($stateParams.id).then(function (response) {
                     if (response.data.status == "success") {
-                        $scope.parcel = response.data.response[0]; 
+                        $scope.parcel = response.data.response[0];
                         $scope.trip = response.data.trip;
                         AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
                             $scope.userlist = results.data.response;
@@ -154,12 +225,11 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                                     $scope.transporter = response.data.response[0];
                                 }
                             });
-                        }  
+                        }
                     }
                 });
             }
-            else
-            {
+            else {
                 $scope.orderlist = results.data.response;
             }
         });
@@ -198,14 +268,14 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
         options: {
             html: false, focusOpen: false, onlySelectValid: true, source: function (request, response) {
                 if (request.term.length == 0)
-                    return; 
+                    return;
                 res = _suggestLocations(request.term);
                 var data = [];
                 for (var i = 0; i < res.length; i++) {
                     var r = res[i];
                     data.push({ label: r.location, value: r.location, id: r.id, name: r.location });
                 }
-                response(data); 
+                response(data);
             }
         },
         methods: {}
@@ -270,7 +340,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                                         $scope.userlist = results.data.response;
 
                                     });
-                                     
+
                                     if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
                                         searchService.gettransporterdetails($scope.parcel.trans_id).then(function (response) {
                                             if (response.data.status == "success") {
@@ -311,46 +381,46 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                     ReceiverService.usrupdatestatus(data).then(function (results) {
                         $scope.successaddtripMessage = "Updated Successfully";
                         if (results.status == 200) {
-                             ParcelService.getparceldetail($stateParams.id).then(function (response) {
-        if (response.data.status == "success") {
-            $scope.parcel = response.data.response[0];
-            if (AuthService.authentication.UserId != $scope.parcel.usr_id) {
-                $state.transitionTo('home');
-            }
-            $scope.trip = response.data.trip;
-            AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
-                $scope.userlist = results.data.response;
+                            ParcelService.getparceldetail($stateParams.id).then(function (response) {
+                                if (response.data.status == "success") {
+                                    $scope.parcel = response.data.response[0];
+                                    if (AuthService.authentication.UserId != $scope.parcel.usr_id) {
+                                        $state.transitionTo('home');
+                                    }
+                                    $scope.trip = response.data.trip;
+                                    AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
+                                        $scope.userlist = results.data.response;
 
-            });
-         
-            if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
-                searchService.gettransporterdetails($scope.parcel.trans_id).then(function (response) {
-                    if (response.data.status == "success") {
-                        $scope.issummary = true;
-                        $scope.transporter = response.data.response[0];
-                    }
-                });
-            } else {
+                                    });
 
-                if (response.data.tripsmatch !== null && typeof response.data.tripsmatch !== 'undefined') {
-                    $scope.tripsmatch = response.data.tripsmatch;
-                    trans.clear().draw();
-                    for (i = 0; i < $scope.tripsmatch.length; i++) {
-                        var dat = $scope.tripsmatch[i].dep_time.split("-");
-                        var day = dat[2].split(" ");
-                        $scope.tripsmatch[i].dep_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
-                        var dat = $scope.tripsmatch[i].arrival_time.split("-");
-                        var day = dat[2].split(" ");
-                        $scope.tripsmatch[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
-                        trans.row.add([$scope.tripsmatch[i].TripID, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
+                                    if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
+                                        searchService.gettransporterdetails($scope.parcel.trans_id).then(function (response) {
+                                            if (response.data.status == "success") {
+                                                $scope.issummary = true;
+                                                $scope.transporter = response.data.response[0];
+                                            }
+                                        });
+                                    } else {
 
-                    }
-                } else {
-                    $scope.tripsmatch = [];
-                }
-            }
-        }
-    }); 
+                                        if (response.data.tripsmatch !== null && typeof response.data.tripsmatch !== 'undefined') {
+                                            $scope.tripsmatch = response.data.tripsmatch;
+                                            trans.clear().draw();
+                                            for (i = 0; i < $scope.tripsmatch.length; i++) {
+                                                var dat = $scope.tripsmatch[i].dep_time.split("-");
+                                                var day = dat[2].split(" ");
+                                                $scope.tripsmatch[i].dep_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                                                var dat = $scope.tripsmatch[i].arrival_time.split("-");
+                                                var day = dat[2].split(" ");
+                                                $scope.tripsmatch[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                                                trans.row.add([$scope.tripsmatch[i].TripID, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
+
+                                            }
+                                        } else {
+                                            $scope.tripsmatch = [];
+                                        }
+                                    }
+                                }
+                            });
                         }
                     });
                 }

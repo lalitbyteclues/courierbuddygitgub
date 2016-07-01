@@ -24,21 +24,44 @@ angular.module('courier').controller("admintripmanagerController", function ($ro
      $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
      };
-     $scope.approvetrip = function (id,status) { 
-         var data = {"id":id,"status":status};
-         AddTripsService.updatestatus(data).then(function (results) {
-             if (results.status == 200) {
-                 $scope.tripslist = results.data.response;
-                 for (i = 0; i < $scope.tripslist.length; i++) {
-                     var deptime = $scope.tripslist[i].dep_time.split(" ");
-                     $scope.tripslist[i].dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
-                     var deptime = $scope.tripslist[i].arrival_time.split(" ");
-                     $scope.tripslist[i].arrival_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
-                     $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
-                     $scope.tripslist[i].image = $scope.tripslist[i].image == "" ? RESOURCES.API_BASE_PATH + "uploads/noimage.jpg" : RESOURCES.API_BASE_PATH + $scope.tripslist[i].image;
+     $scope.approvetrip = function (id, status) {
+         var reason = "";
+         if (status == 8) {
+             bootbox.prompt("onhold Reason?", function (result) {
+                 if (result !== null)
+                 {
+                     var data = { "id": id, "status": status, "reason": result, };
+                     AddTripsService.updatestatus(data).then(function (results) {
+                         if (results.status == 200) {
+                             $scope.tripslist = results.data.response;
+                             for (i = 0; i < $scope.tripslist.length; i++) {
+                                 var deptime = $scope.tripslist[i].dep_time.split(" ");
+                                 $scope.tripslist[i].dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
+                                 var deptime = $scope.tripslist[i].arrival_time.split(" ");
+                                 $scope.tripslist[i].arrival_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
+                                 $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
+                                 $scope.tripslist[i].image = $scope.tripslist[i].image == "" ? RESOURCES.API_BASE_PATH + "uploads/noimage.jpg" : RESOURCES.API_BASE_PATH + $scope.tripslist[i].image;
+                             }
+                         }
+                     });
                  } 
-             }
-         });
+             });
+         } else {
+             var data = { "id": id, "status": status };
+             AddTripsService.updatestatus(data).then(function (results) {
+                 if (results.status == 200) {
+                     $scope.tripslist = results.data.response;
+                     for (i = 0; i < $scope.tripslist.length; i++) {
+                         var deptime = $scope.tripslist[i].dep_time.split(" ");
+                         $scope.tripslist[i].dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
+                         var deptime = $scope.tripslist[i].arrival_time.split(" ");
+                         $scope.tripslist[i].arrival_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
+                         $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
+                         $scope.tripslist[i].image = $scope.tripslist[i].image == "" ? RESOURCES.API_BASE_PATH + "uploads/noimage.jpg" : RESOURCES.API_BASE_PATH + $scope.tripslist[i].image;
+                     }
+                 }
+             });
+         } 
      }
      $scope.delete = function (id) {
          var data = { "id": id };

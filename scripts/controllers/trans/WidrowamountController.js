@@ -14,6 +14,7 @@ angular.module('courier').controller("WidrowamountController", function ($rootSc
         if (results.status == 200) {
             $scope.userdetails = results.data.response[0];
             $scope.userdetails.targetamount = parseFloat($scope.userdetails.wallet);
+            $scope.userdetails.rbank_act_no = results.data.response[0].bank_act_no;
         }
     });
     searchService.paymentrequestlist(sessionStorage.getItem("UserId")).then(function (results) {
