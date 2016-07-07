@@ -61,14 +61,14 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="textinput">From<span class="red">*</span></label>
         <div class="col-md-8">
-            <input type="text" ng-change="changedurationwithoutjavascript()" name="source" maxlength="200" required="required" class="form-control input-md" ng-model="locationfrom" ng-blur="checklocation()" ui-autocomplete="locationStateOption" placeholder="(eg :Jaipur)" id="textinput">
+            <input type="text"   name="source" maxlength="200" required="required" class="form-control input-md" ng-model="locationfrom" ng-blur="checklocation()" ui-autocomplete="locationStateOption" placeholder="(eg :Jaipur)" id="textinput">
             <span class="error" ng-show="(addtripform.$submitted && addtripform.source.$error.required)">Required.</span>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-4 control-label" for="textinput">To<span class="red">*</span></label>
         <div class="col-md-8">
-            <input type="text" ng-change="changedurationwithoutjavascript()" required="required" maxlength="200" name="destination" ng-required="true" class="form-control input-md" ng-blur="checklocation()" ng-model="locationto" ui-autocomplete="locationStateOption" placeholder="eg : New Delhi">
+            <input type="text"  required="required" maxlength="200" name="destination" ng-required="true" class="form-control input-md" ng-blur="checklocation()" ng-model="locationto" ui-autocomplete="locationStateOption" placeholder="eg : New Delhi">
             <span class="error" ng-show="(addtripform.$submitted && addtripform.destination.$error.required)">Required.</span>
         </div>
     </div>
@@ -80,26 +80,26 @@
                 <span class="error" ng-show="(addtripform.$submitted && addtripform.d_date.$error.required)">Required.</span>
             </div>
             <div class="col-md-3" style="padding-right:0;padding-left:5px;">
-                <input id="setTimeExample" ng-change="changedurationwithoutjavascript()" ng-model="dtime" maxlength="100" placeholder="HH:MM:A" type="text" class="time ui-timepicker-input form-control" autocomplete="off">
+                <input id="setTimeExample"   ng-model="dtime" maxlength="100" placeholder="HH:MM:A" type="text" class="time ui-timepicker-input form-control" autocomplete="off">
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <!--<div class="form-group">
         <label class="col-md-4 control-label" for="filebutton">Trip Duration<span class="red">*</span></label>
         <div class="col-md-8">
             <div id="durationPicker"></div>
             <input type="number" style="display:none;" id="seconds" class="form-control" ng-required="true" ng-model="tripduration" />
         </div>
-    </div>
+    </div>-->
     <div class="form-group">
         <label class="col-md-4 control-label" for="textinput">Arrival On<span class="red">*</span></label>
         <div class="col-md-8">
             <div class="col-md-9" style="padding-left:0;padding-right:0;">
-                <input readonly name="a_date" placeholder="DD-MM-YYYY" class="quote_date1 form-control" id="dtt2" value="{{arrivalon | date:'dd-MM-yyyy'}}" type="text" />
+                <input   name="a_date" placeholder="DD-MM-YYYY" class="quote_date1 form-control" id="dtt2" value="{{arrivalon | date:'dd-MM-yyyy'}}" type="text" />
                 <span class="error" ng-show="(addtripform.$submitted && addtripform.a_date.$error.required)">Required.</span>
             </div>
             <div class="col-md-3" style="padding-right:0;padding-left:5px;">
-                <input readonly name="atime" id="setTimeExample1" value="{{arrivalon | date:'h:mma'}}" style="padding:6px 7px;" placeholder="HH:MM:A" type="text" class="time ui-timepicker-input form-control" autocomplete="off">
+                <input   name="atime" id="setTimeExample1" value="{{arrivalon | date:'h:mma'}}" style="padding:6px 7px;" placeholder="HH:MM:A" type="text" class="time ui-timepicker-input form-control" autocomplete="off">
             </div>
         </div>
     </div>
@@ -138,7 +138,7 @@
         </div>
     </div>
     <div class="form-group">
-        <a ui-sref="transporter" style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:0px 0px 0 8px;" title="Cancel Edit">Cancel</a>
+        <a ui-sref="transporter" ui-sref-opts="{reload: true}" style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:0px 0px 0 8px;" title="Cancel Edit">Cancel</a>
         <input type="submit" value="Save" style="float:right;width:90px;background: #3b5998;border: 0;color: #fff;margin-right: 15px;height: 29px;" />
     </div>
 </form>
@@ -163,11 +163,8 @@
     </div>
 </div>
 <script>
-    $('.quote_date').Zebra_DatePicker({
-        direction: true, format: 'd-m-Y', onSelect: function (view, elements) {
-            angular.element('.container').scope().changeduration();
-        }
-    }); 
+    $('.quote_date').Zebra_DatePicker({ direction: true, format: 'd-m-Y' });
+    $('.quote_date1').Zebra_DatePicker({ direction: 0, format: 'd-m-Y' });
     $('.quote_datesearch').Zebra_DatePicker({
         direction: true, pair: $('.quote_datesearch1'), format: 'd-m-Y'
     });
@@ -184,13 +181,13 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#durationPicker").durationPicker()
-          .change(function () {
-              var seconds = $("#durationPicker").durationPicker("seconds");
-              $("#seconds").val(seconds);
-              angular.element('.container').scope().changeduration();
-              angular.element('.container').scope().tripduration = seconds;
+        //$("#durationPicker").durationPicker()
+        //  .change(function () {
+        //      var seconds = $("#durationPicker").durationPicker("seconds");
+        //      $("#seconds").val(seconds);
+        //      angular.element('.container').scope().changeduration();
+        //      angular.element('.container').scope().tripduration = seconds;
 
-          });
+        //  });
     });
 </script>

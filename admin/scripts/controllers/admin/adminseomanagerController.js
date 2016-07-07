@@ -38,7 +38,7 @@ angular.module('courier').controller("adminseomanagerController", function ($htt
          }, 10);
      };
      $scope.addRow = function (index) {
-         $scope.list.push({ editMode: true });
+         $scope.list.push({ editMode: true,created:new Date() });
      };
      $scope.deleterecords = function (field) { 
          AirportService.deleteseolist(field).then(function (results) {
@@ -66,8 +66,7 @@ angular.module('courier').controller("adminseomanagerController", function ($htt
              $scope.totalItems = $scope.list.length;
              $scope.successmessage = "Updated SuccessFully";
              $scope.errormessage = "";
-         });
-
+         }); 
      };
      $scope.sort_by = function (predicate) {
          $scope.predicate = predicate;

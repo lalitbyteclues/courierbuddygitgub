@@ -43,9 +43,9 @@
                                 <div ng-include="'views/parcel/sendermenu.html'"></div>
                                 <div class="clear">&nbsp;&nbsp;</div>
                             </div>
-                            <div class="col-md-7"  >
+                            <div class="col-md-7" ng-hide="issummary">
                                 <h1>Add Parcel</h1>
-                                <form ng-hide='tripsavemessage' class="stdform" id="addbook-frm" ng-submit="paynow(frmaddparcel.$valid)" enctype="multipart/form-data" method="post" accept-charset="utf-8" novalidate="novalidate" name="frmaddparcel"> 
+                                <form ng-hide='tripsavemessage' class="stdform" id="addbook-frm" ng-submit="submitsummarypaynow(frmaddparcel.$valid)" enctype="multipart/form-data" method="post" accept-charset="utf-8" novalidate="novalidate" name="frmaddparcel">
                                     <div class="row">
                                         <div class="form-group col-sm-12">
                                             <div class="alert alert-danger" role="alert" ng-hide='!errormessage'>{{errormessage}}</div>
@@ -214,7 +214,91 @@
                                     </div>
                                 </div><div class="clear">&nbsp;&nbsp;</div>
                                 <div class="clear">&nbsp;&nbsp;</div>
-                            </div> 
+                            </div>
+                            <div class="col-md-7" ng-show="issummary">
+                                <div class="search-result book-now a-left">
+                                    <h1>Confirm Parcel</h1>
+                                    <form ng-submit="paynow(frmaddparcel.$valid)" class="stdform" id="accept-and-pay" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                        <a href='javascript:void(0);' ng-click='editparcel()' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 0 5px 0;" title='Edit Parcel'>Edit Parcel</a>
+                                        <div class="clear">
+                                            <div class="f-left"><label>From </label></div>
+                                            <div class="f-right">
+                                                <b>-</b>
+                                                {{ parcel.source }}
+                                            </div>
+                                        </div>
+                                        <div class="clear">
+                                            <div class="f-left"><label>To </label></div>
+                                            <div class="f-right">
+                                                <b>-</b>
+                                                {{ parcel.destination }}
+                                            </div>
+
+                                        </div>
+                                        <div class="clear">
+                                            <div class="f-left"><label>Parcel type</label></div>
+                                            <div class="f-right">
+                                                <b>-</b>  {{parcel.type=='E'?'Envelope':parcel.type=='B'?'Box':parcel.type=='P'?'Packet':parcel.type}}
+                                            </div>
+                                        </div>
+                                        <div class="clear p-size" ng-show="parcel.type=='B'">
+                                            <div class="f-left"><label>Parcel Dimension</label></div>
+                                            <div class="f-right">
+                                                <b>-</b>
+                                                H {{parcel.height}}" , W {{parcel.width}}" , L {{parcel.length}}"
+                                            </div>
+                                        </div>
+                                        <div class="clear p-size">
+                                            <div class="f-left"><label>Parcel Weight</label></div>
+                                            <div class="f-right">
+                                                <b>-</b>
+                                                {{parcel.weight}}kg
+                                            </div>
+                                        </div>
+                                        <div class="clear p-size">
+                                            <div class="f-left"><label>Amount</label></div>
+                                            <div class="f-right">
+                                                <b>-</b>
+                                                {{parcel.amount | currency:"&#8377;"}}
+                                            </div>
+                                        </div>
+                                        <div class="clear">
+                                            <div class="f-left"><label>Parcel Description</label></div>
+                                            <div class="f-right a-justify">
+                                                <b>-</b>
+                                                {{parcel.description}}
+                                            </div>
+                                        </div> 
+                                        <hr />
+                                        <h1>Receiver Details </h1>
+                                        <div class="com-det">
+                                            <table border="0" cellpadding="4" width="100%">
+                                                <tbody>
+                                                    <tr ng-repeat="user in userlist">
+                                                        <td><b>MCB Id</b>{{user.UserID}}</td>
+                                                        <td><b>Email</b>{{user.username}}</td>
+                                                        <td><b>Name</b>{{user.name}} </td>
+                                                        <td><b>Phone</b>{{user.mobile}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div ng-show="userlist.length==0">
+                                                <div class="alert alert-danger" role="alert">No receiver found </div>
+                                            </div>
+                                        </div>
+                                        <hr /> 
+                                        <div class="clear">
+                                        </div>
+                                        <div   class="form-group"> 
+                                            <div class="col-md-12">
+                                                <div class="form-group m-top8" ng-show="userlist.length>0" id="pay">
+                                                    <input type="submit" style="float:right;width:90px;background: #3b5998;border: 0;color: #fff;margin-right:0;height: 29px;" value="Confirm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                             <div class="col-md-3 inner-tab-form-image">
                                 <img src="images/slideparcel.png" style="width:100%; max-height:500px; margin-top:20px;" />
                             </div>
@@ -241,5 +325,5 @@
 <style>
     .input-group, span.Zebra_DatePicker_Icon_Wrapper {
         width: 100%;
-    } 
+    }
 </style>

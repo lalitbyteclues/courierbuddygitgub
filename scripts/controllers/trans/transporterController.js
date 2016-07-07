@@ -35,6 +35,10 @@ angular.module('courier').controller("transporterController", function (searchSe
             }
         });
     }
+    $scope.navigate = function (id,action) {
+        RESOURCES.tripid = id;
+         $state.transitionTo('login');
+    }
     $scope.fillgrid();
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
@@ -65,7 +69,7 @@ angular.module('courier').controller("transporterController", function (searchSe
         $scope.successaddtripMessage = "";
         bootbox.confirm("Are you sure you have collected the parcel?", function (result) {
             if (result) {
-                var data = { "id": $scope.transporter.id, "status": 3, "process_by": sessionStorage.getItem("UserId"), "reason": "Parcel Collected", "parcelid": id };
+                var data = { "id": $scope.transporter.id, "status": 3, "process_by": AuthService.authentication.UserId, "reason": "Parcel Collected", "parcelid": id };
                 AddTripsService.usrupdatestatus(data).then(function (results) {
                     searchService.gettransporterdetails($scope.transporter.id).then(function (response) {
                         $scope.parcel = response.data.parcel;
@@ -80,7 +84,7 @@ angular.module('courier').controller("transporterController", function (searchSe
         $scope.successaddtripMessage = "";
         bootbox.confirm("Are you sure you have delivered the parcel?", function (result) {
             if (result) {
-                var data = { "id": $scope.transporter.id, "status": 6, "process_by": sessionStorage.getItem("UserId"), "reason": "Parcel Delivered", "parcelid": id };
+                var data = { "id": $scope.transporter.id, "status": 6, "process_by": AuthService.authentication.UserId, "reason": "Parcel Delivered", "parcelid": id };
                 AddTripsService.usrupdatestatus(data).then(function (results) {
                         searchService.gettransporterdetails($scope.transporter.id).then(function (response) {
                             $scope.parcel = response.data.parcel;
@@ -102,7 +106,7 @@ angular.module('courier').controller("transporterController", function (searchSe
         $scope.successaddtripMessage = "";
         bootbox.prompt("Do you want to cancel this Booking? Give Reason.", function (result) {
             if (result !== null) {
-                var data = { "id": $scope.transporter.id, "status": 0, "process_by": sessionStorage.getItem("UserId"), "reason": result,"parcelid":id };
+                var data = { "id": $scope.transporter.id, "status": 0, "process_by": AuthService.authentication.UserId, "reason": result, "parcelid": id };
                 AddTripsService.cancelparcelbytransporter(data).then(function (results) {
                     $("#userdetails").modal("hide");
                     if (results.status == 200) {
@@ -116,7 +120,7 @@ angular.module('courier').controller("transporterController", function (searchSe
         $scope.successaddtripMessage = "";
         bootbox.prompt("Do you want to cancel this Trip? Give Reason.", function (result) {
             if (result !== null) {
-                var data = { "id": id, "status": 4, "process_by": sessionStorage.getItem("UserId"), "reason": result };
+                var data = { "id": id, "status": 4, "process_by": AuthService.authentication.UserId, "reason": result };
                 AddTripsService.usrupdatestatus(data).then(function (results) {
                     searchService.gettransporterdetails($scope.transporter.id).then(function (response) {
                         $scope.parcel = response.data.parcel;

@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <ul class="nav nav-tabs" role="tablist">
                 <li style="margin-left:40%;" role="presentation">
-                    <a><h4>Users List</h4> </a>
+                    <a>User Manager</a>
                 </li>
             </ul>
         </div>
@@ -15,36 +15,35 @@
                     <div class="clear">&nbsp;&nbsp;</div>
                 </div>
                 <div class="col-md-10">
-                    <br class="clear" />
-                    <fieldset>
-                        <legend>Search:</legend>
-
+                    <div class="clear">&nbsp;</div>
+                    <fieldset> 
+                        <legend>Search:</legend> 
                         <div class="col-md-3" style="padding-left:5px;padding-right:5px;">
-                            <select name="data[Search][type]" ng-change="searchusers()" ng-model="userrole" class="form-control">
-                                <option value="">Role Type</option>
-                                <option value="T">Transporter</option>
-                                <option value="S">Sender</option>
-                                <option value="R">Receiver</option>
-                            </select>
-                        </div>
+                            <p class="input-group">
+                                <select name="data[Search][type]" ng-change="searchusers()" ng-model="userrole" class="form-control">
+                                    <option value="">Role Type</option>
+                                    <option value="T">Transporter</option>
+                                    <option value="S">Sender</option>
+                                    <option value="R">Receiver</option>
+                                </select></p>
+</div>
                         <div class="col-md-3" style="padding-left:5px;padding-right:5px;">
                             <select name="data[Search][status]" ng-change="searchusers()" ng-model="userstatus" class="form-control">
                                 <option value="">Status</option>
-                                <option value="B">Active</option>
-                                <option value="A">Inactive</option>
+                                <option value="Y">Active</option>
+                                <option value="N">Inactive</option>
                             </select>
                         </div>
                         <div class="col-md-6" style="padding-left:5px;padding-right:5px;text-align:left;">
                             <a class="btn  btn-primary" href="javascript:void(0);" ng-click="searchusersdays(7)" id="week">This Week</a>
                             <a class="btn  btn-primary" href="javascript:void(0);" id="month" ng-click="searchusersdays(30)">This Month</a>
                             <a class="btn  btn-primary" href="javascript:void(0);" ng-csv="listexportcsv" filename="users.csv" field-separator="," decimal-separator="." id="month">Export To CSV</a>
-                        </div><div class="clear">&nbsp;<br /></div>
-                    </fieldset>
-                    <div class="clear">&nbsp;<br /></div>
-                    <div class="col-md-4" style="padding-left:5px;padding-right:5px;">
+                        </div> 
+                    </fieldset> 
+                    <div class="col-md-4" style="padding:5px 5px 5px 0;">
                         <input type="text" ng-model="search" ng-change="filter()" placeholder="Filter" class="form-control" />
                     </div>
-                    <div class="col-md-2" style="padding-left:5px;padding-right:5px;">
+                    <div class="col-md-2" style="padding:5px 0px;">
                         <select ng-model="entryLimit" class="form-control">
                             <option>5</option>
                             <option>10</option>
@@ -59,44 +58,36 @@
                     <div ng-show="successmessage.length" class="alert alert-success">{{successmessage}}</div>
                     <div ng-show="errormessage.length" class="alert alert-danger">{{errormessage}}</div>
                     <br />
-                    <div class="col-md-12" ng-show="filteredItems > 0">
+                    <div class="col-md-12" ng-show="filteredItems > 0" style="padding-left:0px;padding-right:0px;">
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>
-                                        S.No:&nbsp;<a ng-click="sort_by('$index');">
+                                    <td>
+                                        S.No:
+                                    </td>
+                                    <td>
+                                        User ID &nbsp;<a ng-click="sort_by('UserID');">
                                             <i class="glyphicon glyphicon-sort"></i>
                                         </a>
-                                    </th>
-                                    <th>
-                                        User ID &nbsp;<a ng-click="sort_by('id');">
-                                            <i class="glyphicon glyphicon-sort"></i>
-                                        </a>
-                                    </th>
-                                    <th>
+                                    </td>
+                                    <td>
                                         Name&nbsp;
                                         <a ng-click="sort_by('name');">
                                             <i class="glyphicon glyphicon-sort"></i>
                                         </a>
-                                    </th>
-                                    <th>
-                                        Mobile&nbsp;
-                                        <a ng-click="sort_by('mobile');">
-                                            <i class="glyphicon glyphicon-sort"></i>
-                                        </a>
-                                    </th>
-                                    <th>
-                                        Email&nbsp;
-                                        <a ng-click="sort_by('email');">
-                                            <i class="glyphicon glyphicon-sort"></i>
-                                        </a>
-                                    </th>
-                                    <th>
+                                    </td>
+                                    <td>
+                                        Mobile 
+                                    </td>
+                                    <td>
+                                        Email
+                                    </td>
+                                    <td>
                                         Status&nbsp;
                                         <a ng-click="sort_by('status');">
                                             <i class="glyphicon glyphicon-sort"></i>
                                         </a>
-                                    </th>
+                                    </td>
                                     <th>
                                     </th>
                                 </tr>
@@ -113,18 +104,20 @@
                                         <span>{{data.name }}</span>
                                     </td>
                                     <td>
-                                        <span>{{data.mobile }}</span>
+                                        <span>{{data.mobile==0?"--NA--":data.mobile }}</span>
                                     </td>
                                     <td>
                                         <span>{{data.username }}</span>
                                     </td>
                                     <td>
-                                        <span data-ng-hide="editMode">{{data.activation_code}}</span>
-                                        <select class="form-control" data-ng-show="editMode" data-ng-model="data.activation_code" data-ng-required>
+                                        <span data-ng-hide="editMode">{{data.status}}</span><br data-ng-hide="editMode || data.status=='Y' || data.remark==''" />
+                                        <span data-ng-hide="editMode || data.status=='Y'">{{data.remark}}</span>
+                                        <select class="form-control" data-ng-show="editMode" data-ng-model="data.status" data-ng-required>
                                             <optgroup label="Select Status"></optgroup>
-                                            <option ng-selected="data.activation_code=='Y'" value="Y">Yes</option>
-                                            <option ng-selected="data.activation_code=='N'" value="N">No</option>
+                                            <option ng-selected="data.status=='Y'" value="Y">Yes</option>
+                                            <option ng-selected="data.status=='N'" value="N">No</option>
                                         </select>
+                                        <input type="text" placeholder="Remark" data-ng-show="editMode && data.status=='N'" ng-model="data.remark" />
                                     </td>
                                     <td>
                                         <button type="submit" data-ng-hide="editMode" data-ng-click="editMode = true; editAppKey(data)" class="btn btn-primary">Edit</button>

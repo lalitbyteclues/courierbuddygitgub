@@ -13,6 +13,13 @@ angular.module('courier').factory('ParcelService', ['$http', '$q', 'RESOURCES', 
             return response;
         });
     };
+    var _calculateamount = function (data) {
+        return $http.post(serviceBase + 'api/calculateamount', data, {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (response) {
+            return response;
+        });
+    };
     var _addcontacts = function (data) {
         return $http.post(serviceBase + 'api/addcontacts', data, {
             headers: { 'Content-Type': 'application/json' }
@@ -117,7 +124,8 @@ angular.module('courier').factory('ParcelService', ['$http', '$q', 'RESOURCES', 
         });
     };
     ParcelServiceFactory.addcontacts = _addcontacts;
-    ParcelServiceFactory.AddParcelData = _AddParcelData;  
+    ParcelServiceFactory.AddParcelData = _AddParcelData;
+    ParcelServiceFactory.calculateamount = _calculateamount;
     ParcelServiceFactory.updateParcelData = _updateParcelData; 
     ParcelServiceFactory.updateparcelweight = _updateparcelweight;
     ParcelServiceFactory.getParcelList = _getParcelList;

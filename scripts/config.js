@@ -31,11 +31,11 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider, $loca
             data: {
                 pageTitle: 'My Account | ChangePassword '
             }
-        }).state('cancelledtrips', {
-            url: "/transporter/canceltrips",
+        }).state('ecpiredtrips', {
+            url: "/transporter/expiredtrips",
             templateUrl: "views/trips/canceltrips.html",
             data: {
-                pageTitle: 'Transporter | cancelled trips '
+                pageTitle: 'Transporter | expiredtrips trips '
             }
         }).state('bankdetails', {
             url: "/transporter/bankdetails",
@@ -90,11 +90,11 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider, $loca
             data: {
                 pageTitle: 'Add Parcel | My Courier Buddy'
             }
-        }).state('cancelparcel', {
-            url: "/cancelparcel",
+        }).state('expiredparcel', {
+            url: "/expiredparcel",
             templateUrl: "views/parcel/cancelparcel.html",
             data: {
-                pageTitle: 'Cancel Parcel | My Courier Buddy'
+                pageTitle: 'Expired Parcel | My Courier Buddy'
             }
         }).state('refundparcel', {
             url: "/refundparcel",

@@ -55,6 +55,13 @@ angular.module('courier').factory('AddTripsService', ['$http', '$q', 'RESOURCES'
             return results;
         });
     };
+    var _getrequstticket = function (UserID) {
+        return $http.get(serviceBase + 'api/requestticketfromtransporter/' + UserID, {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (results) {
+            return results;
+        });
+    };
     var _senderbookingrequest = function (parcelid,tripid) {
         return $http.get(serviceBase + 'api/senderbookingrequest/' + parcelid + '/' + tripid, {
             headers: { 'Content-Type': 'application/json' }
@@ -79,7 +86,8 @@ angular.module('courier').factory('AddTripsService', ['$http', '$q', 'RESOURCES'
     AddTripsServiceFactory.AddTripsData = _AddTripsData; 
     AddTripsServiceFactory.updateticketTripsData = _updateticketTripsData;
     AddTripsServiceFactory.updateTripsData = _updateTripsData;
-    AddTripsServiceFactory.getTripsList = _getTripsList;
+    AddTripsServiceFactory.getTripsList = _getTripsList; 
+    AddTripsServiceFactory.getrequstticket = _getrequstticket;
     AddTripsServiceFactory.getTripsListall = _getTripsListall;
     AddTripsServiceFactory.getcalcelledTripsList = _getcalcelledTripsList; 
     AddTripsServiceFactory.updatestatus = _updatestatus;

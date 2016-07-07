@@ -177,6 +177,13 @@ angular.module('courier').factory("AuthService", ['$http', '$q', 'ValiDatedToken
             return results;
         });
     };
+    var _getchannelslist = function (UserID) {
+        return $http.get(serviceBase + 'api/getunreadchannellist/' + UserID, {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (results) {
+            return results;
+        });
+    };
     var _getuserslist = function (UserID) {
         return $http.get(serviceBase + 'api/getuserslist', {
             headers: { 'Content-Type': 'application/json' }
@@ -219,6 +226,7 @@ angular.module('courier').factory("AuthService", ['$http', '$q', 'ValiDatedToken
     authServiceFactory.obtainAccessToken = _obtainAccessToken;
     authServiceFactory.externalAuthData = _externalAuthData;
     authServiceFactory.getuserdetails = _getuserdetails; 
+    authServiceFactory.getchannelslist = _getchannelslist;
     authServiceFactory.getuserslist = _getuserslist;
     authServiceFactory.getchatlist = _getchatlist;
     authServiceFactory.resetPasswordToken = _resetPasswordToken;

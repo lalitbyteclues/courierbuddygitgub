@@ -61,6 +61,48 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
     function getpriceusingweight(weight) {
         return weight < 0.02 ? 500 : weight < .05 ? 800 : weight < 1 ? 1000 : weight < 2 ? 1950 : weight < 3 ? 2900 : weight < 4 ? 3800 : weight < 5 ? 4700 : weight < 6 ? 5600 : weight < 7 ? 6500 : weight < 8 ? 7400 : weight < 9 ? 8300 : weight <= 10 ? 9200 : 0;
     }
+    $scope.editparcel = function () {
+        $scope.issummary = false;
+    }
+    $scope.submitsummarypaynow = function (isValid) {
+        $scope.errormessage = "";
+        $scope.successaddtripMessage = "";
+        if (!isValid) {
+            $scope.errormessage = "Please fill all mandatory fields!";
+            return;
+        }
+        if (AuthService.authentication.isAuth) {
+            AuthService.getuserdetails(AuthService.authentication.UserId).then(function (results) {
+                if (results.status == 200) {
+                    if (results.data.response[0].status == "Y") {
+                        if ($scope.userlist.length == 0) {
+                            $scope.errormessage = "Please Select receiver !";
+                            return;
+                        }
+                        var result = document.getElementsByClassName("quote_date");
+                        if (result.data.value.length == 0) {
+                            $scope.errormessage = "Departure Time Required!";
+                            return;
+                        }
+                        $scope.deliverytill = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2] + " ");
+                        var tilldate = result.data.value.split("-")[2] + "/" + result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0];
+                        var amount = getpriceusingweight(parseFloat($scope.ParcelWeight));
+                        $scope.parcel = { "source": $scope.parcelfromloation, "destination": $scope.parceltoloation, "till_date": tilldate, "type": $scope.parceltype, "weight": parseFloat($scope.ParcelWeight), "height": $scope.ParcelHeight, "width": $scope.ParcelWidth, "length": $scope.ParcelLength, "created": new Date(), "usr_id": sessionStorage.getItem("UserId"), "recv_id": $scope.userlist[0].id, "status": 0, "description": $scope.parceldecsription, "payment": parseFloat(amount) };
+                        ParcelService.calculateamount($scope.parcel).then(function (results) {
+                            if (results.status == 200) {
+                                $scope.parcel.amount = results.data.price;
+                                $scope.issummary = true;
+                            }
+                        });
+                    }
+                    else {
+                        $scope.errormessage = "Please verify your email before adding Parcel ! ";
+                        return;
+                    }
+                }
+            })
+        }
+    }
     $scope.paynow = function (isValid) {
         $scope.errormessage = "";
         $scope.successaddtripMessage = "";

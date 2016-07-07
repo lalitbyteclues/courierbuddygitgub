@@ -45,7 +45,7 @@ button.Zebra_DatePicker_Icon_Inside {  margin: 0px 3px 0 0; right: 4px !importan
 .tab-form-new {margin-top:5px;min-height:700px;}
 .tab-form-new ul {background: #3b5998 none repeat scroll 0 0;}
 .tab-form-new .nav.nav-tabs a {color: #fff;}
-.tab-form-new .nav.nav-tabs .active a {background: #f2f2f2 none repeat scroll 0 0;   border-radius: 0;color: #3b5998;}
+.tab-form-new .nav.nav-tabs .active a {background: #f2f2f2 none repeat scroll 0 0;   border-radius: 0;color: #3b5998;cursor:pointer;}
 table.dataTable>tbody>tr.child ul{background:none !important;}
 .tab-form-new .nav.nav-tabs a:hover {background: #f2f2f2 none repeat scroll 0 0;border-radius: 0;color: #3b5998;}
 .inner-tab-form-new li {float: none;}
@@ -266,8 +266,7 @@ color: #666;
 }
 input{width:auto;}
 fieldset { background:#eee;} 
-legend {padding: 0.2em 0.5em!important;color:#3b5998!important;
-text-align:left!important;width:auto!important;background:#eee;border-radius:5px;
+legend {padding: 0.2em 0.5em!important;color:#3b5998!important;text-align:left!important;width:auto!important;background:#eee;border-radius:5px;margin-bottom:0px!important;font-size:18px!important;
 -moz-border-radius:5px;-webkit-border-radius:5px;border-bottom:0!important; }
 .dropdown-menu{min-width:89px !important;}
 .dropdown-menu > li > a{padding:3px 6px;}
@@ -303,7 +302,7 @@ padding: 0 0 0 10px;
 background-repeat: no-repeat;
 background-image: url(../images/sprites.png);
 background-position: -154px -443px;
-color: #fff;
+color: #fff;margin-top:0px;
 }
 .maincontentinner {
 border: 1px solid #CCCCCC;
@@ -367,3 +366,5 @@ border-radius: 2px;
 .popup-messages .direct-chat-textright {background: #dfece7 none repeat scroll 0 0;border: 1px solid #dfece7;border-radius: 2px;color: #1f2121;text-align:right;}
 .direct-chat-text {background: #d2d6de none repeat scroll 0 0;border: 1px solid #d2d6de;border-radius: 5px;color: #444;margin: 5px 0 0 50px;padding: 5px 10px;position: relative;}
 .direct-chat-textright {background: #d2d6de none repeat scroll 0 0;border: 1px solid #d2d6de;border-radius: 5px;color: #444;margin: 5px 50px 0 0;padding: 5px 10px;position: relative;}
+.notification{overflow-y: scroll;height: 138px;left: 54%!important;}
+.dropdown-menu > li > a{color:#fff!important;}

@@ -31,7 +31,7 @@ function CallAPI($method, $url, $data = false)
 //$_POST['payuMoneyId']
 $data1=array("txnid"=> $_POST["txnid"],"payuMoneyId" => "123456987",);
 $post=json_encode($data1);
-$response=CallAPI("POST","http://webservice9875.mycourierbuddy.in/api/payordernumber",$post);
+$response=CallAPI("POST","http://webservice.mycourierbuddy.com/api/payordernumber",$post);
 if(isset($response)){
 header( "Location: http://dev9856.mycourierbuddy.in/viewparcel/".json_decode($response)->response );
 }

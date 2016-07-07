@@ -1,14 +1,14 @@
 ﻿ <header ng-controller="HeaderController" id="top-bar"> 
     <div class="wrapper">
-        <div class="logo"><a ui-sref="home"><img src="/images/logo.png" alt="logo"></a> </div>
+        <div class="logo"><a ui-sref="home" ui-sref-opts="{reload: true}"><img src="/images/logo.png" alt="logo"></a> </div>
         <div class="user-opt">
             <!--<a ui-sref="addparcel">Add Parcel</a>
             <a ui-sref="addtrip">Add Trip</a>
             <a ui-sref="pricelist">Price List</a>--> 
-            <a ng-show="isAuth && isUser" ui-sref="admindashboard"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Welcome <span class="hd_us_nm">{{userName}}</span></a>
-            <a ng-show="isAuth && isAdministrator" ui-sref="admindashboard">Admin Panel</a>
-            <a ng-show="isAuth" ui-sref="adminprofile"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;My Dashboard</a>
-            <a ng-show="isAuth" ui-sref="logout"><i class="fa fa-power-off" aria-hidden="true"></i>&nbsp;Logout</a>
+            <a ng-show="isAuth && isUser" ui-sref="admindashboard" ui-sref-opts="{reload: true}"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Welcome <span class="hd_us_nm">{{userName}}</span></a>
+            <a ng-show="isAuth && isAdministrator" ui-sref="admindashboard" ui-sref-opts="{reload: true}">Admin Panel</a>
+            <a ng-show="isAuth" ui-sref="adminprofile" ui-sref-opts="{reload: true}"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;My Dashboard</a>
+            <a ng-show="isAuth" ui-sref="logout" ui-sref-opts="{reload: true}"><i class="fa fa-power-off" aria-hidden="true"></i>&nbsp;Logout</a>
         </div>
     </div>  
 </header>  

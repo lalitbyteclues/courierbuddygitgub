@@ -3,7 +3,7 @@
     <div class="tab-form-new">
         <div class="col-md-12">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation">
+                <li style="left:40%;" role="presentation">
                     <a>Dashboard</a>
                 </li>
             </ul>
@@ -15,6 +15,8 @@
                     <div class="clear">&nbsp;&nbsp;</div>
                 </div>
                 <div class="col-md-9">
+                    <div class="clear">&nbsp;
+                    </div>
                     <div class="maincontentinner">
                         <div style="height:200px;">
                             <div class="contenttitle radiusbottom0">
@@ -24,7 +26,7 @@
                             </div>
                             <div class="DashContent">
                                 <img src="/admin/images/ResetPass.png" alt="Reset Password" class="dashImg" title="Reset Password">
-                                <span class="Dashlink"><a ui-sref="adminprofile"   class="Dash-link">Your Detail</a></span>
+                                <span class="Dashlink"><a ui-sref="adminprofile" ui-sref-opts="{reload: true}" class="Dash-link">Your Detail</a></span>
                                 <br>
                                 <div class="link_body">
                                     To View and Edit Your Details.
@@ -32,7 +34,7 @@
                             </div>
                             <div class="DashContent">
                                 <img src="/admin/images/ChangePass.png" alt="Reset Password" class="dashImg" title="Reset Password">
-                                <span class="Dashlink"><a ui-sref="changepassword" class="Dash-link">Change Password</a></span>
+                                <span class="Dashlink"><a ui-sref="changepassword" ui-sref-opts="{reload: true}" class="Dash-link">Change Password</a></span>
                                 <br>
                                 <div class="link_body">
                                     To Reset Your Password.

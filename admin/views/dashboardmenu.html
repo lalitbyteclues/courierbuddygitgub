@@ -1,23 +1,23 @@
 ﻿ <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" ng-class="isActive('/sender') || isActive('/addparcel') || isActive('/cancelparcel') || isActive('/refundparcel')?'active':''">
-        <a ui-sref="sender" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-sender" aria-hidden="true">&nbsp;</i> Sender Dashboard</a>
+    <li role="presentation" ng-class="isActive('/sender') || isActive('/addparcel') || isActive('/expiredparcel') || isActive('/refundparcel')?'active':''">
+        <a ui-sref="sender" ui-sref-opts="{reload: true}" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-sender" aria-hidden="true">&nbsp;</i> Sender Dashboard</a>
     </li>
-    <li role="presentation" ng-class="isActive('/transporter')|| isActive('/transporter/addtrip') || isActive('/transporter/canceltrips') || isActive('/transporter/bankdetails')?'active':''">
-        <a ui-sref="transporter" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-transporter" aria-hidden="true">&nbsp;</i> Transporter Dashboard</a>
+    <li role="presentation" ng-class="isActive('/transporter')|| isActive('/transporter/addtrip') || isActive('/transporter/expiredtrips') || isActive('/transporter/bankdetails')?'active':''">
+        <a ui-sref="transporter" ui-sref-opts="{reload: true}" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-transporter" aria-hidden="true">&nbsp;</i> Transporter Dashboard</a>
     </li>
     <li role="presentation" id="main-rec" ng-class="isActive('/receiver')?'active':''">
-        <a ui-sref="receiver" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-receiver" aria-hidden="true">&nbsp;</i> Receiver</a>
+        <a ui-sref="receiver" ui-sref-opts="{reload: true}" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-receiver" aria-hidden="true">&nbsp;</i> Receiver</a>
     </li>
     <li role="presentation" ng-class="isActive('/dashboard') || isActive('/changepassword')?'active':''">
-        <a ui-sref="dashboard" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+        <a ui-sref="dashboard" ui-sref-opts="{reload: true}" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
     </li>
     <li role="presentation" ng-class="isActive('/mywallet') ?'active':''">
-        <a ui-sref="mywallet" aria-controls="settings" role="tab" data-toggle="tab">
+        <a ui-sref="mywallet" ui-sref-opts="{reload: true}" aria-controls="settings" role="tab" data-toggle="tab">
             <i class="fa fa-google-wallet" aria-hidden="true"></i>My Wallet
         </a>
     </li> 
-    <li role="presentation" ng-class="isActive('/transporter/withdraw')?'active':''"><a ui-sref="withdraw" aria-controls="withdraw" role="tab" data-toggle="tab"><i class="fa fa-money" aria-hidden="true"></i> Withdraw</a></li>
+    <li role="presentation" ng-class="isActive('/transporter/withdraw')?'active':''"><a ui-sref="withdraw" ui-sref-opts="{reload: true}" aria-controls="withdraw" role="tab" data-toggle="tab"><i class="fa fa-money" aria-hidden="true"></i> Withdraw</a></li>
 </ul>
 
 

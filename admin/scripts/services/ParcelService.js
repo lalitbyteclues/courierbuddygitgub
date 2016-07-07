@@ -48,6 +48,13 @@ angular.module('courier').factory('ParcelService', ['$http', '$q', 'RESOURCES', 
             return response;
         });
     };
+    var _usrupdatestatusadmin = function (data) {
+        return $http.post(serviceBase + 'api/cancelparcelbyadmin', data, {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (response) {
+            return response;
+        });
+    };
     var _generateordernumber = function (data) {
         return $http.post(serviceBase + 'api/generateordernumber', data, {
             headers: { 'Content-Type': 'application/json' }
@@ -136,7 +143,8 @@ angular.module('courier').factory('ParcelService', ['$http', '$q', 'RESOURCES', 
     ParcelServiceFactory.getrefundedParcelList = _getrefundedParcelList;
     ParcelServiceFactory.getwalletstatement = _getwalletstatement;
     ParcelServiceFactory.updatestatus = _updatestatus;
-    ParcelServiceFactory.usrupdatestatus = _usrupdatestatus;
+    ParcelServiceFactory.usrupdatestatus = _usrupdatestatus; 
+    ParcelServiceFactory.usrupdatestatusadmin = _usrupdatestatusadmin;
     ParcelServiceFactory.deletetrip = _deletetrip;
     ParcelServiceFactory.getparceldetail = _getparceldetail;
     ParcelServiceFactory.generateordernumber = _generateordernumber;

@@ -1,6 +1,6 @@
 ﻿<ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" ng-class="isActive('/sender') ?'active':''"><a aria-controls="home" role="tab" data-toggle="tab" ui-sref="sender"><i class="fa fa-plane" aria-hidden="true"></i> My Parcels</a></li>
+    <li role="presentation" ng-class="isActive('/sender') ?'active':''"><a aria-controls="home" role="tab" data-toggle="tab" ui-sref="sender" ui-sref-opts="{reload: true}"><i class="fa fa-plane" aria-hidden="true"></i> My Parcels</a></li>
     <li role="presentation" ng-class="isActive('/addparcel') ?'active':''">
-        <a aria-controls="profile" role="tab" data-toggle="tab" ui-sref="addparcel"><i class="fa fa-plus" aria-hidden="true"></i>Add Parcel</a></li>
-    <li role="presentation" ng-class="isActive('/cancelparcel') ?'active':''"><a aria-controls="messages" role="tab" data-toggle="tab" ui-sref="cancelparcel"><i class="fa fa-times" aria-hidden="true"></i>Cancelled Parcels</a></li> 
+        <a aria-controls="profile" role="tab" data-toggle="tab" ui-sref="addparcel" ui-sref-opts="{reload: true}"><i class="fa fa-plus" aria-hidden="true"></i>Add Parcel</a></li>
+    <li role="presentation" ng-class="isActive('/expiredparcel') ?'active':''"><a aria-controls="messages" role="tab" data-toggle="tab" ui-sref="expiredparcel" ui-sref-opts="{reload: true}"><i class="fa fa-times" aria-hidden="true"></i>Expired Parcels</a></li> 
 </ul>

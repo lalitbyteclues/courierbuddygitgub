@@ -6,6 +6,7 @@ angular.module('courier').controller("adminbookingmanagerController", function (
     $scope.successMessage = "";
     $scope.TransporterID = "";
     $scope.status = "";
+    $scope.payment = {};
     $scope.possiblematchid = 0;
     $scope.timeperiod = 0;
     $scope.listexportcsv = [];
@@ -19,7 +20,7 @@ angular.module('courier').controller("adminbookingmanagerController", function (
     }
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
-    };
+    }; 
     $scope.approvetrip = function (id, status) {
         var data = { "id": id, "status": status };
         ParcelService.updatestatus(data).then(function (results) {
@@ -27,8 +28,7 @@ angular.module('courier').controller("adminbookingmanagerController", function (
                 $scope.tripslist = results.data.response;
                 for (i = 0; i < $scope.tripslist.length; i++) {
                     $scope.tripslist[i].till_date = new Date($scope.tripslist[i].till_date);
-                    $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
-
+                    $scope.tripslist[i].status = parseInt($scope.tripslist[i].status); 
                 }
             }
         });
@@ -51,8 +51,8 @@ angular.module('courier').controller("adminbookingmanagerController", function (
     $scope.cancellparcel = function (id, status) {
         bootbox.prompt("Do you want to " + status == 6 ? "Cancel" : "Refund" + " this Parcel? Give Reason.", function (result) {
             if (result !== null) {
-                var data = { "id": id, "status": status, "process_by": sessionStorage.getItem("UserId"), "reason": result };
-                ParcelService.usrupdatestatus(data).then(function (results) {
+                var data = { "id": id, "status": status, "process_by": AuthService.authentication.UserId, "reason": result };
+                ParcelService.usrupdatestatusadmin(data).then(function (results) {
                     if (results.status == 200) {
                         if (status == 6) {
                             $scope.successMessage = "Cancelled Successfully";
@@ -86,13 +86,10 @@ angular.module('courier').controller("adminbookingmanagerController", function (
             if (results.status == 200) {
                 $scope.tripslist = results.data.response;
                 $scope.listexportcsv = [];
-                $scope.payment = 0;
+                $scope.payment = results.data.paymentdetails[0];
                 for (i = 0; i < $scope.tripslist.length; i++) {
                     $scope.tripslist[i].created = new Date($scope.tripslist[i].created);
-                    $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
-                                   if ($scope.tripslist[i].status ==6) {
-                        $scope.payment = parseFloat($scope.payment) + parseFloat($scope.tripslist[i].payment);
-                    }
+                    $scope.tripslist[i].status = parseInt($scope.tripslist[i].status); 
                     $scope.listexportcsv.push({ "id": $scope.tripslist[i].id, "BookingDate": $scope.tripslist[i].created, "TransporteruserID": $scope.tripslist[i].TransporteruserID, "SenderID": $scope.tripslist[i].SenderID, "payment": $scope.tripslist[i].payment, "Ordernumber": "" + $scope.tripslist[i].trans_payment + "", "BookingStatus": $scope.tripslist[i].BookingStatus });
                 }
                 $scope.filteredItems = results.data.total; //Initially for no filter  

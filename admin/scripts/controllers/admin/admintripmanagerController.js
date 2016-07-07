@@ -12,7 +12,7 @@ angular.module('courier').filter('startFrom', function () {
 }); 
 angular.module('courier').controller("admintripmanagerController", function ($rootScope, $state, $scope, $location, searchService, AddTripsService, AuthService, RESOURCES) {
     $scope.errormessage = '';
-    $scope.successMessage = "";
+    $scope.successmessage = "";
     $scope.transporter = {};
     $scope.userdetails = {};
     $scope.listexportcsv = [];
@@ -24,40 +24,40 @@ angular.module('courier').controller("admintripmanagerController", function ($ro
      $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
      };
+     $scope.requesttripticket = function (id) {
+         AddTripsService.getrequstticket(id).then(function (results) {
+             if (results.status == 200) {
+                 $scope.fillgrid();
+                 $scope.successmessage = "Request has been sent successfully.";
+             }
+         });
+     }
      $scope.approvetrip = function (id, status) {
+         $scope.successmessage = "";
          var reason = "";
          if (status == 8) {
-             bootbox.prompt("onhold Reason?", function (result) {
+             bootbox.prompt("Reason for keeping the trip on hold.", function (result) {
                  if (result !== null)
                  {
-                     var data = { "id": id, "status": status, "reason": result, };
+                     var data = { "id": id, "status": status, "reason": result, "processed_by": AuthService.authentication.UserId };
                      AddTripsService.updatestatus(data).then(function (results) {
                          if (results.status == 200) {
-                             $scope.tripslist = results.data.response;
-                             for (i = 0; i < $scope.tripslist.length; i++) {
-                                 var deptime = $scope.tripslist[i].dep_time.split(" ");
-                                 $scope.tripslist[i].dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
-                                 var deptime = $scope.tripslist[i].arrival_time.split(" ");
-                                 $scope.tripslist[i].arrival_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
-                                 $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
-                                 $scope.tripslist[i].image = $scope.tripslist[i].image == "" ? RESOURCES.API_BASE_PATH + "uploads/noimage.jpg" : RESOURCES.API_BASE_PATH + $scope.tripslist[i].image;
-                             }
+                             $scope.fillgrid();
+                             $scope.successmessage = "Request status has been set 'On Hold' successfully.";
                          }
                      });
                  } 
              });
          } else {
-             var data = { "id": id, "status": status };
+             var data = { "id": id, "status": status, "processed_by": AuthService.authentication.UserId };
              AddTripsService.updatestatus(data).then(function (results) {
                  if (results.status == 200) {
-                     $scope.tripslist = results.data.response;
-                     for (i = 0; i < $scope.tripslist.length; i++) {
-                         var deptime = $scope.tripslist[i].dep_time.split(" ");
-                         $scope.tripslist[i].dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
-                         var deptime = $scope.tripslist[i].arrival_time.split(" ");
-                         $scope.tripslist[i].arrival_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
-                         $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
-                         $scope.tripslist[i].image = $scope.tripslist[i].image == "" ? RESOURCES.API_BASE_PATH + "uploads/noimage.jpg" : RESOURCES.API_BASE_PATH + $scope.tripslist[i].image;
+                     $scope.fillgrid();
+                     if (status==1){
+                         $scope.successmessage = "Request has been 'Approved' successfully.";
+                     }
+                     if (status == 5) {
+                         $scope.successmessage = "Request has been 'Cancelled' successfully.";
                      }
                  }
              });
@@ -67,39 +67,36 @@ angular.module('courier').controller("admintripmanagerController", function ($ro
          var data = { "id": id };
          AddTripsService.deletetrip(data).then(function (results) {
              if (results.status == 200) {
+                 $scope.fillgrid();
+             }
+         });
+     }
+     $scope.tripslist = [];
+     $scope.fillgrid = function () {
+         $scope.successmessage = "";
+         AddTripsService.getTripsListall().then(function (results) {
+             if (results.status == 200) {
                  $scope.tripslist = results.data.response;
                  for (i = 0; i < $scope.tripslist.length; i++) {
                      var deptime = $scope.tripslist[i].dep_time.split(" ");
                      $scope.tripslist[i].dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
                      var deptime = $scope.tripslist[i].arrival_time.split(" ");
                      $scope.tripslist[i].arrival_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
+
                      $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
-                     $scope.tripslist[i].image = $scope.tripslist[i].image == "" ? RESOURCES.API_BASE_PATH + "uploads/noimage.jpg" : RESOURCES.API_BASE_PATH + $scope.tripslist[i].image;
-                 } $scope.filteredItems = $scope.tripslist.length; //Initially for no filter  
+                     $scope.tripslist[i].image = $scope.tripslist[i].image == "" ? "" : RESOURCES.API_BASE_PATH + $scope.tripslist[i].image;
+                     $scope.listexportcsv.push({ "TripID": $scope.tripslist[i].TripID, "UserID": $scope.tripslist[i].UserID, "From": $scope.tripslist[i].source, "To": $scope.tripslist[i].destination, "Date": $scope.tripslist[i].dep_time, "PNR": $scope.tripslist[i].pnr, "Status": $scope.tripslist[i].statusdescription });
+                 }
+                 $scope.currentPage = 1; //current page
+                 $scope.entryLimit = 10; //max no of items to display in a page
+                 $scope.filteredItems = $scope.tripslist.length; //Initially for no filter  
                  $scope.totalItems = $scope.tripslist.length;
+                 $scope.sort_by("status");
+                 $scope.sort_by("status");
              }
          });
      }
-     $scope.tripslist = [];
-     AddTripsService.getTripsListall().then(function (results) {
-         if (results.status == 200) {
-             $scope.tripslist = results.data.response;
-             for (i = 0; i < $scope.tripslist.length; i++) {
-                 var deptime = $scope.tripslist[i].dep_time.split(" ");
-                 $scope.tripslist[i].dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
-                 var deptime = $scope.tripslist[i].arrival_time.split(" ");
-                 $scope.tripslist[i].arrival_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
-
-                 $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
-                 $scope.tripslist[i].image = $scope.tripslist[i].image == "" ? RESOURCES.API_BASE_PATH + "uploads/noimage.jpg" : RESOURCES.API_BASE_PATH + $scope.tripslist[i].image;
-                 $scope.listexportcsv.push({ "TripID": $scope.tripslist[i].TripID, "UserID": $scope.tripslist[i].UserID, "From": $scope.tripslist[i].source, "To": $scope.tripslist[i].destination, "Date": $scope.tripslist[i].dep_time, "PNR": $scope.tripslist[i].pnr, "Status": $scope.tripslist[i].statusdescription });
-             }
-             $scope.currentPage = 1; //current page
-             $scope.entryLimit = 10; //max no of items to display in a page
-             $scope.filteredItems = $scope.tripslist.length; //Initially for no filter  
-             $scope.totalItems = $scope.tripslist.length;
-         }
-     });
+     $scope.fillgrid();
      $scope.setPage = function (pageNo) {
          $scope.currentPage = pageNo;
      };
@@ -116,6 +113,7 @@ angular.module('courier').controller("admintripmanagerController", function ($ro
          return viewLocation === $location.path();
      };
      $scope.viewtripdetails = function (tripid) {
+         $scope.successmessage = "";
          searchService.gettransporterdetails(tripid).then(function (response) {
              if (response.data.status == "success") {
                  $scope.transporter = response.data.response[0];

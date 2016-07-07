@@ -74,7 +74,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
         $scope.successaddtripMessage = "";
         bootbox.prompt("Do you want to cancel this Parcel? Give Reason.", function (result) {
             if (result !== null) {
-                var data = { "id": id, "status": 6, "process_by": sessionStorage.getItem("UserId"), "reason": result };
+                var data = { "id": id, "status": 6, "process_by": AuthService.authentication.UserId, "reason": result };
                 ParcelService.usrupdatestatus(data).then(function (results) {
                     if (results.status == 200) {
                         ParcelService.getparceldetail($stateParams.id).then(function (response) {

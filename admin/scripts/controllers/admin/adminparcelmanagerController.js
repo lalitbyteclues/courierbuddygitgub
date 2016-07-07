@@ -26,8 +26,12 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
                 $scope.tripslist = results.data.response;
                 for (i = 0; i < $scope.tripslist.length; i++) {
                     $scope.tripslist[i].till_date = new Date($scope.tripslist[i].till_date);
-                    $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
+                    $scope.tripslist[i].status = parseInt($scope.tripslist[i].status); 
+                    $scope.tripslist[i].payment = parseInt($scope.tripslist[i].payment); 
+                    $scope.tripslist[i].weight = parseFloat($scope.tripslist[i].weight);  
                 }
+                $scope.sort_by("status"); $scope.sort_by("status");
+                $scope.sort_by("status"); $scope.sort_by("status");
             }
         });
     }
@@ -57,6 +61,7 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
 
     }
     $scope.senderbooknow = function (id) {
+        $scope.successMessage = "";
         AddTripsService.senderbookingrequest($scope.possiblematchid, id).then(function (results) {
             if (results.data.status == "success") {
                 $('#message-box').modal('hide');
@@ -65,9 +70,10 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
         });
     }
     $scope.cancellparcel = function (id, status) {
-        bootbox.prompt("Do you want to " + status == 6 ? "Cancel" : "Refund" + " this Parcel? Give Reason.", function (result) {
+        $scope.successMessage = "";
+        bootbox.prompt((status == 0 ? "Reason for release booking." : "Reason for cancellation."), function (result) {
             if (result !== null) {
-                var data = { "id": id, "status": status, "process_by": sessionStorage.getItem("UserId"), "reason": result };
+                var data = { "id": id, "status": status, "process_by": AuthService.authentication.UserId, "reason": result };
                 ParcelService.usrupdatestatus(data).then(function (results) {
                     if (results.status == 200) {
                         if (status == 6){
@@ -82,6 +88,7 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
         });
     }
     $scope.delete = function (id) {
+        $scope.successMessage = "";
         var data = { "id": id };
         ParcelService.deletetrip(data).then(function (results) {
             if (results.status == 200) {
@@ -96,6 +103,7 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
         }
     });
     $scope.searchdatabyuser = function () {
+        $scope.successMessage = "";
         $scope.entryrange = (parseInt($scope.currentPage - 1) * $scope.entryLimit) + "-" + $scope.entryLimit;
         var tilldate = "";
         if (!(typeof $("#tilldate").val() == 'undefined') && $("#tilldate").val() != "") {
@@ -109,10 +117,13 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
                 for (i = 0; i < $scope.tripslist.length; i++) {
                     $scope.tripslist[i].till_date = new Date($scope.tripslist[i].till_date);
                     $scope.tripslist[i].status = parseInt($scope.tripslist[i].status);
+                    $scope.tripslist[i].payment = parseInt($scope.tripslist[i].payment);
+                    $scope.tripslist[i].weight = parseFloat($scope.tripslist[i].weight);
                     $scope.listexportcsv.push({ "ParcelID": $scope.tripslist[i].ParcelID, "From": $scope.tripslist[i].source, "Destination": $scope.tripslist[i].destination, "TillDate": $scope.tripslist[i].till_date, "ParcelType": $scope.tripslist[i].type == 'E' ? 'Envelope' : $scope.tripslist[i].type == 'B' ? 'Box' : $scope.tripslist[i].type == 'P' ? 'Packet' : $scope.tripslist[i].type, "weight": $scope.tripslist[i].weight + "Kg", "Amount": $scope.tripslist[i].payment, "Status": $scope.tripslist[i].statusdescription });
                 }
                 $scope.filteredItems = results.data.total; //Initially for no filter  
                 $scope.totalItems = results.data.total;
+                $scope.sort_by("status"); $scope.sort_by("status");
             }
         });
 

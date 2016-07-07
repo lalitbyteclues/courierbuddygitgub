@@ -1,6 +1,6 @@
 ﻿<ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" ng-class="isActive('/transporter')?'active':''"><a ui-sref="transporter" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> My Trips</a></li>
-    <li role="presentation" ng-class="isActive('/transporter/addtrip')?'active':''"><a ui-sref="addtrip" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-plus" aria-hidden="true"></i> Add Trips</a></li>
-    <li role="presentation" ng-class="isActive('/transporter/canceltrips')?'active':''"><a ui-sref="cancelledtrips" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-times" aria-hidden="true"></i> Cancelled Trips</a></li>
-    <li role="presentation" ng-class="isActive('/transporter/bankdetails')?'active':''"><a ui-sref="bankdetails" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-university" aria-hidden="true"></i> Bank Detail</a></li> 
+    <li role="presentation" ng-class="isActive('/transporter')?'active':''"><a ui-sref="transporter" ui-sref-opts="{reload: true}" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> My Trips</a></li>
+    <li role="presentation" ng-class="isActive('/transporter/addtrip')?'active':''"><a ui-sref="addtrip" ui-sref-opts="{reload: true}" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-plus" aria-hidden="true"></i> Add Trips</a></li>
+    <li role="presentation" ng-class="isActive('/transporter/expiredtrips')?'active':''"><a ui-sref="ecpiredtrips" ui-sref-opts="{reload: true}" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-times" aria-hidden="true"></i> Expired Trips</a></li>
+    <li role="presentation" ng-class="isActive('/transporter/bankdetails')?'active':''"><a ui-sref="bankdetails" ui-sref-opts="{reload: true}" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-university" aria-hidden="true"></i> Bank Detail</a></li> 
 </ul>

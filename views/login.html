@@ -21,7 +21,7 @@
                                     <label for="login-password" class="sr-only">Password</label>
                                     <input type="password" maxlength="12" title="Please enter your password" placeholder="Password" required name="loginDatapassword" id="loginDatapassword" ng-model="loginData.password" class="form-control login-password">
                                     <span class="error" ng-show="(loginForm.$submitted && loginForm.loginDatapassword.$error.required)">Password Required.</span>
-                                    <p class="forgot-password"> <a ui-sref="forgetpassword">Forgot Password?</a> </p>
+                                    <p class="forgot-password"> <a ui-sref="forgetpassword" ui-sref-opts="{reload: true}">Forgot Password?</a> </p>
                                 </div>
                                 <input class="btn btn-block btn-cta-primary" type="submit" value="Log in">
                                 <div class="checkbox remember">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <p>If you are a new user <a ui-sref="register" id="signup-link" class="signup-link">Sign up now</a></p>
+                        <p>If you are a new user <a ui-sref="register" ui-sref-opts="{reload: true}" id="signup-link" class="signup-link">Sign up now</a></p>
                     </div>
                 </div>
             </div>

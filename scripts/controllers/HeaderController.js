@@ -6,6 +6,7 @@ angular.module('courier').controller("HeaderController", function ($scope, AuthS
     $scope.userName = AuthService.authentication.userName;
     $scope.isAdministrator = AuthService.authentication.isAdministrator;
     $scope.isUser = AuthService.authentication.isUser;
+    $scope.chatchannelslist = [];
     if ($scope.isAuth) {
         AuthService.getuserdetails(AuthService.authentication.UserId).then(function (results) { 
             if (results.data.status == "success") { 
@@ -14,6 +15,9 @@ angular.module('courier').controller("HeaderController", function ($scope, AuthS
                     $scope.verificationmessage = "Verification link send on your Email please verify.";
                 }
             }
+        });
+        AuthService.getchannelslist(AuthService.authentication.UserId).then(function (results) {
+            $scope.chatchannelslist = results.data;
         });
     } 
     $scope.isActive = function (viewLocation) {
@@ -30,4 +34,8 @@ angular.module('courier').controller("HeaderController", function ($scope, AuthS
             }
         }
     });
+    $scope.showchatopen = function (id, parcelid, index) {
+        $scope.chatchannelslist.splice(index, 1); 
+        angular.element('.chatmessagepopup').scope().showchat(id, parcelid);
+    }
 })

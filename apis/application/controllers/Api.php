@@ -471,6 +471,24 @@ class Api extends CI_Controller{
 			echo $json_response;  
 		}
 	}
+	public function calculateamount()
+	{    try 
+			{ 
+			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
+			if(isset($input_data))
+			{ 
+				$this->api_model->calculateamount($input_data); 
+			} 
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="No Trip added";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
 	 public function updatetripticket()
 	 {
 		try 
@@ -764,6 +782,21 @@ class Api extends CI_Controller{
 			echo $json_response;  
 		}
 	} 
+	public function requestticketfromtransporter($tripid)
+	{
+		try 
+		{ 
+			$this->api_model->requestticketfromtransporter($tripid);  
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="NO record Found";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
 	public function cancelparcellist($userID)
 	{
 		try 
@@ -821,6 +854,11 @@ class Api extends CI_Controller{
 	public function cancelparcelbytransporter()
 	{	$input_data = json_decode(trim(file_get_contents('php://input')), true);
 		$message = $this->api_model->cancel_parcel_by_transporter($input_data);		 
+		 echo $message; 
+	}
+	public function cancelparcelbyadmin()
+	{	$input_data = json_decode(trim(file_get_contents('php://input')), true);
+		$message = $this->api_model->cancel_parcel_by_admin($input_data);		 
 		 echo $message; 
 	} 
 	public function updateParceltatus()
@@ -1018,8 +1056,8 @@ public function updateuserdetails()
 		$arr['success'] = false;
 		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-danger alert-dismissable"><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . validation_errors() . '</div>';
 	} else {
-		$this->db->insert('chatmessages',$arr);
-		$detail =$this->db->query("select a.id,a.channelid,message,a.created,a.readstatus,a.messageuserid,u.name as username,cchannel.parcelid,cchannel.senderid,cchannel.transporterid,cchannel.receiverid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where a.id=".$this->db->insert_id()."")->result()[0];
+		$this->db->insert('chatmessages',$arr); 
+ 		 $detail =$this->db->query("select a.id,a.channelid,message,a.created,a.readstatus,a.messageuserid,u.name as username,cchannel.parcelid,cchannel.senderid,cchannel.transporterid,cchannel.receiverid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where a.id=".$this->db->insert_id()."")->result()[0];
 		 $arr['channelid'] = $detail->channelid;
 		 $arr['parcelid'] = $detail->parcelid;
 		 $arr['senderid'] = $detail->senderid;
@@ -1038,6 +1076,13 @@ public function updateuserdetails()
  public function getchannelmessageslist($channelid)
  {   
 	$data['message'] =$this->db->query("select a.messageuserid as id,a.channelid,message,a.created,a.readstatus,u.name as username,cchannel.parcelid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where channelid=".$channelid." ");
+	$sql = "update cms_chatmessages set readstatus=1 where channelid=".$channelid; 
+	$this->db->query($sql);
+	print_r(json_encode($data['message']->result()));
+ }
+ public function getunreadchannellist($userid)
+ { 
+    $data['message'] =$this->db->query("select cc.*,cm.messagecount,cp.Parcelid as Parcelmcbid from cms_chatchannel cc inner join (SELECT channelid,count(message)messagecount FROM `cms_chatmessages` WHERE `readstatus`=0 group by channelid)cm on cc.id=cm.channelid left join cms_parcels cp on cc.`parcelid`=cp.id where (cc.`receiverid`=".$userid."  or  cc.`transporterid`=".$userid."  or  cc.`senderid`=".$userid." )and cc.isactive=1");
 	print_r(json_encode($data['message']->result()));
  }
 }

@@ -1,16 +1,20 @@
-﻿ <header ng-controller="HeaderController" id="top-bar"> 
+﻿<header ng-controller="HeaderController" id="top-bar">
     <div class="wrapper">
-        <div class="logo"><a ui-sref="home"><img src="/images/logo.png" alt="logo"></a> </div>
+        <div class="logo"><a ui-sref="home" ui-sref-opts="{reload: true}"><img src="/images/logo.png" alt="logo"></a> </div>
         <div class="user-opt">
             <!--<a ui-sref="addparcel">Add Parcel</a>
             <a ui-sref="addtrip">Add Trip</a>
             <a ui-sref="pricelist">Price List</a>-->
-            <a ng-hide="isAuth" ui-sref="login">Login</a>
-            <a ng-hide="isAuth" ui-sref="register">Sign Up</a>  
-            <a ng-show="isAuth && isUser" ui-sref="dashboard"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Welcome <span class="hd_us_nm">{{userName}}</span></a>
-            <a ng-show="isAuth" ui-sref="sender"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;My Dashboard</a>
-            <a ng-show="isAuth" ui-sref="logout"><i class="fa fa-power-off" aria-hidden="true"></i>&nbsp;Logout</a>
+            <a ng-hide="isAuth" ui-sref="login" ui-sref-opts="{reload: true}">Login</a>
+            <a ng-hide="isAuth" ui-sref="register" ui-sref-opts="{reload: true}">Sign Up</a>
+            <a ng-show="isAuth && chatchannelslist.length>0" href='javascript:void()' data-toggle='dropdown' class='dropdown-toggle'><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Messages<b class='caret'></b></a> 
+            <ul ng-show="isAuth && chatchannelslist.length>0" class='dropdown-menu notification'>
+                <li ng-repeat="channel in chatchannelslist"><a ng-click="showchatopen(channel.id,channel.parcelid,$index)" href='javascript:void()'>{{channel.Parcelmcbid}}({{channel.messagecount}})</a></li>             
+            </ul> 
+            <a ng-show="isAuth && isUser" ui-sref="dashboard" ui-sref-opts="{reload: true}"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Welcome <span class="hd_us_nm">{{userName}}</span></a>
+            <a ng-show="isAuth" ui-sref="sender" ui-sref-opts="{reload: true}"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;My Dashboard</a>
+            <a ng-show="isAuth" ui-sref="logout" ui-sref-opts="{reload: true}"><i class="fa fa-power-off" aria-hidden="true"></i>&nbsp;Logout</a>
         </div>
-    </div> 
-     <div class="alert alert-success" role="alert" ng-hide='!verificationmessage'>{{ verificationmessage }}</div> 
-</header>  
+    </div>
+    <div class="alert alert-success" role="alert" ng-hide='!verificationmessage'>{{ verificationmessage }}</div>
+</header>

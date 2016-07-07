@@ -12,7 +12,7 @@ angular.module('courier').factory('AddTripsService', ['$http', '$q', 'RESOURCES'
         }).then(function (response) { 
             return response;
         }); 
-    };
+    }; 
     var _updateTripsData = function (data) {
         return $http.post(serviceBase + 'api/updatetrip', data, {
             headers: { 'Content-Type': 'application/json' }

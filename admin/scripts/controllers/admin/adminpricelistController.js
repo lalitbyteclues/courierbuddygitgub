@@ -13,8 +13,10 @@ angular.module('courier').filter('startFrom', function () {
 angular.module('courier').controller("adminpricelistController", function ($http, $state, $scope, $location, AirportService, AuthService) {
     $scope.errormessage = '';
     $scope.successMessage = "";
-    $scope.searchfromzoneid = "1";
-    $scope.searchtozoneid = "1";
+    $scope.searchfromzoneid = 0;
+    $scope.searchtozoneid = 0;
+    $scope.currentPage = 1;   
+    $scope.entryLimit = 10;  
     $scope.edit = false;
     if (!AuthService.authentication.isAdministrator) {
         var path = $location.path();
@@ -34,23 +36,26 @@ angular.module('courier').controller("adminpricelistController", function ($http
     });
     $scope.checkgridlist = function () {
         $scope.successmessage = "";
-        if ($scope.searchfromzoneid > 0 && $scope.searchtozoneid > 0) {
+        if ($scope.searchfromzoneid >= 0 && $scope.searchtozoneid >= 0) {
             AirportService.getpricelist().then(function (results) {
                 $scope.list = [];
                 for (i = 0; i < $scope.weightrangelist.length; i++) {
-                    var datacount = $.grep(results.data.response, function (pp) { return pp.fromzoneid == $scope.searchfromzoneid && pp.tozoneid == $scope.searchtozoneid && pp.weightrangeid == $scope.weightrangelist[i].id });
-                   if (datacount.length > 0) {
-                       $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "transportershare": parseFloat(datacount[0].transportershare), "price": parseFloat(datacount[0].price), "id": datacount[0].id, "fromzoneid": $scope.searchfromzoneid, "tozoneid": $scope.searchtozoneid });
+                    var datacount = $.grep(results.data.response, function (pp) { return (pp.fromzoneid == $scope.searchfromzoneid || $scope.searchfromzoneid == 0) && (pp.tozoneid == $scope.searchtozoneid || $scope.searchtozoneid == 0) && pp.weightrangeid == $scope.weightrangelist[i].id });
+                    console.log(datacount);
+                    if (datacount.length > 0) {
+                        for (j = 0; j < datacount.length; j++) { 
+                            $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "transportershare": parseFloat(datacount[j].transportershare), "price": parseFloat(datacount[j].price), "id": datacount[j].id, "fromzoneid": datacount[j].fromzoneid, "tozoneid": datacount[j].tozoneid });
+                        }
                     } else {
-                       $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "transportershare": parseFloat(datacount[0].transportershare), "price": 0, "id": 0, "fromzoneid": $scope.searchfromzoneid, "tozoneid": $scope.searchtozoneid });
+                        $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "transportershare": 0, "price": 0, "id": 0, "fromzoneid": $scope.searchfromzoneid, "tozoneid": $scope.searchtozoneid });
                     }
                 }
                 $scope.currentPage = 1; //current page
-                $scope.entryLimit = 15; //max no of items to display in a page
+                $scope.entryLimit = 10; //max no of items to display in a page
                 $scope.filteredItems = $scope.list.length; //Initially for no filter  
-                $scope.totalItems = $scope.list.length;
+                $scope.totalItems = $scope.list.length;  
                 $scope.reverse = true;
-                $scope.sort_by("weightrangeid");
+                $scope.sort_by("weightrangeid"); 
             });
 
         } else {
@@ -68,7 +73,7 @@ angular.module('courier').controller("adminpricelistController", function ($http
     $scope.Savepricelist = function () {
         $scope.successmessage = "";
         AirportService.savezonepricelist($scope.list).then(function (results) {
-            $scope.successmessage = "Updated SuccessFully"; 
+            $scope.successmessage = "Updated SuccessFully";
         });
     };
     $scope.deletepricelist = function (field) {

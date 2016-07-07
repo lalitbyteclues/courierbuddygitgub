@@ -67,7 +67,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
         $scope.successaddtripMessage = "";
         bootbox.prompt("Do you want to cancel this Trip? Give Reason.", function (result) {
             if (result !== null) {
-                var data = { "id": id, "status": 4, "process_by": sessionStorage.getItem("UserId"), "reason": result };
+                var data = { "id": id, "status": 4, "process_by": AuthService.authentication.UserId, "reason": result };
                 AddTripsService.usrupdatestatus(data).then(function (results) {
                     if (results.status == 200) {
                         searchService.gettransporterdetails($stateParams.id).then(function (response) {
@@ -100,7 +100,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
         $scope.successaddtripMessage = "";
         bootbox.confirm("Are you sure you have collected the parcel?", function (result) {
             if (result) {
-                var data = { "id": $scope.transporter.id, "status": 3, "process_by": sessionStorage.getItem("UserId"), "reason": "Parcel Collected","parcelid":id };
+                var data = { "id": $scope.transporter.id, "status": 3, "process_by": AuthService.authentication.UserId, "reason": "Parcel Collected", "parcelid": id };
                 AddTripsService.usrupdatestatus(data).then(function (results) {
                     if (results.status == 200) {
                         searchService.gettransporterdetails($stateParams.id).then(function (response) {
@@ -132,7 +132,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
         $scope.successaddtripMessage = "";
         bootbox.confirm("Are you sure you have delivered the parcel?", function (result) {
             if (result) {
-                var data = { "id": $scope.transporter.id, "status": 6, "process_by": sessionStorage.getItem("UserId"), "reason": "Parcel Delivered", "parcelid": id };
+                var data = { "id": $scope.transporter.id, "status": 6, "process_by": AuthService.authentication.UserId, "reason": "Parcel Delivered", "parcelid": id };
                 AddTripsService.usrupdatestatus(data).then(function (results) {
                     if (results.status == 200) {
                         searchService.gettransporterdetails($stateParams.id).then(function (response) {
@@ -161,7 +161,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
         });
     }
     $scope.senderbooknow = function (id) { 
-        if (!($.grep($scope.parcellist, function (parcel) { return parcel.id == id })[0].weight <= (parseFloat($scope.transporter.awailableweight) + (parseFloat($scope.transporter.awailableweight) * .2)))) {
+		if (!($.grep($scope.parcellist, function (parcel) { return parcel.id == id })[0].weight <= (parseFloat($scope.transporter.awailableweight==null?$scope.transporter.capacity:$scope.transporter.awailableweight) + (parseFloat($scope.transporter.awailableweight==null?$scope.transporter.capacity:$scope.transporter.awailableweight) * .2)))) {
             bootbox.alert("You can't book parcel having weight mare than 20% of your available capacity !", function () { 
             });
             return false;

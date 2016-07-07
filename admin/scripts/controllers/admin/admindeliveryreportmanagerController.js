@@ -1,7 +1,7 @@
 /**
  * Created by Lalit on 21.05.2016.
  */
-angular.module('courier').controller("admindeliveryreportmanagerController", function ($state, $scope, ParcelService, $location, AuthService) {
+angular.module('courier').controller("admindeliveryreportmanagerController", function ($state, $scope, ParcelService, $location, AuthService, searchService) {
     $scope.errormessage = '';
     $scope.successMessage = "";
     $scope.timeperiod =0;
@@ -43,6 +43,16 @@ angular.module('courier').controller("admindeliveryreportmanagerController", fun
         $scope.predicate = predicate;
         $scope.reverse = !$scope.reverse;
     };
+    $scope.viewbookingdetail = function (id) {
+        searchService.gettransporterdetails(id).then(function (response) {
+            $scope.trip = response.data.response[0];
+            var deptime = $scope.trip.dep_time.split(" ");
+            $scope.trip.dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]).getTime();
+            var arrtime = $scope.trip.arrival_time.split(" ");
+            $scope.trip.arrival_time = new Date(arrtime[0].split("-")[1] + "/" + arrtime[0].split("-")[2] + "/" + arrtime[0].split("-")[0] + " " + arrtime[1]).getTime();
+            $("#parceldetails").modal();
+        });
+    }
     $scope.$watch('currentPage', function (newPage) {
         if (newPage != NaN) {
             $scope.searchdatabyuser();

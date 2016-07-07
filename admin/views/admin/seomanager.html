@@ -3,8 +3,8 @@
     <div class="tab-form-new">
         <div class="col-md-12">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation">
-                    <a>Airport List</a>
+                <li style="left:40%;" role="presentation">
+                    <a>Seo Manager</a>
                 </li>
             </ul>
         </div>
@@ -17,9 +17,8 @@
                 <div class="col-md-10">
                     <div class="clear">&nbsp;</div>
                     <fieldset>
-                        <div class="clear">&nbsp;</div>
-                        <div class="col-md-2">
-                            PageSize:
+                        <legend>Search:</legend>
+                        <div class="col-md-2" style="padding-left:5px;padding-right:5px;">
                             <select ng-model="entryLimit" class="form-control">
                                 <option>5</option>
                                 <option>10</option>
@@ -28,56 +27,47 @@
                                 <option>100</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            Filter:
-                            <input type="text" ng-model="search" ng-change="filter()" placeholder="Filter" class="form-control" />
+                        <div class="col-md-3" style="padding-left:5px;padding-right:5px;">
+                            <p class="input-group" style="width:100%;">
+                                <input type="text" ng-model="search" ng-change="filter()" placeholder="Filter" class="form-control" />
+                            </p>
                         </div>
                         <div class="col-md-3" style="padding-left:5px;padding-right:5px;text-align:left;">
-                            <a class="btn  btn-primary" style="margin-top:20px;" href="javascript:void(0);" ng-csv="list" filename="seopage.csv" field-separator="," decimal-separator="." id="month">Export To CSV</a>
-                        </div><div class="clear">&nbsp;</div>
-                    </fieldset><div class="clear">&nbsp;</div><h5>Filtered {{ filtered.length }} of {{ totalItems}} Total Airport</h5>
+                            <a class="btn  btn-primary"   href="javascript:void(0);" ng-csv="list" filename="seopage.csv" field-separator="," decimal-separator="." id="month">Export To CSV</a>
+                        </div>
+                    </fieldset>
+                    <h5>Filtered {{ filtered.length }} of {{ totalItems}} Total Airport</h5>
                     <div ng-show="successmessage.length" class="alert alert-success">{{successmessage}}</div>
-                    <div ng-show="errormessage.length" class="alert alert-danger">{{errormessage}}</div>
-                    <br />
+                    <div ng-show="errormessage.length" class="alert alert-danger">{{errormessage}}</div> 
                     <div class="row">
                         <div class="col-md-12" ng-show="filteredItems > 0">
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            Page&nbsp;<a ng-click="sort_by('page');">
+                                        <td>
+                                            Page<a ng-click="sort_by('page');">
                                                 <i class="glyphicon glyphicon-sort"></i>
                                             </a>
-                                        </th>
-                                        <th>
-                                            Keyword&nbsp;<a ng-click="sort_by('keyword');">
-                                                <i class="glyphicon glyphicon-sort"></i>
-                                            </a>
-                                        </th>
-                                        <th>
-                                            Description&nbsp;
-                                            <a ng-click="sort_by('description');">
-                                                <i class="glyphicon glyphicon-sort"></i>
-                                            </a>
-                                        </th>
-                                        <th>
-                                            Title&nbsp;
-                                            <a ng-click="sort_by('title');">
-                                                <i class="glyphicon glyphicon-sort"></i>
-                                            </a>
-                                        </th>
-                                        <th>
-                                            Location&nbsp;
+                                        </td>
+                                        <td>
+                                            Keyword 
+                                        </td>
+                                        <td>
+                                            Description
+                                            
+                                        </td>
+                                        <td>
+                                            Title 
+                                        </td>
+                                        <td>
+                                            Location
                                             <a ng-click="sort_by('location');">
                                                 <i class="glyphicon glyphicon-sort"></i>
                                             </a>
-                                        </th>
-                                        <th>
-                                            Status&nbsp;
-                                            <a ng-click="sort_by('status');">
-                                                <i class="glyphicon glyphicon-sort"></i>
-                                            </a>
-                                        </th>
+                                        </td>
+                                        <td>
+                                            Status 
+                                        </td>
                                         <th>
                                         </th>
                                     </tr>
@@ -85,38 +75,38 @@
                                 <tbody>
                                     <tr ng-repeat="data in filtered = (list | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
                                         <td>
-                                            <span data-ng-hide="editMode">{{data.page}}</span>
-                                            <input type="text" data-ng-show="editMode" class="form-control" data-ng-model="data.page" data-ng-required />
+                                            <span data-ng-hide="editMode || data.editMode">{{data.page}}</span>
+                                            <input placeholder="Page Name" type="text" data-ng-show="editMode || data.editMode" class="form-control" data-ng-model="data.page" data-ng-required />
                                         </td>
                                         <td>
-                                            <span data-ng-hide="editMode">{{data.keyword}}</span>
-                                            <input type="text" data-ng-show="editMode" class="form-control" data-ng-model="data.keyword" data-ng-required />
+                                            <span data-ng-hide="editMode || data.editMode">{{data.keyword}}</span>
+                                            <input placeholder="Keyword" type="text" data-ng-show="editMode || data.editMode" class="form-control" data-ng-model="data.keyword" data-ng-required />
                                         </td>
                                         <td>
-                                            <span data-ng-hide="editMode">{{data.description }}</span>
-                                            <input type="text" data-ng-show="editMode" class="form-control" data-ng-model="data.description" data-ng-required />
+                                            <span data-ng-hide="editMode || data.editMode">{{data.description }}</span>
+                                            <input placeholder="Description" type="text" data-ng-show="editMode || data.editMode" class="form-control" data-ng-model="data.description" data-ng-required />
                                         </td>
                                         <td>
-                                            <span data-ng-hide="editMode">{{data.title}}</span>
-                                            <input type="text" data-ng-show="editMode" class="form-control" data-ng-model="data.title" data-ng-required />
+                                            <span data-ng-hide="editMode || data.editMode">{{data.title}}</span>
+                                            <input placeholder="Page Title" type="text" data-ng-show="editMode || data.editMode" class="form-control" data-ng-model="data.title" data-ng-required />
                                         </td>
                                         <td>
-                                            <span data-ng-hide="editMode">{{data.location}}</span>
-                                            <input type="text" data-ng-show="editMode" class="form-control" data-ng-model="data.location" data-ng-required />
+                                            <span data-ng-hide="editMode || data.editMode">{{data.location}}</span>
+                                            <input placeholder="Page URL" type="text" data-ng-show="editMode || data.editMode" class="form-control" data-ng-model="data.location" data-ng-required />
                                         </td>
                                         <td>
-                                            <span data-ng-hide="editMode">{{data.status}}</span>
-                                            <select class="form-control" data-ng-show="editMode" data-ng-model="data.status" data-ng-required>
+                                            <span data-ng-hide="editMode || data.editMode">{{data.status}}</span>
+                                            <select class="form-control" data-ng-show="editMode || data.editMode" data-ng-model="data.status" data-ng-required>
                                                 <optgroup label="Select Status"></optgroup>
                                                 <option ng-selected="data.status=='Y'" value="Y">Yes</option>
                                                 <option ng-selected="data.status=='N'" value="N">No</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <a href="javascript:void(0)" data-ng-hide="editMode" data-ng-click="editMode = true; editAppKey(data)">Edit</a>
-                                            <a href="javascript:void(0)" data-ng-hide="editMode" data-ng-click="deleterecords(data.id)">Delete</a>
-                                            <a href="javascript:void(0)" data-ng-show="editMode" data-ng-click="editMode = false ; saverecords(data)">Save</a>
-                                            <a href="javascript:void(0)" data-ng-show="editMode" data-ng-click="editMode = false; cancel()">Cancel</a>
+                                            <a href="javascript:void(0)" data-ng-hide="editMode || data.editMode" data-ng-click="editMode = true; editAppKey(data)">Edit</a>
+                                            <a href="javascript:void(0)" data-ng-hide="editMode || data.editMode" data-ng-click="deleterecords(data.id)">Delete</a>
+                                            <a href="javascript:void(0)" data-ng-show="editMode || data.editMode" data-ng-click="editMode = false ; saverecords(data)">Save</a>
+                                            <a href="javascript:void(0)" data-ng-show="editMode || data.editMode" data-ng-click="editMode = false; cancel()">Cancel</a>
                                         </td>
                                     </tr>
                                 </tbody>
