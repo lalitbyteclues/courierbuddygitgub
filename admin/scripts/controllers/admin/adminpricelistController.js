@@ -33,6 +33,7 @@ angular.module('courier').controller("adminpricelistController", function ($http
     });
     AirportService.getweightrangelist().then(function (results) {
         $scope.weightrangelist = results.data.response;
+        $scope.checkgridlist();
     });
     $scope.checkgridlist = function () {
         $scope.successmessage = "";
@@ -95,6 +96,5 @@ angular.module('courier').controller("adminpricelistController", function ($http
     $scope.sort_by = function (predicate) {
         $scope.predicate = predicate;
         $scope.reverse = !$scope.reverse;
-    };
-    $scope.checkgridlist();
+    }; 
 });

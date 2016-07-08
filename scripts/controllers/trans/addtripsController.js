@@ -29,29 +29,16 @@ angular.module('courier').controller("addtripsController", function ($rootScope,
                             $scope.errormessage = "Departure Time Required!";
                             return;
                         }
-                        $scope.departureon = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));
-                        var dep_time = "";
-                        if ($scope.dtime.split(":")[1].substring(2) == "pm" && parseInt($scope.dtime.split(":")[0]) < 12) {
-                            dep_time = result.d_date.value.split("-")[2] + "/" + result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + " " + (parseInt($scope.dtime.split(":")[0]) + 12) + ":" + $scope.dtime.split(":")[1].substring(0, 2);
-                        }
-                        else {
-                            dep_time = result.d_date.value.split("-")[2] + "/" + result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2);
-                        }
-
+                        $scope.departureon = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " "  + $scope.dtime);
+                        var dep_time = result.d_date.value.split("-")[2] + "/" + result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + " " + $scope.dtime;
                         var result = document.getElementsByClassName("quote_date1");
                         if (result.a_date.value.length == 0) {
                             $scope.errormessage = "Arrival Time Required!";
                             return;
                         }
                         $scope.atime = angular.element('#setTimeExample1').val();
-                        $scope.arrivalon = new Date(result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + "/" + result.a_date.value.split("-")[2] + " " + $scope.atime.split(":")[0] + ":" + $scope.atime.split(":")[1].substring(0, 2) + " " + $scope.atime.split(":")[1].substring(2));
-                        var arrivaltime = "";
-                        if ($scope.atime.split(":")[1].substring(2).toLowerCase() == "pm" && parseInt($scope.atime.split(":")[0]) < 12) {
-                            arrivaltime = result.a_date.value.split("-")[2] + "/" + result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + " " + (parseInt($scope.atime.split(":")[0]) + 12) + ":" + $scope.atime.split(":")[1].substring(0, 2);
-                        }
-                        else {
-                            arrivaltime = result.a_date.value.split("-")[2] + "/" + result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + " " + $scope.atime.split(":")[0] + ":" + $scope.atime.split(":")[1].substring(0, 2);
-                        }
+                        $scope.arrivalon = new Date(result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + "/" + result.a_date.value.split("-")[2] + " " +$scope.atime);
+                        var arrivaltime = result.a_date.value.split("-")[2] + "/" + result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + " " + $scope.atime;
                         if (!angular.isDate($scope.arrivalon)) {
                             $scope.errormessage = "Invalid Arrival Time or select Estimate Trip Duration!";
                             return;

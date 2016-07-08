@@ -105,6 +105,22 @@ class Api extends CI_Controller{
 					$json_response = json_encode($errormessage); 
 					echo $json_response;  
 	}}
+	 public function saveweightrangelist()
+	{  try
+		{
+			$input_data = json_decode(trim(file_get_contents('php://input')), true);
+			$this->api_model->saveweightrangelist($input_data);
+			$providers = $this->api_model->getweightrangelist();		 
+			echo $providers;
+		} 
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+					$errormessage->status="Error";
+					$errormessage->errorMessage="No Weight range added";
+					$json_response = json_encode($errormessage); 
+					echo $json_response;  
+	}}
 	public function saveairportlist()
 	{  try
 		{
@@ -143,6 +159,22 @@ class Api extends CI_Controller{
 		{  
 			$this->api_model->deleteseolist($id);
 			$providers = $this->api_model->getseolist();		 
+			echo $providers;
+		} 
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+					$errormessage->status="Error";
+					$errormessage->errorMessage="No seo deleted";
+					$json_response = json_encode($errormessage); 
+					echo $json_response;  
+		} 
+	}
+	public function deleteweightrangelist($id)
+	{  try
+		{  
+			$this->api_model->deleteweightrangelist($id);
+			$providers = $this->api_model->getweightrangelist();		 
 			echo $providers;
 		} 
 		catch (Exception $e)

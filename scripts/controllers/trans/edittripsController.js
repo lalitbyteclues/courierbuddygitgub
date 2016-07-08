@@ -18,21 +18,18 @@ angular.module('courier').controller("edittripsController", function ($rootScope
             {
                 $state.transitionTo('home');
             }
-            $scope.dtime = day[1];
+            $scope.dtime = day[1].substring(0, 5); 
             $scope.tripduration = parseInt($scope.transporter.duration);
             $("#durationPicker").durationPicker("seconds", $scope.tripduration);
             $scope.departureon = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
             var dat = $scope.transporter.arrival_time.split("-");
-            var day = dat[2].split(" ");
-            $scope.atime = day[1];
+            var day = dat[2].split(" "); 
+            $scope.atime = day[1].substring(0, 5); 
             $scope.arrivalon = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1])); 
             $scope.flightno = $scope.transporter.flight_no;
             $scope.bookingpnr = $scope.transporter.pnr;
             $scope.capacity = parseFloat($scope.transporter.capacity);
-            $scope.tripcomment = $scope.transporter.comment;
-           // $scope.departureon = convertUTCDateToLocalDate($scope.departureon);
-            //$scope.arrivalon = convertUTCDateToLocalDate($scope.arrivalon); 
-            
+            $scope.tripcomment = $scope.transporter.comment; 
         }
     }); 
     $scope.errormessage = "";
@@ -69,21 +66,13 @@ angular.module('courier').controller("edittripsController", function ($rootScope
                 if (results.status == 200) {
                     if (results.data.response[0].status == "Y") {
                         var result = document.getElementsByClassName("quote_date");
-                        $scope.departureon = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));
-                        var deptime = "";
-                        if ($scope.dtime.split(":")[1].substring(2) == 'pm' && parseInt($scope.dtime.split(":")[0]) < 12) {
-                            deptime = result.d_date.value.split("-")[2] + "/" + result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + " " + (parseInt($scope.dtime.split(":")[0]) + parseInt(12)) + ":" + $scope.dtime.split(":")[1].substring(0, 2);
-                        } else {
-                            deptime = result.d_date.value.split("-")[2] + "/" + result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2);
-                        }
-                        var arrivaltime = "";
+                        $scope.departureon = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime);
+                        var dep_time = result.d_date.value.split("-")[2] + "/" + result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + " " + $scope.dtime;
+                         
                         result = document.getElementsByClassName("quote_date1");
                         $scope.atime = moment($scope.arrivalon).format("h:mm");
-                        if ($scope.atime.split(":")[1].substring(2) == 'pm' && parseInt($scope.atime.split(":")[0]) < 12) {
-                            arrivaltime = result.a_date.value.split("-")[2] + "/" + result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + " " + (parseInt($scope.atime.split(":")[0]) + parseInt(12)) + ":" + $scope.atime.split(":")[1].substring(0, 2);
-                        } else {
-                            arrivaltime = result.a_date.value.split("-")[2] + "/" + result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + " " + $scope.atime.split(":")[0] + ":" + $scope.atime.split(":")[1].substring(0, 2);
-                        }
+                        $scope.arrivalon = new Date(result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + "/" + result.a_date.value.split("-")[2] + " " + $scope.atime);
+                        var arrivaltime = result.a_date.value.split("-")[2] + "/" + result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + " " + $scope.atime;
                         $scope.arrivalon = new Date(result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + "/" + result.a_date.value.split("-")[2] + " " + $scope.atime.split(":")[0] + ":" + $scope.atime.split(":")[1].substring(0, 2) + " " + $scope.atime.split(":")[1].substring(2));
                         if (!angular.isDate($scope.departureon)) {
                             $scope.errormessage = "Invalid Depa!";
@@ -286,11 +275,9 @@ angular.module('courier').controller("edittripsController", function ($rootScope
         return viewLocation === $location.path();
     };
     $scope.search = function () {
-        var result = document.getElementsByClassName("quote_datesearch");
-        console.log(result);
+        var result = document.getElementsByClassName("quote_datesearch"); 
         RESOURCES.searchcriteria.datefrom = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
-        result = document.getElementsByClassName("quote_datesearch1");
-        console.log(result);
+        result = document.getElementsByClassName("quote_datesearch1"); 
         RESOURCES.searchcriteria.dateto = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
         if ($scope.searchfromlocation.trim() != $scope.searchtolocation.trim()) {
             RESOURCES.searchcriteria.locationfrom = $scope.searchfromlocation;

@@ -95,7 +95,7 @@
                             </div>
                         </div>
                         <div class="col-md-12" ng-show="filteredItems > 0">
-                            <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+                            <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" items-per-page="entryLimit"></pagination>
                         </div>
                     </div>
                 </div>
@@ -156,9 +156,11 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
-                <div class="modal-body">
-                    <div class="col-md-3" ng-repeat="data in userslistemail" style="text-align:left">
-                        <input type="checkbox" ng-model="data.selected" />   {{data.username}}
+                <div class="modal-body"> 
+                    <div class="row">
+                        <div class="col-md-3" ng-repeat="data in userslistemail" style="text-align:left">
+                            <input type="checkbox" ng-model="data.selected" />   {{data.username}}
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

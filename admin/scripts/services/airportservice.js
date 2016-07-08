@@ -57,6 +57,14 @@ angular.module('courier').factory('AirportService', ['$http', '$q', 'RESOURCES',
             return response;
         });
     };
+    var _saveweightrangelist = function (data) {
+        return $http.post(serviceBase + 'api/saveweightrangelist', data, {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (response) {
+            console.log(response);
+            return response;
+        });
+    };
     var _deleteairportlist = function (id) {
         return $http.get(serviceBase + 'api/deleteairportlist/' + id, {
             headers: { 'Content-Type': 'application/json' }
@@ -66,6 +74,13 @@ angular.module('courier').factory('AirportService', ['$http', '$q', 'RESOURCES',
     };
     var _deleteseolist = function (id) {
         return $http.get(serviceBase + 'api/deleteseolist/' + id, {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (results) {
+            return results;
+        });
+    };
+    var _deletepricerecord = function (id) {
+        return $http.get(serviceBase + 'api/deleteweightrangelist/' + id, {
             headers: { 'Content-Type': 'application/json' }
         }).then(function (results) {
             return results;
@@ -90,10 +105,12 @@ angular.module('courier').factory('AirportService', ['$http', '$q', 'RESOURCES',
     AirportServiceFactory.getweightrangelist = _getweightrangelist;
     AirportServiceFactory.getairportslist = _getairportslist;
     AirportServiceFactory.saveairportdate = _saveairportdate; 
-    AirportServiceFactory.saveseolist = _saveseolist;
+    AirportServiceFactory.saveseolist = _saveseolist;  
+    AirportServiceFactory.saveweightrangelist = _saveweightrangelist;
     AirportServiceFactory.savezonepricelist = _savezonepricelist;
     AirportServiceFactory.deleteairportlist = _deleteairportlist; 
     AirportServiceFactory.deleteseolist = _deleteseolist;
+    AirportServiceFactory.deletepricerecord = _deletepricerecord;
     AirportServiceFactory.getpricelist = _getpricelist; 
     AirportServiceFactory.deletepricelist = _deletepricelist;
     return AirportServiceFactory;

@@ -5,7 +5,7 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider, $loca
         var $state = $injector.get("$state");
         $state.go('login');
     });
-    $stateProvider 
+    $stateProvider
        .state('admindashboard', {
            url: "/admin/dashboard",
            templateUrl: "admin/views/admin/dashboard.html",
@@ -19,11 +19,11 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider, $loca
                pageTitle: 'Admin Profile'
            }
        }).state('adminuserslist', {
-            url: "/admin/userlist",
-            templateUrl: "admin/views/admin/users.html",
-            data: {
-                pageTitle: 'Admin Users'
-            }
+           url: "/admin/userlist",
+           templateUrl: "admin/views/admin/users.html",
+           data: {
+               pageTitle: 'Admin Users'
+           }
        }).state('admintripslist', {
            url: "/admin/tripslist",
            templateUrl: "admin/views/admin/tripmanager.html",
@@ -43,88 +43,94 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider, $loca
                pageTitle: 'Admin Trips'
            }
        }).state('adminpricelist', {
-            url: "/admin/pricelist",
-            templateUrl: "admin/views/admin/adminpricelist.html",
-            data: {
-                pageTitle: 'Admin Price List'
-            }
-        }).state('adminseomanager', {
-            url: "/admin/seomanager",
-            templateUrl: "admin/views/admin/seomanager.html",
-            data: {
-                pageTitle: 'admin seo manager'
-            }
-        }).state('adminparcellist', {
-            url: "/admin/parcellist",
-            templateUrl: "admin/views/admin/parcelmanager.html",
-            data: {
-                pageTitle: 'Admin Parcel List'
-            }
-        }).state('adminbookings', {
-            url: "/admin/bookings",
-            templateUrl: "admin/views/admin/bookingmanager.html",
-            data: {
-                pageTitle: 'Admin Booking List'
-            }
-        }).state('adminpayments', {
-            url: "/admin/payments",
-            templateUrl: "admin/views/admin/paymentmanager.html",
-            data: {
-                pageTitle: 'Admin Payments'
-            }
-        }).state('adminreports', {
-            url: "/admin/reports",
-            templateUrl: "admin/views/admin/reportmanager.html",
-            data: {
-                pageTitle: 'Admin Reports'
-            }
-        }).state('admindeliveryreports', {
-            url: "/admin/deliveryreports",
-            templateUrl: "admin/views/admin/deliveryreport.html",
-            data: {
-                pageTitle: 'Admin Delivery Reports'
-            }
-        }).state('adminairportslist', {
-            url: "/admin/airportslist",
-            templateUrl: "admin/views/admin/airportmanager.html",
-            data: {
-                pageTitle: 'Admin Airportslist'
-            }
-        }).state('adminfeedbackslist', {
-            url: "/admin/feedbackslist",
-            templateUrl: "admin/views/admin/feedbackmanager.html",
-            data: {
-                pageTitle: 'Admin FeedBack Manager'
-            }
-        }).state('adminnewsletters', {
-            url: "/admin/newsletters",
-            templateUrl: "admin/views/admin/newslettermanager.html",
-            data: {
-                pageTitle: 'Admin News Letters'
-            }
-        }).state('changepassword', {
-            url: "/admin/changepassword",
-            templateUrl: "admin/views/changepassword.html",
-            data: {
-                pageTitle: 'My Account | ChangePassword '
-            }
-        }).state('logout', {
-            url: "/logout",
-            controller: function ($state, $rootScope, AuthService) {
-                AuthService.logOut();
-                $state.go('login');
-            },
-            data: {
-                pageTitle: 'logout'
-            }
-        }) 
+           url: "/admin/pricelist",
+           templateUrl: "admin/views/admin/adminpricelist.html",
+           data: {
+               pageTitle: 'Admin Price Range List'
+           }
+       }).state('pricerangelist', {
+           url: "/admin/pricerange",
+           templateUrl: "admin/views/admin/pricerange.html",
+           data: {
+               pageTitle: 'Admin Price List'
+           }
+       }).state('adminseomanager', {
+           url: "/admin/seomanager",
+           templateUrl: "admin/views/admin/seomanager.html",
+           data: {
+               pageTitle: 'admin seo manager'
+           }
+       }).state('adminparcellist', {
+           url: "/admin/parcellist",
+           templateUrl: "admin/views/admin/parcelmanager.html",
+           data: {
+               pageTitle: 'Admin Parcel List'
+           }
+       }).state('adminbookings', {
+           url: "/admin/bookings",
+           templateUrl: "admin/views/admin/bookingmanager.html",
+           data: {
+               pageTitle: 'Admin Booking List'
+           }
+       }).state('adminpayments', {
+           url: "/admin/payments",
+           templateUrl: "admin/views/admin/paymentmanager.html",
+           data: {
+               pageTitle: 'Admin Payments'
+           }
+       }).state('adminreports', {
+           url: "/admin/reports",
+           templateUrl: "admin/views/admin/reportmanager.html",
+           data: {
+               pageTitle: 'Admin Reports'
+           }
+       }).state('admindeliveryreports', {
+           url: "/admin/deliveryreports",
+           templateUrl: "admin/views/admin/deliveryreport.html",
+           data: {
+               pageTitle: 'Admin Delivery Reports'
+           }
+       }).state('adminairportslist', {
+           url: "/admin/airportslist",
+           templateUrl: "admin/views/admin/airportmanager.html",
+           data: {
+               pageTitle: 'Admin Airportslist'
+           }
+       }).state('adminfeedbackslist', {
+           url: "/admin/feedbackslist",
+           templateUrl: "admin/views/admin/feedbackmanager.html",
+           data: {
+               pageTitle: 'Admin FeedBack Manager'
+           }
+       }).state('adminnewsletters', {
+           url: "/admin/newsletters",
+           templateUrl: "admin/views/admin/newslettermanager.html",
+           data: {
+               pageTitle: 'Admin News Letters'
+           }
+       }).state('changepassword', {
+           url: "/admin/changepassword",
+           templateUrl: "admin/views/changepassword.html",
+           data: {
+               pageTitle: 'My Account | ChangePassword '
+           }
+       }).state('logout', {
+           url: "/logout",
+           controller: function ($state, $rootScope, AuthService) {
+               AuthService.logOut();
+               $state.go('login');
+           },
+           data: {
+               pageTitle: 'logout'
+           }
+       })
         .state('login', {
             url: "admin/login",
             templateUrl: "admin/views/login.html",
             data: {
                 pageTitle: 'Login'
             }
-        }) .state('pricelist', {
+        }).state('pricelist', {
             url: "/pricelist",
             templateUrl: "views/static/pricelist.html",
             data: {
@@ -174,15 +180,15 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider, $loca
             }
         })
 }
-angular.module('courier').config(configState).run(function ($rootScope, $state,  Permission, ValiDatedTokenObject, AuthService) {
-    
+angular.module('courier').config(configState).run(function ($rootScope, $state, Permission, ValiDatedTokenObject, AuthService) {
+
     $rootScope.numberWithCommas = function (x) {
         var parts = x.toString().split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         return parts.join(".");
     }
     AuthService.fillAuthData();
-    $rootScope.$state = $state; 
+    $rootScope.$state = $state;
     // Define anonymous role
     Permission.defineRole('anonymous', function (stateParams) {
         if (!sessionStorage.getItem("ValiDatedTokenObject")) {
@@ -227,7 +233,7 @@ angular.module('courier').config(configState).run(function ($rootScope, $state, 
             return false;
         });
 
-}); 
+});
 angular.isUndefinedOrNull = function (val) {
     return angular.isUndefined(val) || val === null
 }

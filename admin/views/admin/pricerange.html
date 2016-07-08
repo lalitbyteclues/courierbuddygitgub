@@ -1,0 +1,93 @@
+﻿<div ng-include="'admin/views/head.html'"></div>
+<div class="container" ng-controller="pricerangeController">
+    <div class="tab-form-new">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li style="left:40%;" role="presentation">
+                    <a>Price Range Manager</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="Dashboard">
+                <div class="col-md-2">
+                    <div ng-include="'admin/views/admin/adminmenu.html'"></div>
+                    <div class="clear">&nbsp;&nbsp;</div>
+                </div>
+                <div class="col-md-10">
+                    <div class="clear">&nbsp;</div>
+                    <fieldset>
+                        <legend>Search:</legend>
+                        <div class="col-md-2" style="padding-left:5px;padding-right:5px;">
+                            <select ng-model="entryLimit" class="form-control">
+                                <option>5</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3" style="padding-left:5px;padding-right:5px;">
+                            <p class="input-group" style="width:100%;">
+                                <input type="text" ng-model="search" ng-change="filter()" placeholder="Filter" class="form-control" />
+                            </p>
+                        </div>
+                        <div class="col-md-3" style="padding-left:5px;padding-right:5px;text-align:left;">
+                            <a class="btn  btn-primary" href="javascript:void(0);" ng-csv="list" filename="seopage.csv" field-separator="," decimal-separator="." id="month">Export To CSV</a>
+                        </div>
+                    </fieldset>
+                    <h5>Filtered {{ filtered.length }} of {{ totalItems}} Total Airport</h5>
+                    <div ng-show="successmessage.length" class="alert alert-success">{{successmessage}}</div>
+                    <div ng-show="errormessage.length" class="alert alert-danger">{{errormessage}}</div>
+                    <div ng-show="warningmessage.length" class="alert alert-warning">{{warningmessage}}</div>
+                    <div class="row"> 
+                        <div class="col-md-12" ng-show="filteredItems > 0">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>Name<a ng-click="sort_by('name');"> <i class="glyphicon glyphicon-sort"></i></a></td>
+                                        <td>Min Weight</td>
+                                        <td>Max Weight</td> 
+                                        <th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in filtered = (list | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                        <td>
+                                            <span>{{data.minweight}}-{{data.maxweight }}</span> 
+                                        </td>
+                                        <td>
+    <span data-ng-hide="editMode || data.editMode">{{data.minweight}}</span>
+              <input placeholder="Min Weight" type="number" step="0.01" data-ng-show="editMode || data.editMode" class="form-control" data-ng-model="data.minweight" data-ng-required />
+                                        </td>
+                                        <td>
+<span data-ng-hide="editMode || data.editMode">{{data.maxweight }}</span>
+                                            <input placeholder="Max Weight" type="number" step="0.01" data-ng-show="editMode || data.editMode" class="form-control" data-ng-model="data.maxweight" data-ng-required />
+                                        </td> 
+                                        <td> 
+                                            <a href="javascript:void(0)" data-ng-hide="editMode || data.editMode" data-ng-click="editMode = true;data.editMode=true; editAppKey(data)">Edit</a>
+                                            <a href="javascript:void(0)" data-ng-hide="editMode || data.editMode" data-ng-click="deleterecords(data.id)">Delete</a>
+                                            <a href="javascript:void(0)" data-ng-show="editMode || data.editMode" data-ng-click="editMode = false ;saverecords(data)">Save</a>
+                                            <a href="javascript:void(0)" data-ng-show="editMode || data.editMode" data-ng-click="editMode = false;data.editMode=false; cancel()">Cancel</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <input type="button" class="btn btn-primary" value="Add Row" data-ng-click="addRow()" />
+                        <div class="col-md-12" ng-show="filteredItems == 0">
+                            <div class="col-md-12">
+                                <h4>No Record found</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="filteredItems > 0">
+                            <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" items-per-page="entryLimit"></pagination>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

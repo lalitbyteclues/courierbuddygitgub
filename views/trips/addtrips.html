@@ -87,7 +87,7 @@
                                                         <span class="error" ng-show="(addtripform.$submitted && addtripform.d_date.$error.required)">Required.</span>
                                                     </div>
                                                     <div class="col-md-3" style="padding-right:0;padding-left:5px;">
-                                                        <input maxlength="100"   id="setTimeExample" ng-model="dtime" style="padding:6px 7px;" placeholder="HH:MM:A" type="text" class="time ui-timepicker-input form-control" autocomplete="off">
+                                                        <input maxlength="100"   id="setTimeExample" ng-model="dtime" style="padding:6px 7px;" placeholder="HH:MM" type="text" class="time ui-timepicker-input form-control" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
@@ -106,7 +106,7 @@
                                                         <span class="error" ng-show="(addtripform.$submitted && addtripform.a_date.$error.required)">Required.</span>
                                                     </div>
                                                     <div class="col-md-3" style="padding-right:0;padding-left:5px;">
-                                                        <input   name="atime" id="setTimeExample1" value="{{arrivalon | date:'h:mma'}}" style="padding:6px 7px;" placeholder="HH:MM:A" type="text" class="time ui-timepicker-input form-control" autocomplete="off">
+                                                        <input   name="atime" id="setTimeExample1" value="{{arrivalon | date:'h:mma'}}" style="padding:6px 7px;" placeholder="HH:MM" type="text" class="time ui-timepicker-input form-control" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
@@ -181,12 +181,23 @@
     </div>
 </div>
 <script>
-    $('.quote_date').Zebra_DatePicker({ direction: true, format: 'd-m-Y'});
-    $('.quote_date1').Zebra_DatePicker({ direction: 0, format: 'd-m-Y' });
-    $('.quote_datesearch').Zebra_DatePicker({direction: true, format: 'd-m-Y'});
+    $('.quote_date').Zebra_DatePicker({
+        direction: true, format: 'd-m-Y', onSelect: function (view, elements) {
+            var result = document.getElementsByClassName("quote_date"); 
+            var d = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2]); 
+            d.setDate(d.getDate() - 1);  
+            $('.quote_date1').Zebra_DatePicker({ direction: [moment(d).format('DD-MM-YYYY'), false], format: 'd-m-Y' });
+            document.getElementsByClassName("quote_date1").a_date.value = result.d_date.value;
+        } 
+    });
+    $('.quote_date1').Zebra_DatePicker({ direction: true, format: 'd-m-Y' });
+    $('.quote_datesearch').Zebra_DatePicker({ direction: true, format: 'd-m-Y', pair: $('.quote_datesearch1') });
     $('.quote_datesearch1').Zebra_DatePicker({direction: true, format: 'd-m-Y'});
-    $('#setTimeExample').timepicker();
-    $('#setTimeExample1').timepicker();
+    $('#setTimeExample').timepicker({ 'timeFormat': 'H:i', 'step': function (i) { return 5; } });
+    $('#setTimeExample').on('changeTime', function () { 
+        $('#setTimeExample1').val($(this).val());
+    });
+    $('#setTimeExample1').timepicker({'timeFormat': 'H:i', 'step': function (i) { return 5;} });
 </script>
 <style>
     .input-group, span.Zebra_DatePicker_Icon_Wrapper {

@@ -429,9 +429,9 @@ class Api_model extends CI_Model {
 			$this->db->where("id",$ParcelID); 
 			$query=$this->db->get("parcels");   
 			$parcel=$query->result()[0];
-			$sql = "update `cms_parcels` set  trans_id=".$TripID.",process_by=".$parcel->usr_id.",status=2 where id=".$ParcelID.";";
+			$sql = "update `cms_parcels` set  trans_id=".$TripID.",processed_by=".$parcel->usr_id.",status=2 where id=".$ParcelID.";";
 			$this->db->query($sql);
-			$sql = "update `cms_trips` set status=3,process_by=".$parcel->usr_id." where id=".$TripID.";";
+			$sql = "update `cms_trips` set status=3,processed_by=".$parcel->usr_id." where id=".$TripID.";";
 			$this->db->query($sql); 
 			$this->db->where("id",$TripID); 
 			$tripquery=$this->db->get("trips");
@@ -683,6 +683,7 @@ class Api_model extends CI_Model {
  sou.location='".$parcel['source']."' and dest.location='".$parcel['destination']."'"); 
 		    $pricedata=$query->result(); 
 			$parcel['payment']=$pricedata[0]->price; 
+			$parcel['processed_by']=$parcel['usr_id']; 
 			$this->db->insert('parcels', $parcel); 
 			if(isset($parcel["trans_id"]))
 			{
@@ -1580,12 +1581,33 @@ class Api_model extends CI_Model {
 			$this->db->insert('seos', $data); 
 		  }	 
 	}
+	function saveweightrangelist($post)
+	{   
+		if(isset($post["id"]))
+		 { 
+			$data = array('name' =>$post["name"],'minweight' =>$post["minweight"],'maxweight' =>$post["maxweight"]);
+		   $this->db->update('weightrange', $data, "id =".$post["id"]);
+		 }
+		 else
+		 {
+			$data = array('name' =>$post["name"],'minweight' =>$post["minweight"],'maxweight' =>$post["maxweight"]);
+			$this->db->insert('weightrange', $data); 
+		  }	 
+	}
 	function deleteseolist($id)
 	{   
 		if($id>0)
 		 {   
 			$this->db->where('id', $id);
 			$this->db->delete('seos'); 
+		 } 
+	}
+	function deleteweightrangelist($id)
+	{   
+		if($id>0)
+		 {   
+			$this->db->where('id', $id);
+			$this->db->delete('weightrange'); 
 		 } 
 	}
 	function deleteairportlist($id)
@@ -1631,13 +1653,13 @@ class Api_model extends CI_Model {
 			$this->db->where('id', $request["userID"]);
 			$this->db->update('users', $data);
 			$data1->status="success";
-			$data1->response="Password Updated Successfully";
+			$data1->response="Password changed successfully";
 			$json_response = json_encode($data1); 
 			return $json_response;
            
 		}else{
 			$data1->status="Error";
-			$data1->errorMessage="Current Password Not Match";
+			$data1->errorMessage="Current password is not correct.";
 			$json_response = json_encode($data1); 
 			return $json_response;
 		}  
