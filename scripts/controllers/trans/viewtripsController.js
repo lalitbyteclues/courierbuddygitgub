@@ -24,32 +24,49 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
     var Id = $stateParams.id;
     $scope.parcel =[];
     $scope.transporter = {};
-    searchService.gettransporterdetails($stateParams.id).then(function (response) {
-        if (response.data.status == "success") {
-            $scope.transporter = response.data.response[0];           
-            if (AuthService.authentication.UserId != $scope.transporter.t_id) {
-                $state.transitionTo('home');
+    $scope.cancelparcel = function (id) {
+        $scope.successaddtripMessage = "";
+        bootbox.prompt("Reject Reason?", function (result) {
+            if (result !== null) {
+                var data = { "id": $scope.transporter.id, "status": 9, "process_by": AuthService.authentication.UserId, "reason": result, "parcelid": id };
+                AddTripsService.cancelparcelbytransporter(data).then(function (results) {
+                    $("#userdetails").modal("hide");
+                    if (results.status == 200) {
+                        $state.go($state.current, {}, { reload: true });
+                    }
+                });
             }
-            $('#example2').DataTable({ searching: false, paging: false });
-            var deptime = $scope.transporter.dep_time.split(" ");
-            $scope.transporter.dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]).getTime();
-            var arrtime = $scope.transporter.arrival_time.split(" ");
-            $scope.transporter.arrival_time = new Date(arrtime[0].split("-")[1] + "/" + arrtime[0].split("-")[2] + "/" + arrtime[0].split("-")[0] + " " + arrtime[1]).getTime();
-            if (response.data.parcellist !== null && typeof response.data.parcellist !== 'undefined') {
-                $scope.parcellist = response.data.parcellist;
-                sender.clear().draw();
-                for (i = 0; i < $scope.parcellist.length; i++) {
-                    sender.row.add([$scope.parcellist[i].source, $scope.parcellist[i].destination, $scope.parcellist[i].till_date, $scope.parcellist[i].type == 'E' ? 'Envelope' : $scope.parcellist[i].type == 'B' ? 'Box' : $scope.parcellist[i].type == 'P' ? 'Packet' : $scope.parcellist[i].type, $scope.parcellist[i].weight, "<a href='javascript:void(0);' ng-click='senderbooknow(" + $scope.parcellist[i].id + ")' onclick='senderbooknow(" + $scope.parcellist[i].id + ")' class='btn btn-primary'>Book Now</a>"]).draw();
+        });
+    }
+    $scope.filldetails = function () {
+        searchService.gettransporterdetails($stateParams.id).then(function (response) {
+            if (response.data.status == "success") {
+                $scope.transporter = response.data.response[0];
+                if (AuthService.authentication.UserId != $scope.transporter.t_id) {
+                    $state.transitionTo('home');
                 }
-            } else {
-                $scope.parcellist = [];
+                $('#example2').DataTable({ searching: false, paging: false });
+                var deptime = $scope.transporter.dep_time.split(" ");
+                $scope.transporter.dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]).getTime();
+                var arrtime = $scope.transporter.arrival_time.split(" ");
+                $scope.transporter.arrival_time = new Date(arrtime[0].split("-")[1] + "/" + arrtime[0].split("-")[2] + "/" + arrtime[0].split("-")[0] + " " + arrtime[1]).getTime();
+                if (response.data.parcellist !== null && typeof response.data.parcellist !== 'undefined') {
+                    $scope.parcellist = response.data.parcellist;
+                    sender.clear().draw();
+                    for (i = 0; i < $scope.parcellist.length; i++) {
+                        sender.row.add([$scope.parcellist[i].source, $scope.parcellist[i].destination, $scope.parcellist[i].till_date, $scope.parcellist[i].type == 'E' ? 'Envelope' : $scope.parcellist[i].type == 'B' ? 'Box' : $scope.parcellist[i].type == 'P' ? 'Packet' : $scope.parcellist[i].type, $scope.parcellist[i].weight, "<a href='javascript:void(0);' ng-click='senderbooknow(" + $scope.parcellist[i].id + ")' onclick='senderbooknow(" + $scope.parcellist[i].id + ")' class='btn btn-primary'>Book Now</a>"]).draw();
+                    }
+                } else {
+                    $scope.parcellist = [];
+                }
+                if ($scope.transporter.status == 3 || $scope.transporter.status == 6) {
+                    $scope.parcel = response.data.parcel;
+                }
+                $scope.transporter.link = "<a target='" + ($scope.transporter.image.length > 0 ? "_blank" : "_self") + "' href='" + ($scope.transporter.image.length > 0 ? RESOURCES.API_BASE_PATH + $scope.transporter.image : "/uploadtripticket/" + $scope.transporter.id) + "'  title='" + ($scope.transporter.image.length > 0 ? "View Ticket" : "Upload Ticket") + "'>" + ($scope.transporter.image.length > 0 ? "View Ticket" : "Upload Ticket") + "</a>";
             }
-            if ($scope.transporter.status == 3 || $scope.transporter.status == 6) {
-                $scope.parcel = response.data.parcel; 
-            }
-            $scope.transporter.link = "<a target='" + ($scope.transporter.image.length > 0 ? "_blank" : "_self") + "' href='" + ($scope.transporter.image.length > 0 ? RESOURCES.API_BASE_PATH + $scope.transporter.image : "/uploadtripticket/" + $scope.transporter.id) + "'  title='" + ($scope.transporter.image.length > 0 ? "View Ticket" : "Upload Ticket") + "'>" + ($scope.transporter.image.length > 0 ? "View Ticket" : "Upload Ticket") + "</a>";
-        }
-    });
+        });
+    }
+    $scope.filldetails();
     $scope.viewuserdetails = function (userid) {
         AuthService.getuserdetails(userid).then(function (results) {
             if (results.data.status != "Error") {

@@ -7,9 +7,9 @@
             <a ui-sref="pricelist">Price List</a>-->
             <a ng-hide="isAuth" ui-sref="login" ui-sref-opts="{reload: true}">Login</a>
             <a ng-hide="isAuth" ui-sref="register" ui-sref-opts="{reload: true}">Sign Up</a>
-            <a ng-show="isAuth && chatchannelslist.length>0" href='javascript:void()' data-toggle='dropdown' class='dropdown-toggle'><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Messages<b class='caret'></b></a> 
+            <a ng-show="isAuth && chatchannelslist.length>0" href='javascript:void()' data-toggle='dropdown' class='dropdown-toggle'><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Messages({{totalmessages}})<b class='caret'></b></a> 
             <ul ng-show="isAuth && chatchannelslist.length>0" class='dropdown-menu notification'>
-                <li ng-repeat="channel in chatchannelslist"><a ng-click="showchatopen(channel.id,channel.parcelid,$index)" href='javascript:void()'>{{channel.Parcelmcbid}}({{channel.messagecount}})</a></li>             
+                <li ng-repeat="channel in chatchannelslist"><a ng-click="showchatopen(channel.id,channel.parcelid,$index)" style="color:#333!important;" href='javascript:void()'>{{channel.Parcelmcbid}}({{channel.messagecount}})</a></li>             
             </ul> 
             <a ng-show="isAuth && isUser" ui-sref="dashboard" ui-sref-opts="{reload: true}"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Welcome <span class="hd_us_nm">{{userName}}</span></a>
             <a ng-show="isAuth" ui-sref="sender" ui-sref-opts="{reload: true}"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;My Dashboard</a>

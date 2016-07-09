@@ -128,7 +128,7 @@
                                                                 <a href="javascript:void(0);" ng-show="par.channelid>0" ng-click="showchat(par.channelid,par.id)"><span class="glyphicon glyphicon-comment"></span> </a>
                                                                 <a href='javascript:void(0);' class="btn btn-primary" ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
                                                                 <a href='javascript:void(0);' class="btn btn-primary" ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
-                                                                <a href='javascript:void(0);' class="btn btn-primary" ng-click='cancelparcel(par.id)' ng-show="transporter.status==3" title='Cancel Booking'>Cancel</a>
+                                                                <a href='javascript:void(0);' class="btn btn-primary" ng-click='cancelparcel(par.id)' ng-show="transporter.status==3" title='Cancel Booking'>Reject</a>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -172,6 +172,6 @@
 
 <style>
     .dropdown-menu > li > a {
-        color: #fff;
+        color: #fff!important;
     }
 </style>

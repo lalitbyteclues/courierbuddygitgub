@@ -77,12 +77,11 @@ angular.module('courier').controller("editparcelController", function ($http, $s
             return;
         }
         if ($scope.status == 2) {
-            bootbox.confirm("This Parcel has a confirmed Booking. Changing the Parcel will cancel the booking   Want To Proceed ?", function (result) { 
+            bootbox.confirm("This Parcel has a confirmed Booking. Changing the Parcel will cancel the booking   Want To Proceed ?", function (result) {
                 if (result) {
-                    saveparceldata(); 
+                    saveparceldata();
                 }
-                else
-                {
+                else {
                     this.modal("hide");
                     return false;
                 }
@@ -115,6 +114,7 @@ angular.module('courier').controller("editparcelController", function ($http, $s
                         }
                         ParcelService.updateParcelData(datapost).then(function (results) {
                             if (results.status == 200) {
+                                $state.go("viewparcel", { id: $scope.parcel.id });
                                 $scope.successaddtripMessage = 'Parcel Updated Successfully.  <a style="float:right;" href="/#viewparcel/' + $scope.parcel.id + '" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-plane" aria-hidden="true"></i> View Parcel</a>';
                                 $scope.tripsavemessage = "Parcel Updated Successfully.";
                             }
@@ -129,17 +129,20 @@ angular.module('courier').controller("editparcelController", function ($http, $s
         }
     }
     $scope.searchuser = function () {
+        $scope.errormessage = "";
+        $scope.successaddtripMessage = ""; 
+        $scope.usersearchclicked = false;
         if ((typeof $scope.exitingemail === 'undefined' || $scope.exitingemail === '' || $scope.exitingemail == null) && (typeof $scope.exitingmobilenumber === 'undefined' || $scope.exitingmobilenumber === '' || $scope.exitingmobilenumber == null)) {
 
         } else {
-            console.log(AuthService.authentication.UserId);
             searchService.searchuser($scope.exitingmobilenumber, $scope.exitingemail, AuthService.authentication.UserId).then(function (response) {
                 $scope.userlist = response.data.response;
                 if ($scope.userlist.length > 0) {
                     $scope.usersearchvisible = false;
                 }
+                $scope.usersearchclicked = true;
             });
-        }
+        } 
     };
     $scope.checkdimensions = function () {
         if ($scope.parceltype == "B") {

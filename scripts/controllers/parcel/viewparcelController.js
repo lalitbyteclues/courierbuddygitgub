@@ -6,7 +6,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
         var path = $location.path();
         sessionStorage.setItem("return_url", path);
         $state.transitionTo('login');
-    } 
+    }
     $http.get(RESOURCES.API_BASE_PATH + 'api/getcountries', { headers: { 'Content-Type': 'application/json' }, }).then(function (results) {
         $scope.countries = results.data.response;
     });
@@ -35,10 +35,19 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                 $state.transitionTo('home');
             }
             $scope.trip = response.data.trip;
+            if (typeof $scope.trip != 'undefined')
+            {
+                var dat = $scope.trip[0].dep_time.split("-");
+                var day = dat[2].split(" ");
+                $scope.trip[0].dep_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                var dat = $scope.trip[0].arrival_time.split("-");
+                var day = dat[2].split(" ");
+                $scope.trip[0].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+            }
             AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
                 $scope.userlist = results.data.response;
 
-            }); 
+            });
             $('#example2').DataTable({ searching: false, paging: false });
             if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
                 searchService.gettransporterdetails($scope.parcel.trans_id).then(function (response) {

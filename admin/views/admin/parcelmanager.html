@@ -41,6 +41,7 @@
                                     <option value="5">Delivery Complete</option>
                                     <option value="6">Cancelled</option>
                                     <option value="7">Not Received</option>
+                                    <option value="9">Rejected</option>
                                 </select>
                             </div>
                             <div style="padding-left:5px;padding-right:5px;" class="col-md-1">
@@ -111,6 +112,9 @@
                                         Status
                                     </th>
                                     <th>
+                                        Reason
+                                    </th>
+                                    <th>
                                         Action
                                     </th>
                                 </tr>
@@ -137,17 +141,19 @@
                                         {{data.payment | currency:"&#8377;"}}
                                     </th>
                                     <td>{{data.statusdescription}}</td>
+                                    <td>{{data.reason}}</td>
                                     <td>
-                                        <div class='dropdown' ng-show="data.status==0 || data.status==1">
-                                            <a href='javascript:void()' data-toggle='dropdown' class='dropdown-toggle'>Action<b class='caret'></b></a>
-                                            <ul class='dropdown-menu'>
-                                                <li><a href="javascript:void(0);" ng-show="data.status==0" ng-click="possiblematch(data.id)"><i class="fa fa-database"></i>Possible Match</a> </li>
-                                                <li><a href="javascript:void(0);" ng-show="data.status==0 || data.status==1 || data.status==2" ng-click="cancellparcel(data.id,6)"><i class="fa fa-times"></i>Cancel</a></li>
-                                                <li><a href="javascript:void(0);" ng-show="data.status==1" ng-click="cancellparcel(data.id,0)"><i class="fa fa-times"></i>Release Booking</a></li>
-                                                <!--<li><a href="javascript:void(0);" ng-show="data.status==7" ng-click="cancellparcel(data.id,8)"><i class="fa fa-times"></i>Refund</a></li>-->
-                                            </ul>
-                                        </div>
-                                        <span ng-hide="data.status==0 || data.status==1">-</span>
+<div class='dropdown' ng-show="data.status==0 || data.status==9 || data.status==1">
+<a href='javascript:void()' data-toggle='dropdown' class='dropdown-toggle'>Action<b class='caret'></b></a>
+<ul class='dropdown-menu'>
+<li><a href="javascript:void(0);" ng-show="data.status==0" ng-click="possiblematch(data.id)"><i class="fa fa-database"></i>Possible Match</a> </li>
+    <li><a href="javascript:void(0);" ng-show="data.status==0 || data.status==1 || data.status==2" ng-click="cancellparcel(data.id,6)"><i class="fa fa-times"></i>Cancel</a></li>
+<li><a href="javascript:void(0);" ng-show="data.status==9" ng-click="cancellparcel(data.id,0)"><i class="fa fa-times"></i>Set Active</a></li>
+<li><a href="javascript:void(0);" ng-show="data.status==1" ng-click="cancellparcel(data.id,0)"><i class="fa fa-times"></i>Release Booking</a></li>
+<!--<li><a href="javascript:void(0);" ng-show="data.status==7" ng-click="cancellparcel(data.id,8)"><i class="fa fa-times"></i>Refund</a></li>-->
+</ul>
+</div>
+                                        <span ng-hide="data.status==0 || data.status==1 || data.status==9">-</span>
                                     </td>
                                 </tr>
                             </tbody>

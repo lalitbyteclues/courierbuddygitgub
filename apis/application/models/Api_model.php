@@ -312,9 +312,9 @@ class Api_model extends CI_Model {
 					$this->db->where("id",$ParcelID); 
 					$query=$this->db->get("parcels");   
 					$parcel=$query->result()[0];
-					$sql = "update `cms_parcels` set  trans_id=".$TripID.",process_by=".$parcel->usr_id.",status=2 where id=".$ParcelID.";";
+					$sql = "update `cms_parcels` set  trans_id=".$TripID.",processed_by=".$parcel->usr_id.",status=2 where id=".$ParcelID.";";
 					$this->db->query($sql);
-					$sql = "update `cms_trips` set status=3,process_by=".$parcel->usr_id." where id=".$TripID.";";
+					$sql = "update `cms_trips` set status=3,processed_by=".$parcel->usr_id." where id=".$TripID.";";
 					$this->db->query($sql);
 					
 					$walletstatement=array("comment"=>"Used in Parcel Boking","parcelid"=>$order['ParcelID'],"tripid"=>$order["TransID"],"weight"=>$parcel->weight,"insertdate"=>date("Y-m-d H:i:s"),"amount"=>-($order["Amount"]),"debit"=>$order["Amount"],"credit"=>0,"userid"=>$order["loginuserid"]);
@@ -1157,7 +1157,7 @@ class Api_model extends CI_Model {
 				$this->db->where("id",$trip->t_id);  
 				$transquery=$this->db->get("users");
 				$transuser=$transquery->result()[0]; 
-				$sql = "update cms_parcels a set a.status=0,trans_id=0,reason='".$request["reason"]."',processed_by=".$request["process_by"]." where id=".$request["parcelid"].";"; 
+				$sql = "update cms_parcels a set a.status=9,trans_id=0,reason='".$request["reason"]."',processed_by=".$request["process_by"]." where id=".$request["parcelid"].";"; 
 				$this->db->query($sql);	  
 				$sql = "update `cms_bookings` set  status=4,process_by=".$request["process_by"]." where p_id=".$request["parcelid"].";"; 
 				$this->db->query($sql);					 

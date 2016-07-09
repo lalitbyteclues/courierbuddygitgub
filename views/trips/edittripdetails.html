@@ -175,11 +175,11 @@
     $('.quote_date1').Zebra_DatePicker({ direction: true, format: 'd-m-Y' });
     $('.quote_datesearch').Zebra_DatePicker({ direction: true, format: 'd-m-Y', pair: $('.quote_datesearch1') });
     $('.quote_datesearch1').Zebra_DatePicker({ direction: true, format: 'd-m-Y' });
-    $('#setTimeExample').timepicker({ 'timeFormat': 'H:i', 'step': function (i) { return 5; } });
+    $('#setTimeExample').timepicker({ 'timeFormat': 'H:i', 'step': 5 });
     $('#setTimeExample').on('changeTime', function () {
         $('#setTimeExample1').val($(this).val());
     });
-    $('#setTimeExample1').timepicker({ 'timeFormat': 'H:i', 'step': function (i) { return 5; } }); 
+    $('#setTimeExample1').timepicker({ 'timeFormat': 'H:i', 'step':5}); 
 </script>
 <style>
     .input-group, span.Zebra_DatePicker_Icon_Wrapper {

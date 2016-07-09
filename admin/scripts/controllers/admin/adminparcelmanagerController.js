@@ -71,7 +71,7 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
     }
     $scope.cancellparcel = function (id, status) {
         $scope.successMessage = "";
-        bootbox.prompt((status == 0 ? "Reason for release booking." : "Reason for cancellation."), function (result) {
+        bootbox.prompt((status == 0 ? "Reason for Active Parcel." : "Reason for cancellation."), function (result) {
             if (result !== null) {
                 var data = { "id": id, "status": status, "process_by": AuthService.authentication.UserId, "reason": result };
                 ParcelService.usrupdatestatus(data).then(function (results) {

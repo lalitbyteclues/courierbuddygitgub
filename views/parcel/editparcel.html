@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="col-md-7" ng-hide="issummary">
                                         <h1>Edit Parcel</h1>
-                                        <form   class="stdform" id="addbook-frm" ng-submit="paynow(frmaddparcel.$valid)" enctype="multipart/form-data" method="post" accept-charset="utf-8" novalidate="novalidate" name="frmaddparcel">
+                                        <form class="stdform" id="addbook-frm" ng-submit="paynow(frmaddparcel.$valid)" enctype="multipart/form-data" method="post" accept-charset="utf-8" novalidate="novalidate" name="frmaddparcel">
                                             <div class="row">
                                                 <div class="form-group col-sm-12">
                                                     <div class="alert alert-danger" role="alert" ng-hide='!errormessage'>{{errormessage}}</div>
@@ -77,7 +77,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-4 control-label" for="textinput">Parcel type <span class="red">*</span></label>
                                                 <div class="col-md-8">
-      <select name="Parceltype" class="form-control input-md" ng-model="parceltype" placeholder="Select Parcel Type You Have To Send" required="required" ng-change="checkdimensions()" id="typchkk">
+                                                    <select name="Parceltype" class="form-control input-md" ng-model="parceltype" placeholder="Select Parcel Type You Have To Send" required="required" ng-change="checkdimensions()" id="typchkk">
                                                         <option value="">Select Parcel Type</option>
                                                         <option value="B">Box</option>
                                                         <option value="E">Envelope</option>
@@ -122,7 +122,7 @@
                                                     <textarea maxlength="300" name="description" ng-model="parceldecsription" placeholder="Short Description Of The Parcel" required="required" class="form-control" id="ParcelDescription"></textarea>
                                                     <span class="error" ng-show="(frmaddparcel.$submitted && frmaddparcel.description.$error.required)">Required.</span>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <h1>Receiver Details </h1>
                                             <div ng-show="usersearchvisible">
                                                 <div class="form-group n-find">
@@ -130,7 +130,7 @@
                                                         <label>Choose Receivers Details</label>
                                                     </div>
                                                     <div id="book-radio" class="col-md-8 a-left">
-                                                        <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType1" ng-model="value1" required="required" value="true" checked="true" />
+                                                        <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType1" ng-model="value1" required="required" value="true" checked="checked" />
                                                         Existing User
                                                         <input type="radio" name="data[Parcel][recv_type]" id="ParcelRecvType2" ng-model="value1" required="required" value="false" /> New User
                                                     </div>
@@ -152,6 +152,10 @@
                                                         <div class="form-group">
                                                             <a href="javascript:void(0);" ng-click="searchuser()" class="f-btn" style="float:right;background: #3b5998;border: 0;color: #fff;padding:6px 15px;" id="find">Search</a>
                                                         </div>
+                                                        <div class="clear">&nbsp;</div>
+                                                        <div ng-show="userlist.length==0 && usersearchclicked">
+                                                            <div class="alert alert-danger" role="alert">No receiver found </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div id="invite" ng-hide="value1=='true'" ng-show="value1=='false'">
@@ -163,15 +167,15 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-md-4 control-label" for="textinput"> Number (M)</label>
-                                                            <div class="col-md-8">
-                                                                <input type="text" maxlength="15" class="form-control" ng-model="registermobile" name="number" id="number" placeholder=" Mobile Number" valid-number>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
                                                             <label class="col-md-4 control-label" for="textinput"> Email ID <span class="red">*</span></label>
                                                             <div class="col-md-8">
                                                                 <input type="text" maxlength="200" class="form-control" ng-model="registeremail" name="emil" id="emil" placeholder=" Email Address">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 control-label" for="textinput"> Number (M)</label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" maxlength="15" class="form-control" ng-model="registermobile" name="number" id="number" placeholder=" Mobile Number" valid-number>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -184,17 +188,22 @@
                                                             <a href="javascript:void(0);" style="float:right;background: #3b5998;border: 0;color: #fff;margin-right:0;text-decoration:none;padding:5px 10px" class="f-btn" ng-click="sendinviteuser()">Send Invite</a>
                                                         </div>
                                                         <span id="emsg"></span>
+                                                        <div class="clear">&nbsp;</div>
+                                                        <div ng-show="userlist.length==0 && usersearchclicked">
+                                                            <div class="alert alert-danger" role="alert">No receiver found </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="com-det">
+                                            <div class="alert alert-danger" role="alert" ng-hide='!errormessageuser'>{{errormessageuser}}</div>
+                                            <div class="com-det" ng-hide="usersearchvisible">
                                                 <table border="0" cellpadding="4" ng-show="userlist.length>0" width="100%">
                                                     <tbody>
                                                         <tr ng-repeat="user in userlist">
                                                             <td style="text-transform:uppercase;"><b>MCB Id</b>{{user.UserID}}</td>
                                                             <td><b>Email</b>{{user.username}}</td>
                                                             <td><b>Name</b>{{user.name}} </td>
-                                                            <td><b>Phone</b>{{user.mobile}}</td>
+                                                            <td><b>Phone</b>{{user.mobile=="0"?"&nbsp;":user.mobile}}</td>
                                                             <td>
                                                                 <b>&nbsp;</b>
                                                                 <a href="javascript:void(0);" ng-click="changereceiveruser()">Change</a>
@@ -207,14 +216,13 @@
                                                     <div class="alert alert-danger" role="alert">No receiver found </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group m-top8" ng-show="userlist.length>0" id="pay">
+                                            <div class="form-group m-top8" ng-hide="usersearchvisible" id="pay">
                                                 <a ui-sref="sender" ui-sref-opts="{reload: true}" style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:0px 0px 0 12px;" title="Cancel Edit">Cancel</a>
-                                                   <input type="submit" style="float:right;width:90px;background: #3b5998;border: 0;color: #fff;margin-right:0;height: 29px;" value="Submit">
-                                               
+                                                <input type="submit" style="float:right;width:90px;background: #3b5998;border: 0;color: #fff;margin-right:0;height: 29px;" value="Submit">
                                             </div>
-                                        </form> 
+                                        </form>
                                         <div class="clear">&nbsp;&nbsp;</div>
-                                    </div> 
+                                    </div>
                                     <div class="col-md-3 inner-tab-form-image">
                                         <img src="images/slideparcel.png" style="width:100%; max-height:500px; margin-top:20px;" />
                                     </div>

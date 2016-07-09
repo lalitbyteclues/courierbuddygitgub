@@ -67,8 +67,7 @@ angular.module('courier').controller("edittripsController", function ($rootScope
                     if (results.data.response[0].status == "Y") {
                         var result = document.getElementsByClassName("quote_date");
                         $scope.departureon = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime);
-                        var dep_time = result.d_date.value.split("-")[2] + "/" + result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + " " + $scope.dtime;
-                         
+                        var deptime = result.d_date.value.split("-")[2] + "/" + result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + " " + $scope.dtime;
                         result = document.getElementsByClassName("quote_date1");
                         $scope.atime = moment($scope.arrivalon).format("h:mm");
                         $scope.arrivalon = new Date(result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + "/" + result.a_date.value.split("-")[2] + " " + $scope.atime);

@@ -3,6 +3,7 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
     $scope.channelid = 0;
     $scope.chatslist = [];
     $scope.showchat = function (channelid, parcelid) {
+        $scope.loginuserid = AuthService.authentication.UserId;
         if (($.grep($scope.chatslist, function (a) { return a.channelid == channelid })).length == 0)
         {
             $scope.messages = [];
@@ -102,8 +103,7 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
                         }
                     }
                     $scope.chatslist.push({ "parcelid": data.parcelid, "chatmessage": "", "channelid": data.channelid, "messages": $scope.messages });
-                    $(".popup-messages").animate({ scrollTop: 9999999 }, 500);
-                    $scope.$apply();
+                    $(".popup-messages").animate({ scrollTop: 9999999 }, 500); 
                 });
             }
         }

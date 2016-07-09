@@ -104,9 +104,9 @@ angular.module('courier').controller("transporterController", function (searchSe
     }
     $scope.cancelparcel = function (id) { 
         $scope.successaddtripMessage = "";
-        bootbox.prompt("Do you want to cancel this Booking? Give Reason.", function (result) {
+        bootbox.prompt("Reject Reason?", function (result) {
             if (result !== null) {
-                var data = { "id": $scope.transporter.id, "status": 0, "process_by": AuthService.authentication.UserId, "reason": result, "parcelid": id };
+                var data = { "id": $scope.transporter.id, "status":9, "process_by": AuthService.authentication.UserId, "reason": result, "parcelid": id };
                 AddTripsService.cancelparcelbytransporter(data).then(function (results) {
                     $("#userdetails").modal("hide");
                     if (results.status == 200) {

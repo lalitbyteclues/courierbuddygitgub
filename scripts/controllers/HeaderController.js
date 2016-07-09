@@ -6,6 +6,7 @@ angular.module('courier').controller("HeaderController", function ($scope, AuthS
     $scope.userName = AuthService.authentication.userName;
     $scope.isAdministrator = AuthService.authentication.isAdministrator;
     $scope.isUser = AuthService.authentication.isUser;
+    $scope.totalmessages = 0;
     $scope.chatchannelslist = [];
     if ($scope.isAuth) {
         AuthService.getuserdetails(AuthService.authentication.UserId).then(function (results) { 
@@ -18,6 +19,9 @@ angular.module('courier').controller("HeaderController", function ($scope, AuthS
         });
         AuthService.getchannelslist(AuthService.authentication.UserId).then(function (results) {
             $scope.chatchannelslist = results.data;
+            for (i = 0; i < $scope.chatchannelslist.length; i++) {
+                $scope.totalmessages = $scope.totalmessages + parseInt($scope.chatchannelslist[i].messagecount);
+            }
         });
     } 
     $scope.isActive = function (viewLocation) {

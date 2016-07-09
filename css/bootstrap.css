@@ -368,3 +368,24 @@ border-radius: 2px;
 .direct-chat-textright {background: #d2d6de none repeat scroll 0 0;border: 1px solid #d2d6de;border-radius: 5px;color: #444;margin: 5px 50px 0 0;padding: 5px 10px;position: relative;}
 .notification{overflow-y: scroll;height: 138px;left: 54%!important;}
 .dropdown-menu > li > a{color:#fff!important;}
+.filterscheck input {  display: none;}
+.filterscheck .icon {  text-align: center;  display: inline-block;}
+.filterscheck .icon .fa {  visibility: hidden;}
+.filterscheck input:checked + .icon .fa {  visibility: visible;}
+/* IE8 and lower disabling hack because it does not support the :checked selector */
+.filterscheck input {  display: inline\9;}
+.filterscheck .icon {  display: none\9;}
+/* Optional */
+.filterscheck {  /* prevent accidental selection when clicking */
+  user-select: none;  -ms-user-select: none;  -moz-user-select: none;  -webkit-user-select: none;}
+.filterscheck label {  cursor: pointer;}
+/* Checkbox styling */
+.filterscheck input {    margin: 0 .1em; /* Use something similar to .icon */}
+.filterscheck .icon {    background: #fcf4d2;    border: 1px solid;    border-color: #cac3a8 #f9f0c2 #f9f0c2 #cac3a8;    border-radius: .3em;    text-align: center;    font-size: .8em;    color: #666;    margin: 0 .1em;    height:3em;    width:3em;    padding: 0.15em;    line-height: 1.1em;    /**     * Values for height, width and line-height     * may need to be adjusted depending on your font.     */}
+/* Inline menu styling */
+.filterscheck {  list-style: none;  padding: 8px;  display: inline-block;}
+.filterscheck li {  display: inline-block;  margin-right: 0.3em;}
+/* Extra beautify */ 
+.filterscheck {  border-radius: 4px;  box-shadow: 0 0 7px rgba(0,0,0,0.15);  background: #fff !important;}
+.filterscheck sup{  font-size:14px;padding-top:-.1em!important;padding-bottom:0em!important;}
+.user-opt a:hover{color:#fff;}
