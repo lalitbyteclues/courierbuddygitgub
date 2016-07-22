@@ -1088,6 +1088,14 @@ public function updateuserdetails()
 		$arr['success'] = false;
 		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-danger alert-dismissable"><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . validation_errors() . '</div>';
 	} else {
+		 $query=$this->db->query("	SELECT  a.`parcelid`,b.status FROM `cms_chatchannel` a inner join cms_parcels b on a.parcelid=b.id WHERE a.id=".$arr['channelid']." ");
+	   $data=$query->result();
+	if($data[0]->status==5){
+		$arr['success'] = false;
+		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-danger alert-dismissable"><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Not Valid Parcel Delivered</div>';
+	}
+	else
+	{
 		$this->db->insert('chatmessages',$arr); 
  		 $detail =$this->db->query("select a.id,a.channelid,message,a.created,a.readstatus,a.messageuserid,u.name as username,cchannel.parcelid,cchannel.senderid,cchannel.transporterid,cchannel.receiverid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where a.id=".$this->db->insert_id()."")->result()[0];
 		 $arr['channelid'] = $detail->channelid;
@@ -1102,15 +1110,18 @@ public function updateuserdetails()
 		$arr['new_count_message'] = $this->db->where('readstatus',0)->count_all_results('chatmessages');
 		$arr['success'] = true;
 		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-success" role="alert"> <i class="fa fa-check"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Message sent ...</div>';
-	}
+	}}
 	echo json_encode($arr);
  }
  public function getchannelmessageslist($channelid)
  {   
-	$data['message'] =$this->db->query("select a.messageuserid as id,a.channelid,message,a.created,a.readstatus,u.name as username,cchannel.parcelid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where channelid=".$channelid." ");
+	 $query=$this->db->query("select a.messageuserid as id,a.channelid,message,a.created,a.readstatus,u.name as username,cchannel.parcelid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where channelid=".$channelid." ");
+	$data['message']=$query->result();
+	$query=$this->db->query("SELECT  trans.name transportername,send.name sendername,recv.name receivername FROM  `cms_chatchannel` ch inner join cms_users trans on  ch.`transporterid`=trans.id inner join cms_users send on  ch.`senderid`=send.id inner join cms_users recv on  ch.`receiverid`=recv.id where ch.id=".$channelid."");
+	$data['users']=$query->result();
 	$sql = "update cms_chatmessages set readstatus=1 where channelid=".$channelid; 
 	$this->db->query($sql);
-	print_r(json_encode($data['message']->result()));
+	print_r(json_encode($data));
  }
  public function getunreadchannellist($userid)
  { 

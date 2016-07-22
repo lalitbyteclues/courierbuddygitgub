@@ -5,6 +5,7 @@ angular.module('courier').controller("searchController", function ($scope, $loca
     $scope.authuser = AuthService.authentication;
     $scope.countries = [];
     $scope.submitted = true;
+    $scope.countavailablequantities = 0;
     if (RESOURCES.searchcriteria.datefrom != "" && RESOURCES.searchcriteria.datefrom !="Invalid Date")
     {
         $scope.dateFrom = RESOURCES.searchcriteria.datefrom;
@@ -18,6 +19,14 @@ angular.module('courier').controller("searchController", function ($scope, $loca
         $scope.dateTo = RESOURCES.searchcriteria.dateto;
     } else {
         RESOURCES.searchcriteria.dateto = "";
+    }
+    function daydiff(first, second) {
+        return Math.round((second - first) / (1000 * 60 * 60 * 24));
+    } 
+    var daysdifference = daydiff($scope.dateFrom, $scope.dateTo);
+    if (daysdifference == 0 || daysdifference == 2 || daysdifference == 5)
+    {
+        $scope.classsetactive = daysdifference;
     }
     $scope.locationfrom = RESOURCES.searchcriteria.locationfrom;
     $scope.locationto = RESOURCES.searchcriteria.locationto;
@@ -33,6 +42,7 @@ angular.module('courier').controller("searchController", function ($scope, $loca
         $scope.senders = [];
         searchService.searchAdvanced($scope.dateFrom, $scope.dateTo, $scope.locationfrom, $scope.locationto, $scope.type).then(function (results) {
             var res = results.data.response;
+            $scope.countavailablequantities = 0;
             $scope.submitted = true;
             trans.clear().draw();
             sender.clear().draw();
@@ -46,6 +56,7 @@ angular.module('courier').controller("searchController", function ($scope, $loca
                     var dat = $scope.transporters[i].arrival_time.split("-");
                     var day = dat[2].split(" ");
                     $scope.transporters[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                    $scope.countavailablequantities = parseFloat($scope.countavailablequantities) + parseFloat($scope.transporters[i].capacity);
                     trans.row.add(["T" + $scope.transporters[i].id, $scope.transporters[i].source, $scope.transporters[i].destination, moment($scope.transporters[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.transporters[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.transporters[i].capacity, $scope.transporters[i].capacity > 0 ? "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.transporters[i].id + ")' onclick='createcourierrequest(" + $scope.transporters[i].id + ")' class='btn btn-primary'>Create Courier Request</a>" : "<span class='alert-danger'>Fully Booked</span>"]).draw();
                     $compile($('#example').html())($scope);
                 }
@@ -54,6 +65,7 @@ angular.module('courier').controller("searchController", function ($scope, $loca
                 $scope.transporters = [];
                 $scope.senders = res;
                 for (i = 0; i < $scope.senders.length; i++) {
+                    $scope.countavailablequantities = parseFloat($scope.countavailablequantities) + parseFloat($scope.senders[i].weight);
                     sender.row.add([$scope.senders[i].source, $scope.senders[i].destination, $scope.senders[i].till_date, $scope.senders[i].type == 'E' ? 'Envelope' : $scope.senders[i].type == 'B' ? 'Box' : $scope.senders[i].type == 'P' ? 'Packet' : $scope.senders[i].type, $scope.senders[i].weight, "<a href='javascript:void(0);' ng-click='senderbooknow(" + $scope.senders[i].id + ")' onclick='senderbooknow(" + $scope.senders[i].id + ")' class='btn btn-primary'>Book Now</a>"]).draw();
                     $compile($('#example1').html())($scope);
                 }

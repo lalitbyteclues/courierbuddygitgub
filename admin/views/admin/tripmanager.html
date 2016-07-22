@@ -14,7 +14,7 @@
                     <div ng-include="'admin/views/admin/adminmenu.html'"></div>
                     <div class="clear">&nbsp;&nbsp;</div>
                 </div>
-                <div class="col-md-10"> 
+                <div class="col-md-10">
                     <div class="clear"> &nbsp;</div>
                     <fieldset>
                         <legend>Search:</legend>
@@ -65,8 +65,8 @@
                                 <h5>Filtered {{ filtered.length }} of {{ totalItems}} Total Trips</h5>
                             </div>
                         </div>
-                        <div class="row"> 
-                            <div  ng-show="filteredItems > 0"> 
+                        <div class="row">
+                            <div ng-show="filteredItems > 0">
                                 <table class="table table-bordered table-responsive">
                                     <thead>
                                         <tr>
@@ -104,6 +104,11 @@
                                                 </a>
                                             </th>
                                             <th>
+                                                Reason<a ng-click="sort_by('reason');">
+                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                </a>
+                                            </th>
+                                            <th>
                                                 Status<a ng-click="sort_by('status');">
                                                     <i class="glyphicon glyphicon-sort"></i>
                                                 </a>
@@ -129,7 +134,7 @@
                                                 <span>{{data.destination }}</span>
                                             </td>
                                             <td>
-                                                <span>{{data.dep_time  | date:"dd/MM/yyyy 'at' h:mma" }}</span>
+                                                <span>{{data.dep_time  | date:"dd/MM/yyyy h:mma" }}</span>
                                             </td>
                                             <td>
                                                 <a target="_blank" href='{{data.airlinelink}}'>{{data.flight_no }}</a>
@@ -138,26 +143,29 @@
                                                 <span>{{data.pnr }}</span>
                                             </td>
                                             <td>
+                                                <span style="white-space:pre-wrap;">{{data.requirement}}</span>
+                                            </td>
+                                            <td>
                                                 <span style="white-space:pre-wrap;">{{data.statusdescription}}</span>
                                             </td>
                                             <td>
                                                 <div class='dropdown' ng-hide="data.status==5">
                                                     <a href='javascript:void()' data-toggle='dropdown' class='dropdown-toggle'>Action<b class='caret'></b></a>
                                                     <ul class='dropdown-menu'>
-        <li><a href="javascript:void(0);" ng-show="data.status==0 || data.status==8" ng-click="approvetrip(data.id,1)"><i class="fa fa-check-circle"></i>Approve</a> </li>
-        <li><a href="javascript:void(0);" ng-show="data.status==0 || data.status==8" ng-click="approvetrip(data.id,5)"><i class="fa fa-times"></i>Reject</a> </li>
-        <li><a href="javascript:void(0);" ng-show="data.status==0" ng-click="approvetrip(data.id,8)"><i class="fa fa-ban"></i>Hold</a> </li>
-        <!--<li><a href="javascript:void(0);" ng-show="data.status==1" ng-click="approvetrip(data.id,0)"><i class="fa fa-ban"></i>DisApprove</a></li>-->
-        <!--<li><a href="javascript:void(0);" ng-click="delete(data.id)"><i class="fa fa-times"></i>Delete</a></li>-->
-            <li><a href="{{data.image}}" ng-show="data.image!=''" target="_blank"><i class="fa fa-ticket"></i>View Ticket</a></li>
-            <li><a href="javascript:void(0);" ng-show="data.image==''" ng-click="requesttripticket(data.id)"><i class="fa fa-ticket"></i>Request Ticket</a></li>
+                                                        <li><a href="javascript:void(0);" ng-show="data.status==0 || data.status==8" ng-click="approvetrip(data.id,1)"><i class="fa fa-check-circle"></i>Approve</a> </li>
+                                                        <li><a href="javascript:void(0);" ng-show="data.status==0 || data.status==8" ng-click="approvetrip(data.id,5)"><i class="fa fa-times"></i>Reject</a> </li>
+                                                        <li><a href="javascript:void(0);" ng-show="data.status==0" ng-click="approvetrip(data.id,8)"><i class="fa fa-ban"></i>Hold</a> </li>
+                                                        <!--<li><a href="javascript:void(0);" ng-show="data.status==1" ng-click="approvetrip(data.id,0)"><i class="fa fa-ban"></i>DisApprove</a></li>-->
+                                                        <!--<li><a href="javascript:void(0);" ng-click="delete(data.id)"><i class="fa fa-times"></i>Delete</a></li>-->
+                                                        <li><a href="{{data.image}}" ng-show="data.image!=''" target="_blank"><i class="fa fa-ticket"></i>View Ticket</a></li>
+                                                        <li><a href="javascript:void(0);" ng-show="data.image==''" ng-click="requesttripticket(data.id)"><i class="fa fa-ticket"></i>Request Ticket</a></li>
                                                     </ul>
                                                 </div>
                                                 <span ng-show="data.status==5">--NA--</span>
                                             </td>
                                         </tr>
                                     </tbody>
-                                </table> 
+                                </table>
                             </div>
                             <div class="col-md-12" ng-show="filteredItems == 0">
                                 <div class="col-md-12">

@@ -170,6 +170,8 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
             }
             else {
                 $scope.orderlist = results.data.response;
+                $scope.orderlist[0].Amount = parseFloat($scope.orderlist[0].Amount);
+                $scope.parcel.payment = parseFloat($scope.parcel.payment);
             }
         });
     }

@@ -16,17 +16,16 @@
                 </div>
                 <div class="col-md-10">
                     <div class="clear">&nbsp;</div>
-                    <fieldset> 
-                        <legend>Search:</legend> 
-                        <div class="col-md-3" style="padding-left:5px;padding-right:5px;">
-                            <p class="input-group">
-                                <select name="data[Search][type]" ng-change="searchusers()" ng-model="userrole" class="form-control">
-                                    <option value="">Role Type</option>
-                                    <option value="T">Transporter</option>
-                                    <option value="S">Sender</option>
-                                    <option value="R">Receiver</option>
-                                </select></p>
-</div>
+                    <fieldset>
+                        <legend>Search:</legend>
+                        <div class="col-md-2" style="padding-left:5px;padding-right:5px;">
+                            <p class="input-group" style="width:100%;">
+                                <select name="data[Search][type]" style="width:100%;" ng-change="searchuserschange()" ng-model="userrole" class="form-control">
+                                    <option value="">All</option>
+                                    <option value="7">New Users</option>
+                                </select>
+                            </p>
+                        </div>
                         <div class="col-md-3" style="padding-left:5px;padding-right:5px;">
                             <select name="data[Search][status]" ng-change="searchusers()" ng-model="userstatus" class="form-control">
                                 <option value="">Status</option>
@@ -38,8 +37,8 @@
                             <a class="btn  btn-primary" href="javascript:void(0);" ng-click="searchusersdays(7)" id="week">This Week</a>
                             <a class="btn  btn-primary" href="javascript:void(0);" id="month" ng-click="searchusersdays(30)">This Month</a>
                             <a class="btn  btn-primary" href="javascript:void(0);" ng-csv="listexportcsv" filename="users.csv" field-separator="," decimal-separator="." id="month">Export To CSV</a>
-                        </div> 
-                    </fieldset> 
+                        </div>
+                    </fieldset>
                     <div class="col-md-4" style="padding:5px 5px 5px 0;">
                         <input type="text" ng-model="search" ng-change="filter()" placeholder="Filter" class="form-control" />
                     </div>
@@ -54,7 +53,7 @@
                     </div>
                     <div class="col-md-6">
                         <h5 style="text-align:right;margin-top:17px;">Filtered {{ filtered.length }} of {{ totalItems}} Total Users</h5>
-                    </div> 
+                    </div>
                     <div ng-show="successmessage.length" class="alert alert-success">{{successmessage}}</div>
                     <div ng-show="errormessage.length" class="alert alert-danger">{{errormessage}}</div>
                     <br />
@@ -77,7 +76,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        Mobile 
+                                        Mobile
                                     </td>
                                     <td>
                                         Email
@@ -110,12 +109,12 @@
                                         <span>{{data.username }}</span>
                                     </td>
                                     <td>
-                                        <span data-ng-hide="editMode">{{data.status}}</span><br data-ng-hide="editMode || data.status=='Y' || data.remark==''" />
+                                        <span data-ng-hide="editMode">{{data.status=='Y'?'Active':'Inactive'}}</span><br data-ng-hide="editMode || data.status=='Y' || data.remark==''" />
                                         <span data-ng-hide="editMode || data.status=='Y'">{{data.remark}}</span>
                                         <select class="form-control" data-ng-show="editMode" data-ng-model="data.status" data-ng-required>
                                             <optgroup label="Select Status"></optgroup>
-                                            <option ng-selected="data.status=='Y'" value="Y">Yes</option>
-                                            <option ng-selected="data.status=='N'" value="N">No</option>
+                                            <option ng-selected="data.status=='Y'" value="Y">Active</option>
+                                            <option ng-selected="data.status=='N'" value="N">Inactive</option>
                                         </select>
                                         <input type="text" placeholder="Remark" data-ng-show="editMode && data.status=='N'" ng-model="data.remark" />
                                     </td>

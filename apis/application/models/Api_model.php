@@ -55,9 +55,10 @@ class Api_model extends CI_Model {
 			{ $booking = $this->db->query("SELECT a.*,IFNULL(b.username,'') as transporteremail,IFNULL(b.name,'') as transportername,d.id as BookingID FROM cms_trips a left join cms_users b on a.t_id=b.id inner join cms_bookings d on a.id=d.t_id where d.p_id=".$tp->id.""); 
 				 $data->trip=$booking->result();
 			}else{
+				if($tp->status==0){
 				$booking = $this->db->query("SELECT id,a.TripID,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,created,status,processed_by,'update' FROM `cms_trips` a left join (SELECT f.t_id,sum(weight) as totalweight FROM cms_bookings f where f.status in(3)  group by f.t_id)c on a.id=c.t_id where (a.status=1 or a.status=3 and (a.capacity-COALESCE(c.totalweight,0))>0 and a.capacity>0) and destination='".$tp->destination."' and source='".$tp->source."' and arrival_time<='".$tp->till_date." 23:59' and arrival_time >= CURDATE()  "); 
 				 $data->tripsmatch=$booking->result();
-			} 
+			} }
 			$data->status="success";
 			$data->response=$parcel;
 			$json_response = json_encode($data);   
@@ -393,7 +394,7 @@ class Api_model extends CI_Model {
 					print_r($json_response);
 			  } 
 			}else{ 
-		       	$transaction=array("orderdate"=>date("Y-m-d H:i:s"),"PaymentTransaction"=>"Pay from Wallet","Paymentvia"=>"Payu Money Gateway","ParcelID"=>$order["ParcelID"] ,"TransID"=>$order["TransID"],"ordernumber"=>$order["ordernumber"],"Amount"=>($order["Amount"]-$order["walletamount"])); 
+		       	$transaction=array("orderdate"=>date("Y-m-d H:i:s"),"PaymentTransaction"=>"Pay from Wallet","Paymentvia"=>"Payu Money Gateway","ParcelID"=>$order["ParcelID"] ,"TransID"=>$order["TransID"],"ordernumber"=>$order["ordernumber"],"Amount"=>$order["Amount"]); 
 				$this->db->insert('transactions', $transaction); 
 				$this->db->order_by('TransactionID', 'DESC'); 
 				$this->db->limit(1);
@@ -790,7 +791,7 @@ class Api_model extends CI_Model {
 				$this->email->send();  
 				$sql = "update cms_users a set a.wallet=wallet+".$parcel['payment']." where id=".$parceluser->id.";"; 
 			    $this->db->query($sql);
-				  $sql = "update cms_chatchannel a set a.isactive=0 where parcelid=".$parceluser->id.";"; 
+				  $sql = "update cms_chatchannel a set a.isactive=0 where parcelid=".$parcel["id"].";"; 
 			   $this->db->query($sql);	
 				$walletstatement=array("comment"=>"Refund from cancellation","parcelid"=> $parcel["id"],"tripid"=>$parcel["trans_id"],"weight"=>$parcel['weight'],"insertdate"=>date("Y-m-d H:i:s"),"amount"=>$parcel['payment'],"credit"=>$parcel['payment'],"debit"=>0,"userid"=>$parceluser->id);
 				$this->db->insert('walletstatement', $walletstatement);
@@ -939,7 +940,39 @@ class Api_model extends CI_Model {
 				$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
 				$this->email->to($emailid.',info@mycourierbuddy.in'); 
 				$this->email->subject('Trip #T'.$request["id"].'  Approved Successfully | mycourierbuddy.in');   
-				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">    <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear user</div><p style="text-align:left;">Congratulations! Trip #T'.$request["id"].'  Approved Successfully </div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;">Your trip is now live for search. </div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
+				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">    <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$res1->name.'</div><p style="text-align:left;">Congratulations! Trip '.$res->TripID.'  Approved Successfully </div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;">Your trip is now live for search. </div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
+				$this->email->message($message);
+				$this->email->send(); 
+			}	
+			if($request["status"]=="8")
+			{ 
+				$this->db->where('id', $request["id"]);
+				$query1=$this->db->get("trips");
+				$res=$query1->result()[0]; 
+				$this->db->where("id",$res->t_id);  
+				$query2=$this->db->get("users");
+				$res1=$query2->result()[0]; 
+				$emailid=$res1->username;
+				$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
+				$this->email->to($emailid.',info@mycourierbuddy.in'); 
+				$this->email->subject('Trip '.$res->TripID.' is on Hold | mycourierbuddy.in');   
+				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">    <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$res1->name.'</div><p style="text-align:left;">Trip '.$res->TripID.' is on Hold due to reason:'.$request["reason"].'</div><br /><div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
+				$this->email->message($message);
+				$this->email->send(); 
+			}	
+			if($request["status"]=="5")
+			{ 
+					$this->db->where('id', $request["id"]);
+				$query1=$this->db->get("trips");
+				$res=$query1->result()[0]; 
+				$this->db->where("id",$res->t_id);  
+				$query2=$this->db->get("users");
+				$res1=$query2->result()[0]; 
+				$emailid=$res1->username;
+				$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
+				$this->email->to($emailid.',info@mycourierbuddy.in'); 
+				$this->email->subject('Trip '.$res->TripID.' is Rejected | mycourierbuddy.in');   
+				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">    <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$res1->name.'</div><p style="text-align:left;">Trip '.$res->TripID.' is Rejected due to reason:'.$request["reason"].'</div><br /><div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
 				$this->email->message($message);
 				$this->email->send(); 
 			}	
@@ -1624,12 +1657,12 @@ class Api_model extends CI_Model {
 		if($param["type"]=="Transporter")
 		{
 			//and (a.capacity-COALESCE(c.totalweight,0))>0 
-			$query = $this->db->query("SELECT id,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,created,status,processed_by,'update' FROM `cms_trips` a left join (SELECT a.t_id,sum(weight) as totalweight FROM cms_bookings a where a.status=3 group by a.t_id)c on a.id=c.t_id where (a.status=1 or a.status=3) and (a.source like '%".$param["locationfrom"]."%' or '".$param["locationfrom"]."'='') and (a.destination like '%".$param["locationto"]."%' or '".$param["locationto"]."'='') and (a.dep_time >= '".$param["dateFrom"]."' or '".$param["dateFrom"]."'='') and (a.dep_time <= '".$param["dateTo"]." 23:99' or '".$param["dateTo"]."'='')and a.arrival_time >= CURDATE()  ");
+		    $query = $this->db->query("SELECT id,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,created,status,processed_by,'update' FROM `cms_trips` a left join (SELECT a.t_id,sum(weight) as totalweight FROM cms_bookings a where a.status=3 group by a.t_id)c on a.id=c.t_id where (a.status=1 or a.status=3) and (a.source like '%".$param["locationfrom"]."%' or '".$param["locationfrom"]."'='') and (a.destination like '%".$param["locationto"]."%' or '".$param["locationto"]."'='') and (a.dep_time >= '".$param["dateFrom"]."' or '".$param["dateFrom"]."'='') and (a.dep_time <= '".$param["dateTo"]." 23:59' or '".$param["dateTo"]."'='')and a.arrival_time >= CURDATE()  ");
 			$response = $query->result();  
 		}
 		else
 		{
-		  $query = $this->db->query("SELECT * FROM `cms_parcels`  where  status =0 and (source like '%".$param["locationfrom"]."%' or '".$param["locationfrom"]."'='') and (destination like '%".$param["locationto"]."%' or '".$param["locationto"]."'='') and (till_date >= '".$param["dateFrom"]."' or '".$param["dateFrom"]."'='') and (till_date <= '".$param["dateTo"]."' or '".$param["dateTo"]."'='' and till_date >= CURDATE())");
+		  $query = $this->db->query("SELECT * FROM `cms_parcels`  where  status =0 and (source like '%".$param["locationfrom"]."%' or '".$param["locationfrom"]."'='') and (destination like '%".$param["locationto"]."%' or '".$param["locationto"]."'='') and (till_date >= '".$param["dateFrom"]."' or '".$param["dateFrom"]."'='') and (till_date <= '".$param["dateTo"]."' or '".$param["dateTo"]."'='') and till_date >= CURDATE()");
 			$response = $query->result();  
 		}
 		$data=new stdclass();
@@ -1701,7 +1734,7 @@ class Api_model extends CI_Model {
 						$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
 						$this->email->to($email.',info@mycourierbuddy.in'); 
 						$this->email->subject('User Invited You on mycourierbuddy.in');   
-						$message=' <div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0"><img src="http://mycourierbuddy.in/images/logo.png" /></div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$request['name'].'</div><p style="text-align:left;">Congratulations! You have successfully register with mycourierbuddy.in by your friend '.$senduser->name.' </p><div style="text-align:left; color:#2c4882;">Your Login ID - <a style="margin-left:10px; color:#2c4882"href="#"><em>'.$request['email'].'</em></a><br />Your Password - &nbsp; '.$randomString.'</div> <br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;">If you forget your password in future, you can reset your password by click on <a style="color:#233151;" href="http://mycourierbuddy.in/users/forgotten">Reset Password </a>. The username can not be changed, hence we recommend you to store this email for your future reference.</div><div> </div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div> </div> <div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div> </div> ';
+						$message=' <div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0"><img src="http://mycourierbuddy.in/images/logo.png" /></div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$request['name'].'</div><p style="text-align:left;">Congratulations! You have successfully register with mycourierbuddy.in by your friend '.$senduser->name.' </p><p>Please complete your profile by clicking this <a href="dev9856.mycourierbuddy.in/dashboard">Link</a>.</p><div style="text-align:left; color:#2c4882;">Your Login ID - <a style="margin-left:10px; color:#2c4882"href="#"><em>'.$request['email'].'</em></a><br />Your Password - &nbsp; '.$randomString.'</div> <br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;">If you forget your password in future, you can reset your password by click on <a style="color:#233151;" href="http://mycourierbuddy.in/users/forgotten">Reset Password </a>. The username can not be changed, hence we recommend you to store this email for your future reference.</div><div> </div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div> </div> <div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div> </div> ';
 						$this->email->message($message);
 						$this->email->send(); 
 						//end email 
@@ -1835,30 +1868,18 @@ class Api_model extends CI_Model {
 		} 
     } 
 	function getuserslist($request)
-    {  
-	$concatstring="";
-	if(isset($request["role"])){
-		 if($request["role"]=="T"){
-			 $concatstring="and id in(SELECT t_id FROM `cms_trips`)";
-		 } 
-		 if($request["role"]=="S"){
-			 $concatstring="and id in(SELECT usr_id FROM `cms_parcels`)";
-		 } 
-		 if($request["role"]=="R"){
-			 $concatstring="and id in(select distinct recv_id from cms_parcels)";
-		 } 
-	} 
-	$days=0;
-	if(isset($request["days"])){
-		if($request["days"]!=""){
-		$days=$request["days"];}
-	}
-	$status="";
-	if(isset($request["status"])){
-		$status=$request["status"];
-	} 
-		$query = $this->db->query("SELECT * FROM cms_users where (status='".$status."' or '".$status."'='') and (".$days."=0 or DATEDIFF(CURDATE(),STR_TO_DATE(created, '%m/%d/%Y'))<=".$days.")".$concatstring);
-	  $data=new stdclass();
+    {   
+		$days=0;
+		if(isset($request["days"])){
+			if($request["days"]!=""){
+			$days=$request["days"];}
+		}
+		$status="";
+		if(isset($request["status"])){
+			$status=$request["status"];
+		} 
+	   $query = $this->db->query("SELECT * FROM cms_users where (status='".$status."' or '".$status."'='') and (".$days."=0 or DATEDIFF(CURDATE(),created)<=".$days.")");
+	   $data=new stdclass();
 		$data->status="success";
 		$data->response=$query->result();
 		$json_response = json_encode($data); 

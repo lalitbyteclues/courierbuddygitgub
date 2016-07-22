@@ -44,10 +44,13 @@
     <div ng-repeat="chat in chatslist">
         <div class="popup-box chat-popup popup-box-on" style="right:{{(($index)*300)+70}}px">
             <div class="popup-head">
-                <div class="popup-head-left pull-left">P{{chat.parcelid}}Chat Message</div>
+                <div class="popup-head-left pull-left">P{{chat.parcelid}}</div>
                 <div class="popup-head-right pull-right">
                     <button data-widget="remove" ng-click="removechat($index)" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-off"></i></button>
                 </div>
+                 
+                    Welcome {{users.transportername}},{{users.sendername}},{{users.receivername}}.
+                 
             </div>
             <div class="popup-messages">
                 <div class="direct-chat-messages">
@@ -67,11 +70,11 @@
                                 <div class="direct-chat-info clearfix">
                                     <span class="direct-chat-timestamp pull-right">{{mo.created | date:"h:mma"}}</span>
                                 </div>
-                                <div class="direct-chat-info clearfix" ng-hide="$index>0 && mess.messages[$index].id==mess.messages[$index+1].id">
+                                <!--<div class="direct-chat-info clearfix" ng-hide="$index>0 && mess.messages[$index].id==mess.messages[$index+1].id">
                                     <span class="direct-chat-img-reply-small pull-left">
 
                                     </span>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="direct-chat-msg doted-borderright" ng-show="loginuserid==mo.id">
                                 <div class="direct-chat-info clearfix" ng-hide="$index>0 && mess.messages[$index-1].id==mess.messages[$index].id">
@@ -84,21 +87,23 @@
                                 <div class="direct-chat-info clearfix">
                                     <span class="direct-chat-timestamp pull-left">{{mo.created | date:"h:mma"}}</span>
                                 </div>
-                                <div class="direct-chat-info clearfix" ng-hide="$index>0 && mess.messages[$index].id==mess.messages[$index+1].id">
+                                <!--<div class="direct-chat-info clearfix" ng-hide="$index>0 && mess.messages[$index].id==mess.messages[$index+1].id">
                                     <span class="direct-chat-img-reply-small pull-right">
 
                                     </span>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="popup-messages-footer">
-                <form ng-submit="submitchat(chat.channelid,chat.chatmessage)">
-                    <input type="text" id="status_message" autocomplete="off" ng-model="chat.chatmessage" required placeholder="Type a message..." name="message" />
-                    <div class="btn-footer"> 
-                        <button type="submit" class="bg_none pull-right"><i class="glyphicon glyphicon-send"></i> </button>
+                <form ng-submit="submitchat(chat.channelid,chat.chatmessage)" id="frmmessages">
+                    <div style="width:85%;float:left;height:50px;"><textarea style="height:50px;" id="status_message" autocomplete="off" ng-model="chat.chatmessage" required placeholder="Type a message..." name="message"   ng-enter="submit(chat.channelid,chat.chatmessage)"></textarea></div>
+                    <div style="width:15%;float:right;background:#eee;">
+                        <div class="btn-footer">
+                            <button type="submit" class="bg_none pull-right"><i class="glyphicon glyphicon-send"></i> </button>
+                        </div>
                     </div>
                 </form>
             </div>

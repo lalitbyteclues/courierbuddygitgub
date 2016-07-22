@@ -81,7 +81,7 @@
                                                 <td>{{transporter.dep_time | date:"dd/MM/yyyy 'at' h:mma"}}</td>
                                                 <td>{{transporter.arrival_time | date:"dd/MM/yyyy 'at' h:mma"}}</td>
                                                 <td><div ng-bind-html="transporter.link"></div></td>
-                                                <td><a ng-hide="transporter.airlinelink==null" target="_blank" href='{{transporter.airlinelink}}'>{{transporter.flight_no }}</a><span ng-show="transporter.airlinelink==null">{{transporter.flight_no}}</span></td>
+                                                <td> {{transporter.flight_no}} </td>
                                                 <td>{{transporter.capacity}}</td> 
                                                 <td>{{ transporter.statusdescription }}</td>
                                             </tr>

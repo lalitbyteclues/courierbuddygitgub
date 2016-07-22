@@ -31,6 +31,9 @@ angular.module('courier').controller("editparcelController", function ($http, $s
     ParcelService.getparceldetail($stateParams.id).then(function (response) {
         if (response.data.status == "success") {
             $scope.parcel = response.data.response[0];
+            if (!($scope.parcel.status == 0 || $scope.parcel.status == 1 || $scope.parcel.status == 2)) {
+                $state.go("viewparcel", { id: $scope.parcel.id });
+            }
             if (AuthService.authentication.UserId != $scope.parcel.usr_id) {
                 $state.transitionTo('home');
             }
@@ -130,7 +133,7 @@ angular.module('courier').controller("editparcelController", function ($http, $s
     }
     $scope.searchuser = function () {
         $scope.errormessage = "";
-        $scope.successaddtripMessage = ""; 
+        $scope.successaddtripMessage = "";
         $scope.usersearchclicked = false;
         if ((typeof $scope.exitingemail === 'undefined' || $scope.exitingemail === '' || $scope.exitingemail == null) && (typeof $scope.exitingmobilenumber === 'undefined' || $scope.exitingmobilenumber === '' || $scope.exitingmobilenumber == null)) {
 
@@ -142,7 +145,7 @@ angular.module('courier').controller("editparcelController", function ($http, $s
                 }
                 $scope.usersearchclicked = true;
             });
-        } 
+        }
     };
     $scope.checkdimensions = function () {
         if ($scope.parceltype == "B") {

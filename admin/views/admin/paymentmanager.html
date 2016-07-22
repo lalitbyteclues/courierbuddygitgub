@@ -32,7 +32,7 @@
                                 <select name="data[Trip][status]" ng-model="status" id="ParcelStatus" class="form-control">
                                     <option value="">Select Status</option>
                                     <option value="Y">Approved</option>
-                                    <option value="N">Pending</option>
+                                    <option value="N">Processed</option>
                                 </select>
                             </div>
                             <div class="col-md-2" style="padding-left:5px;padding-right:5px;text-align:left;">
@@ -68,6 +68,11 @@
                                             </a>
                                         </th>
                                         <th>
+                                            Request No.<a ng-click="sort_by('withdrawID');">
+                                                <i class="glyphicon glyphicon-sort"></i>
+                                            </a>
+                                        </th> 
+                                        <th>
                                             Bank Name<a ng-click="sort_by('bank_name');">
                                                 <i class="glyphicon glyphicon-sort"></i>
                                             </a>
@@ -77,26 +82,7 @@
                                                 <i class="glyphicon glyphicon-sort"></i>
                                             </a>
                                         </th>
-                                        <th>
-                                            Acct No.<a ng-click="sort_by('acct_no');">
-                                                <i class="glyphicon glyphicon-sort"></i>
-                                            </a>
-                                        </th>
-                                        <th>
-                                            ifsc<a ng-click="sort_by('ifsc');">
-                                                <i class="glyphicon glyphicon-sort"></i>
-                                            </a>
-                                        </th>
-                                        <th>
-                                            swift_code<a ng-click="sort_by('swift_code');">
-                                                <i class="glyphicon glyphicon-sort"></i>
-                                            </a>
-                                        </th>
-                                        <th>
-                                            Name<a ng-click="sort_by('act_name');">
-                                                <i class="glyphicon glyphicon-sort"></i>
-                                            </a>
-                                        </th>
+                                      
                                         <th>
                                             Date<a ng-click="sort_by('created');">
                                                 <i class="glyphicon glyphicon-sort"></i>
@@ -119,15 +105,12 @@
                                     <tr ng-repeat="data in filtered = (tripslist | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
                                         <td>
                                             <a href='javascript:void(0);;' ng-click="viewuserdetails(data.trans_id)">{{data.UserID }} </a>
-                                        </td>
+                                        </td><td><a href='javascript:void(0);;' ng-click="paymentdetails(data)">{{data.withdrawID}}</a></td> 
                                         <td>{{data.bank_name}}</td>
                                         <td>{{data.amount}}</td>
-                                        <td>{{data.acct_no}}</td>
-                                        <td>{{data.ifsc}}</td>
-                                        <td>{{data.swift_code}}</td>
-                                        <td>{{data.act_name}}</td>
+                                   
                                         <td>{{data.created |date:"dd/MM/yyyy hh:mm a"}}</td>
-                                        <td>{{data.status=='Y'?"Approved":"Pending"}}</td>
+                                        <td>{{data.status=='Y'?"Approved":"Processed"}}</td>
                                         <td>  
                                             <a href="javascript:void(0);" ng-hide="data.status=='Y'" ng-click="approvetrip(data)"><i class="fa fa-check-circle"></i>Approve</a>
                                             <span ng-show="data.status=='Y'">--</span>
@@ -181,6 +164,42 @@
                                                 </tr>
                                                 <tr>
                                                     <td valign="top"><i class="fa fa-location-arrow fa-2x"></i>&nbsp;&nbsp;{{ userdetails.addr1=="" && userdetails.addr2=="" && userdetails.addr3==""?"empty":userdetails.addr1+" "+userdetails.addr2+" "+userdetails.addr3}} </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div><div class="clear">&nbsp;</div>
+                    </div>
+                    <div role="dialog" tabindex="-1" id="paymentdetails" class="modal modal-login">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table   id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                                <tr>
+                                                    <td>Account No</td>
+                                                    <td>{{payment.acct_no}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>IFSC</td>
+                                                    <td>{{payment.ifsc}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>SWIFT CODE</td>
+                                                    <td>{{payment.swift_code}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Account Holder Name</td>
+                                                    <td>{{payment.act_name}}</td>
                                                 </tr>
                                             </table>
                                         </div>

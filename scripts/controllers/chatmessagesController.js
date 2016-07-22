@@ -2,6 +2,7 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
     $scope.loginuserid = AuthService.authentication.UserId;
     $scope.channelid = 0;
     $scope.chatslist = [];
+    $scope.users = {};
     $scope.showchat = function (channelid, parcelid) {
         $scope.loginuserid = AuthService.authentication.UserId;
         if (($.grep($scope.chatslist, function (a) { return a.channelid == channelid })).length == 0)
@@ -12,18 +13,19 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
                 var index = 0;
                 var datestore = "";
                 var namestore = "";
-                for (i = 0; i < response.data.length; i++) {
-                    var dat = response.data[i].created.split("-");
+                $scope.users = response.data.users[0];
+                for (i = 0; i < response.data.message.length; i++) {
+                    var dat = response.data.message[i].created.split("-");
                     var day = dat[2].split(" ");
-                    response.data[i].created = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
-                    response.data[i].created = calcTime(response.data[i].created.getTime(), 12.5);
+                    response.data.message[i].created = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                    response.data.message[i].created = calcTime(response.data.message[i].created.getTime(), 12.5);
                     if (datestore != (dat[1] + "/" + day[0] + "/" + dat[0])) {
-                        $scope.messages.push({ "date": response.data[i].created, "messages": [response.data[i]] });
+                        $scope.messages.push({ "date": response.data.message[i].created, "messages": [response.data.message[i]] });
                         index = index + 1;
                         datestore = (dat[1] + "/" + day[0] + "/" + dat[0]);
                     }
                     else {
-                        $scope.messages[index - 1].messages.push(response.data[i]);
+                        $scope.messages[index - 1].messages.push(response.data.message[i]);
                     }
                 }
                 $scope.chatslist.push({ "parcelid": parcelid, "chatmessage": "", "channelid": channelid, "messages": $scope.messages });
@@ -33,9 +35,11 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
     }
     $scope.messages = [];
     var socket = io.connect('http://webservice.mycourierbuddy.com:3000');
-    $scope.submitchat = function (channelid, message) {
-        var dataString = { channelid: channelid, messageuserid: AuthService.authentication.UserId, message: message };
-        console.log(dataString);
+    $scope.submit = function (channelid, message) {
+        $scope.submitchat(channelid, message); 
+    }
+    $scope.submitchat = function (channelid, message) { 
+        var dataString = { channelid: channelid, messageuserid: AuthService.authentication.UserId, message: message }; 
         $.ajax({
             type: "POST", url: "http://webservice.mycourierbuddy.com/api/chatsubmit", data: dataString, dataType: "json", cache: false, success: function (data) {
                 $scope.messages = $.grep($scope.chatslist, function (a) { return a.channelid == channelid })[0].chatmessage = "";
@@ -88,18 +92,19 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
                     var index = 0;
                     var datestore = "";
                     var namestore = "";
-                    for (i = 0; i < response.data.length; i++) {
-                        var dat = response.data[i].created.split("-");
+                    $scope.users = response.data.users[0];
+                    for (i = 0; i < response.data.message.length; i++) {
+                        var dat = response.data.message[i].created.split("-");
                         var day = dat[2].split(" ");
-                        response.data[i].created = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
-                        response.data[i].created = calcTime(response.data[i].created.getTime(), 12.5);
+                        response.data.message[i].created = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
+                        response.data.message[i].created = calcTime(response.data.message[i].created.getTime(), 12.5);
                         if (datestore != (dat[1] + "/" + day[0] + "/" + dat[0])) {
-                            $scope.messages.push({ "date": response.data[i].created, "messages": [response.data[i]] });
+                            $scope.messages.push({ "date": response.data.message[i].created, "messages": [response.data.message[i]] });
                             index = index + 1;
                             datestore = (dat[1] + "/" + day[0] + "/" + dat[0]);
                         }
                         else {
-                            $scope.messages[index - 1].messages.push(response.data[i]);
+                            $scope.messages[index - 1].messages.push(response.data.message[i]);
                         }
                     }
                     $scope.chatslist.push({ "parcelid": data.parcelid, "chatmessage": "", "channelid": data.channelid, "messages": $scope.messages });

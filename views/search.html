@@ -44,20 +44,8 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div class="col-md-12">
-                        <div ng-show="transporters.length==0 && type == 'Transporter' && submitted">
-                            <center>
-                                <div class="alert-error"><b>No Record Found!!</b></div>
-                                <a class="btn btn-primary" ui-sref="addparcel" ui-sref-opts="{reload: true}">Add Parcel</a>
-                            </center>
-                        </div>
-                        <div ng-show="type == 'Sender' && senders.length == 0 && submitted">
-                            <center>
-                                <div class="alert-error"><b>No Record Found!!</b></div>
-                                <a class="btn btn-primary" ui-sref="addtrip" ui-sref-opts="{reload: true}">Add Trip</a>
-                            </center>
-                        </div>
+                    </div> 
+                    <div class="col-md-12"> 
                         <div ng-hide="transporters.length==0" class="gridsystem">
                             <div class="row">
                                 <h3>Transporter's List</h3>
@@ -94,6 +82,18 @@
                                     <tbody></tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div ng-show="(transporters.length==0 && type == 'Transporter' && submitted) ||(type == 'Transporter' && countavailablequantities==0) ">
+                            <center>
+                                <div class="alert-error" ng-show="transporters.length==0"><b>No Record Found!!</b></div>
+                                <a class="btn btn-primary" ui-sref="addparcel" ui-sref-opts="{reload: true}">Add Parcel</a>
+                            </center>
+                        </div>
+                        <div ng-show="type == 'Sender' && senders.length == 0 && submitted">
+                            <center>
+                                <div class="alert-error"><b>No Record Found!!</b></div>
+                                <a class="btn btn-primary" ui-sref="addtrip" ui-sref-opts="{reload: true}">Add Trip</a>
+                            </center>
                         </div>
                     </div>
                 </div>
