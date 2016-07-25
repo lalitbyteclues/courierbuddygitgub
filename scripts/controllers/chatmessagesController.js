@@ -3,6 +3,12 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
     $scope.channelid = 0;
     $scope.chatslist = [];
     $scope.users = {};
+    $scope.screenresolation = window.innerWidth;
+    $scope.updatechat = function () {
+        if (AuthService.authentication.UserId == 0) {
+            $scope.chatslist = [];
+        }
+    } 
     $scope.showchat = function (channelid, parcelid) {
         $scope.loginuserid = AuthService.authentication.UserId;
         if (($.grep($scope.chatslist, function (a) { return a.channelid == channelid })).length == 0)
@@ -28,11 +34,13 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
                         $scope.messages[index - 1].messages.push(response.data.message[i]);
                     }
                 }
-                $scope.chatslist.push({ "parcelid": parcelid, "chatmessage": "", "channelid": channelid, "messages": $scope.messages });
-                $(".popup-messages").animate({ scrollTop: 9999999 }, 500);
-            });
+                for (i = 0; i < $scope.chatslist.length; i++) {
+                    $scope.chatslist[i].isminimized = true;
+                }
+                $scope.chatslist.push({ "parcelid": parcelid, "chatmessage": "", "channelid": channelid, "messages": $scope.messages, isminimized: false });
+             });
         }
-    }
+    } 
     $scope.messages = [];
     var socket = io.connect('http://webservice.mycourierbuddy.com:3000');
     $scope.submit = function (channelid, message) {
@@ -50,8 +58,7 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
                     socket.emit('new_message', newamitmessage);
                 } else if (data.success == false) {
                     $("#notif").html(data.notif);
-                }
-                $(".popup-messages").animate({ scrollTop: 9999999 }, 50);
+                } 
             }, error: function (xhr, status, error) {
                 console.log(error);
             },
@@ -59,6 +66,18 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
     }
     $scope.removechat = function (index) {
         $scope.chatslist.splice(index, 1);
+    }
+    $scope.minimizechat = function (index) {
+        for (i = 0; i < $scope.chatslist.length; i++) {
+            $scope.chatslist[i].isminimized = true;
+        }
+        $scope.chatslist[index].isminimized=true;
+    }
+    $scope.maximizechat = function (index) {
+        for (i = 0; i < $scope.chatslist.length; i++) {
+            $scope.chatslist[i].isminimized = true;
+        }
+        $scope.chatslist[index].isminimized = false;
     }
     socket.on('new_count_message', function (data) {
         //  $("#new_count_message").html(data.new_count_message);
@@ -81,9 +100,12 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
                     $scope.messages.push({ "date": data.created, "messages": [data] });
                 }
                 $.grep($scope.chatslist, function (a) { return a.parcelid == data.parcelid })[0].messages = $scope.messages;
+                for (i = 0; i < $scope.chatslist.length; i++) {
+                    $scope.chatslist[i].isminimized = true;
+                }
+                $.grep($scope.chatslist, function (a) { return a.parcelid == data.parcelid })[0].isminimized = false;
                 $scope.$apply();
-                $("#no-message-notif").html('');
-                $(".popup-messages").animate({ scrollTop: 9999999 }, 500);
+                $("#no-message-notif").html(''); 
                 $("#new-message-notif").html('<div class="alert alert-success" role="alert"> <i class="fa fa-check"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>New message ...</div>');
             }
             else {
@@ -107,8 +129,11 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
                             $scope.messages[index - 1].messages.push(response.data.message[i]);
                         }
                     }
-                    $scope.chatslist.push({ "parcelid": data.parcelid, "chatmessage": "", "channelid": data.channelid, "messages": $scope.messages });
-                    $(".popup-messages").animate({ scrollTop: 9999999 }, 500); 
+                    for (i = 0; i < $scope.chatslist.length; i++) {
+                        $scope.chatslist[i].isminimized = true;
+                    }
+                    $scope.chatslist.push({ "parcelid": data.parcelid, "chatmessage": "", "channelid": data.channelid, "messages": $scope.messages, isminimized: false });
+                     
                 });
             }
         }

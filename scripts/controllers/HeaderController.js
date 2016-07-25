@@ -2,6 +2,7 @@
  * Created by Lalit on 21.05.2016.
  */
 angular.module('courier').controller("HeaderController", function ($scope, AuthService, $location, AirportService) {
+    angular.element('.chatmessagepopup').scope().updatechat();
     $scope.isAuth = AuthService.authentication.isAuth;
     $scope.userName = AuthService.authentication.userName;
     $scope.isAdministrator = AuthService.authentication.isAdministrator;

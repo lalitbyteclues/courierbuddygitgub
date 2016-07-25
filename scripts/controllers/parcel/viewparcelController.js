@@ -6,7 +6,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
         var path = $location.path();
         sessionStorage.setItem("return_url", path);
         $state.transitionTo('login');
-    }
+    } 
     $http.get(RESOURCES.API_BASE_PATH + 'api/getcountries', { headers: { 'Content-Type': 'application/json' }, }).then(function (results) {
         $scope.countries = results.data.response;
     });
@@ -47,8 +47,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
             AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
                 $scope.userlist = results.data.response;
 
-            });
-            $('#example2').DataTable({ searching: false, paging: false });
+            }); 
             if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
                 searchService.gettransporterdetails($scope.parcel.trans_id).then(function (response) {
                     if (response.data.status == "success") {

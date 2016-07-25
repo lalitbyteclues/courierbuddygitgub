@@ -42,17 +42,17 @@
         </audio>
     </div>
     <div ng-repeat="chat in chatslist">
-        <div class="popup-box chat-popup popup-box-on" style="right:{{(($index)*300)+70}}px">
-            <div class="popup-head">
-                <div class="popup-head-left pull-left">P{{chat.parcelid}}</div>
+        <div class="popup-box chat-popup popup-box-on" ng-hide="chat.isminimized" style="right:{{screenresolation<=680?71:111}}px">
+            <div class="popup-head" ng-click="minimizechat($index)">
+                <h3 class="popup-head-left pull-left">P{{chat.parcelid}}</h3>
                 <div class="popup-head-right pull-right">
                     <button data-widget="remove" ng-click="removechat($index)" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-off"></i></button>
+                    <button data-widget="remove" ng-click="minimizechat($index)" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-minus"></i></button>
                 </div>
-                 
-                    Welcome {{users.transportername}},{{users.sendername}},{{users.receivername}}.
-                 
+                <div class="clear">  </div>
+                Welcome {{users.transportername}},{{users.sendername}},{{users.receivername}}.
             </div>
-            <div class="popup-messages">
+            <div class="popup-messages" id="popupmessagesscroller" scroll="popupmessagesscroller">
                 <div class="direct-chat-messages">
                     <div ng-repeat="mess in chat.messages">
                         <div class="chat-box-single-line">
@@ -63,7 +63,7 @@
                                 <div class="direct-chat-info clearfix" ng-hide="$index>0 && mess.messages[$index-1].id==mess.messages[$index].id">
                                     <span class="direct-chat-name pull-left">{{mo.username}}</span>
                                 </div>
-                                <img alt="iamgurdeeposahan" src="/images/chatuser.png" class="direct-chat-img" ng-hide="$index>0 && mess.messages[$index-1].id==mess.messages[$index].id">
+                                <img alt="iamgurdeeposahan" src="/images/chatuser.png" class="direct-chat-img" ng-hide="$index>0 && mess.messages[$index-1].id==mess.messages[$index].id" />
                                 <div class="direct-chat-text">
                                     {{mo.message}}
                                 </div>
@@ -99,8 +99,8 @@
             </div>
             <div class="popup-messages-footer">
                 <form ng-submit="submitchat(chat.channelid,chat.chatmessage)" id="frmmessages">
-                    <div style="width:85%;float:left;height:50px;"><textarea style="height:50px;" id="status_message" autocomplete="off" ng-model="chat.chatmessage" required placeholder="Type a message..." name="message"   ng-enter="submit(chat.channelid,chat.chatmessage)"></textarea></div>
-                    <div style="width:15%;float:right;background:#eee;">
+                    <div class="leftalignmessagebox"><textarea id="status_message" autocomplete="off" ng-model="chat.chatmessage" required placeholder="Type a message..." name="message" ng-enter="submit(chat.channelid,chat.chatmessage)"></textarea></div>
+                    <div class="rightalignmessagebox">
                         <div class="btn-footer">
                             <button type="submit" class="bg_none pull-right"><i class="glyphicon glyphicon-send"></i> </button>
                         </div>
@@ -109,4 +109,18 @@
             </div>
         </div>
     </div>
+    <div ng-repeat="chat in chatslist | filter:{ isminimized: true }">
+        <div ng-show="chat.isminimized" id="livechat-compact-container" style="bottom:{{screenresolation<=680?(($index)*65)+11:(($index)*100)+11}}px" class="iconimagepositionchat">
+            <div class="lc2 https" style="margin: 0px; padding: 0px;">
+                <div style="display:block" id="mobile_invitation_container">
+                    <div id="operator_avatar_container">
+                        <div ng-click="maximizechat($index)" id="operator_avatar">
+                            <span class="icon-agentonline">P{{chat.parcelid}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+

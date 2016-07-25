@@ -2,16 +2,17 @@
  * Created by Lalit on 21.05.2016.
  */
 angular.module('courier').controller("transbookingController", function (ParcelService, $state, $location, $scope, ValiDatedTokenObject, AuthService, searchService, $stateParams) {
-    var Id = $stateParams.id; 
-    searchService.gettransporterdetails($stateParams.id).then(function (response) { 
+    var Id = $stateParams.id;
+    searchService.gettransporterdetails($stateParams.id).then(function (response) {
         if (response.data.status == "success") {
             $scope.transporter = response.data.response[0];
             $scope.parcelfromloation = $scope.transporter.source;
             $scope.parceltoloation = $scope.transporter.destination;
             $scope.maxcapicity = $scope.transporter.awailableweight;
-            $scope.deliverytill = $scope.transporter.arrival_time; 
+            $scope.deliverytill = $scope.transporter.arrival_time;
         }
     });
+    var userlisttableentity = $('#userlist').DataTable({ searching: false, paging: false });
     $scope.registeremail = "";
     $scope.registername = "";
     if (!AuthService.authentication.isAuth) {
@@ -21,32 +22,35 @@ angular.module('courier').controller("transbookingController", function (ParcelS
     }
     $scope.changereceiveruser = function () {
         $scope.usersearchvisible = true;
+        $scope.$apply();
     }
     $scope.ParcelHeight = 0; $scope.ParcelWidth = 0; $scope.ParcelLength = 0;
-    $scope.userlist = [];
+    $scope.userlist = []; 
     $scope.issummary = false;
     $scope.usersearchclicked = false;
     $scope.usersearchvisible = true;
     $scope.successaddtripMessage = "";
     $scope.totalamount = 0.00;
     $scope.sendinviteuser = function () {
-        var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/; 
+        var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
         $scope.successaddtripMessage = "";
         $scope.errormessageuser = "";
-        if ($scope.registeremail == "" || $scope.registername=="") {
+        if ($scope.registeremail == "" || $scope.registername == "") {
             $scope.errormessageuser = "Please fill all mandatory fields!";
             return;
         }
         if (!EMAIL_REGEXP.test($scope.registeremail)) {
             $scope.errormessageuser = "Please enter a valid Email ID !";
             return;
-        }  
+        }
         var data = { "email": $scope.registeremail, "name": $scope.registername, "number": $scope.registermobile, "message": $scope.registermessage, "UserID": AuthService.authentication.UserId };
         AuthService.inviteuser(data).then(function (results) {
             if (results.status == 200) {
                 $scope.successaddtripMessage = "User Invited Successfully";
                 $scope.userlist = results.data.response;
                 if ($scope.userlist.length > 0) {
+                    userlisttableentity.clear().draw();
+                    userlisttableentity.row.add([$scope.userlist[0].UserID, $scope.userlist[0].username, $scope.userlist[0].name, $scope.userlist[0].mobile == 0 ? "" : $scope.userlist[0].mobile, ' <a href="javascript:void(0);" onclick="changereceiveruser()">Change</a>']).draw();
                     $scope.usersearchvisible = false;
                 }
             }
@@ -67,7 +71,7 @@ angular.module('courier').controller("transbookingController", function (ParcelS
                         if ($scope.userlist.length == 0) {
                             $scope.errormessage = "Please Select receiver !";
                             return;
-                        } 
+                        }
                         var amount = getpriceusingweight(parseFloat($scope.ParcelWeight));
                         var datapost = { "source": $scope.parcelfromloation, "destination": $scope.parceltoloation, "till_date": $scope.deliverytill, "type": $scope.parceltype, "weight": parseFloat($scope.ParcelWeight), "height": $scope.ParcelHeight, "width": $scope.ParcelWidth, "length": $scope.ParcelLength, "created": new Date(), "usr_id": sessionStorage.getItem("UserId"), "recv_id": $scope.userlist[0].id, "status": 1, "description": $scope.parceldecsription, "payment": parseFloat(amount), "trans_id": $stateParams.id };
                         ParcelService.AddParcelData(datapost).then(function (results) {
@@ -100,6 +104,8 @@ angular.module('courier').controller("transbookingController", function (ParcelS
             searchService.searchuser($scope.exitingmobilenumber, $scope.exitingemail, AuthService.authentication.UserId).then(function (response) {
                 $scope.userlist = response.data.response;
                 if ($scope.userlist.length > 0) {
+                    userlisttableentity.clear().draw();
+                    userlisttableentity.row.add([$scope.userlist[0].UserID, $scope.userlist[0].username, $scope.userlist[0].name, $scope.userlist[0].mobile == 0 ? "" : $scope.userlist[0].mobile, ' <a href="javascript:void(0);" onclick="changereceiveruser()">Change</a>']).draw();
                     $scope.usersearchvisible = false;
                 }
                 $scope.usersearchclicked = true;
@@ -151,37 +157,37 @@ angular.module('courier').controller("transbookingController", function (ParcelS
         options: {
             html: false, focusOpen: false, onlySelectValid: true, source: function (request, response) {
                 if (request.term.length == 0)
-                    return; 
-                    res = _suggestLocations(request.term);
-                    var data = [];
-                    for (var i = 0; i < res.length; i++) {
-                        var r = res[i];
-                        data.push({ label: r.location, value: r.location, id: r.id, name: r.location });
-                    }
-                    response(data); 
+                    return;
+                res = _suggestLocations(request.term);
+                var data = [];
+                for (var i = 0; i < res.length; i++) {
+                    var r = res[i];
+                    data.push({ label: r.location, value: r.location, id: r.id, name: r.location });
+                }
+                response(data);
             }
         },
         methods: {}
     };
     var _suggestLocations = function (text) {
-        var result = []; 
-            for (i = 0; i < $scope.countries.length; i++) {
-                if (result.length > 10) {
-                    break;
-                }
-                if ($scope.countries[i].location.toLowerCase().indexOf(text.toLowerCase()) == 0) {
-                    result.push($scope.countries[i]);
-                }
+        var result = [];
+        for (i = 0; i < $scope.countries.length; i++) {
+            if (result.length > 10) {
+                break;
             }
-            for (i = 0; i < $scope.countries.length; i++) {
-                if (result.length > 10) {
-                    break;
-                }
-                if ($scope.countries[i].location.toLowerCase().indexOf(text.toLowerCase()) > 0) {
-                    result.push($scope.countries[i]);
-                }
+            if ($scope.countries[i].location.toLowerCase().indexOf(text.toLowerCase()) == 0) {
+                result.push($scope.countries[i]);
             }
-            return result; 
+        }
+        for (i = 0; i < $scope.countries.length; i++) {
+            if (result.length > 10) {
+                break;
+            }
+            if ($scope.countries[i].location.toLowerCase().indexOf(text.toLowerCase()) > 0) {
+                result.push($scope.countries[i]);
+            }
+        }
+        return result;
     };
     $scope.search = function () {
         var result = document.getElementsByClassName("quote_datesearch");

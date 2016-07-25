@@ -15,7 +15,7 @@ angular.module('courier').controller("SenderController", function ($scope, $loca
     $scope.errormessage = "";
     $scope.list = [];
     $scope.mainlist = [];
-    dTable = $('#example').DataTable();
+    dTable = $('#example').DataTable({ searching: false });
     ParcelService.getParcelList(sessionStorage.getItem("UserId")).then(function (results) {
         if (results.status == 200) {
             dTable.clear().draw();

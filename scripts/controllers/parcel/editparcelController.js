@@ -10,6 +10,7 @@ angular.module('courier').controller("editparcelController", function ($http, $s
     $http.get(RESOURCES.API_BASE_PATH + 'api/getcountries', { headers: { 'Content-Type': 'application/json' }, }).then(function (results) {
         $scope.countries = results.data.response;
     });
+    var userlisttableentity = $('#userlist').DataTable({ searching: false, paging: false });
     $scope.parcel = {};
     $scope.usersearchclicked = false;
     $scope.usersearchvisible = true;
@@ -27,6 +28,7 @@ angular.module('courier').controller("editparcelController", function ($http, $s
     $scope.exitingemail = ""; $scope.exitingmobilenumber = ""; $scope.value1 = 'true';
     $scope.changereceiveruser = function () {
         $scope.usersearchvisible = true;
+        $scope.$apply();
     }
     ParcelService.getparceldetail($stateParams.id).then(function (response) {
         if (response.data.status == "success") {
@@ -51,6 +53,9 @@ angular.module('courier').controller("editparcelController", function ($http, $s
             AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
                 $scope.userlist = results.data.response;
                 if ($scope.userlist.length > 0) {
+                    userlisttableentity.clear().draw();
+                    userlisttableentity.row.add([$scope.userlist[0].UserID, $scope.userlist[0].username, $scope.userlist[0].name, $scope.userlist[0].mobile == 0 ? "" : $scope.userlist[0].mobile, ' <a href="javascript:void(0);" onclick="changereceiveruser()">Change</a>']).draw();
+
                     $scope.usersearchvisible = false;
                 }
 
@@ -65,6 +70,8 @@ angular.module('courier').controller("editparcelController", function ($http, $s
                 //   $scope.successaddtripMessage = "User Invited Successfully";
                 $scope.userlist = results.data.response;
                 if ($scope.userlist.length > 0) {
+                    userlisttableentity.clear().draw();
+                    userlisttableentity.row.add([$scope.userlist[0].UserID, $scope.userlist[0].username, $scope.userlist[0].name, $scope.userlist[0].mobile == 0 ? "" : $scope.userlist[0].mobile, ' <a href="javascript:void(0);" onclick="changereceiveruser()">Change</a>']).draw();
                     $scope.usersearchvisible = false;
                 }
             }
@@ -141,6 +148,9 @@ angular.module('courier').controller("editparcelController", function ($http, $s
             searchService.searchuser($scope.exitingmobilenumber, $scope.exitingemail, AuthService.authentication.UserId).then(function (response) {
                 $scope.userlist = response.data.response;
                 if ($scope.userlist.length > 0) {
+                    userlisttableentity.clear().draw();
+                    userlisttableentity.row.add([$scope.userlist[0].UserID, $scope.userlist[0].username, $scope.userlist[0].name, $scope.userlist[0].mobile == 0 ? "" : $scope.userlist[0].mobile, ' <a href="javascript:void(0);" onclick="changereceiveruser()">Change</a>']).draw();
+
                     $scope.usersearchvisible = false;
                 }
                 $scope.usersearchclicked = true;

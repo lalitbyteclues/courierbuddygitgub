@@ -56,8 +56,7 @@
                                     <a href='javascript:void(0);' ng-click='changestatusparcel(parcel.id,1)' title='Cancel Status' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 5px 5px 0;">Received</a>
                                     <a href='javascript:void(0);' ng-click='changestatusparcel(parcel.id, 0)' title='Cancel Status' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 5px 5px 0;">Not Received</a>
                                 </div>
-
-                                <table id="example2" class="table table-striped table-bordered dt-responsive nowrap">
+                                <table id="example2" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th><b>From</b></th>
@@ -83,52 +82,63 @@
                                                 <div class="alert-success" ng-show='parcel.status==2'><i class="fa fa-check fa-2x">&nbsp;</i>{{ parcel.statusdescription }}</div>
                                                 <span ng-hide='parcel.status==2'>{{ parcel.statusdescription }}</span>
                                             </td>
-                                            <!--<td ng-hide='!parcel.reason'>{{parcel.reason}}</td>-->
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div ng-show="trip.length>0">
                                     <h1>Booking Detail</h1>
-                                    <div class="round hollow text-center" ng-show="parcel.channelid>0">
-                                        <a href="javascript:void(0);" ng-click="showchat(parcel.channelid,parcel.id)"><span class="glyphicon glyphicon-comment"></span>Chat</a>
+                                    <div class="text-right" style="float: right;margin-top:-77px;cursor:pointer;" ng-show="parcel.channelid>0">
+                                        <div id="operator_avatar_container">
+                                            <div ng-click="showchat(parcel.channelid,parcel.id)" id="operator_avatar">
+                                                <span class="icon-agentonline"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <h4>Transporter Details</h4>
-                                    <table class="table table-striped table-bordered dt-responsive nowrap">
-                                        <tr>
-                                            <td><b>Name</b></td>
-                                            <td><b>Email</b></td>
-                                            <td><b>Departure Time</b></td>
-                                            <td><b>Arrival Time</b></td>
-                                            <td><b>Flight No.</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{trip[0].transportername}}</td>
-                                            <td>{{trip[0].transporteremail}}</td>
-                                            <td>{{trip[0].dep_time  | date:"dd/MM/yyyy 'at' h:mma" }} </td>
-                                            <td>{{trip[0].arrival_time  | date:"dd/MM/yyyy 'at' h:mma" }}</td>
-                                            <td>{{trip[0].flight_no}}</td>
-                                        </tr>
+                                    <table id="transporterdatatable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th><b>Name</b></th>
+                                                <th><b>Email</b></th>
+                                                <th><b>Departure Time</b></th>
+                                                <th><b>Arrival Time</b></th>
+                                                <th><b>Flight No.</b></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{trip[0].transportername}}</td>
+                                                <td>{{trip[0].transporteremail}}</td>
+                                                <td>{{trip[0].dep_time  | date:"dd/MM/yyyy 'at' h:mma" }} </td>
+                                                <td>{{trip[0].arrival_time  | date:"dd/MM/yyyy 'at' h:mma" }}</td>
+                                                <td>{{trip[0].flight_no}}</td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                     <h4>Receiver Details</h4>
-                                    <table class="table table-striped table-bordered dt-responsive nowrap">
-                                        <tr>
-                                            <td><b>Name</b></td>
-                                            <td><b>Email</b></td>
-                                            <td>Mobile</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{userlist[0].name}}</td>
-                                            <td>{{userlist[0].username}}</td>
-                                            <td>
-                                                {{userlist[0].country_code == ''?'':'+'+userlist[0].country_code +'-'}}{{userlist[0].mobile}}
-                                            </td>
-                                        </tr>
+                                    <table id="receiverdatatable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <td><b>Name</b></td>
+                                                <td><b>Email</b></td>
+                                                <td>Mobile</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{userlist[0].name}}</td>
+                                                <td>{{userlist[0].username}}</td>
+                                                <td>
+                                                    {{userlist[0].country_code == ''?'':'+'+userlist[0].country_code +'-'}}{{userlist[0].mobile}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                                 <div id="what" ng-hide="tripsmatch.length==0" class="gridsystem">
                                     <div class="row">
                                         <h1>Transporter's Match Found</h1>
-                                        <table id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                        <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -154,36 +164,48 @@
                                 <div class="search-result a-left">
                                     <h1>Summary</h1>
                                     <form ng-submit="generateordernumber()" class="stdform" id="accept-and-pay" enctype="multipart/form-data" method="post" accept-charset="utf-8">
-                                        <table class="table table-striped table-bordered dt-responsive nowrap">
-                                            <tr>
-                                                <td><label><b>From</b>  </label></td>
-                                                <td><label><b>To</b>  </label></td>
-                                                <td><label><b>Parcel type</b>  </label></td>
-                                                <td ng-show="parcel.type=='B'"><label><b>Parcel Dimension</b>  </label></td>
-                                                <td><label><b>Parcel Weight</b>  </label></td>
-                                                <td><label><b>Parcel Description</b>  </label></td>
-                                                <td><label><b>Amount To Pay</b>  </label></td>
-                                            </tr>
-                                            <tr>
-                                                <td> {{ parcel.source }}</td>
-                                                <td> {{ parcel.destination }}</td>
-                                                <td> {{parcel.type=='E'?'Envelope':parcel.type=='B'?'Box':parcel.type=='P'?'Packet':parcel.type}}</td>
-                                                <td ng-show="parcel.type=='B'"> H {{parcel.height}}" , W {{parcel.width}}" , L {{parcel.length}}"</td>
-                                                <td>  {{parcel.weight}}kg</td>
-                                                <td>  {{parcel.description}}</td>
-                                                <td>{{parcel.payment | currency:"&#8377;"}}</td>
-                                            </tr>
+                                        <table class="table table-striped table-bordered dt-responsive nowrap datatablesummary" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <td><label><b>From</b>  </label></td>
+                                                    <td><label><b>To</b>  </label></td>
+                                                    <td><label><b>Parcel type</b>  </label></td>
+                                                    <td ng-show="parcel.type=='B'"><label><b>Parcel Dimension</b>  </label></td>
+                                                    <td><label><b>Parcel Weight</b>  </label></td>
+                                                    <td><label><b>Parcel Description</b>  </label></td>
+                                                    <td><label><b>Amount To Pay</b>  </label></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td> {{ parcel.source }}</td>
+                                                    <td> {{ parcel.destination }}</td>
+                                                    <td> {{parcel.type=='E'?'Envelope':parcel.type=='B'?'Box':parcel.type=='P'?'Packet':parcel.type}}</td>
+                                                    <td ng-show="parcel.type=='B'"> H {{parcel.height}}" , W {{parcel.width}}" , L {{parcel.length}}"</td>
+                                                    <td>  {{parcel.weight}}kg</td>
+                                                    <td>  {{parcel.description}}</td>
+                                                    <td>{{parcel.payment | currency:"&#8377;"}}</td>
+                                                </tr>
+                                            </tbody>
                                         </table>
                                         <hr />
                                         <h1>Receiver Details </h1>
                                         <div class="com-det">
-                                            <table border="0" cellpadding="4" width="100%">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap datatablesummary" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th><b>MCB Id</b></th>
+                                                        <th><b>Email</b></th>
+                                                        <th><b>Name</b></th>
+                                                        <th><b>Phone</b></th>
+                                                    </tr>
+                                                </thead>
                                                 <tbody>
                                                     <tr ng-repeat="user in userlist">
-                                                        <td><b>MCB Id</b>{{user.UserID}}</td>
-                                                        <td><b>Email</b>{{user.username}}</td>
-                                                        <td><b>Name</b>{{user.name}} </td>
-                                                        <td><b>Phone</b>{{user.mobile}}</td>
+                                                        <td>{{user.UserID}}</td>
+                                                        <td>{{user.username}}</td>
+                                                        <td>{{user.name}} </td>
+                                                        <td>{{user.mobile}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -194,13 +216,21 @@
                                         <hr />
                                         <h1>Transporter Details</h1>
                                         <div class="com-det">
-                                            <table border="0" ng-show="userlist.length>0" cellpadding="4" width="100%">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap datatablesummary" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th><b>Trip Id</b></th>
+                                                        <th><b>Departure On</b></th>
+                                                        <th><b>Arrival On</b></th>
+                                                        <th><b>Flight No</b></th>
+                                                    </tr>
+                                                </thead>
                                                 <tbody>
                                                     <tr ng-repeat="user in userlist">
-                                                        <td><b>Trip Id</b>{{transporter.TripID}}</td>
-                                                        <td><b>Departure On</b>{{transporter.dep_time}}</td>
-                                                        <td><b>Arrival On</b>{{transporter.arrival_time}} </td>
-                                                        <td><b>Flight No</b>{{transporter.flight_no}}</td>
+                                                        <td>{{transporter.TripID}}</td>
+                                                        <td>{{transporter.dep_time}}</td>
+                                                        <td>{{transporter.arrival_time}} </td>
+                                                        <td>{{transporter.flight_no}}</td>
                                                         <!--<td><b>PNR /Booking Reference</b>{{transporter.pnr}}</td>-->
                                                     </tr>
                                                 </tbody>
@@ -212,25 +242,23 @@
                                         </div>
                                         <div class="clear">
                                         </div>
-                                        <div ng-show="orderlist.length==0" class="form-group">
-                                            <div class="col-md-12">
-                                                <ul class="filterscheck">
-                                                    <li>
-                                                        <label>
-                                                            <input type="checkbox" id="voilet" ng-model="usewalletamount" ng-disabled="loginuser.wallet==0" />
-                                                            <span class="icon"><i class="fa fa-check fa-3x"></i></span>
-                                                            <sup>   Use MCB Wallet Your awalable Amount {{loginuser.wallet | currency:"&#8377;"}}</sup>
-                                                        </label>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                        <div ng-show="orderlist.length==0" class="form-group"> 
+                                            <ul class="filterscheck">
+                                                <li>
+                                                    <label>
+                                                        <input type="checkbox" id="voilet" ng-model="usewalletamount" ng-disabled="loginuser.wallet==0" />
+                                                        <span class="icon"><i class="fa fa-check fa-3x"></i></span>
+                                                        <sup>   Use MCB Wallet Your awalable Amount {{loginuser.wallet | currency:"&#8377;"}}</sup>
+                                                    </label>
+                                                </li>
+                                            </ul> 
                                             <div class="col-md-12">
                                                 <input class="customsearchbutton" style="font-size:15px;padding:10px 23px;float:right;text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);  color:#fff;font-family: 'proxima_novasemibold'; text-transform:uppercase;    background: -moz-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(144,193,81,1)), color-stop(100%, rgba(107,162,35,1)));     background: -webkit-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: -o-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);      background: -ms-linear-gradient(270deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     background: linear-gradient(180deg, rgba(144,193,81,1) 0%, rgba(107,162,35,1) 100%);     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#90c151', endColorstr='#6ba223',GradientType=0 ); " type="submit" value="{{parcel.status==7?'Confirm Now':'Pay Now'}}">
                                             </div>
                                         </div>
                                     </form>
-                                    <form ng-show="orderlist.length>0" action="/pay.php" class="stdform" id="accept-and-pay" enctype="multipart/form-data" method="post" accept-charset="utf-8"> 
-                                        <table align="right" class="table table-striped table-bordered dt-responsive nowrap">
+                                    <form ng-show="orderlist.length>0" action="/pay.php" class="stdform" id="accept-and-pay" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                        <table align="right" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                             <tr>
                                                 <td><b>Amount To Pay:</b></td>
                                                 <td>{{orderlist[0].Amount  | currency:"&#8377;"}}</td>
@@ -239,7 +267,7 @@
                                                 <td><b>Used Amount From Wallet:</b></td>
                                                 <td>{{parcel.payment - orderlist[0].Amount  | currency:"&#8377;"}}</td>
                                             </tr>
-                                        </table> 
+                                        </table>
                                         <input type="hidden" value="{{orderlist[0].ordernumber}}" name="txnid" />
                                         <input type="hidden" value="{{loginuser.name}}" name="firstname" />
                                         <input type="hidden" value="{{loginuser.username}}" name="email" />
@@ -285,6 +313,15 @@
     function createcourierrequest(id) {
         angular.element('.container').scope().createcourierrequest(id);
     }
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#example2').DataTable({ searching: false, paging: false });
+            $('#transporterdatatable').DataTable({ searching: false, paging: false });
+            $('#receiverdatatable').DataTable({ searching: false, paging: false });
+            $('.datatablesummary').DataTable({ searching: false, paging: false });
+        }, 2000);
+
+    });
 </script>
 <style>
     .input-group, span.Zebra_DatePicker_Icon_Wrapper {
@@ -293,5 +330,15 @@
 
     table.table-bordered.dataTable td:nth-child(7) {
         white-space: normal !important;
+    }
+
+    .text-right #operator_avatar {
+        width: 4em;
+        height: 4em;
+        float: right;
+    }
+
+    .text-right .icon-agentonline {
+        line-height: 4.6em !important;
     }
 </style>

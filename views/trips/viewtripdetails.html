@@ -61,7 +61,7 @@
                                             <div class="alert alert-success" role="alert" ng-hide='!successaddtripMessage'>{{successaddtripMessage}}</div>
                                         </div>
                                     </div>
-                                    <table id="example2" class="table table-striped table-bordered dt-responsive">
+                                    <table id="example2" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>From </th>
@@ -70,7 +70,7 @@
                                                 <th>Arrival On</th>
                                                 <th>Ticket</th>
                                                 <th>Flight No:</th>
-                                                <th>Capacity (kg) </th> 
+                                                <th>Capacity (kg) </th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -82,7 +82,7 @@
                                                 <td>{{transporter.arrival_time | date:"dd/MM/yyyy 'at' h:mma"}}</td>
                                                 <td><div ng-bind-html="transporter.link"></div></td>
                                                 <td> {{transporter.flight_no}} </td>
-                                                <td>{{transporter.capacity}}</td> 
+                                                <td>{{transporter.capacity}}</td>
                                                 <td>{{ transporter.statusdescription }}</td>
                                             </tr>
                                         </tbody>
@@ -91,7 +91,7 @@
                                         <h1>Booking Detail</h1> 
                                         <div class="col-md-12" ng-show="parcel.length>0">
                                             <h4>Parcel Details</h4>
-                                            <table class="table table-striped table-bordered dt-responsive nowrap">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                                 <tr>
                                                     <td><b>Booking ID</b></td>
                                                     <td><b>Type</b></td>
@@ -99,7 +99,7 @@
                                                     <td><b>Dimensions</b></td>
                                                     <td><b>Sender</b></td>
                                                     <td><b>Receiver</b></td>
-                                                    <td><b>Status</b></td> 
+                                                    <td><b>Status</b></td>
                                                     <td ng-show="transporter.status==3">Next Action</td>
                                                 </tr>
                                                 <tr ng-repeat="par in parcel">
@@ -107,14 +107,14 @@
                                                     <td>{{par.type=='E'?'Envelope':par.type=='B'?'Box':par.type=='P'?'Packet':par.type}} </td>
                                                     <td>{{par.weight}}KG</td>
                                                     <td><span ng-show="par.type=='B'"> Height:{{par.height}} <br />Width:{{par.width}} <br />Length:{{par.length}}</span></td>
-                                                     <td><a href='javascript:void(0);' ng-click='viewuserdetails(par.usr_id)'>MCB{{par.usr_id}}</a></td>
+                                                    <td><a href='javascript:void(0);' ng-click='viewuserdetails(par.usr_id)'>MCB{{par.usr_id}}</a></td>
                                                     <td><a href='javascript:void(0);' ng-click='viewuserdetails(par.recv_id)'>MCB{{par.recv_id}}</a></td>
-                                                    <td> 
-                                                         {{ par.statusdescription}}
-                                                    </td> 
+                                                    <td>
+                                                        {{ par.statusdescription}}
+                                                    </td>
                                                     <td style="text-align:center;" ng-show="transporter.status==3">
-                                                         <a href="javascript:void(0);" ng-show="par.channelid>0" ng-click="showchat(par.channelid)"><span class="glyphicon glyphicon-comment"></span> </a> 
-                                                        <a href='javascript:void(0);' class="btn btn-primary"  ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
+                                                        <a href="javascript:void(0);" ng-show="par.channelid>0" ng-click="showchat(par.channelid)"><span class="glyphicon glyphicon-comment"></span> </a>
+                                                        <a href='javascript:void(0);' class="btn btn-primary" ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
                                                         <a href='javascript:void(0);' class="btn btn-primary" ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
                                                         <a href='javascript:void(0);' class="btn btn-primary" ng-click='cancelparcel(par.id)' ng-show="transporter.status==3" title='Cancel Booking'>Reject</a>
                                                     </td>
@@ -126,7 +126,7 @@
                                     <div ng-show="(transporter.status==1 || transporter.status==3) && (transporter.awailableweight>0 || transporter.awailableweight==null)" class="gridsystem">
                                         <div class="row" ng-show="parcellist.length>0">
                                             <h4>Sender's Match List</h4>
-                                            <table id="example1" class="table table-striped table-bordered dt-responsive nowrap">
+                                            <table id="example1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>From </th>
@@ -160,7 +160,7 @@
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <table ng-hide="edit" id="example" class="table table-striped table-bordered dt-responsive nowrap">
+                                            <table ng-hide="edit" id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                                 <tr>
                                                     <th valign="top"><i class="fa fa-user fa-2x"></i>&nbsp;&nbsp;{{ userdetails.name}} &nbsp;{{ userdetails.l_name}}</th>
                                                 </tr>
@@ -215,11 +215,17 @@
         $("#removeClass").click(function () {
             $('#qnimate').removeClass('popup-box-on');
         });
-    })
+    })  
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#example2').DataTable({ searching: false, paging: false });
+        }, 2000);
 
+    });
 </script>
 <style>
     .input-group, span.Zebra_DatePicker_Icon_Wrapper {
         width: 100%;
     }
+    .tab-pane ul li a{width:auto;}
 </style>

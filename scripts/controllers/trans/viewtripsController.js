@@ -44,8 +44,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
                 $scope.transporter = response.data.response[0];
                 if (AuthService.authentication.UserId != $scope.transporter.t_id) {
                     $state.transitionTo('home');
-                }
-                $('#example2').DataTable({ searching: false, paging: false });
+                } 
                 var deptime = $scope.transporter.dep_time.split(" ");
                 $scope.transporter.dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]).getTime();
                 var arrtime = $scope.transporter.arrival_time.split(" ");

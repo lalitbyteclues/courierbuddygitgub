@@ -32,8 +32,11 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
     $scope.successaddtripMessage = "";
     $scope.errormessage = "";
     $scope.totalamount = 0.00;
+    var userlisttableentity = $('#userlist').DataTable({ searching: false, paging: false });
+    var userlisttableentity1 = $('#userlist1').DataTable({ searching: false, paging: false });
     $scope.changereceiveruser = function () { 
         $scope.usersearchvisible = true;
+        $scope.$apply();
     }
     $scope.sendinviteuser = function () {
         var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
@@ -53,6 +56,10 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
                 $scope.successaddtripMessage = "User Invited Successfully";
                 $scope.userlist = results.data.response;
                 if ($scope.userlist.length > 0) {
+                    userlisttableentity.clear().draw();
+                    userlisttableentity.row.add([$scope.userlist[0].UserID, $scope.userlist[0].username, $scope.userlist[0].name, $scope.userlist[0].mobile == 0 ? "" : $scope.userlist[0].mobile, ' <a href="javascript:void(0);" onclick="changereceiveruser()">Change</a>']).draw();
+                    userlisttableentity1.clear().draw();
+                    userlisttableentity1.row.add([$scope.userlist[0].UserID, $scope.userlist[0].username, $scope.userlist[0].name, $scope.userlist[0].mobile == 0 ? "" : $scope.userlist[0].mobile, ' <a href="javascript:void(0);" onclick="changereceiveruser()">Change</a>']).draw();
                     $scope.usersearchvisible = false;
                 }
             }
@@ -92,6 +99,9 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
                             if (results.status == 200) {
                                 $scope.parcel.amount = results.data.price;
                                 $scope.issummary = true;
+                                setTimeout(function () {
+                                    $('.parcelsummary').DataTable({ searching: false, paging: false });
+                                }, 500);
                             }
                         });
                     }
@@ -162,6 +172,11 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
                         searchService.searchuser($scope.exitingmobilenumber, $scope.exitingemail, AuthService.authentication.UserId).then(function (response) {
                             $scope.userlist = response.data.response;
                             if ($scope.userlist.length > 0) {
+                                userlisttableentity.clear().draw();
+                                userlisttableentity.row.add([$scope.userlist[0].UserID, $scope.userlist[0].username, $scope.userlist[0].name, $scope.userlist[0].mobile == 0 ? "" : $scope.userlist[0].mobile, ' <a href="javascript:void(0);" onclick="changereceiveruser()">Change</a>']).draw();
+                                userlisttableentity1.clear().draw();
+                                userlisttableentity1.row.add([$scope.userlist[0].UserID, $scope.userlist[0].username, $scope.userlist[0].name, $scope.userlist[0].mobile == 0 ? "" : $scope.userlist[0].mobile, ' <a href="javascript:void(0);" onclick="changereceiveruser()">Change</a>']).draw();
+
                                 $scope.usersearchvisible = false;
                             }
                             $scope.usersearchclicked = true;

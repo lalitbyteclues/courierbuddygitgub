@@ -197,19 +197,17 @@
                                             </div>
                                             <div class="alert alert-danger" role="alert" ng-hide='!errormessageuser'>{{errormessageuser}}</div>
                                             <div class="com-det" ng-hide="usersearchvisible">
-                                                <table border="0" cellpadding="4" ng-show="userlist.length>0" width="100%">
-                                                    <tbody>
-                                                        <tr ng-repeat="user in userlist">
-                                                            <td style="text-transform:uppercase;"><b>MCB Id</b>{{user.UserID}}</td>
-                                                            <td><b>Email</b>{{user.username}}</td>
-                                                            <td><b>Name</b>{{user.name}} </td>
-                                                            <td><b>Phone</b>{{user.mobile=="0"?"&nbsp;":user.mobile}}</td>
-                                                            <td>
-                                                                <b>&nbsp;</b>
-                                                                <a href="javascript:void(0);" ng-click="changereceiveruser()">Change</a>
-                                                            </td>
+                                                <table id="userlist" ng-show="userlist.length>0" class="table table-striped table-bordered dt-responsive nowrap userlist" cellspacing="0" style="max-width:100%;" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><b>&nbsp;&nbsp;&nbsp; MCB Id &nbsp;&nbsp;&nbsp;</b></th>
+                                                            <td><b>&nbsp;&nbsp;&nbsp;Email  &nbsp;&nbsp;&nbsp;</b></td>
+                                                            <td><b>&nbsp;&nbsp;&nbsp;Name  &nbsp;&nbsp;&nbsp;</b></td>
+                                                            <td><b>Phone</b></td>
+                                                            <td><b>&nbsp;</b></td>
                                                         </tr>
-                                                    </tbody>
+                                                    </thead>
+                                                    <tbody></tbody>
                                                 </table>
                                                 <div class="clear">&nbsp;</div>
                                                 <div ng-show="userlist.length==0 && usersearchclicked">
@@ -247,6 +245,9 @@
     });
     $('#setTimeExample').timepicker();
     $('#setTimeExample1').timepicker();
+    function changereceiveruser() {
+        angular.element('.container').scope().changereceiveruser();
+    }
 </script>
 <style>
     .input-group, span.Zebra_DatePicker_Icon_Wrapper {
