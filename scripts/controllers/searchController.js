@@ -88,14 +88,12 @@ angular.module('courier').controller("searchController", function ($scope, $loca
             $state.go('login');
         }
     }
-    $scope.search = function () { 
-        var result = document.getElementsByClassName("quote_date");
-        if (result.data.value.length > 0) {
-            $scope.dateFrom = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
-        }
-        result = document.getElementsByClassName("quote_date1");
-        if (result.data.value.length > 0) {
-            $scope.dateTo = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
+    $scope.search = function () {  
+        if ($(".quote_date").val().length > 0) {
+            $scope.dateFrom = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2]);
+        } 
+        if ($(".quote_date1").val().length > 0) {
+            $scope.dateTo = new Date($(".quote_date1").val().split("-")[1] + "/" + $(".quote_date1").val().split("-")[0] + "/" + $(".quote_date1").val().split("-")[2]);
         }
         if ($scope.locationto.trim().length == 0 || $scope.locationfrom.trim().length == 0) {
             return;
@@ -183,24 +181,24 @@ angular.module('courier').controller("searchController", function ($scope, $loca
             var date = new Date();
             $scope.dateFrom = new Date();
             $scope.dateTo = date.setDate((new Date()).getDate() + 0); 
-            document.getElementsByClassName("quote_date").data.value = moment($scope.dateFrom).format("DD-MM-YYYY");
-            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
+            $(".quote_date").val(moment($scope.dateFrom).format("DD-MM-YYYY"));
+            $(".quote_date1").val(moment($scope.dateTo).format("DD-MM-YYYY"));
         }
         if (days == 2) {
             $scope.classsetactive = 2;
             var date = new Date();
             $scope.dateFrom = new Date();
             $scope.dateTo = date.setDate((new Date()).getDate() + 2); 
-            document.getElementsByClassName("quote_date").data.value = moment($scope.dateFrom).format("DD-MM-YYYY");
-            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
+            $(".quote_date").val(moment($scope.dateFrom).format("DD-MM-YYYY"));
+            $(".quote_date1").val(moment($scope.dateTo).format("DD-MM-YYYY"));
         }
         if (days == 5) {
             $scope.classsetactive = 5;
             var date = new Date();
             $scope.dateFrom = new Date();
-            $scope.dateTo = date.setDate((new Date()).getDate() + 5); 
-            document.getElementsByClassName("quote_date").data.value = moment($scope.dateFrom).format("DD-MM-YYYY");
-            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
+            $scope.dateTo = date.setDate((new Date()).getDate() + 5);
+            $(".quote_date").val(moment($scope.dateFrom).format("DD-MM-YYYY"));
+            $(".quote_date1").val(moment($scope.dateTo).format("DD-MM-YYYY")); 
         }
     }
     $scope.dt = new Date();

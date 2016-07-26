@@ -240,13 +240,9 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
         }
         return result;
     };
-    $scope.search = function () {
-        var result = document.getElementsByClassName("quote_datesearch");
-        console.log(result);
-        RESOURCES.searchcriteria.datefrom = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
-        result = document.getElementsByClassName("quote_datesearch1");
-        console.log(result);
-        RESOURCES.searchcriteria.dateto = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
+    $scope.search = function () { 
+        RESOURCES.searchcriteria.datefrom = new Date($(".quote_datesearch").val().split("-")[1] + "/" + $(".quote_datesearch").val().split("-")[0] + "/" + $(".quote_datesearch").val().split("-")[2]);
+        RESOURCES.searchcriteria.dateto = new Date($(".quote_datesearch1").val().split("-")[1] + "/" + $(".quote_datesearch1").val().split("-")[0] + "/" + $(".quote_datesearch1").val().split("-")[2]);
         if ($scope.searchfromlocation.trim() != $scope.searchtolocation.trim()) {
             RESOURCES.searchcriteria.locationfrom = $scope.searchfromlocation;
             RESOURCES.searchcriteria.locationto = $scope.searchtolocation;

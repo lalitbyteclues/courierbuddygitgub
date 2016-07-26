@@ -202,11 +202,9 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
         if (AuthService.authentication.isAuth) {
             AuthService.getuserdetails(AuthService.authentication.UserId).then(function (results) {
                 if (results.status == 200) {
-                    if (results.data.response[0].status == "Y") {
-                        var result = document.getElementsByClassName("quote_date");
-                        $scope.departureon = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));
-                        result = document.getElementsByClassName("quote_date1");
-                        $scope.arrivalon = new Date(result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + "/" + result.a_date.value.split("-")[2] + " " + $scope.atime.split(":")[0] + ":" + $scope.atime.split(":")[1].substring(0, 2) + " " + $scope.atime.split(":")[1].substring(2));
+                    if (results.data.response[0].status == "Y") { 
+                        $scope.departureon = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));
+                        $scope.arrivalon = new Date($(".quote_date1").val().split("-")[1] + "/" + $(".quote_date1").val().split("-")[0] + "/" + $(".quote_date1").val().split("-")[2] + " " + $scope.atime.split(":")[0] + ":" + $scope.atime.split(":")[1].substring(0, 2) + " " + $scope.atime.split(":")[1].substring(2));
                         if (!angular.isDate($scope.departureon)) {
                             $scope.errormessage = "Invalid Depa!";
                             return;
@@ -309,13 +307,9 @@ angular.module('courier').controller("viewtripsController", function ($scope, $h
         return result;
     };
 
-    $scope.search = function () {
-        var result = document.getElementsByClassName("quote_datesearch");
-        console.log(result);
-        RESOURCES.searchcriteria.datefrom = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
-        result = document.getElementsByClassName("quote_datesearch1");
-        console.log(result);
-        RESOURCES.searchcriteria.dateto = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
+    $scope.search = function () {       
+        RESOURCES.searchcriteria.datefrom = new Date($(".quote_datesearch").val().split("-")[1] + "/" + $(".quote_datesearch").val().split("-")[0] + "/" + $(".quote_datesearch").val().split("-")[2]);
+        RESOURCES.searchcriteria.dateto = new Date($(".quote_datesearch1").val().split("-")[1] + "/" + $(".quote_datesearch1").val().split("-")[0] + "/" + $(".quote_datesearch1").val().split("-")[2]);
         if ($scope.searchfromlocation.trim() != $scope.searchtolocation.trim()) {
             RESOURCES.searchcriteria.locationfrom = $scope.searchfromlocation;
             RESOURCES.searchcriteria.locationto = $scope.searchtolocation;

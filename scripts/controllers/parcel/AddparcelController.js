@@ -85,14 +85,13 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
                         if ($scope.userlist.length == 0) {
                             $scope.errormessage = "Please Select receiver !";
                             return;
-                        }
-                        var result = document.getElementsByClassName("quote_date");
-                        if (result.data.value.length == 0) {
+                        }   
+                        if ($(".quote_date").val().length == 0) {
                             $scope.errormessage = "Departure Time Required!";
                             return;
                         }
-                        $scope.deliverytill = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2] + " ");
-                        var tilldate = result.data.value.split("-")[2] + "/" + result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0];
+                        $scope.deliverytill = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2] + " ");
+                        var tilldate = $(".quote_date").val().split("-")[2] + "/" + $(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0];
                         var amount = getpriceusingweight(parseFloat($scope.ParcelWeight));
                         $scope.parcel = { "source": $scope.parcelfromloation, "destination": $scope.parceltoloation, "till_date": tilldate, "type": $scope.parceltype, "weight": parseFloat($scope.ParcelWeight), "height": $scope.ParcelHeight, "width": $scope.ParcelWidth, "length": $scope.ParcelLength, "created": new Date(), "usr_id": sessionStorage.getItem("UserId"), "recv_id": $scope.userlist[0].id, "status": 0, "description": $scope.parceldecsription, "payment": parseFloat(amount) };
                         ParcelService.calculateamount($scope.parcel).then(function (results) {
@@ -127,14 +126,13 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
                         if ($scope.userlist.length == 0) {
                             $scope.errormessage = "Please Select receiver !";
                             return;
-                        }
-                        var result = document.getElementsByClassName("quote_date");
-                        if (result.data.value.length == 0) {
+                        } 
+                        if ($(".quote_date").val().length == 0) {
                             $scope.errormessage = "Departure Time Required!";
                             return;
                         }
-                        $scope.deliverytill = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2] + " ");
-                        var tilldate = result.data.value.split("-")[2] + "/" + result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0];
+                        $scope.deliverytill = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2] + " ");
+                        var tilldate = $(".quote_date").val().split("-")[2] + "/" + $(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0];
                         var amount = getpriceusingweight(parseFloat($scope.ParcelWeight));
                         var datapost = { "source": $scope.parcelfromloation, "destination": $scope.parceltoloation, "till_date": tilldate, "type": $scope.parceltype, "weight": parseFloat($scope.ParcelWeight), "height": $scope.ParcelHeight, "width": $scope.ParcelWidth, "length": $scope.ParcelLength, "created": new Date(), "usr_id": sessionStorage.getItem("UserId"), "recv_id": $scope.userlist[0].id, "status": 0, "description": $scope.parceldecsription, "payment": parseFloat(amount) };
                         ParcelService.AddParcelData(datapost).then(function (results) {
@@ -268,11 +266,9 @@ angular.module('courier').controller("AddparcelController", function ($http, $sc
         }
         return result;
     };
-    $scope.search = function () {
-        var result = document.getElementsByClassName("quote_datesearch"); 
-        RESOURCES.searchcriteria.datefrom = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
-        result = document.getElementsByClassName("quote_datesearch1"); 
-        RESOURCES.searchcriteria.dateto = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
+    $scope.search = function () { 
+        RESOURCES.searchcriteria.datefrom = new Date($(".quote_datesearch").val().split("-")[1] + "/" + $(".quote_datesearch").val().split("-")[0] + "/" + $(".quote_datesearch").val().split("-")[2]);
+        RESOURCES.searchcriteria.dateto = new Date($(".quote_datesearch1").val().split("-")[1] + "/" + $(".quote_datesearch1").val().split("-")[0] + "/" + $(".quote_datesearch1").val().split("-")[2]);
         if ($scope.searchfromlocation.trim() != $scope.searchtolocation.trim()) {
             RESOURCES.searchcriteria.locationfrom = $scope.searchfromlocation;
             RESOURCES.searchcriteria.locationto = $scope.searchtolocation;

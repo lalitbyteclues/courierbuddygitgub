@@ -45,10 +45,9 @@ angular.module('courier').controller("transporterController", function (searchSe
     };
     var _searchByFilter = function () {
         $scope.list = [];
-        dTable.clear().draw();
-        var result = document.getElementsByClassName("quote_date");
-        if (result.data.value.length > 0) {
-            $scope.departureat = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
+        dTable.clear().draw(); 
+        if ($(".quote_date").val().length > 0) {
+            $scope.departureat = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2]);
         } else {
             $scope.departureat = "";
         }

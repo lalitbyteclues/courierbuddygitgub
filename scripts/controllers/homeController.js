@@ -10,17 +10,15 @@ angular.module('courier').controller("homeController", function ($scope, ValiDat
         $scope.countries = results.data.response;
         $scope.getLocation();
     });
-    $scope.search = function () {
-        var result = document.getElementsByClassName("quote_date");
-        if (result.data.value.length == 0) {
+    $scope.search = function () { 
+        if ($(".quote_date").val().length == 0) {
             return;
         }
-        RESOURCES.searchcriteria.datefrom = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
-        result = document.getElementsByClassName("quote_date1");
-        if (result.data.value.length == 0) {
+        RESOURCES.searchcriteria.datefrom = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2]);
+        if ($(".quote_date1").val().length == 0) {
             return;
         }
-        RESOURCES.searchcriteria.dateto = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
+        RESOURCES.searchcriteria.dateto = new Date($(".quote_date1").val().split("-")[1] + "/" + $(".quote_date1").val().split("-")[0] + "/" + $(".quote_date1").val().split("-")[2]);
         if ($scope.locationto.trim() != $scope.locationfrom.trim()) {
             RESOURCES.searchcriteria.locationfrom = $scope.locationfrom;
             RESOURCES.searchcriteria.locationto = $scope.locationto;
@@ -105,32 +103,32 @@ angular.module('courier').controller("homeController", function ($scope, ValiDat
     $scope.dateFrom = date.setDate((new Date()).getDate() + 0);
     $scope.dateTo = date.setDate((new Date()).getDate() + 2);
     $scope.setdate = function (days) { 
-        document.getElementsByClassName("quote_date").data.value = "";
-        document.getElementsByClassName("quote_date1").data.value = "";
+	$(".quote_date").val('');
+	$(".quote_date1").val('');
         days = parseInt(days);
         if (days == 0) {
             $scope.classsetactive = 0;
             var date = new Date();
             $scope.dateFrom = new Date();
             $scope.dateTo = date.setDate((new Date()).getDate() + 0);
-            document.getElementsByClassName("quote_date").data.value =moment($scope.dateFrom).format("DD-MM-YYYY");
-            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
+			$(".quote_date").val(moment($scope.dateFrom).format("DD-MM-YYYY"));
+			$(".quote_date1").val(moment($scope.dateTo).format("DD-MM-YYYY"));
         }
         if (days == 2) {
             $scope.classsetactive = 2;
             var date = new Date();
             $scope.dateFrom = new Date();
             $scope.dateTo = date.setDate((new Date()).getDate() + 2); 
-            document.getElementsByClassName("quote_date").data.value = moment($scope.dateFrom).format("DD-MM-YYYY");
-            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
+           	$(".quote_date").val(moment($scope.dateFrom).format("DD-MM-YYYY"));
+			$(".quote_date1").val(moment($scope.dateTo).format("DD-MM-YYYY"));
         }
         if (days == 5) {
             $scope.classsetactive = 5;
             var date = new Date();
             $scope.dateFrom = new Date();
             $scope.dateTo = date.setDate((new Date()).getDate() + 5); 
-            document.getElementsByClassName("quote_date").data.value = moment($scope.dateFrom).format("DD-MM-YYYY");
-            document.getElementsByClassName("quote_date1").data.value = moment($scope.dateTo).format("DD-MM-YYYY");
+          	$(".quote_date").val(moment($scope.dateFrom).format("DD-MM-YYYY"));
+			$(".quote_date1").val(moment($scope.dateTo).format("DD-MM-YYYY"));
         }
     }
     $scope.dt = new Date();

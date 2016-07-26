@@ -109,15 +109,14 @@ angular.module('courier').controller("editparcelController", function ($http, $s
                         if ($scope.userlist.length == 0) {
                             $scope.errormessage = "Please Select receiver !";
                             return;
-                        }
-                        var result = document.getElementsByClassName("quote_date");
-                        if (result.data.value.length == 0) {
+                        } 
+                        if ($(".quote_date").val().length == 0) {
                             $scope.errormessage = "Departure Time Required!";
                             return;
                         }
-                        $scope.deliverytill = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2] + " ");
+                        $scope.deliverytill = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2] + " ");
                         var amount = getpriceusingweight(parseFloat($scope.ParcelWeight));
-                        var datapost = { "source": $scope.parcelfromloation, "destination": $scope.parceltoloation, "till_date": result.data.value.split("-")[2] + "/" + result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0], "type": $scope.parceltype, "weight": parseFloat($scope.ParcelWeight), "height": $scope.ParcelHeight, "width": $scope.ParcelWidth, "length": $scope.ParcelLength, "usr_id": sessionStorage.getItem("UserId"), "recv_id": $scope.userlist[0].id, "description": $scope.parceldecsription, "payment": parseFloat(amount), "id": $stateParams.id, "trans_id": "", "status": $scope.status };
+                        var datapost = { "source": $scope.parcelfromloation, "destination": $scope.parceltoloation, "till_date": $(".quote_date").val().split("-")[2] + "/" + $(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0], "type": $scope.parceltype, "weight": parseFloat($scope.ParcelWeight), "height": $scope.ParcelHeight, "width": $scope.ParcelWidth, "length": $scope.ParcelLength, "usr_id": sessionStorage.getItem("UserId"), "recv_id": $scope.userlist[0].id, "description": $scope.parceldecsription, "payment": parseFloat(amount), "id": $stateParams.id, "trans_id": "", "status": $scope.status };
                         if ($scope.status == 4 || $scope.status == 5 || $scope.status == 3) {
                             $scope.errormessage = "Can't Able to edit its delivery is about to be completed.";
                             return;
@@ -235,13 +234,9 @@ angular.module('courier').controller("editparcelController", function ($http, $s
         }
         return result;
     };
-    $scope.search = function () {
-        var result = document.getElementsByClassName("quote_datesearch");
-        console.log(result);
-        RESOURCES.searchcriteria.datefrom = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
-        result = document.getElementsByClassName("quote_datesearch1");
-        console.log(result);
-        RESOURCES.searchcriteria.dateto = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
+    $scope.search = function () { 
+        RESOURCES.searchcriteria.datefrom = new Date($(".quote_datesearch").val().split("-")[1] + "/" + $(".quote_datesearch").val().split("-")[0] + "/" + $(".quote_datesearch").val().split("-")[2]);
+        RESOURCES.searchcriteria.dateto = new Date($(".quote_datesearch1").val().split("-")[1] + "/" + $(".quote_datesearch1").val().split("-")[0] + "/" + $(".quote_datesearch1").val().split("-")[2]);
         if ($scope.searchfromlocation.trim() != $scope.searchtolocation.trim()) {
             RESOURCES.searchcriteria.locationfrom = $scope.searchfromlocation;
             RESOURCES.searchcriteria.locationto = $scope.searchtolocation;

@@ -23,22 +23,20 @@ angular.module('courier').controller("addtripsController", function ($rootScope,
         if (AuthService.authentication.isAuth) {
             AuthService.getuserdetails(AuthService.authentication.UserId).then(function (results) {
                 if (results.status == 200) {
-                    if (results.data.response[0].status == "Y") {
-                        var result = document.getElementsByClassName("quote_date");
-                        if (result.d_date.value.length == 0) {
+                    if (results.data.response[0].status == "Y") {   
+                        if ($(".quote_date").val().length == 0) {
                             $scope.errormessage = "Departure Time Required!";
                             return;
                         }
-                        $scope.departureon = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " "  + $scope.dtime);
-                        var dep_time = result.d_date.value.split("-")[2] + "/" + result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + " " + $scope.dtime;
-                        var result = document.getElementsByClassName("quote_date1");
-                        if (result.a_date.value.length == 0) {
+                        $scope.departureon = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2] + " " + $scope.dtime);
+                        var dep_time = $(".quote_date").val().split("-")[2] + "/" + $(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + " " + $scope.dtime;
+                        if ($(".quote_date1").val().length == 0) {
                             $scope.errormessage = "Arrival Time Required!";
                             return;
                         }
                         $scope.atime = angular.element('#setTimeExample1').val();
-                        $scope.arrivalon = new Date(result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + "/" + result.a_date.value.split("-")[2] + " " +$scope.atime);
-                        var arrivaltime = result.a_date.value.split("-")[2] + "/" + result.a_date.value.split("-")[1] + "/" + result.a_date.value.split("-")[0] + " " + $scope.atime;
+                        $scope.arrivalon = new Date($(".quote_date1").val().split("-")[1] + "/" + $(".quote_date1").val().split("-")[0] + "/" + $(".quote_date1").val().split("-")[2] + " " + $scope.atime);
+                        var arrivaltime = $(".quote_date1").val().split("-")[2] + "/" + $(".quote_date1").val().split("-")[1] + "/" + $(".quote_date1").val().split("-")[0] + " " + $scope.atime;
                         if (!angular.isDate($scope.arrivalon)) {
                             $scope.errormessage = "Invalid Arrival Time or select Estimate Trip Duration!";
                             return;
@@ -66,19 +64,18 @@ angular.module('courier').controller("addtripsController", function ($rootScope,
             });
         }
     }
-    $scope.changedurationwithoutjavascript = function () {
-        var result = document.getElementsByClassName("quote_date");
-        if (result.d_date.value.length == 0) {
+    $scope.changedurationwithoutjavascript = function () { 
+        if ($(".quote_date").val().length == 0) {
             $scope.arrivalon = "";
             return;
         } else {
             if (parseInt($scope.tripduration) > 0) {
-                d = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));;
+                d = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));;
                 var totalseconds = parseFloat($scope.tripduration * 60);
                 var indtotime = (d.getTime() + (1000 * totalseconds));
                 $scope.arrivalon = indtotime;
             } else {
-                $scope.arrivalon = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));;
+                $scope.arrivalon = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));;
             }
         }
         if (typeof $scope.locationfrom === 'undefined' || $scope.locationfrom == '' || $scope.locationfrom == null) {
@@ -93,26 +90,25 @@ angular.module('courier').controller("addtripsController", function ($rootScope,
         if (typeof $scope.tripduration !== 'undefined' && $scope.tripduration !== '' && $scope.tripduration != null) {
             var locfrom = $.grep($scope.countries, function (country) { return country.location == $scope.locationfrom })[0];
             var locto = $.grep($scope.countries, function (country) { return country.location == $scope.locationto })[0];
-            var d = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));
+            var d = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));
             var totalseconds = parseFloat($scope.tripduration * 60);
             var indtotime = (d.getTime() + (1000 * totalseconds));
             var centraltime = new Date(indtotime).getTime() + (-(locfrom.zone * 60) * 60000);
             $scope.arrivalon = calcTime(centraltime, locto.zone); 
         }
     }
-    $scope.changeduration = function () {
-        var result = document.getElementsByClassName("quote_date"); 
-        if (result.d_date.value.length == 0) {
+    $scope.changeduration = function () { 
+        if ($(".quote_date").val().length == 0) {
             $scope.arrivalon = "";
             return;
         } else { 
             if (parseInt($scope.tripduration) > 0) {
-               d = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));;
+                d = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));;
                var totalseconds = parseFloat($scope.tripduration * 60); 
                var indtotime = (d.getTime() + (1000 * totalseconds)); 
                 $scope.arrivalon = indtotime;
             } else {
-                $scope.arrivalon = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));;
+                $scope.arrivalon = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + $(".quote_date").val().split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));;
             }
             $scope.$apply(); 
         } 
@@ -128,7 +124,7 @@ angular.module('courier').controller("addtripsController", function ($rootScope,
         if (typeof $scope.tripduration !== 'undefined' && $scope.tripduration !== '' && $scope.tripduration != null) {
             var locfrom = $.grep($scope.countries, function (country) { return country.location == $scope.locationfrom })[0];
             var locto = $.grep($scope.countries, function (country) { return country.location == $scope.locationto })[0];
-            var d = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));
+            var d = new Date($(".quote_date").val().split("-")[1] + "/" +  $(".quote_date").val().split("-")[0] + "/" +  $(".quote_date").val().split("-")[2] + " " + $scope.dtime.split(":")[0] + ":" + $scope.dtime.split(":")[1].substring(0, 2) + " " + $scope.dtime.split(":")[1].substring(2));
             var totalseconds = parseFloat($scope.tripduration * 60);
             var indtotime = (d.getTime() + (1000 * totalseconds)); 
             var centraltime = new Date(indtotime).getTime() + (-(locfrom.zone * 60) * 60000);
@@ -230,11 +226,9 @@ angular.module('courier').controller("addtripsController", function ($rootScope,
     $scope.locationfrom = RESOURCES.searchcriteria.locationfrom;
     $scope.searchtolocation = RESOURCES.searchcriteria.locationto;
     $scope.locationto = RESOURCES.searchcriteria.locationto;
-    $scope.search = function () {
-        var result = document.getElementsByClassName("quote_datesearch"); 
-        RESOURCES.searchcriteria.datefrom = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
-        result = document.getElementsByClassName("quote_datesearch1");
-        RESOURCES.searchcriteria.dateto = new Date(result.data.value.split("-")[1] + "/" + result.data.value.split("-")[0] + "/" + result.data.value.split("-")[2]);
+    $scope.search = function () { 
+        RESOURCES.searchcriteria.datefrom = new Date($(".quote_datesearch").val().split("-")[1] + "/" + $(".quote_datesearch").val().split("-")[0] + "/" + $(".quote_datesearch").val().split("-")[2]);
+        RESOURCES.searchcriteria.dateto = new Date($(".quote_datesearch1").val().split("-")[1] + "/" + $(".quote_datesearch1").val().split("-")[0] + "/" + $(".quote_datesearch1").val().split("-")[2]);
         if ($scope.searchfromlocation.trim() != $scope.searchtolocation.trim()) {
             RESOURCES.searchcriteria.locationfrom = $scope.searchfromlocation;
             RESOURCES.searchcriteria.locationto = $scope.searchtolocation;

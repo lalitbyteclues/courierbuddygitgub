@@ -183,11 +183,11 @@
 <script>
     $('.quote_date').Zebra_DatePicker({
         direction: true, format: 'd-m-Y', onSelect: function (view, elements) {
-            var result = document.getElementsByClassName("quote_date"); 
-            var d = new Date(result.d_date.value.split("-")[1] + "/" + result.d_date.value.split("-")[0] + "/" + result.d_date.value.split("-")[2]); 
+         
+            var d = new Date($(".quote_date").val().split("-")[1] + "/" + $(".quote_date").val().split("-")[0] + "/" + result$(".quote_date").val().split("-")[2]);
             d.setDate(d.getDate() - 1);  
             $('.quote_date1').Zebra_DatePicker({ direction: [moment(d).format('DD-MM-YYYY'), false], format: 'd-m-Y' });
-            document.getElementsByClassName("quote_date1").a_date.value = result.d_date.value;
+            $(".quote_date1").val($(".quote_date").val());
         } 
     });
     $('.quote_date1').Zebra_DatePicker({ direction: true, format: 'd-m-Y' });
