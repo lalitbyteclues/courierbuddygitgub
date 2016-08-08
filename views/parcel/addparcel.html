@@ -241,9 +241,9 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>  {{ parcel.source }}</td>
-                                                    <td> {{ parcel.destination }}</td>
-                                                    <td>  {{parcel.type=='E'?'Envelope':parcel.type=='B'?'Box':parcel.type=='P'?'Packet':parcel.type}}</td>
+                                                    <td>{{ parcel.source }}</td>
+                                                    <td>{{ parcel.destination }}</td>
+                                                    <td>{{parcel.type=='E'?'Envelope':parcel.type=='B'?'Box':parcel.type=='P'?'Packet':parcel.type}}</td>
                                                     <td ng-show="parcel.type=='B'"> H {{parcel.height}}" , W {{parcel.width}}" , L {{parcel.length}}"</td>
                                                     <td> {{parcel.weight}}kg</td>
                                                     <td>{{parcel.amount | currency:"&#8377;"}}</td>
@@ -273,6 +273,7 @@
                                         <hr /> 
                                         <div class="clear">
                                         </div>
+                                        <span style="float:left;width:90px;background: #3b5998;border: 0;color: #fff;margin-left:40%;height:38px;border-radius:30px;-webkit-border-radius:30px;-moz-border-radius:30px;padding:10px;">{{parcel.amount | currency:"&#8377;"}}</span>
                                         <div   class="form-group"> 
                                             <div class="col-md-12">
                                                 <div class="form-group m-top8" ng-show="userlist.length>0" id="pay">

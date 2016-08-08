@@ -121,7 +121,8 @@
 
                                                                         <td valign="top">
                                                                             <i class="fa fa-mobile fa-2x"></i>&nbsp;&nbsp;
-                                                                            {{userdetails.country_code == ''?'':'+'+userdetails.country_code+'-'}}{{userdetails.mobile}}
+                                                                            <span ng-show="userdetails.mobile==0">Not available</span>
+                                                                            <span ng-hide="userdetails.mobile==0">{{userdetails.country_code == ''?'':'+'+userdetails.country_code+'-'}}{{userdetails.mobile}}</span>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

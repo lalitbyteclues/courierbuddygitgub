@@ -141,6 +141,10 @@ angular.module('courier').controller("admintripmanagerController", function ($ro
             }
             return false;
         };
+        $scope.readMore = function (desc) {
+            bootbox.alert(desc, function () {
+            });
+        }
         $scope.dt = new Date();
         $scope.disabled = function (date, mode) { return (mode === 'day' && false); };
         var date = new Date();

@@ -67,7 +67,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                         var dat = $scope.tripsmatch[i].arrival_time.split("-");
                         var day = dat[2].split(" ");
                         $scope.tripsmatch[i].arrival_time = new Date((dat[1] + "/" + day[0] + "/" + dat[0] + " " + day[1]));
-                        trans.row.add([$scope.tripsmatch[i].TripID, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>"]).draw();
+                        trans.row.add([$scope.tripsmatch[i].TripID, $scope.tripsmatch[i].source, $scope.tripsmatch[i].destination, moment($scope.tripsmatch[i].dep_time).format('DD/MM/YYYY, h:mm a'), moment($scope.tripsmatch[i].arrival_time).format('DD/MM/YYYY, h:mm a'), $scope.tripsmatch[i].capacity, $scope.tripsmatch[i].capacity > 0 ? "<a href='javascript:void(0);' ng-click='createcourierrequest(" + $scope.tripsmatch[i].id + ")' onclick='createcourierrequest(" + $scope.tripsmatch[i].id + ")' class='btn btn-primary'>Create Courier Request</a>" : "<span class='alert-danger'>Fully Booked</span>"]).draw();
                     }
                 } else {
                     $scope.tripsmatch = [];
@@ -77,6 +77,9 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
     });
     $scope.showchat = function (id, parcelid) {
         angular.element('.chatmessagepopup').scope().showchat(id, parcelid);
+    }
+    $scope.backconfirmbutton = function () {
+        $scope.orderlist = [];
     }
     $scope.cancelparcellist = function (id) {
         $scope.successaddtripMessage = "";
@@ -141,7 +144,59 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
             });
         }
     }
+    $scope.confirmpaymentorder = function () { 
+        if ($scope.orderlist[0].ordernumber == "") {
+            var datapost = { "ParcelID": $scope.parcel.id, "TransID": $scope.transporter.id, "status": $scope.parcel.status, "ordernumber": new Date().getTime(), "Amount": $scope.parcel.payment, "Paymentvia": "Payu Money Gateway", "usewalletamount": $scope.usewalletamount, "walletamount": $scope.loginuser.wallet, "loginuserid": $scope.loginuser.id };
+            ParcelService.generateordernumber(datapost).then(function (results) {
+                if (results.data.status == "successpayment") {
+                    $scope.tripsmatch = [];
+                    $scope.issummary = false;
+                    $scope.ordernumber = false;
+                    ParcelService.getparceldetail($stateParams.id).then(function (response) {
+                        if (response.data.status == "success") {
+                            $scope.parcel = response.data.response[0];
+                            $scope.trip = response.data.trip;
+                            AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
+                                $scope.userlist = results.data.response;
+                            });
+                            if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
+                                searchService.gettransporterdetails($scope.parcel.trans_id).then(function (response) {
+                                    if (response.data.status == "success") {
+                                        $scope.issummary = true;
+                                        $scope.transporter = response.data.response[0];
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+                else {
+                    $scope.orderlist = results.data.response;
+                    $scope.orderlist[0].Amount = parseFloat($scope.orderlist[0].Amount);
+                    $scope.parcel.payment = parseFloat($scope.parcel.payment);
+                    $("#txnid").val($scope.orderlist[0].ordernumber);
+                    $("#amount").val($scope.orderlist[0].Amount);
+                    console.log($scope.orderlist[0]);
+                    setTimeout(function () {
+                        $("#txnid").val($scope.orderlist[0].ordernumber);
+                        $("#amount").val($scope.orderlist[0].Amount);
+                        $('#accept-and-pay').attr("action", "/pay.php");
+                        console.log($('#accept-and-pay').attr("action"));
+                        console.log($("#amount").val());
+                        $('#accept-and-pay').submit();
+                    }, 500); 
+                }
+            });
+        } else {
+            $('#accept-and-pay').attr("action", "/pay.php");
+            $('#accept-and-pay').submit();
+        }
+    }
     $scope.generateordernumber = function () {
+        if ($scope.usewalletamount && $scope.parcel.payment > $scope.loginuser.wallet) {
+            $scope.orderlist = [{ Amount: $scope.parcel.payment - $scope.loginuser.wallet, ordernumber: "" }];
+            return;
+        }
         var datapost = { "ParcelID": $scope.parcel.id, "TransID": $scope.transporter.id, "status": $scope.parcel.status, "ordernumber": new Date().getTime(), "Amount": $scope.parcel.payment, "Paymentvia": "Payu Money Gateway", "usewalletamount": $scope.usewalletamount, "walletamount": $scope.loginuser.wallet, "loginuserid": $scope.loginuser.id };
         ParcelService.generateordernumber(datapost).then(function (results) {
             if (results.data.status == "successpayment") {
@@ -153,8 +208,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
                         $scope.parcel = response.data.response[0];
                         $scope.trip = response.data.trip;
                         AuthService.getuserdetails($scope.parcel.recv_id).then(function (results) {
-                            $scope.userlist = results.data.response;
-
+                            $scope.userlist = results.data.response; 
                         });
                         if ($scope.parcel.trans_id !== null && typeof $scope.parcel.trans_id !== 'undefined' && $scope.parcel.trans_id > 0 && $scope.parcel.status == 1) {
                             searchService.gettransporterdetails($scope.parcel.trans_id).then(function (response) {

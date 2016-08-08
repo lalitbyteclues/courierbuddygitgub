@@ -96,6 +96,7 @@
                                                     <td><b>Booking ID</b></td>
                                                     <td><b>Type</b></td>
                                                     <td><b>Pkg. Weight</b></td>
+                                                    <td><b>Amount</b></td>
                                                     <td><b>Dimensions</b></td>
                                                     <td><b>Sender</b></td>
                                                     <td><b>Receiver</b></td>
@@ -103,9 +104,10 @@
                                                     <td ng-show="transporter.status==3">Next Action</td>
                                                 </tr>
                                                 <tr ng-repeat="par in parcel">
-                                                    <td>{{par.BookingID}}</td>
+                                                    <td>{{par.BookingID==0?"Payment Request Sent":par.BookingID}}</td>
                                                     <td>{{par.type=='E'?'Envelope':par.type=='B'?'Box':par.type=='P'?'Packet':par.type}} </td>
                                                     <td>{{par.weight}}KG</td>
+                                                    <td>{{par.payment | currency:"&#8377;"}}</td>
                                                     <td><span ng-show="par.type=='B'"> Height:{{par.height}} <br />Width:{{par.width}} <br />Length:{{par.length}}</span></td>
                                                     <td><a href='javascript:void(0);' ng-click='viewuserdetails(par.usr_id)'>MCB{{par.usr_id}}</a></td>
                                                     <td><a href='javascript:void(0);' ng-click='viewuserdetails(par.recv_id)'>MCB{{par.recv_id}}</a></td>
@@ -113,17 +115,17 @@
                                                         {{ par.statusdescription}}
                                                     </td>
                                                     <td style="text-align:center;" ng-show="transporter.status==3">
-                                                        <a href="javascript:void(0);" ng-show="par.channelid>0" ng-click="showchat(par.channelid)"><span class="glyphicon glyphicon-comment"></span> </a>
-                                                        <a href='javascript:void(0);' class="btn btn-primary" ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
-                                                        <a href='javascript:void(0);' class="btn btn-primary" ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
-                                                        <a href='javascript:void(0);' class="btn btn-primary" ng-click='cancelparcel(par.id)' ng-show="transporter.status==3" title='Cancel Booking'>Reject</a>
+<a href="javascript:void(0);" ng-show="par.channelid>0" ng-click="showchat(par.channelid)"><span class="glyphicon glyphicon-comment"></span> </a>
+<a href='javascript:void(0);' class="btn btn-primary" ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
+<a href='javascript:void(0);' class="btn btn-primary" ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
+                                                        <a href='javascript:void(0);' class="btn btn-primary" ng-click='cancelparcel(par.id)' ng-hide="par.status>2" title='Cancel Booking'>Reject</a>
                                                     </td>
                                                 </tr>
                                             </table>
                                         </div>
                                     </div> 
                                 <div class="clear">&nbsp;</div>
-                                    <div ng-show="(transporter.status==1 || transporter.status==3) && (transporter.awailableweight>0 || transporter.awailableweight==null)" class="gridsystem">
+                                    <div ng-show="(transporter.status==1 || transporter.status==2 || transporter.status==3) && (transporter.awailableweight>0 || transporter.awailableweight==null)" class="gridsystem">
                                         <div class="row" ng-show="parcellist.length>0">
                                             <h4>Sender's Match List</h4>
                                             <table id="example1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -134,6 +136,7 @@
                                                         <th>Delivered Till</th>
                                                         <th>Parcel Type</th>
                                                         <th>Weight</th>
+                                                        <th>Amount</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -172,7 +175,9 @@
 
                                                     <th valign="top">
                                                         <i class="fa fa-mobile fa-2x"></i>&nbsp;&nbsp;
-                                                        {{userdetails.country_code == ''?'':'+'+userdetails.country_code+'-'}}{{userdetails.mobile}}
+                            <span ng-show="userdetails.mobile==0">Not available</span>
+                            <span ng-hide="userdetails.mobile==0">{{userdetails.country_code == ''?'':'+'+userdetails.country_code+'-'}}{{userdetails.mobile}}</span>
+                                                      
                                                     </th>
                                                 </tr>
                                             </table>

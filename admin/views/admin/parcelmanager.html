@@ -141,7 +141,8 @@
                                         {{data.payment | currency:"&#8377;"}}
                                     </th>
                                     <td>{{data.statusdescription}}</td>
-                                    <td>{{data.reason}}</td>
+                                    <td>{{ data.reason | limitTo: 20 }}<a ng-show="data.reason.length > 20" href="javascript:void(0);" ng-click="readMore(data.reason)">{{data.reason.length > 20 ? '...' : ''}}</a>
+                                    </td>
                                     <td>
 <div class='dropdown' ng-show="data.status==0 || data.status==9 || data.status==1">
 <a href='javascript:void()' data-toggle='dropdown' class='dropdown-toggle'>Action<b class='caret'></b></a>

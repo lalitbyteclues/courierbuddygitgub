@@ -60,6 +60,10 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
         });
 
     }
+    $scope.readMore = function (desc) {
+        bootbox.alert(desc, function () { 
+        });
+    }
     $scope.senderbooknow = function (id) {
         $scope.successMessage = "";
         AddTripsService.senderbookingrequest($scope.possiblematchid, id).then(function (results) {

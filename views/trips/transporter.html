@@ -116,7 +116,7 @@
                                                             <td>Next Action</td>
                                                         </tr>
                                                         <tr ng-repeat="par in parcel">
-                                                            <td>{{par.BookingID}}</td>
+                                                            <td>{{par.BookingID==0?"Payment Request Sent":par.BookingID}}</td>
                                                             <td>{{par.type=='E'?'Envelope':par.type=='B'?'Box':par.type=='P'?'Packet':par.type}} </td>
                                                             <td>{{par.weight}}KG</td>
                                                             <td><span ng-show="par.type=='B'"> Height:{{par.height}} <br />Width:{{par.width}} <br />Length:{{par.length}}</span></td>
@@ -125,10 +125,10 @@
                                                             <td>{{par.receivername}}</td>
                                                             <td>{{par.receiveremail}}</td>
                                                             <td style="text-align:center;">
-                                                                <a href="javascript:void(0);" ng-show="par.channelid>0" ng-click="showchat(par.channelid,par.id)"><span class="glyphicon glyphicon-comment"></span> </a>
-                                                                <a href='javascript:void(0);' class="btn btn-primary" ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
-                                                                <a href='javascript:void(0);' class="btn btn-primary" ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
-                                                                <a href='javascript:void(0);' class="btn btn-primary" ng-click='cancelparcel(par.id)' ng-show="transporter.status==3" title='Cancel Booking'>Reject</a>
+<a href="javascript:void(0);" ng-show="par.channelid>0" ng-click="showchat(par.channelid,par.id)"><span class="glyphicon glyphicon-comment"></span> </a>
+<a href='javascript:void(0);' class="btn btn-primary" ng-show="transporter.status==3 && par.status==3" ng-click='parceldelivered(par.id)' title='Parcel Delivered'>Delivered</a>
+<a href='javascript:void(0);' class="btn btn-primary" ng-click='parcelcollected(par.id)' ng-show="transporter.status==3 && par.status==2" title='Parcel Collected'>Collected</a>
+    <a href='javascript:void(0);' class="btn btn-primary" ng-click='cancelparcel(par.id)' ng-hide="par.status>2" title='Cancel Booking'>Reject</a>
                                                             </td>
                                                         </tr>
                                                     </table>

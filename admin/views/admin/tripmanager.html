@@ -143,7 +143,7 @@
                                                 <span>{{data.pnr }}</span>
                                             </td>
                                             <td>
-                                                <span style="white-space:pre-wrap;">{{data.requirement}}</span>
+                                                <span> {{ data.requirement | limitTo: 20 }}<a ng-show="data.requirement.length > 20" href="javascript:void(0);" ng-click="readMore(data.requirement)">{{data.requirement.length > 20 ? '...' : ''}}</a></span>
                                             </td>
                                             <td>
                                                 <span style="white-space:pre-wrap;">{{data.statusdescription}}</span>
@@ -190,27 +190,28 @@
                                                         <td valign="top"><i class="fa fa-user fa-2x"></i>&nbsp;&nbsp;{{ userdetails.name}} &nbsp;{{ userdetails.l_name}}</td>
                                                     </tr>
                                                     <tr>
-
                                                         <td valign="top"><i class="fa fa-envelope fa-2x"></i>&nbsp;&nbsp;{{ userdetails.username}} </td>
                                                     </tr>
                                                     <tr>
 
-                                                        <td valign="top"><i class="fa fa-mobile fa-2x"></i>&nbsp;&nbsp;+{{ userdetails.country_code}}-{{ userdetails.mobile}}</td>
+                                                        <td valign="top"><i class="fa fa-mobile fa-2x"></i>&nbsp;&nbsp;
+                                                        <span ng-show="userdetails.mobile==0">Not available</span>
+<span ng-hide="userdetails.mobile==0">{{userdetails.country_code == ''?'':'+'+userdetails.country_code+'-'}}{{userdetails.mobile}}</span></td>
                                                     </tr>
                                                     <tr>
                                                         <td valign="top"><i class="fa fa-phone fa-2x"></i>&nbsp;&nbsp;{{ userdetails.phone==""?"not available":userdetails.phone}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top">
-                                                            <img src="/images/user.png" alt="Passport/ID Proof" title="Passport/ID Proof" />
-                                                            &nbsp;&nbsp;{{ userdetails.passportno=="" || userdetails.passportno==null?"not available":userdetails.passportno}}
-                                                        </td>
+                    <td valign="top">
+                        <img src="/images/user.png" alt="Passport/ID Proof" title="Passport/ID Proof" />
+                        &nbsp;&nbsp;{{ userdetails.passportno=="" || userdetails.passportno==null?"not available":userdetails.passportno}}
+                    </td>
                                                     </tr>
-                                                    <tr>
+                                                    <!--<tr>
                                                         <td valign="top"><i class="fa fa-mobile fa-3x"></i>&nbsp;&nbsp;{{ userdetails.altr_mobile==""?"not available":userdetails.altr_mobile }}</td>
-                                                    </tr>
+                                                    </tr>-->
                                                     <tr>
-                                                        <td valign="top"><i class="fa fa-location-arrow fa-2x"></i>&nbsp;&nbsp;{{ userdetails.addr1=="" && userdetails.addr2=="" && userdetails.addr3==""?"empty":userdetails.addr1+" "+userdetails.addr2+" "+userdetails.addr3}} </td>
+                                                        <td valign="top"><i class="fa fa-location-arrow fa-2x"></i>&nbsp;&nbsp;{{ userdetails.addr1=="" && userdetails.addr2=="" && userdetails.addr3==""?"empty":userdetails.addr1+" "+userdetails.addr2+" "+userdetails.addr3+" "+userdetails.altr_mobile}} </td>
                                                     </tr>
                                                 </table>
                                             </div>
