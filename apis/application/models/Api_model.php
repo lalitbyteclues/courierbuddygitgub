@@ -27,15 +27,15 @@ class Api_model extends CI_Model {
     }
 	function gettransporterdetail($transporterid)
 	{      $data=new stdclass();
-		   $tripquery = $this->db->query("SELECT a.*, (a.capacity - awailableweight.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, t_id FROM  `cms_bookings` WHERE STATUS =3 GROUP BY t_id )awailableweight ON a.id = awailableweight.t_id left join cms_tripstatus trstatus on a.status=trstatus.id  left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2)=al.code where a.id=".$transporterid); 
+		   $tripquery = $this->db->query("SELECT a.*, (a.capacity - awailableweight.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )awailableweight ON a.id = awailableweight.t_id left join cms_tripstatus trstatus on a.status=trstatus.id  left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2)=al.code where a.id=".$transporterid); 
 		   $trip=$tripquery->result();
 		   $tp=$trip[0];
-			if( $tp->status==3 || $tp->status==6)
+			if( $tp->status==3 || $tp->status==2 || $tp->status==6)
 			{ 
-			  $booking = $this->db->query("SELECT a.*,IFNULL(b.username,'') as senderemail,IFNULL(b.name,'') as sendername,IFNULL(c.username,'') as receiveremail ,IFNULL(c.name,'') as receivername,d.id as BookingID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid FROM cms_parcels a left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid left join cms_users b on a.usr_id=b.id left join cms_users c on a.recv_id=c.id inner join (select * from cms_bookings where status in(3,6)) d on a.id=d.p_id left join cms_parcelstatus prstatus on a.status=prstatus.id where `t_id`=".$tp->id.""); 
+			  $booking = $this->db->query("SELECT a.*,IFNULL(b.username,'') as senderemail,IFNULL(b.name,'') as sendername,IFNULL(c.username,'') as receiveremail ,IFNULL(c.name,'') as receivername,d.BookingID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid FROM cms_parcels a left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid left join cms_users b on a.usr_id=b.id left join cms_users c on a.recv_id=c.id inner join (select par.id ParcelID,ifnull(bk.id,0) BookingID,par.trans_id as t_id from cms_parcels par left join cms_bookings bk on par.id=bk.p_id and bk.status<>4 where par.status<>0) d on a.id=d.ParcelID left join cms_parcelstatus prstatus on a.status=prstatus.id where `t_id`=".$tp->id.""); 
 			  $data->parcel=$booking->result();
 			}
-			if($tp->status==1 || $tp->status==3){ 
+			if($tp->status==1 || $tp->status==2 || $tp->status==3){ 
 			$dt = new DateTime($tp->arrival_time); 
 				$booking = $this->db->query("SELECT a.*,prstatus.status as statusdescription FROM `cms_parcels` a left join cms_parcelstatus prstatus on a.status=prstatus.id  where  a.status =0 and source ='".$tp->source."' and  a.destination='".$tp->destination."' and  '".$dt->format('Y/m/d')."'<= a.till_date and  a.till_date >= CURDATE() "); 
 			  $data->parcellist=$booking->result();
@@ -56,7 +56,7 @@ class Api_model extends CI_Model {
 				 $data->trip=$booking->result();
 			}else{
 				if($tp->status==0){
-				$booking = $this->db->query("SELECT id,a.TripID,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,created,status,processed_by,'update' FROM `cms_trips` a left join (SELECT f.t_id,sum(weight) as totalweight FROM cms_bookings f where f.status in(3)  group by f.t_id)c on a.id=c.t_id where (a.status=1 or a.status=3 and (a.capacity-COALESCE(c.totalweight,0))>0 and a.capacity>0) and destination='".$tp->destination."' and source='".$tp->source."' and arrival_time<='".$tp->till_date." 23:59' and arrival_time >= CURDATE()  "); 
+				$booking = $this->db->query("SELECT id,a.TripID,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,created,status,processed_by,'update' FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id where (a.status=1 or a.status=3) and destination='".$tp->destination."' and source='".$tp->source."' and arrival_time<='".$tp->till_date." 23:59' and arrival_time >= CURDATE()  "); 
 				 $data->tripsmatch=$booking->result();
 			} }
 			$data->status="success";
@@ -67,7 +67,7 @@ class Api_model extends CI_Model {
 	function triplist($userID)
 	{
 			$data=new stdclass();
-			$query = $this->db->query("SELECT a . * , (a.capacity - c.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink  FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, t_id FROM  `cms_bookings` WHERE STATUS =3 GROUP BY t_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id  left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2) =al.code WHERE a.status not IN (4) AND a.dep_time >= CURDATE() AND a.t_id =".$userID.""); 
+			$query = $this->db->query("SELECT a . * , (a.capacity - c.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink  FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id  left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2) =al.code WHERE a.status not IN (4) AND a.arrival_time >= CURDATE() AND a.t_id =".$userID.""); 
 			$data->status="success";
 			$data->response=$query->result();		
 			$json_response = json_encode($data); 
@@ -110,7 +110,7 @@ class Api_model extends CI_Model {
 			print_r($json_response); 
 	}
 	function receiverlist($userID) 
-	{   $query = $this->db->query("select a.id,a.usr_id,a.source,a.destination,a.till_date,a.type,a.height,a.width,a.weight,a.length,a.created,a.description,a.status,a.recv_id,a.recv_comment,a.processed_by,a.ParcelID,a.payment,a.trans_id,a.trans_comment,a.reason,recv.username receiveremail,recv.mobile receivermobile,recv.name receivername,send.username senderemail,send.mobile sendermobile,send.name sendername ,trans.username transporteremail,trans.mobile transportermobile,trans.name transportername,trans.id Transporterid,trans.UserID as MCBtransporterid,send.UserID as MCBSenderID,trip.flight_no,trip.arrival_time,trip.dep_time,trip.pnr,trip.TripID,book.id as BookingID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid  from cms_parcels a  left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid   inner join cms_users recv on a.recv_id=recv.id  inner join cms_users send on a.usr_id=send.id  inner join cms_trips trip on a.trans_id=trip.id   inner join cms_users trans on trip.t_id=trans.id  inner join (SELECT * FROM cms_bookings WHERE id IN ( SELECT id FROM cms_bookings WHERE STATUS <>4 UNION SELECT id FROM cms_bookings WHERE STATUS =4 AND p_id NOT  IN ( SELECT p_id FROM cms_bookings WHERE STATUS <>4 ))) book on a.id=book.p_id left join cms_parcelstatus prstatus on a.status=prstatus.id where a.recv_id=".$userID." and a.status in(2,3,4,5,6)"); 
+	{   $query = $this->db->query("select a.id,a.usr_id,a.source,a.destination,a.till_date,a.type,a.height,a.width,a.weight,a.length,a.created,a.description,a.status,a.recv_id,a.recv_comment,a.processed_by,a.ParcelID,a.payment,a.trans_id,a.trans_comment,a.reason,recv.username receiveremail,recv.mobile receivermobile,recv.name receivername,send.username senderemail,send.mobile sendermobile,send.name sendername ,trans.username transporteremail,trans.mobile transportermobile,trans.name transportername,trans.id Transporterid,trans.UserID as MCBtransporterid,send.UserID as MCBSenderID,trip.flight_no,trip.arrival_time,trip.dep_time,trip.pnr,trip.TripID,book.id as BookingID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid  from cms_parcels a  left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid   inner join cms_users recv on a.recv_id=recv.id  inner join cms_users send on a.usr_id=send.id  inner join cms_trips trip on a.trans_id=trip.id   inner join cms_users trans on trip.t_id=trans.id  inner join (SELECT * FROM cms_bookings WHERE id IN ( SELECT id FROM cms_bookings WHERE STATUS !=4 UNION SELECT id FROM cms_bookings WHERE STATUS =4 AND p_id NOT  IN ( SELECT p_id FROM cms_bookings WHERE STATUS !=4 ))) book on a.id=book.p_id left join cms_parcelstatus prstatus on a.status=prstatus.id where a.recv_id=".$userID." and a.status in(2,3,4,5,6)"); 
 		$data=new stdclass();
 		$data->status="success";
 		$data->response=$query->result();		
@@ -128,7 +128,7 @@ class Api_model extends CI_Model {
 	}
 	function triplistall(){
 		$data=new stdclass();
-		$query = $this->db->query("SELECT a . * ,user.UserID, (a.capacity - c.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, t_id FROM  `cms_bookings` WHERE STATUS =3 GROUP BY t_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2) =al.code left join cms_users user on a.t_id =user.id order by a.status"); 
+		$query = $this->db->query("SELECT a . * ,user.UserID, (a.capacity - c.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2) =al.code left join cms_users user on a.t_id =user.id order by a.status"); 
 		$data->status="success";
 		$data->response=$query->result();		
 		$json_response = json_encode($data); 
@@ -170,7 +170,7 @@ class Api_model extends CI_Model {
 	}
 	function canceltripslist($userID){ 
 		$data=new stdclass();
-		$query = $this->db->query("SELECT a . * , (a.capacity - c.totalweight) AS awailableweight,trstatus.status as statusdescription FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, t_id FROM  `cms_bookings` WHERE STATUS =3 GROUP BY t_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id WHERE (a.status IN (4) or a.dep_time < CURDATE())  AND a.t_id =".$userID.""); 
+		$query = $this->db->query("SELECT a . * , (a.capacity - c.totalweight) AS awailableweight,trstatus.status as statusdescription FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id WHERE (a.status IN (4) or a.dep_time < CURDATE())  AND a.t_id =".$userID.""); 
 		$data->status="success";
 		$data->response=$query->result();		
 		$json_response = json_encode($data); 
@@ -197,12 +197,12 @@ class Api_model extends CI_Model {
 			print_r($json_response); 
 	}
 	function cancelParcellist($userID){
-		$query = $this->db->query("SELECT a.*,IFNULL(b.username,'') as receiveremail,IFNULL(c.username,'') as transemail,prstatus.status as statusdescription FROM cms_parcels a left join cms_users b on a.recv_id=b.id left join cms_users c on a.trans_id=c.id left join cms_parcelstatus prstatus on a.status=prstatus.id where (a.status in(6) or a.till_date < CURDATE())  and  a.usr_id=".$userID." "); 
-		 $data=new stdclass();
-		 $data->status="success";
-			$data->response=$query->result();		
-			$json_response = json_encode($data); 
-			print_r($json_response); 
+		$query = $this->db->query("SELECT a.*,IFNULL(b.username,'') as receiveremail,IFNULL(b.UserID,'') as MCBreceiverID,IFNULL(c.username,'') as transemail,IFNULL(c.UserID,'') as MCBTransporterID,IFNULL(c.id,0) as transporterID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid,(a.till_date >= CURDATE())as Isactive FROM cms_parcels a left join cms_users b on a.recv_id=b.id left join cms_trips trip on a.trans_id=trip.id left join cms_users c on trip.t_id=c.id left join cms_parcelstatus prstatus on a.status=prstatus.id  left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid  where  a.usr_id=".$userID." "); 
+		$data=new stdclass();
+		$data->status="success";
+		$data->response=$query->result();		
+		$json_response = json_encode($data); 
+		print_r($json_response); 
 	}
 	function refundedparcellist($userID)
 	{
@@ -225,16 +225,78 @@ class Api_model extends CI_Model {
 			$this->db->where("id",$senderid); 
 			$query=$this->db->get("parcels");	
 			$parceldetails=$query->result()[0]; 
-			$this->db->where("id",$parceldetails->usr_id);  
+			$this->db->where("id",$tripdetails->t_id);  
 			$query2=$this->db->get("users");
 			$tripuser=$query2->result()[0]; 
-			$this->db->where("id",$tripdetails->t_id);  
+			$this->db->where("id",$parceldetails->usr_id);  
 			$query3=$this->db->get("users");
 			$parceluser=$query3->result()[0];  
 			$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
 			$this->email->to($parceluser->username.',info@mycourierbuddy.in'); 
-			$this->email->subject('Trip Match Found | mycourierbuddy.in');   
-			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">    <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear user</div><p style="text-align:left;">Congratulations! You have found new trip on your parcel #'.$parceldetails->id.'.</p><div style="text-align:left; color:#2c4882;">Destination - &nbsp;'.$tripdetails->destination.'<br />Departure on - &nbsp; '.$tripdetails->dep_time.'<br />Source - &nbsp; '.$tripdetails->source.'<br />Arrival at - &nbsp; '.$tripdetails->arrival_time.'<br />Flight No. - &nbsp; '.$tripdetails->flight_no.'<br />PNR /Booking Reference No. - &nbsp; '.$tripdetails->pnr.'<br />Capacity - &nbsp; '.$tripdetails->capacity.' Kg. <br />Comment - &nbsp; '.$tripdetails->comment.'<br /></div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;">  You can create your courier request by clicking on this link <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parceldetails->id.'">Link</a>. </div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
+			$this->email->subject('MCB: Transporter Matched For Parcel No '.$parceldetails->ParcelID.'');   
+			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
+    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
+    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
+        <div>
+            <div style="text-align:left">Dear '.$parceluser->name.'</div>
+            <p style="text-align:left;">Congratulations! Your parcel is accepted by a MCB Transporter. Find the details below - </p>
+            <div style="text-align:left; color:#2c4882;">
+                <table>
+                    <tr>
+                        <td>Parcel No -	</td>
+                        <td>'.$parceldetails->ParcelID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Trip ID 		-
+                        </td>
+                        <td>'.$tripdetails->TripID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transporter ID	-
+                        </td>
+                        <td>'.$tripuser->UserID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Flight No	-
+                        </td>
+                        <td>'.$tripdetails->flight_no.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Departure 	-
+                        </td>
+                        <td>'.$tripdetails->dep_time.'</td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                Make immediate payment to confirm your booking with the transporter. Click on the link below to make payment.
+            </p>
+            <center>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parceldetails->id.'">Make Payment Link</a>
+            </center>
+            <br>As soon as payment is made, Automatic chat will be activated with Transporter and Receiver.
+            <br />
+            <div style="text-align:left; font-size:13px; margin-top:50px;">
+                <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span>
+            </div>
+        </div>
+        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+    </div>
+    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
+        <table style="width:100%;padding:0 25px;">
+            <tr>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+            </tr>
+        </table>
+    </div>
+</div> ';
 			$this->email->message($message);
 			$this->email->send(); 
 			 $data=new stdclass();
@@ -256,7 +318,7 @@ class Api_model extends CI_Model {
 			$data["capacity"]=$trip['capacity']; 
 			if(isset($trip['comment'])){
 				$data["comment"]=$trip['comment'];
-			}
+			}else{$data["comment"]="";}
 			if(isset($trip['duration'])){
 				$data["duration"]=$trip['duration'];
 			}
@@ -271,10 +333,95 @@ class Api_model extends CI_Model {
 			$query2=$this->db->get("users");
 			$res1=$query2->result()[0]; 
 			$emailid=$res1->username;
+			$createdquery = $this->db->query("select * from cms_trips ORDER BY `id` DESC LIMIT 1;"); 
+		    $tripcreated=$createdquery->result()[0]; 
 			$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
 			$this->email->to($emailid.',info@mycourierbuddy.in'); 
-			$this->email->subject('New Trip Added | mycourierbuddy.in');   
-			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">    <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear user</div><p style="text-align:left;">Congratulations! You have successfully added new trip.</p><div style="text-align:left; color:#2c4882;">Destination - &nbsp;'.$trip['destination'].'<br />Departure on - &nbsp; '.$trip['d_date'].'<br />Source - &nbsp; '.$trip['source'].'<br />Arrival at - &nbsp; '.$trip['a_date'].'<br />Flight No. - &nbsp; '.$trip['flight_no'].'<br />PNR /Booking Reference No. - &nbsp; '.$trip['pnr'].'<br />Capacity - &nbsp; '.$trip['capacity'].' Kg. <br />Comment - &nbsp; '.$trip['comment'].'<br /></div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;">You have successfully added request for Trip. We have sent your request to admin for approval. </div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
+			$this->email->subject('Trip No '.$tripcreated->TripID.' Added Successfully');   
+			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
+    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
+    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
+        <div>
+            <div style="text-align:left">Dear '.$res1->name.'</div>
+            <p style="text-align:left;">Congratulations! You have successfully booked your added your trip.</p>
+            <div style="text-align:left; color:#2c4882;">
+                <table>
+                    <tr>
+                        <td>Trip ID 		-</td>
+                        <td>'.$tripcreated->TripID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            From 		-
+                        </td>
+                        <td>'.$trip['source'].'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            To 		-
+                        </td>
+                        <td>'.$trip['destination'].'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Departure Date	-
+                        </td>
+                        <td> '.$trip['d_date'].'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Flight No 	-
+                        </td>
+                        <td>'.$trip['flight_no'].'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            PNR No		-
+                        </td>
+                        <td>'.$trip['pnr'].'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Capacity	-
+                        </td>
+                        <td>'.$trip['capacity'].' Kg</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Comments 	-
+                        </td>
+                        <td>
+                           '.$trip['destination'].'
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                Your trip is saved and send to MCB Admin for approval.
+            </p><p>
+                Once your trip is approved by admin, trip will be visible to senders for booking parcels with you and or you shall also be able to look for matching parcels.
+            </p>
+            <center>
+                <a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$tripcreated->id.'">Check Trip Status Link</a>
+            </center>
+            <b>Note - Please present your Photo ID to sender while collecting and handing over the parcel.</b>
+            <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
+        </div>
+        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b>
+    </div>
+    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
+        <table style="width:100%;padding:0 25px;">
+            <tr>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">    <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear user</div><p style="text-align:left;">Congratulations! You have successfully added new trip.</p><div style="text-align:left; color:#2c4882;">Destination - &nbsp;'.$trip['destination'].'<br />Departure on - &nbsp; '.$trip['d_date'].'<br />Source - &nbsp; '.$trip['source'].'<br />Arrival at - &nbsp; '.$trip['a_date'].'<br />Flight No. - &nbsp; '.$trip['flight_no'].'<br />PNR /Booking Reference No. - &nbsp; '.$trip['pnr'].'<br />Capacity - &nbsp; '.$trip['capacity'].' Kg. <br />Comment - &nbsp; '.$data["comment"].'<br /></div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;">You have successfully added request for Trip. We have sent your request to admin for approval. </div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
 			$this->email->message($message);
 			$this->email->send(); 
 			$query = $this->db->query("SELECT * FROM `cms_trips`  order by id desc limit 1"); 
@@ -345,8 +492,68 @@ class Api_model extends CI_Model {
 					$emailid=$parceluser->username;
 					$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
 					$this->email->to($emailid.',info@mycourierbuddy.in'); 
-					$this->email->subject('Parcel Successfully Created With Transporter | mycourierbuddy.in');   
-					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0"> <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$parceluser->name.'</div><p style="text-align:left;">Congratulations! You Parcel #P'.$parcel->id.' successfully created with Tranporter '.$transuser->name.'.			</p><div style="text-align:left; color:#2c4882;">Destination - &nbsp;'.$parcel->destination.'<br />Delivery Till - &nbsp; '.$parcel->till_date.'<br />Source - &nbsp; '.$parcel->source.'<br /> Description - &nbsp; '.$parcel->description.'<br /> </div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;"></div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
+					$this->email->subject('MCB: Parcel No '.$parcel->ParcelID.' Create and Booked with Transporter Trip '.$trip->TripID.'');    
+					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
+    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
+    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
+        <div>
+            <div style="text-align:left">Dear '.$parceluser->name.'</div>
+            <p style="text-align:left;">Congratulations! You have successfully booked your parcel with Transporter.</p>
+            <div style="text-align:left; color:#2c4882;">
+                <table>
+                    <tr>
+                        <td>Parcel No - </td>
+                        <td>'.$parcel->ParcelID.'</td>
+                    </tr>
+                    <tr>
+                        <td> Trip ID - </td>
+                        <td>'.$trip->TripID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transporter ID	-
+                        </td>
+                        <td>'.$transuser->UserID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Flight No -
+                        </td>
+                        <td>'.$trip->flight_no.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Departure -
+                        </td>
+                        <td>'.$trip->dep_time.'</td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                You can find the more details about transporter on the MCB portal.
+            </p>
+            <br>
+            <p>Automatic chat is activated with Transporter and Receiver. You can now chat and coordinate with transporter to handover your parcel on time. Click on below link </p>
+            <center>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Chat Link</a>
+            </center>
+            <br>
+            <b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b>
+            <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
+        </div>
+        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+    </div>
+    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
+        <table style="width:100%;padding:0 25px;">
+            <tr>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+            </tr>
+        </table>
+    </div>
+</div>';
 					$this->email->message($message);
 					$this->email->send(); 
 					
@@ -460,9 +667,70 @@ class Api_model extends CI_Model {
 			$emailid=$parceluser->username;
 			$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
 			$this->email->to($emailid.',info@mycourierbuddy.in'); 
-			$this->email->subject('Parcel Successfully Created With Transporter | mycourierbuddy.in');   
-			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0"> <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$parceluser->name.'</div><p style="text-align:left;">Congratulations! You Parcel #P'.$parcel->id.' successfully created with Tranporter '.$transuser->name.'.			</p><div style="text-align:left; color:#2c4882;">Destination - &nbsp;'.$parcel->destination.'<br />Delivery Till - &nbsp; '.$parcel->till_date.'<br />Source - &nbsp; '.$parcel->source.'<br /> Description - &nbsp; '.$parcel->description.'<br /> </div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;"></div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
-			$this->email->message($message);
+			$this->email->subject('MCB: Parcel No '.$parcel->ParcelID.' Create and Booked with Transporter Trip '.$trip->TripID.'');   
+		   $message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
+    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
+    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
+        <div>
+            <div style="text-align:left">Dear '.$parceluser->name.'</div>
+            <p style="text-align:left;">Congratulations! You have successfully booked your parcel with Transporter.</p>
+            <div style="text-align:left; color:#2c4882;">
+                <table>
+                    <tr>
+                        <td>Parcel No - </td>
+                        <td>'.$parcel->ParcelID.'</td>
+                    </tr>
+                    <tr>
+                        <td> Trip ID - </td>
+                        <td>'.$trip->TripID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transporter ID	-
+                        </td>
+                        <td>'.$transuser->UserID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Flight No -
+                        </td>
+                        <td>'.$trip->flight_no.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Departure -
+                        </td>
+                        <td>'.$trip->dep_time.'</td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                You can find the more details about transporter on the MCB portal.
+            </p>
+            <br>
+            <p>Automatic chat is activated with Transporter and Receiver. You can now chat and coordinate with transporter to handover your parcel on time. Click on below link </p>
+            <center>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Chat Link</a>
+            </center>
+            <br>
+            <b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b>
+            <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
+        </div>
+        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+    </div>
+    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
+        <table style="width:100%;padding:0 25px;">
+            <tr>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+            </tr>
+        </table>
+    </div>
+</div>';
+			
+			 $this->email->message($message);
 			$this->email->send(); 
 			
 			$emailid=$receiveruser->username;
@@ -696,20 +964,84 @@ class Api_model extends CI_Model {
 			$this->db->where("id",$parcel['usr_id']);  
 			$query2=$this->db->get("users");
 			$res1=$query2->result()[0]; 
+			$createdquery = $this->db->query("select * from cms_parcels ORDER BY `id` DESC LIMIT 1;"); 
+		    $parcelcreated=$createdquery->result()[0]; 
 			$emailid=$res1->username;
+			$this->db->where("id",$parcel['recv_id']);  
+			$query3=$this->db->get("users");
+			$res2=$query3->result()[0];  
 			$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
 			$this->email->to($emailid.',info@mycourierbuddy.in'); 
-			$this->email->subject('New Parcel Added | mycourierbuddy.in');   
-			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0"> <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear user</div><p style="text-align:left;">Congratulations! You have successfully added new Parcel.</p><div style="text-align:left; color:#2c4882;">Destination - &nbsp;'.$parcel['destination'].'<br />Source - &nbsp; '.$parcel['source'].'<br />Delivered Till. - &nbsp; '.$parcel['till_date'].'<br />Parcel type - &nbsp;'.(($parcel['type']=='P') ? "Packet" : (($parcel['type']=='B') ? "Box" : "Envelope")).'<br />Parcel Weight - &nbsp; '.$parcel['weight'].' Kg<br />Description - &nbsp; '.$parcel['description'].'<br /></div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;">You have successfully added request for parcel. your parcel is live for search. </div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
+			$this->email->subject('MCB: Parcel No '.$parcelcreated->ParcelID.' Created');   
+			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
+    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
+    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
+        <div>
+            <div style="text-align:left">Dear '.$res1->name.'</div>
+            <p style="text-align:left;">Congratulations! You have successfully added a new parcel request.</p>
+            <div style="text-align:left; color:#2c4882;">
+                <table>
+                    <tr>
+                        <td> Parcel No - </td>
+                        <td>'.$parcelcreated->ParcelID.'</td>
+                    </tr>
+                    <tr>
+                        <td>From - </td>
+                        <td>'.$parcel['source'].'</td>
+                    </tr>
+                    <tr>
+                        <td>To -</td>
+                        <td>'.$parcel['destination'].'</td>
+                    </tr>
+                    <tr>
+                        <td> Deliver Till -</td>
+                        <td>'.$parcel['till_date'].'</td>
+                    </tr>
+                    <tr>
+                        <td> Weight -</td>
+                        <td>'.$parcel['weight'].' Kg</td>
+                    </tr>
+                    <tr>
+                        <td> Details -</td>
+                        <td>'.$parcel['description'].'</td>
+                    </tr>
+                    <tr>
+                        <td>Amount to Pay -</td>
+                        <td>'.$parcel['payment'].'</td>
+                    </tr>
+                    <tr>
+                        <td>Receiver -</td>
+                        <td>'.$res2->name.'</td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                Now you can find the matching transporter online with your parcel. Click for find matching Transporters.
+            </p>
+            <center>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcelcreated->id.'">Find Matching Trips</a>
+            </center>
+            <br>Please ensure to make a payment as soon as transporter is matched for your parcel. <br />  <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
+        </div>
+        <br><b style="font-family:Calibri;">Note -  Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+    </div>
+    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
+        <table style="width:100%;padding:0 25px;">
+            <tr>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+            </tr>
+        </table>
+    </div>
+</div>';
 			$this->email->message($message);
 			$this->email->send(); 
 			$query = $this->db->query("SELECT * FROM `cms_parcels`  order by id desc limit 1"); 
-			//receiver email
-			$this->db->where("id",$parcel['recv_id']);  
-			$query3=$this->db->get("users");
-			$res2=$query3->result()[0]; 
-			$emailid=$res2->username;
+			//receiver email 
 			$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
+			$emailid=$res2->username;
 			$this->email->to($emailid.',info@mycourierbuddy.in'); 
 			$this->email->subject('Parcel to Receive | mycourierbuddy.in');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">    <img src="http://mycourierbuddy.in/images/logo-mail.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$res2->name.'</div><p style="text-align:left;">Your friend '.$res1->name.' has been added a parcel from mycourierbuddy.in and want you to play role as receiver. He/She want you to help to receive the parcel as per the giving details.</p><div style="text-align:left; color:#2c4882;">Destination - &nbsp;'.$parcel['destination'].'<br />Source - &nbsp; '.$parcel['source'].'<br />Delivered Till. - &nbsp; '.$parcel['till_date'].'<br />Parcel type - &nbsp;'.(($parcel['type']=='P') ? "Packet" : (($parcel['type']=='B') ? "Box" : "Envelope")).'<br />Parcel Weight - &nbsp; '.$parcel['weight'].' Kg<br />Description - &nbsp; '.$parcel['description'].'<br /></div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;">Transporter details has been updated you soon. As per any query regarding parcel receive, you can consult with your friend  '.$res1->name.'  he/she will assist you easily.</div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
@@ -740,7 +1072,7 @@ class Api_model extends CI_Model {
 		if(!empty($parcel['source']) && !empty($parcel['destination']) && !empty($parcel['till_date']) && !empty($parcel['type']) && !empty($parcel['recv_id']) && !empty($parcel['description'])  ) {
 			 $sql = "update `cms_bookings` set  status=4,process_by=".$parcel["usr_id"]." where p_id=".$parcel["id"].";";
 			 $this->db->query($sql);
-			 $sql = "update cms_trips a set status=1,processed_by=".$parcel["usr_id"]."  where exists(select t_id from cms_bookings b where b.t_id=a.id and b.p_id=".$parcel["id"]." and status <>3) "; 
+			 $sql = "update cms_trips a set status=1,processed_by=".$parcel["usr_id"]."  where exists(select t_id from cms_bookings b where b.t_id=a.id and b.p_id=".$parcel["id"]." and status !=3) "; 
 			 $this->db->query($sql); 
 			  $sql = "update cms_trips a set status=1,processed_by=".$parcel["usr_id"]."  where exists(select trans_id from cms_parcels b where b.trans_id=a.id and b.id=".$parcel["id"]." and b.status =1)"; 
 			 $this->db->query($sql); 
@@ -1029,7 +1361,7 @@ class Api_model extends CI_Model {
 			     $message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">    <img src="http://mycourierbuddy.in/images/logo-mail.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$transuser->name.'</div>			<p style="text-align:left;">Trip #T'.$trip->id.'  Cancelled Successfully by You </div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;">			</div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';	
 			     $this->email->message($message);
 			     $this->email->send();   
-				 $arraywhere = array('trans_id' => $request["id"],'status <>' => 6); 
+				 $arraywhere = array('trans_id' => $request["id"],'status !=' => 6); 
 				$this->db->where($arraywhere);  
 				$query=$this->db->get("parcels"); 
 				$parcelqueryresult=$query->result();
@@ -1091,8 +1423,61 @@ class Api_model extends CI_Model {
 			$emailid=$parceluser->username;
 			$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
 			$this->email->to($emailid.',info@mycourierbuddy.in'); 
-			$this->email->subject('Parcel #P'.$parcel->id.'  Collected Successfully by Transporter | mycourierbuddy.in');   
-			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0"> <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$parceluser->name.'</div><p style="text-align:left;">Congratulations! You Parcel #P'.$parcel->id.' successfully Collected with Tranporter '.$transuser->name.'.			</p><div style="text-align:left; color:#2c4882;">Destination - &nbsp;'.$parcel->destination.'<br />Delivery Till - &nbsp; '.$parcel->till_date.'<br />Source - &nbsp; '.$parcel->source.'<br /> Description - &nbsp; '.$parcel->description.'<br /> </div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;"></div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
+			$this->email->subject('Parcel No '.$parcel->ParcelID.' Collected By Transporter '.$transuser->name.'');   
+			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
+    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
+    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
+        <div>
+            <div style="text-align:left">Dear '.$parceluser->name.'</div>
+            <p style="text-align:left;">Congratulations! Transporter has confirmed, your parcel is collected by Transporter.</p>
+            <div style="text-align:left; color:#2c4882;">
+                <table>
+                    <tr>
+                        <td>Parcel No 	-</td>
+                        <td>'.$parcel->ParcelID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transporter ID	-
+                        </td>
+                        <td> '.$transuser->UserID.' & '.$transuser->name.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Flight No	-
+                        </td>
+                        <td>'.$trip->flight_no.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Arrival Time 	-
+                        </td>
+                        <td>'.$trip->arrival_time.'at Destination.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                Do not forget to remind Receiver to receive the parcel as per the landing time at Destination or as per the agreement with Transporter.
+            </p>
+            <p>
+                <b> Note - Please check the ID of transporter while handing over the parcel.</b>
+            </p>
+            <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
+        </div>
+        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b>
+    </div>
+    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
+        <table style="width:100%;padding:0 25px;">
+            <tr>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+            </tr>
+        </table>
+    </div>
+</div>';
 			$this->email->message($message);
 			$this->email->send(); 
 			
@@ -1135,8 +1520,62 @@ class Api_model extends CI_Model {
 			$emailid=$parceluser->username;
 			$this->email->from("info@mycourierbuddy.in", 'mycourierbuddy');
 			$this->email->to($emailid.',info@mycourierbuddy.in'); 
-			$this->email->subject('Parcel #P'.$parcel->id.'  Delivered Successfully by Transporter | mycourierbuddy.in');   
-			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0"> <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$parceluser->name.'</div><p style="text-align:left;">Congratulations! You Parcel #P'.$parcel->id.' successfully Delivered with Tranporter '.$transuser->name.'.			</p><div style="text-align:left; color:#2c4882;">Destination - &nbsp;'.$parcel->destination.'<br />Delivery Till - &nbsp; '.$parcel->till_date.'<br />Source - &nbsp; '.$parcel->source.'<br /> Description - &nbsp; '.$parcel->description.'<br /> </div><br /><div style="text-align:justify;line-height: 18px; margin-top:10px; margin-bottom:20px;"></div><div></div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div></div><div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By  <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div></div>';
+			$this->email->subject('Transporter '.$transuser->name.' Has Delivered the Parcel No. '.$parcel->ParcelID.'');   
+			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
+    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
+    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
+        <div>
+            <div style="text-align:left">Dear '.$parceluser->name.'</div>
+            <p style="text-align:left;">Congratulations! Your parcel is successfully delivered to <Receiver> by Transporter <Transporter Name>. </p>
+            <div style="text-align:left; color:#2c4882;">
+                <table>
+                    <tr>
+                        <td>Parcel No 	-</td>
+                        <td>'.$parcel->ParcelID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transporter ID	-
+                        </td>
+                        <td>'.$trip->TripID.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Receiver	-
+                        </td>
+                        <td>'.$receiveruser->name.'</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Delivery Date
+                        </td>
+                        <td>
+                          '.date("Y-m-d H:i:s").'
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                Next Action - You can check with Receiver if he/she has received the parcel safely. And you can complete the status of parcel and rate the transporter by clicking the below link.
+            </p>
+            <center>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Complete Order Link</a>
+            </center>
+            <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
+        </div>
+        <br><b style="font-family:Calibri;">Note - Note – Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b>
+    </div>
+    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
+        <table style="width:100%;padding:0 25px;">
+            <tr>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+            </tr>
+        </table>
+    </div>
+</div>';
 			$this->email->message($message);
 			$this->email->send(); 
 			
@@ -1327,7 +1766,7 @@ class Api_model extends CI_Model {
 			 $this->db->query($sql); 
 			 $sql = "update cms_chatchannel a set a.isactive=0 where parcelid=".$request["id"].";"; 
 			   $this->db->query($sql);	
-				  $sql = "update cms_trips a set status=1,processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.p_id=".$request["id"]." and b.status<>3) and (select count(*) from cms_bookings where t_id in(select t_id from cms_bookings b where b.p_id=".$request["id"]." ) and status=3)=0	"; 
+				  $sql = "update cms_trips a set status=1,processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.p_id=".$request["id"]." and b.status!=3) and (select count(*) from cms_bookings where t_id in(select t_id from cms_bookings b where b.p_id=".$request["id"]." ) and status=3)=0	"; 
 			 	 $this->db->query($sql);   
 				$this->db->where("id",$parcel->usr_id);  
 				$query2=$this->db->get("users");
@@ -1385,7 +1824,7 @@ class Api_model extends CI_Model {
 			    $this->db->update('chatchannel', $chatchannelcreate);
         		$sql = "update cms_bookings set status=4 , process_by=".$request["process_by"]." where p_id=".$request["id"]; 
 			 	 $this->db->query($sql); 
-				  $sql = "update cms_trips a set status=1,processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.p_id=".$request["id"]." and b.status<>3) and (select count(*) from cms_bookings where t_id in(select t_id from cms_bookings b where b.p_id=".$request["id"]." ) and status=3)=0	"; 
+				  $sql = "update cms_trips a set status=1,processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.p_id=".$request["id"]." and b.status!=3) and (select count(*) from cms_bookings where t_id in(select t_id from cms_bookings b where b.p_id=".$request["id"]." ) and status=3)=0	"; 
 			 	 $this->db->query($sql);  
 				$sql = "update cms_chatchannel a set a.isactive=0,processed_by=".$request["process_by"]." where parcelid=".$request["id"].";"; 
 			   $this->db->query($sql);					 
@@ -1657,7 +2096,7 @@ class Api_model extends CI_Model {
 		if($param["type"]=="Transporter")
 		{
 			//and (a.capacity-COALESCE(c.totalweight,0))>0 
-		    $query = $this->db->query("SELECT id,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,created,status,processed_by,'update' FROM `cms_trips` a left join (SELECT a.t_id,sum(weight) as totalweight FROM cms_bookings a where a.status=3 group by a.t_id)c on a.id=c.t_id where (a.status=1 or a.status=3) and (a.source like '%".$param["locationfrom"]."%' or '".$param["locationfrom"]."'='') and (a.destination like '%".$param["locationto"]."%' or '".$param["locationto"]."'='') and (a.dep_time >= '".$param["dateFrom"]."' or '".$param["dateFrom"]."'='') and (a.dep_time <= '".$param["dateTo"]." 23:59' or '".$param["dateTo"]."'='')and a.arrival_time >= CURDATE()  ");
+		    $query = $this->db->query("SELECT id,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,created,status,processed_by,'update' FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id where (a.status=1 or a.status=3 or a.status=2) and (a.source like '%".$param["locationfrom"]."%' or '".$param["locationfrom"]."'='') and (a.destination like '%".$param["locationto"]."%' or '".$param["locationto"]."'='') and (a.dep_time >= '".$param["dateFrom"]."' or '".$param["dateFrom"]."'='') and (a.dep_time <= '".$param["dateTo"]." 23:59' or '".$param["dateTo"]."'='')and a.arrival_time >= CURDATE()  ");
 			$response = $query->result();  
 		}
 		else
@@ -1941,7 +2380,7 @@ class Api_model extends CI_Model {
     } 
 	 function searchuser($post)
 	{  $param=$post["params"];  
-		$query = $this->db->query("select * from cms_users where (username='". $param["email"] ."' or '". $param["email"] ."'='') and (mobile='".$param["mobile"]."' or '".$param["mobile"]."'='') and id <>".$param["UserId"]."");
+		$query = $this->db->query("select * from cms_users where (username='". $param["email"] ."' or '". $param["email"] ."'='') and (mobile='".$param["mobile"]."' or '".$param["mobile"]."'='') and id !=".$param["UserId"]."");
         $data=new stdclass();
 		$data->status="success";
 		$data->response=$query->result();
