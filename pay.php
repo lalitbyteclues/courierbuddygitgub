@@ -1,11 +1,11 @@
 <?php
 // Merchant key here as provided by Payu
-$MERCHANT_KEY = "LZTHg0";
+$MERCHANT_KEY = "1SKAsxey";
 // Merchant Salt as provided by Payu
-$SALT = "fGUKTCCA";
+$SALT = "lj0ofR1er9";
 // End point - change to https://test.payu.in  for LIVE mode
 //$PAYU_BASE_URL = "https://secure.payu.in";
-$PAYU_BASE_URL = "/success.php";
+$PAYU_BASE_URL = "https://secure.payu.in";
 $action = '';
 $posted = array();
 if(!empty($_POST)) {
@@ -81,8 +81,7 @@ if(empty($posted['hash']) && sizeof($posted) > 0) {
     <form action="<?php echo $action; ?>" method="post"  id="payment"  name="payuForm">
       <input type="hidden" name="key" value="<?php echo $MERCHANT_KEY ?>" />
       <input type="hidden" name="hash" value="<?php echo $hash ?>"/>
-      <input type="hidden" name="txnid" value="<?php echo $txnid ?>" />
-     
+      <input type="hidden" name="txnid" value="<?php echo $txnid ?>" /> 
      <input type="hidden"  name="amount" value="<?php echo (empty($posted['amount'])) ? '' : $posted['amount'] ?>" />
      <input type="hidden"  name="firstname" id="firstname" value="<?php echo (empty($posted['firstname'])) ? '' : $posted['firstname']; ?>" />
 	 <input type="hidden"  name="email" id="email" value="<?php echo (empty($posted['email'])) ? '' : $posted['email']; ?>" />

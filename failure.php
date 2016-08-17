@@ -33,4 +33,4 @@ If (isset($_POST["additionalCharges"])) {
 		 } 
 ?>
 <!--Please enter your website homepagge URL -->
-<p><a href=http://localhost/testing/success_failure/PayUMoney_form.php> Try Again</a></p>
+<p><a href=https://www.mycourierbuddy.com/sender> Try Again</a></p>

@@ -42,14 +42,14 @@ angular.module('courier').controller("chatmessagesController", function ($rootSc
         }
     } 
     $scope.messages = [];
-    var socket = io.connect('http://webservice.mycourierbuddy.com:3000');
+    var socket = io.connect('https://mycourierbuddy.com:3000');
     $scope.submit = function (channelid, message) {
         $scope.submitchat(channelid, message); 
     }
     $scope.submitchat = function (channelid, message) { 
         var dataString = { channelid: channelid, messageuserid: AuthService.authentication.UserId, message: message }; 
         $.ajax({
-            type: "POST", url: "http://webservice.mycourierbuddy.com/api/chatsubmit", data: dataString, dataType: "json", cache: false, success: function (data) {
+            type: "POST", url: apiBasePath+"api/chatsubmit", data: dataString, dataType: "json", cache: false, success: function (data) {
                 $scope.messages = $.grep($scope.chatslist, function (a) { return a.channelid == channelid })[0].chatmessage = "";
                 if (data.success == true) {
                     $("#notif").html(data.notif);

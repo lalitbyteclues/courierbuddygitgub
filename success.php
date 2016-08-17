@@ -27,20 +27,7 @@ function CallAPI($method, $url, $data = false)
 
     curl_close($curl); 
     return $result;
-}
-//$_POST['payuMoneyId']
-$data1=array("txnid"=> $_POST["txnid"],"payuMoneyId" => "123456987",);
-$post=json_encode($data1);
-$response=CallAPI("POST","http://webservice.mycourierbuddy.com/api/payordernumber",$post);
-if(isset($response)){
-header( "Location: http://dev9856.mycourierbuddy.in/viewparcel/".json_decode($response)->response );
-}
-
-
-
-
-
-
+} 
 $status=$_POST["status"];
 $firstname=$_POST["firstname"];
 $amount=$_POST["amount"];
@@ -49,7 +36,7 @@ $posted_hash=$_POST["hash"];
 $key=$_POST["key"];
 $productinfo=$_POST["productinfo"];
 $email=$_POST["email"];
-$salt="GQs7yium";
+$salt="lj0ofR1er9";
 
 If (isset($_POST["additionalCharges"])) {
        $additionalCharges=$_POST["additionalCharges"];
@@ -68,9 +55,14 @@ If (isset($_POST["additionalCharges"])) {
 		   }
 	   else {
            	   
-          echo "<h3>Thank You. Your order status is ". $status .".</h3>";
-          echo "<h4>Your Transaction ID for this transaction is ".$txnid.".</h4>";
-          echo "<h4>We have received a payment of Rs. " . $amount . ". Your order will soon be shipped.</h4>";
+         
+		  //$_POST['payuMoneyId']
+$data1=array("txnid"=> $_POST["txnid"],"payuMoneyId" => $_POST["payuMoneyId"],);
+$post=json_encode($data1);
+$response=CallAPI("POST","https://www.mycourierbuddy.com/apis/index.php/api/payordernumber",$post);
+if(isset($response)){ 
+header( "Location:https://www.mycourierbuddy.com/viewparcel/".json_decode($response)->response );
+}
            
 		   }         
 ?>	
