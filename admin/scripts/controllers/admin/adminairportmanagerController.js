@@ -103,9 +103,9 @@ angular.module('courier').controller("adminairportmanagerController", function (
             var airportlist = JSON.parse(csvJSON($scope.fileContent));
             for (i = 0; i < airportlist.length; i++) {
                 if (angular.isDefined(airportlist[i].Name) && angular.isDefined(airportlist[i].Zone) && angular.isDefined(airportlist[i].type)) {
-                    if ($.grep($scope.list, function (air) { return air.location.toLowerCase() == airportlist[i].Name.toLowerCase() || air.code.toLowerCase() == airportlist[i].Code.toLowerCase(); }).length == 0) {
-                        if ($.grep($scope.zonelist, function (zone) { return zone.Zonename.toLowerCase() == airportlist[i].Zone.toLowerCase(); }).length > 0) {
-                            var item = { "location": airportlist[i].Name, "zone": 0, "type": airportlist[i].type, "zonelistid": $.grep($scope.zonelist, function (zone) { return zone.Zonename.toLowerCase() == airportlist[i].Zone.toLowerCase(); })[0].id, "status": "Y" };
+                    if ($.grep($scope.list, function (air) { return air.location.trim().toLowerCase() == airportlist[i].Name.trim().toLowerCase() || (air.code==null || air.code.trim().toLowerCase() == airportlist[i].Code.trim().toLowerCase()) }).length == 0) {
+                        if ($.grep($scope.zonelist, function (zone) { return zone.Zonename.trim().toLowerCase() == airportlist[i].Zone.trim().toLowerCase(); }).length > 0) {
+                            var item = { "location": airportlist[i].Name, "zone": 0, "type": airportlist[i].type, "zonelistid": $.grep($scope.zonelist, function (zone) { return zone.Zonename.trim().toLowerCase() == airportlist[i].Zone.trim().toLowerCase(); })[0].id, "status": "Y", "code": airportlist[i].Code };
                             AirportService.saveairportdate(item).then(function (results) {
                                 $scope.list = results.data.response;
                                 $scope.currentPage = 1; //current page
