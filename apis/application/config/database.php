@@ -6,7 +6,7 @@ $query_builder = TRUE;
 $db['default'] = array('dsn'	=> ''
 ,'hostname' => 'localhost'
 ,'username' => 'mycourie_buddy','password' => 'Interior@123'
-,'database' => 'mycourie_buddy'
+,'database' => 'mycourie_prod'
 ,'dbdriver' => 'mysqli'
 ,'dbprefix' => 'cms_'
 ,'pconnect' => FALSE,

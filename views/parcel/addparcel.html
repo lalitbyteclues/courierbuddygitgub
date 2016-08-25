@@ -55,14 +55,14 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="textinput">From <span class="red">*</span></label>
                                         <div class="col-md-8 p-reltv">
-                                            <input type="text" maxlength="300" placeholder="eg :Jaipur" name="source" ui-autocomplete="locationStateOption" required="required" class="form-control input-md" ng-model="parcelfromloation" no-special-char autocomplete="off">
+                                            <input type="text" maxlength="300" placeholder="eg :Jaipur" name="source" ui-autocomplete="locationStateOption" required="required" class="form-control input-md" ng-model="parcelfromloation" autocomplete="off">
                                             <span class="error" ng-show="(frmaddparcel.$submitted && frmaddparcel.source.$error.required)">Required.</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="textinput">To <span class="red">*</span></label>
                                         <div class="col-md-8 p-reltv">
-                                            <input name="destination" maxlength="300" class="form-control input-md" ui-autocomplete="locationStateOption" type="text" required="required" autocomplete="off" ng-model="parceltoloation" no-special-char placeholder="eg : New Delhi">
+                                            <input name="destination" maxlength="300" class="form-control input-md" ui-autocomplete="locationStateOption" type="text" required="required" autocomplete="off" ng-model="parceltoloation" placeholder="eg : New Delhi">
                                             <span class="error" ng-show="(frmaddparcel.$submitted && frmaddparcel.destination.$error.required)">Required.</span>
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@
                                     </div>
                                     <div class="alert alert-danger" role="alert" ng-hide='!errormessageuser'>{{errormessageuser}}</div>
                                     <div class="com-det" ng-hide="usersearchvisible">
-                                        <table id="userlist" ng-show="userlist.length>0" class="table table-striped table-bordered  dt-responsive  userlist" cellspacing="0" style="max-width:100%;" width="100%">
+                                        <table id="userlist" ng-show="userlist.length>0" class="table table-striped table-bordered dt-responsive nowrap userlist" cellspacing="0" style="max-width:100%;" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th><b>&nbsp;&nbsp;&nbsp; MCB Id &nbsp;&nbsp;&nbsp;</b></th>
@@ -227,7 +227,7 @@
                                     <h1>Summary</h1>
                                     <form ng-submit="paynow(frmaddparcel.$valid)" class="stdform" id="accept-and-pay" enctype="multipart/form-data" method="post" accept-charset="utf-8">
                                         <a href='javascript:void(0);' ng-click='editparcel()' style="float:right;background: #3b5998;border: 0;color: #fff;padding:5px 15px;margin:5px 0 5px 0;" title='Edit Parcel'>Edit Parcel</a>
-                                        <table class="table table-striped table-bordered  dt-responsive  parcelsummary" cellspacing="0" width="100%">
+                                        <table class="table table-striped table-bordered dt-responsive nowrap parcelsummary" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th><label><b>From </b></label></th>
@@ -254,7 +254,7 @@
                                         <hr />
                                         <h1>Receiver Details </h1>
                                         <div class="com-det">
-                                            <table id="userlist1" ng-show="userlist.length>0" class="table table-striped table-bordered  dt-responsive  userlist" cellspacing="0" style="max-width:100%;" width="100%">
+                                            <table id="userlist1" ng-show="userlist.length>0" class="table table-striped table-bordered dt-responsive nowrap userlist" cellspacing="0" style="max-width:100%;" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th><b>&nbsp;&nbsp;&nbsp; MCB Id &nbsp;&nbsp;&nbsp;</b></th>
