@@ -6,22 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="viewport" content="width=device-width" />
-    <link href="/css/stylesheet.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="/demo/popupwindow.css" />
-    <link href="/css/bootstrap.css" rel="stylesheet" />
-    <link href="/css/timepicki.css" rel="stylesheet" />
+    <link href="/StyleSheet.css" rel="stylesheet" type="text/css" />  
     <script src="/libs/jquery/dist/jquery.min.js"></script>
-    <link href="/libs/jquery/jquery.timepicker.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/libs/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/libs/bootstrap/dist/css/bootstrap-theme.css" />
-    <link href="/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/libs/jquery-ui/themes/blitzer/jquery-ui.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans" />
-    <script src="/libs/jquery/intlTelInput.min.js"></script>
-    <link href="/libs/jquery/intlTelInput.css" rel="stylesheet" />
-    <link href="/libs/resgrid/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-    <link href="/libs/resgrid/css/responsive.bootstrap.min.css" rel="stylesheet" />
-    <link href="/libs/moment/jquery.ui.durationPicker.css" rel="stylesheet" />
+    <script src="/script.js"></script>   
     <base href="/">
 </head>
 <body>
@@ -29,89 +16,9 @@
         <div ui-view autoscroll="true">
         </div>
         <div ng-include="'views/static/footer.html'"></div>
-    </div>
-    <script src="/js/zebra_datepicker.js"></script>
-    <script src="/libs/jquery-ui/jquery-ui.min.js"></script>
-    <script src="/libs/slimScroll/jquery.slimscroll.min.js"></script>
-    <script src="/libs/jquery/dist/jquery.timepicker.js"></script>
-    <script src="/libs/angular/angular.min.js"></script>
-    <script src="/libs/angular-sanitize/angular-sanitize.min.js"></script>
-    <script src="/libs/angular-animate/angular-animate.min.js"></script>
-    <script src="/libs/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="/libs/angular-ui-autocomplete/autocomplete.js"></script>
-    <script src="/libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>  
-    <script src="/libs/iCheck/icheck.min.js"></script> 
-    <script src="/libs/moment/min/moment.min.js"></script>
-    <script src="/libs/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script src="/libs/angular-ui-calendar/src/calendar.js"></script> 
-    <script src="/libs/ng-grid/ng-grid-2.0.14.min.js"></script>
-    <script src="/libs/bootstrap-tour/build/js/bootstrap-tour.min.js"></script>
-    <script src="/libs/resgrid/js/jquery.dataTables.min.js"></script>
-    <script src="/libs/resgrid/js/dataTables.bootstrap.min.js"></script>
-    <script src="/libs/resgrid/js/dataTables.responsive.min.js"></script>
-    <script src="/libs/resgrid/js/responsive.bootstrap.min.js"></script>
-    <script src="/libs/angular-datatables/dist/angular-datatables.min.js"></script>
-    <script src="/libs/ui-select/dist/select.min.js"></script>
-    <script src="/libs/angular-ui-sortable/sortable.min.js"></script>
-    <script src="/libs/footable/dist/footable.all.min.js"></script>
-    <script src="/libs/angular-footable/dist/angular-footable.min.js"></script> 
-    <script src="/libs/angular-permission/angular-permission.js"></script>
-    <script src="/libs/angular-timer/angular-timer.min.js"></script>
-    <script src="/libs/angular-timer/humanize-duration.js"></script>
-    <script src="/libs/angular-timer/moment.js"></script>
-    <script src="/libs/format-as-currency/format-as-currency.js"></script>
-    <script src="/libs/angular-loading-bar/loading-bar.min.js"></script>
-    <script src="/libs/angular-base64-master/angular-base64.min.js"></script>
-    <script src="/libs/angular-base64-master/angular-base64-upload.js"></script>
-    <script src="/libs/angular-bootstrap/bootbox.js"></script>
-    <script src="/libs/moment/jquery.ui.durationPicker.js"></script>
-    <script src="/libs/moment/date.js"></script>
-    <script src="/libs/angular/angular-recaptcha.min.js"></script>
-    <script src="/scripts/app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_K7GmIbxuMHgMeSYIzqtQ5mMHCn8k9i0&language=en"></script> 
+    </div> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_K7GmIbxuMHgMeSYIzqtQ5mMHCn8k9i0&language=en"></script>
     <script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>
-    <script src="/scripts/directives/directives.js"></script>
-    <script src="/scripts/config.js"></script>
-    <script src="/scripts/services/locationHistoryService.js"></script>
-    <script src="/scripts/services/ValiDatedTokenObjectService.js"></script>
-    <script src="/scripts/services/AuthService.js"></script>
-    <script src="/scripts/services/searchService.js"></script>
-    <script src="/scripts/services/addtripsService.js"></script>
-    <script src="/scripts/services/ParcelService.js"></script>
-    <script src="/scripts/services/airportservice.js"></script>
-    <script src="/admin/scripts/services/UsersService.js"></script>
-    <script src="/scripts/services/ReceiverService.js"></script>
-    <script src="/scripts/controllers/HeaderController.js"></script>
-    <script src="/scripts/controllers/LoginController.js"></script>
-    <script src="/scripts/controllers/forgetpasswordController.js"></script>
-    <script src="/scripts/controllers/signupController.js"></script>
-    <script src="/scripts/controllers/homeController.js"></script>
-    <script src="/scripts/controllers/searchController.js"></script>
-    <script src="/scripts/controllers/dashboardController.js"></script>
-    <script src="/scripts/controllers/ChangePasswordController.js"></script>
-    <script src="/scripts/controllers/trans/transbookingController.js"></script>
-    <script src="/scripts/controllers/trans/transporterController.js"></script>
-    <script src="/scripts/controllers/trans/addtripsController.js"></script>
-    <script src="/scripts/controllers/trans/BankdetailsController.js"></script>
-    <script src="/scripts/controllers/trans/CancelledtripsController.js"></script>
-    <script src="/scripts/controllers/trans/WidrowamountController.js"></script>
-    <script src="/scripts/controllers/trans/edittripsController.js"></script>
-    <script src="/scripts/controllers/trans/uploadtripsticketController.js"></script>
-    <script src="/scripts/controllers/trans/viewtripsController.js"></script>
-    <script src="/scripts/controllers/ReceiverController.js"></script>
-    <script src="/scripts/controllers/parcel/SenderController.js"></script>
-    <script src="/scripts/controllers/parcel/AddparcelController.js"></script>
-    <script src="/scripts/controllers/parcel/CancelParcelController.js"></script>
-    <script src="/scripts/controllers/parcel/editparcelController.js"></script>
-    <script src="/scripts/controllers/parcel/viewparcelController.js"></script>
-    <script src="/scripts/controllers/parcel/mywalletController.js"></script>
-    <script src="/scripts/controllers/parcel/parcelbookingController.js"></script>
-    <script src="/scripts/controllers/AllcontentController.js"></script> 
-    <script src="/scripts/controllers/VerifyuserController.js"></script>
-    <script src="/scripts/controllers/chatmessagesController.js"></script>
-    <script src="js/socket.io.js"></script>
-    <script src="/demo/popupwindow.js"></script> 
     <script>
         (function ($) {
             $.fn.clickToggle = function (func1, func2) {

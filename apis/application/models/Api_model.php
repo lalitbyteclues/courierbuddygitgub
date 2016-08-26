@@ -1388,70 +1388,7 @@ class Api_model extends CI_Model {
 			$this->email->message($message);
 			$this->email->send(); 
 			$query = $this->db->query("SELECT * FROM `cms_parcels`  order by id desc limit 1"); 
-			//receiver email 
-			$this->email->from("info@mycourierbuddy.com", 'mycourierbuddy');
-			$emailid=$res2->username;
-			$this->email->to($emailid.',admin@mycourierbuddy.com'); 
-			$this->email->subject('MCB: Parcel No '.$parcelcreated->ParcelID.' Created ');   
-			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
-    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
-    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
-        <div>
-            <div style="text-align:left">Dear '.$res2->name.'</div>
-            <p style="text-align:left;">Congratulations! You have successfully added a new parcel request.</p>
-            <div style="text-align:left; color:#2c4882;">
-                <table>
-                    <tr>
-                        <td> Parcel No - </td>
-                        <td>'.$parcelcreated->ParcelID.'</td>
-                    </tr>
-                    <tr>
-                        <td>From - </td>
-                        <td>'.$parcel['source'].'</td>
-                    </tr>
-                    <tr>
-                        <td>To -</td>
-                        <td>'.$parcel['destination'].'</td>
-                    </tr>
-                    <tr>
-                        <td> Deliver Till -</td>
-                        <td>'.$parcel['till_date'].'</td>
-                    </tr>
-                    <tr>
-                        <td> Weight -</td>
-                        <td>'.$parcel['weight'].' Kg</td>
-                    </tr>
-                    <tr>
-                        <td> Details -</td>
-                        <td>'.$parcel['description'].'</td>
-                    </tr>
-                    <tr>
-                        <td>Amount to Pay -</td>
-                        <td>'.$parcel['payment'].'</td>
-                    </tr>
-                    <tr>
-                        <td>Receiver -</td>
-                        <td>'.$res2->name.'</td>
-                    </tr>
-                </table>
-            </div> 
-            <br>Please ensure to make a payment as soon as transporter is matched for your parcel. <br />  <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
-        </div>
-        <br><b style="font-family:Calibri;">Note -  Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
-    </div>
-    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
-        <table style="width:100%;padding:0 25px;">
-            <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
-            </tr>
-        </table>
-    </div>
-</div>';
-			$this->email->message($message);
-			$this->email->send();  
+			//receiver email  
 			$data=new stdclass();
 			$data->status="success";
 			$data->response=$query->result()[0]; 		
