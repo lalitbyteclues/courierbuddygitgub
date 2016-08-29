@@ -522,8 +522,42 @@ angular.module('courier').controller("addtripsController", function ($rootScope,
         }
     }
 });
-angular.module('courier').controller("PricelistController", function ($rootScope, $scope, $location, ValiDatedTokenObject, locationHistoryService, AuthService) {
-
+angular.module('courier').controller("PricelistController", function ($rootScope, $scope, $location, ValiDatedTokenObject, AirportService, AuthService) {
+    $scope.zonelist = [];
+    $scope.searchfromzoneid = 0;
+    $scope.searchtozoneid = 0; 
+    $scope.weightrangelist = [];
+    AirportService.getzonelist().then(function (results) {
+        $scope.zonelist = results.data.response;
+    });
+    AirportService.getweightrangelist().then(function (results) {
+        $scope.weightrangelist = results.data.response;
+        $scope.checkgridlist();
+    });
+    dTable = $('#example').DataTable({ searching: false, "paging": true });
+    $scope.checkgridlist = function () {
+        $scope.successmessage = "";
+        if ($scope.searchfromzoneid >= 0 && $scope.searchtozoneid >= 0) {
+            AirportService.getpricelist().then(function (results) {
+                $scope.list = [];
+                dTable.clear().draw();
+                for (i = 0; i < $scope.weightrangelist.length; i++) {
+                    var datacount = $.grep(results.data.response, function (pp) { return (pp.fromzoneid == $scope.searchfromzoneid || $scope.searchfromzoneid == 0) && (pp.tozoneid == $scope.searchtozoneid || $scope.searchtozoneid == 0) && pp.weightrangeid == $scope.weightrangelist[i].id });
+                   if (datacount.length > 0) {
+                        for (j = 0; j < datacount.length; j++) {
+                            $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "transportershare": parseFloat(datacount[j].transportershare), "price": parseFloat(datacount[j].price), "id": datacount[j].id, "fromzoneid": datacount[j].fromzoneid, "tozoneid": datacount[j].tozoneid });
+                            dTable.row.add(["Zone " + datacount[j].fromzoneid, "Zone " + datacount[j].tozoneid, $scope.weightrangelist[i].name, parseFloat(datacount[j].price), parseFloat(datacount[j].transportershare)]).draw();;
+                        }
+                    } else {
+                        $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "transportershare": 0, "price": 0, "id": 0, "fromzoneid": $scope.searchfromzoneid, "tozoneid": $scope.searchtozoneid });
+                    }
+                }
+                console.log($scope.list);
+            });              
+        } else {
+            $scope.list = [];
+        }
+    }
 });
 angular.module('courier').controller("TermsandconditionController", function ($rootScope, $scope, $location, UsersService, locationHistoryService, AuthService) {
     UsersService.getMypageslist(3).then(function (results) {

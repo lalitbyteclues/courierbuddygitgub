@@ -1,92 +1,57 @@
-﻿<div ng-include="'views/head.html'"></div> 
+﻿<div ng-include="'views/head.html'"></div>
 <section class="container" ng-controller="PricelistController">
     <div class="row">
         <div class="col-md-12">
-            <div class="page-heading"> 
-            <br />
-                <h1> Price List <span>(Any Airport to Any Airport)</span></h1></div>
+            <div class="page-heading">
+                <br /> 
+                <fieldset>
+                    <legend>Price List</legend>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <p class="input-group" style="width:100%;">
+                                <label> From Zone</label>
+                                <select data-ng-model="searchfromzoneid" class="form-control">
+                                    <option value="0">All</option>
+                                    <option ng-repeat="price in zonelist" ng-selected="data.zonelistid==price.id" value="{{price.id}}">{{price.Zonename}}</option>
+                                </select>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            To
+                        </div>
+                        <div class="col-md-3">
+                            <label> To Zone</label>
+                            <select data-ng-model="searchtozoneid" class="form-control">
+                                <option value="0">All</option>
+                                <option ng-repeat="price in zonelist" ng-selected="data.zonelistid==price.id" value="{{price.id}}">{{price.Zonename}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" style="float:left;">
+                            <a href="javascript:void(0);" style="margin-top:36px;" ng-click="checkgridlist()" class="btn btn-primary">Get List</a>
+                        </div>
+                    </div>
+                </fieldset>
+                <span>Note: All domestic airports fall into same zone.</span>
+            </div>
             <div class="intb static-prc-pg">
                 <table id="example" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
                     <thead>
                         <tr>
+                            <th>From Zone</th>
+                            <th>To Zone</th>
                             <th>Weight Range From To (Kg.)</th>
-                            <th>Parcel Cost</th>
-                            <th>Transporter Share</th>
+                            <th>Parcel Cost (<i class="fa fa-inr"></i>) </th>
+                            <th>Transporter Share (<i class="fa fa-inr"></i>) </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Up to 0.2kg</td>
-                            <td><i class="fa fa-inr"></i>500</td>
-                            <td><i class="fa fa-inr"></i>400</td>
-                        </tr>
-                        <tr>
-                            <td>Above 0.2kg upto 0.5kg</td>
-                            <td><i class="fa fa-inr"></i>800</td>
-                            <td><i class="fa fa-inr"></i>640</td>
-                        </tr>
-                        <tr>
-                            <td>Above 0.5kg upto 1kg</td>
-                            <td><i class="fa fa-inr"></i>1000</td>
-                            <td><i class="fa fa-inr"></i>800</td>
-                        </tr>
-                        <tr>
-                            <td>Above 1kg upto 2kg</td>
-                            <td><i class="fa fa-inr"></i>1950</td>
-                            <td><i class="fa fa-inr"></i>1560</td>
-                        </tr>
-                        <tr>
-                            <td>Above 2kg upto 3kg</td>
-                            <td><i class="fa fa-inr"></i>2900</td>
-                            <td><i class="fa fa-inr"></i>2320</td>
-                        </tr>
-                        <tr>
-                            <td>Above 3kg upto 4kg</td>
-                            <td><i class="fa fa-inr"></i>3800</td>
-                            <td><i class="fa fa-inr"></i>3040</td>
-                        </tr>
-                        <tr>
-                            <td>Above 4kg upto 5kg</td>
-                            <td><i class="fa fa-inr"></i>4700</td>
-                            <td><i class="fa fa-inr"></i>3760</td>
-                        </tr>
-                        <tr>
-                            <td>Above 5kg upto 6kg</td>
-                            <td><i class="fa fa-inr"></i>5600</td>
-                            <td><i class="fa fa-inr"></i>4480</td>
-                        </tr>
-                        <tr>
-                            <td>Above 6kg upto 7kg</td>
-                            <td><i class="fa fa-inr"></i>6500</td>
-                            <td><i class="fa fa-inr"></i>5200</td>
-                        </tr>
-                        <tr>
-                            <td>Above 7kg upto 8kg</td>
-                            <td><i class="fa fa-inr"></i>7400</td>
-                            <td><i class="fa fa-inr"></i>5920</td>
-                        </tr>
-                        <tr>
-                            <td>Above 8kg upto 9kg</td>
-                            <td><i class="fa fa-inr"></i>8300</td>
-                            <td><i class="fa fa-inr"></i>6640</td>
-                        </tr>
-                        <tr>
-                            <td>Above 9kg upto 10kg</td>
-                            <td><i class="fa fa-inr"></i>9200</td>
-                            <td><i class="fa fa-inr"></i>7360</td>
-                        </tr>
-
+                        
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</section>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#example').DataTable({
-            searching: false, "paging": false
-        });
-    });
-</script>
+    <style>
+       #example_wrapper{text-align:left;}
+    </style>
+</section> 
