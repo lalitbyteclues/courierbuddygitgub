@@ -102,31 +102,27 @@ angular.module('courier').factory("AuthService", ['$http', '$q', 'ValiDatedToken
             return response;
         });
     };
-    var _login = function (loginData) {  
+    var _login = function (loginData) {
         var deferred = $q.defer();
-        $http({method: 'POST', url: serviceBase + "api/getloginuser", data: { 'email': loginData.userName, 'password': loginData.password },headers: { 'Content-Type': 'application/json' }}).success(function (response) {
-            console.log(response);
-            if (response.status == "success" && (parseInt(response.response[0].role_id) == 1)) {
+        $http({ method: 'POST', url: serviceBase + "api/getloginuser", data: { 'email': loginData.userName, 'password': loginData.password }, headers: { 'Content-Type': 'application/json' } }).success(function (response) {
+            if (response.status == "success") {
                 ValiDatedTokenObject.setValiDatedTokenObject(response.response);
-                sessionStorage.setItem("ValiDatedTokenObject", JSON.stringify(ValiDatedTokenObject.getValiDatedTokenObject())); 
+                sessionStorage.setItem("ValiDatedTokenObject", JSON.stringify(ValiDatedTokenObject.getValiDatedTokenObject()));
                 _authentication.isAuth = true;
                 _authentication.userName = response.response[0].name;
                 _authentication.isUser = (parseInt(response.response[0].role_id) == 2);
                 _authentication.isAdministrator = (parseInt(response.response[0].role_id) == 1);
                 _authentication.UserId = response.response[0].id;
                 _authentication.isActive = (response.response[0].status == "Y");
-                sessionStorage.setItem("UserId", response.response[0].id); 
+                sessionStorage.setItem("UserId", response.response[0].id);
                 deferred.resolve(response);
-            } else { 
-                _logOut();
-                deferred.reject("Invalid Details");
-            }
+            } else { deferred.resolve(response); }
         }).error(function (response) {
             _logOut();
             deferred.reject(err);
-        }); 
-        return deferred.promise; 
-    }; 
+        });
+        return deferred.promise;
+    };
     var _logOut = function () {
         sessionStorage.removeItem("ValiDatedTokenObject");
         _authentication.isAuth = false;
