@@ -1,0 +1,2 @@
+[17-Aug-2016 05:53:07 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/mycourierbuddy/public_html/success.php:58) in /home/mycourierbuddy/public_html/success.php on line 66
+[17-Aug-2016 05:53:42 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/mycourierbuddy/public_html/success.php:58) in /home/mycourierbuddy/public_html/success.php on line 66

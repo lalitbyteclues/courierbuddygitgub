@@ -251,7 +251,7 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider, $loca
             }
         })
 }
-angular.module('courier').config(configState).run(function ($rootScope, $state,  Permission, ValiDatedTokenObject, AuthService) {
+angular.module('courier').config(configState).run(function ($rootScope, $state, ValiDatedTokenObject, AuthService) {
     
     $rootScope.numberWithCommas = function (x) {
         var parts = x.toString().split(".");
@@ -260,50 +260,6 @@ angular.module('courier').config(configState).run(function ($rootScope, $state, 
     }
     AuthService.fillAuthData();
     $rootScope.$state = $state; 
-    // Define anonymous role
-    Permission.defineRole('anonymous', function (stateParams) {
-        if (!sessionStorage.getItem("ValiDatedTokenObject")) {
-            return true;
-        }
-
-        ValiDatedTokenObject.setValiDatedTokenObject(JSON.parse(sessionStorage.getItem("ValiDatedTokenObject")));
-        if (!ValiDatedTokenObject.getValiDatedTokenObject()) {
-            return true;
-        }
-        return false;
-    })
-        .defineRole('User', function (stateParams) {
-            if (AuthService.authentication.isUser) {
-                return true;
-            }
-            if (!sessionStorage.getItem("ValiDatedTokenObject")) {
-                return false;
-            }
-
-            ValiDatedTokenObject.setValiDatedTokenObject(JSON.parse(sessionStorage.getItem("ValiDatedTokenObject")));
-            if (ValiDatedTokenObject.getValiDatedTokenObject()) {
-                console.log(ValiDatedTokenObject);
-                var role = ValiDatedTokenObject.getValiDatedTokenObject().roles;
-                if (role == 'User') {
-                    return true;
-                }
-            }
-            return false;
-        })
-        .defineRole('Admin', function (stateParams) {
-            if (AuthService.authentication.isAdministrator) {
-                return true;
-            }
-            ValiDatedTokenObject.setValiDatedTokenObject(JSON.parse(sessionStorage.getItem("ValiDatedTokenObject")));
-            if (ValiDatedTokenObject.getValiDatedTokenObject()) {
-                var role = ValiDatedTokenObject.getValiDatedTokenObject().roles;
-                if (role == 'Admin') {
-                    return true;
-                }
-            }
-            return false;
-        });
-
 }); 
 angular.isUndefinedOrNull = function (val) {
     return angular.isUndefined(val) || val === null

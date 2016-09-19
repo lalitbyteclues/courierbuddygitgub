@@ -1,26 +1,7 @@
-//var apiBasePath = 'http://localhost/'; //local 
-//var apiBasePath = 'http://webservice9875.mycourierbuddy.in/'; //live http://webservice.mycourierbuddy.com/
-var apiBasePath = 'https://mycourierbuddy.com/apis/index.php/'; //live
+var apiBasePath = 'https://mycourierbuddy.com/apis/index.php/';
 var clientId = "P600Us6Y476QiK331u5yEzb22dpX_y6NS75!9I-a";
 (function () {
-    angular.module('courier', [
-        'ui.router',// Angular flexible routing
-        'ngSanitize',// Angular-sanitize
-        'ui.bootstrap',// AngularJS native directives for Bootstrap  
-        'ngAnimate',// Angular animations 
-        'ui.calendar',// UI Calendar 
-        'ngGrid',                   // Angular ng Grid
-        'datatables',               // Angular datatables plugin 
-        'ui.select',                // AngularJS ui-select
-        'ui.sortable',              // AngularJS ui-sortable
-        'ui.footable',              // FooTable   
-        'ui.autocomplete', //UI autocomplete
-        'permission', // Permission
-        'timer',
-        'bcherny/formatAsCurrency',
-        'angular-loading-bar'
-        , 'base64', 'naif.base64', 'vcRecaptcha'
-    ]).constant('RESOURCES', (function () {
+    angular.module('courier', ['ui.router','ngSanitize','ui.bootstrap','ngAnimate','ui.autocomplete','bcherny/formatAsCurrency','angular-loading-bar','base64','naif.base64']).constant('RESOURCES', (function () {
         var searchcriteria = { datefrom: "", dateto: "", locationfrom: "", locationto: "", type: "Transporter" };
         var sendersearchcriteria = { TransporterID: "", departureat: "", status: "" };
         var tripsearchcriteria = { TransporterID: "", departureat: "", status: "" };

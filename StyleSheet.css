@@ -1,14 +1,2 @@
-﻿@import url("/css/stylesheet.min.css");
-@import url("/demo/popupwindow.css");
-@import url("/css/bootstrap.min.css");
-@import url("/css/timepicki.css");
-@import url("/libs/jquery/jquery.timepicker.css");
-@import url("/libs/bootstrap/dist/css/bootstrap.min.css");
-@import url("/libs/bootstrap/dist/css/bootstrap-theme.css");
-@import url("/libs/font-awesome/css/font-awesome.min.css");
-@import url("/libs/jquery-ui/themes/blitzer/jquery-ui.min.css");
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
-@import url("/libs/jquery/intlTelInput.css");
-@import url("/libs/resgrid/css/dataTables.bootstrap.min.css");
-@import url("/libs/resgrid/css/responsive.bootstrap.min.css");
-@import url("/libs/moment/jquery.ui.durationPicker.css"); 
+﻿@import url("/libs/font-awesome/css/font-awesome.min.css"); 
+@import url("https://fonts.googleapis.com/css?family=Open+Sans"); 

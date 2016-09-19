@@ -263,9 +263,6 @@ jQuery(function($) {
     goToFirstSpeed:1000, 
   
   }); 
-
- $("a[data-rel^='prettyPhoto']").prettyPhoto();
- 
     
  
 

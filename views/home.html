@@ -1,24 +1,10 @@
 ﻿<div  ng-include="'views/head.html'"></div>
 <script src="/js/responsiveslides.min.js"></script>
 <script>
-    $(function () {
-        $("#slider1").responsiveSlides({
-            pager: false,
-            maxwidth: 1800,
-            speed: 800
-        });
-    });
+$(function(){$("#slider1").responsiveSlides({pager:!1,maxwidth:1800,speed:800})});
 </script>
 <script>
-    $(document).ready(function () { showModal('shw'); });
-    function showModal(id) {
-        $("." + id).fadeIn('slow');
-        $("." + id).fadeIn('slow');
-    }
-    function hideModal(id) {
-        setInterval(function () { $("." + id).fadeOut('slow'); }, 1000);
-    }
-    setInterval(function () { $(".shw").fadeOut('slow'); }, 15000);
+   function showModal(a){$("."+a).fadeIn("slow"),$("."+a).fadeIn("slow")}function hideModal(a){setInterval(function(){$("."+a).fadeOut("slow")},1e3)}$(document).ready(function(){showModal("shw")}),setInterval(function(){$(".shw").fadeOut("slow")},15e3);
 </script>
 <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -30,22 +16,7 @@
             <li><img src="/images/slide1.jpg" alt=""></li>
         </ul>
         <script>
-            $(document).ready(function () {
-                // on load
-                $("#src-send").removeClass('active');
-                $("#src-trans").addClass('active');
-                //$("#hom-frm-cntnt").load("/home/trans/trans");
-                $('#src-send').on('click', function () {
-                    $("#src-trans").removeClass('active');
-                    $("#src-send").addClass('active');
-                    //$("#hom-frm-cntnt").load("/home/trans/send");
-                });
-                $('#src-trans').on('click', function () {
-                    $("#src-send").removeClass('active');
-                    $("#src-trans").addClass('active');
-                    //$("#hom-frm-cntnt").load("/home/trans/trans");
-                });
-            });
+           $(document).ready(function(){$("#src-send").removeClass("active"),$("#src-trans").addClass("active"),$("#src-send").on("click",function(){$("#src-trans").removeClass("active"),$("#src-send").addClass("active")}),$("#src-trans").on("click",function(){$("#src-send").removeClass("active"),$("#src-trans").addClass("active")})});
         </script>
         <div class="">
             <div class="search-form">
@@ -339,26 +310,7 @@
             </div>
         </div>
         <script>
-            $('.quote_date').Zebra_DatePicker({
-                direction: true, pair: $('.quote_date1'), format: 'd-m-Y'
-            });
-            $('.quote_date1').Zebra_DatePicker({
-                direction: true, format: 'd-m-Y'
-            });
-            $(".trans-b").addClass('active');
-            $(".send-trans .transporter-li").show(1000);
-            $(".send-b").click(function () {
-                $(".send-trans .transporter-li").hide(1000);
-                $(".send-trans .sender-li").show(1000);
-                $(".send-b").addClass('active');
-                $(".trans-b").removeClass('active');
-            });
-            $(".trans-b").click(function () {
-                $(".send-trans .sender-li").hide(1000);
-                $(".send-trans .transporter-li").show(1000);
-                $(".trans-b").addClass('active');
-                $(".send-b").removeClass('active');
-            }); 
+           $(".quote_date").Zebra_DatePicker({direction:!0,pair:$(".quote_date1"),format:"d-m-Y"}),$(".quote_date1").Zebra_DatePicker({direction:!0,format:"d-m-Y"}),$(".trans-b").addClass("active"),$(".send-trans .transporter-li").show(1e3),$(".send-b").click(function(){$(".send-trans .transporter-li").hide(1e3),$(".send-trans .sender-li").show(1e3),$(".send-b").addClass("active"),$(".trans-b").removeClass("active")}),$(".trans-b").click(function(){$(".send-trans .sender-li").hide(1e3),$(".send-trans .transporter-li").show(1e3),$(".trans-b").addClass("active"),$(".send-b").removeClass("active")});
         </script>
     </section> 
 </div>

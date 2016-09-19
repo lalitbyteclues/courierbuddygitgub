@@ -1,15 +1,4 @@
-/**
- * HOMER - Responsive Admin Theme
- * Copyright 2015 Webapplayers.com
- *
- */
-
-angular
-    .module('courier')
-    .directive('pageTitle', pageTitle)
-    .directive('sideNavigation', sideNavigation)
-    .directive('minimalizaMenu', minimalizaMenu)
-    .directive('sparkline', sparkline)
+angular.module('courier').directive('pageTitle', pageTitle).directive('sideNavigation', sideNavigation).directive('minimalizaMenu', minimalizaMenu).directive('sparkline', sparkline)
     .directive('icheck', icheck)
     .directive('panelTools', panelTools)
     .directive('panelToolsFullscreen', panelToolsFullscreen)

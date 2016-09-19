@@ -143,17 +143,7 @@ angular.module('courier').controller("homeController", function ($scope, ValiDat
         $event.stopPropagation();
         $scope.status0.opened = true;
 
-    };
-    UsersService.getMysliderlist().then(function (results) {
-        var images = [];
-        for (i = 0; i < results.data.response.length; i++) { 
-            if(results.data.response[i].status=="Y")
-            {
-                images.push(results.data.response[i]);
-            } 
-        }
-        $scope.sliderimages = images;
-    });
+    }; 
     $scope.open1 = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();

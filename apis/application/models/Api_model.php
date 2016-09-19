@@ -189,8 +189,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('MCB: Trip No. '.$tripdetails->TripID.' Is “On Hold”'); 
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 				<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-					<img src="https://mycourierbuddy.com/images/logo.png" />
-				</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+					<img src="http://mycourierbuddy.in/images/logo.png" />
+				</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 				<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 					<div>
 						<div style="text-align:left">Dear '.$tripuser->name.'</div>
@@ -198,25 +198,25 @@ class Api_model extends CI_Model {
 						<div style="text-align:left; color:#2c4882;">
 							<table>
 								<tr>
-									<td>Trip No 		-</td>
+									<td>Trip No</td><td>&nbsp;-&nbsp;</td>
 									<td>'.$tripdetails->TripID.'</td>
 								</tr>
 								<tr>
-									<td>Flight No	- </td>
+									<td>Flight No	</td><td>&nbsp;-&nbsp;</td>
 									<td>'.$tripdetails->flight_no.'</td>
 								</tr>
 								<tr>
-									<td>PNR No 	-</td>
+									<td>PNR No 	</td><td>&nbsp;-&nbsp;</td>
 									<td>'.$tripdetails->pnr.'</td>
 								</tr>  
 							</table>
 						</div>
-						<p>
+						<p style="text-align:left;">
 						We request you to upload the ticket for the verification purpose along with your Trip. This shall help us, to verify the trip and Approve.   
 						</p>
-						<p>Please click on the below link to upload the ticket online -</p>
+						<p style="text-align:left;">Please click on the below link to upload the ticket online -</p>
 						<center>
-							<a href="https://mycourierbuddy.com/viewtrip/'.$res->id.'">Upload Ticket To Trip Link</a>
+							<a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$res->id.'">Upload Ticket To Trip Link</a>
 						</center>
 						<br> 
 						<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -226,8 +226,8 @@ class Api_model extends CI_Model {
 				<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 					<table style="width:100%;padding:0 25px;">
 						<tr>
-							<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-							<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+							<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+							<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 						</tr>
 					</table>
 				</div>
@@ -280,8 +280,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('MCB: Transporter Matched For Parcel No '.$parceldetails->ParcelID.'');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -289,40 +289,36 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No -	</td>
+                        <td>Parcel No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceldetails->ParcelID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Trip ID 		-
-                        </td>
+                            Trip ID </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$tripdetails->TripID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$tripuser->UserID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Flight No	-
-                        </td>
+                            Flight No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$tripdetails->flight_no.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Departure 	-
-                        </td>
+                            Departure </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$tripdetails->dep_time.'</td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 Make immediate payment to confirm your booking with the transporter. Click on the link below to make payment.
             </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewparcel/'.$parceldetails->id.'">Make Payment Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parceldetails->id.'">Make Payment Link</a>
             </center>
             <br>As soon as payment is made, Automatic chat will be activated with Transporter and Receiver.
             <br />
@@ -335,8 +331,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -384,8 +380,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Trip No '.$tripcreated->TripID.' Added Successfully');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$res1->name.'</div>
@@ -393,62 +389,55 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Trip ID 		-</td>
+                        <td>Trip ID 		</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$tripcreated->TripID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            From 		-
-                        </td>
+                            From </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip['source'].'</td>
                     </tr>
                     <tr>
                         <td>
-                            To 		-
-                        </td>
+                            To</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip['destination'].'</td>
                     </tr>
                     <tr>
                         <td>
-                            Departure Date	-
-                        </td>
+                            Departure Date</td><td>&nbsp;-&nbsp;</td>
                         <td> '.$trip['d_date'].'</td>
                     </tr>
                     <tr>
                         <td>
-                            Flight No 	-
-                        </td>
+                            Flight No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip['flight_no'].'</td>
                     </tr>
                     <tr>
                         <td>
-                            PNR No		-
-                        </td>
+                            PNR No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip['pnr'].'</td>
                     </tr>
                     <tr>
                         <td>
-                            Capacity	-
-                        </td>
+                            Capacity</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip['capacity'].' Kg</td>
                     </tr>
                     <tr>
                         <td>
-                            Comments 	-
-                        </td>
+                            Comments </td><td>&nbsp;-&nbsp;</td>
                         <td>
                            '.$trip['destination'].'
                         </td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 Your trip is saved and send to MCB Admin for approval.
-            </p><p>
+            </p><p style="text-align:left;">
                 Once your trip is approved by admin, trip will be visible to senders for booking parcels with you and or you shall also be able to look for matching parcels.
             </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewtrip/'.$tripcreated->id.'">Check Trip Status Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$tripcreated->id.'">Check Trip Status Link</a>
             </center>
             <b>Note - Please present your Photo ID to sender while collecting and handing over the parcel.</b>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -458,8 +447,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -537,8 +526,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('MCB: Parcel No '.$parcel->ParcelID.' Create and Booked with Transporter Trip '.$trip->TripID.'');    
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -546,40 +535,37 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No - </td>
+                        <td>Parcel No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
-                        <td> Trip ID - </td>
+                        <td> Trip ID </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->TripID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$transuser->UserID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Flight No -
-                        </td>
+                            Flight No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->flight_no.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Departure -
-                        </td>
+                            Departure</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->dep_time.'</td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 You can find the more details about transporter on the MCB portal.
             </p>
             <br>
-            <p>Automatic chat is activated with Transporter and Receiver. You can now chat and coordinate with transporter to handover your parcel on time. Click on below link </p>
+            <p style="text-align:left;">Automatic chat is activated with Transporter and Receiver. You can now chat and coordinate with transporter to handover your parcel on time. Click on below link </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewparcel/'.$parcel->id.'">Chat Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Chat Link</a>
             </center>
             <br>
             <b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b>
@@ -590,8 +576,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -604,8 +590,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('MCB: Parcel No '.$parcel->ParcelID.' Create and Booked with Transporter Trip '.$trip->TripID.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -613,40 +599,37 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No - </td>
+                        <td>Parcel No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
-                        <td> Trip ID - </td>
+                        <td> Trip ID </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->TripID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$transuser->UserID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Flight No -
-                        </td>
+                            Flight No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->flight_no.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Departure -
-                        </td>
+                            Departure</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->dep_time.'</td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 You can find the more details about transporter on the MCB portal.
             </p>
             <br>
-            <p>Automatic chat is activated with Transporter and Receiver. You can now chat and coordinate with transporter to handover your parcel on time. Click on below link </p>
+            <p style="text-align:left;">Automatic chat is activated with Transporter and Receiver. You can now chat and coordinate with transporter to handover your parcel on time. Click on below link </p>
             <center>
-                <a href="https://mycourierbuddy.com/receiver">Chat Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/receiver">Chat Link</a>
             </center>
             <br>
             <b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b>
@@ -657,8 +640,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -672,8 +655,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('MCB: Parcel No '.$parcel->ParcelID.' Create and Booked with Transporter Trip '.$trip->TripID.'');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$transuser->name.'</div>
@@ -681,47 +664,47 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel ID	-</td>
+                        <td>Parcel ID	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
-                        <td>Sender -</td>
+                        <td>Sender </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->UserID.'</td>
                     </tr>
                     <tr>
-                        <td>Sender Name - </td>
+                        <td>Sender Name </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->name.'</td>
                     </tr>
                     <tr>
-                        <td>Receiver - </td>
+                        <td>Receiver </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr>
                     <tr>
-                        <td>Trip ID	- </td>
+                        <td>Trip ID	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->TripID.'</td>
                     </tr>
                     <tr>
-                        <td>PNR No - </td>
+                        <td>PNR No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->pnr.'</td>
                     </tr>
                     <tr>
-                        <td>Departure Date	- </td>
+                        <td>Departure Date	</td><td>&nbsp;-&nbsp;</td>
                         <td>'. date("d-m-Y H:i:s", strtotime($trip->dep_time)).'</td>
                     </tr>
                     <tr>
-                        <td>Flight No - </td>
+                        <td>Flight No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->flight_no.'</td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 You can find the more details about sender on the MCB portal.
             </p>
-            <p>Automatic chat is activated with Sender and Receiver. You can now chat and coordinate with sender to collect the parcel on time. Click on below link  </p>
+            <p style="text-align:left;">Automatic chat is activated with Sender and Receiver. You can now chat and coordinate with sender to collect the parcel on time. Click on below link  </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewtrip/'.$trip->id.'">View Trip Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$trip->id.'">View Trip Link</a>
             </center>
-            <p>
+            <p style="text-align:left;">
                 <b>
                     Note - Please present your Photo ID to sender while collecting and handing over the parcel.
                 </b>
@@ -736,8 +719,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -841,8 +824,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('MCB: Parcel No '.$parcel->ParcelID.' Create and Booked with Transporter Trip '.$trip->TripID.'');   
 		   $message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -850,40 +833,37 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No - </td>
+                        <td>Parcel No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
-                        <td> Trip ID - </td>
+                        <td> Trip ID </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->TripID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$transuser->UserID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Flight No -
-                        </td>
+                            Flight No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->flight_no.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Departure -
-                        </td>
+                            Departure</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->dep_time.'</td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 You can find the more details about transporter on the MCB portal.
             </p>
             <br>
-            <p>Automatic chat is activated with Transporter and Receiver. You can now chat and coordinate with transporter to handover your parcel on time. Click on below link </p>
+            <p style="text-align:left;">Automatic chat is activated with Transporter and Receiver. You can now chat and coordinate with transporter to handover your parcel on time. Click on below link </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewparcel/'.$parcel->id.'">Chat Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Chat Link</a>
             </center>
             <br>
             <b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b>
@@ -894,8 +874,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -910,8 +890,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('MCB: Parcel No '.$parcel->ParcelID.' Create and Booked with Transporter Trip '.$trip->TripID.'');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -919,40 +899,37 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No - </td>
+                        <td>Parcel No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
-                        <td> Trip ID - </td>
+                        <td> Trip ID </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->TripID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$transuser->UserID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Flight No -
-                        </td>
+                            Flight No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->flight_no.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Departure -
-                        </td>
+                            Departure</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->dep_time.'</td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 You can find the more details about transporter on the MCB portal.
             </p>
             <br>
-            <p>Automatic chat is activated with Transporter and Receiver. You can now chat and coordinate with transporter to handover your parcel on time. Click on below link </p>
+            <p style="text-align:left;">Automatic chat is activated with Transporter and Receiver. You can now chat and coordinate with transporter to handover your parcel on time. Click on below link </p>
             <center>
-                <a href="https://mycourierbuddy.com/receiver">Chat Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/receiver">Chat Link</a>
             </center>
             <br>
             <b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b>
@@ -963,8 +940,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -978,8 +955,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('MCB: Parcel No '.$parcel->ParcelID.' Create and Booked with Transporter Trip '.$trip->TripID.'');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$transuser->name.'</div>
@@ -987,47 +964,47 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel ID	-</td>
+                        <td>Parcel ID	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
-                        <td>Sender -</td>
+                        <td>Sender </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->UserID.'</td>
                     </tr>
                     <tr>
-                        <td>Sender Name - </td>
+                        <td>Sender Name </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->name.'</td>
                     </tr>
                     <tr>
-                        <td>Receiver - </td>
+                        <td>Receiver </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr>
                     <tr>
-                        <td>Trip ID	- </td>
+                        <td>Trip ID	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->TripID.'</td>
                     </tr>
                     <tr>
-                        <td>PNR No - </td>
+                        <td>PNR No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->pnr.'</td>
                     </tr>
                     <tr>
-                        <td>Departure Date	- </td>
+                        <td>Departure Date	</td><td>&nbsp;-&nbsp;</td>
                         <td>'. date("d-m-Y H:i:s", strtotime($trip->dep_time)).'</td>
                     </tr>
                     <tr>
-                        <td>Flight No - </td>
+                        <td>Flight No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->flight_no.'</td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 You can find the more details about sender on the MCB portal.
             </p>
-            <p>Automatic chat is activated with Sender and Receiver. You can now chat and coordinate with sender to collect the parcel on time. Click on below link  </p>
+            <p style="text-align:left;">Automatic chat is activated with Sender and Receiver. You can now chat and coordinate with sender to collect the parcel on time. Click on below link  </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewtrip/'.$trip->id.'">View Trip Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$trip->id.'">View Trip Link</a>
             </center>
-            <p>
+            <p style="text-align:left;">
                 <b>
                     Note - Please present your Photo ID to sender while collecting and handing over the parcel.
                 </b>
@@ -1042,8 +1019,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -1130,7 +1107,7 @@ class Api_model extends CI_Model {
 		if(isset( $contacts["id"]))
 		{
 			 $this->db->where('id', $contacts["id"]);
-			$this->db->update('contacts', $contacts);  
+			$this->db->update('contacts', $contacts); 
 			$data=new stdclass();
 			$data->status="success";
 			$data->response="Updated Successfully"; 		
@@ -1140,53 +1117,6 @@ class Api_model extends CI_Model {
 		else
 		{
 			$this->db->insert('contacts', $contacts); 
-			$this->email->from("info@mycourierbuddy.com", 'mycourierbuddy');
-			$this->email->to('contact@mycourierbuddy.com'); 
-			$this->email->subject('MCB: You got new Enquiry from '.$contacts["name"].'');   
-			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
-				<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-					<img src="https://mycourierbuddy.com/images/logo.png" />
-				</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
-				<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
-					<div>
-						<div style="text-align:left">Hello admin</div>
-						<p style="text-align:left;">you got new Enquiry</p>
-						<div style="text-align:left; color:#2c4882;">
-							<table>
-								<tr>
-									<td>Name-</td>
-									<td>'.$contacts["name"].'</td>
-								</tr>
-								<tr>
-									<td>Email -</td>
-									<td>'.$contacts["email"].'</td>
-								</tr>
-								<tr>
-									<td>Phone - </td>
-									<td>'.$contacts["phone"].'</td>
-								</tr>
-								<tr>
-									<td>Message - </td>
-									<td>'.$contacts["message"].'</td>
-								</tr> <tr>
-									<td>Date - </td>
-									<td>'.$contacts["created"].'</td>
-								</tr> 
-							</table>
-						</div> 
-					</div> 
-				</div>
-				<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
-					<table style="width:100%;padding:0 25px;">
-						<tr>
-							<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-							<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
-						</tr>
-					</table>
-				</div>
-			</div>';
-			$this->email->message($message);
-			$this->email->send();
 			$data=new stdclass();
 			$data->status="success";
 			$data->response="You Request sent Successfully"; 		
@@ -1324,8 +1254,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('MCB: Parcel No '.$parcelcreated->ParcelID.' Created');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$res1->name.'</div>
@@ -1333,44 +1263,44 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td> Parcel No - </td>
+                        <td> Parcel No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcelcreated->ParcelID.'</td>
                     </tr>
                     <tr>
-                        <td>From - </td>
+                        <td>From </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel['source'].'</td>
                     </tr>
                     <tr>
-                        <td>To -</td>
+                        <td>To </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel['destination'].'</td>
                     </tr>
                     <tr>
-                        <td> Deliver Till -</td>
+                        <td> Deliver Till </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel['till_date'].'</td>
                     </tr>
                     <tr>
-                        <td> Weight -</td>
+                        <td> Weight </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel['weight'].' Kg</td>
                     </tr>
                     <tr>
-                        <td> Details -</td>
+                        <td> Details </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel['description'].'</td>
                     </tr>
                     <tr>
-                        <td>Amount to Pay -</td>
+                        <td>Amount to Pay </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel['payment'].'</td>
                     </tr>
                     <tr>
-                        <td>Receiver -</td>
+                        <td>Receiver </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res2->name.'</td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 Now you can find the matching transporter online with your parcel. Click for find matching Transporters.
             </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewparcel/'.$parcelcreated->id.'">Find Matching Trips</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcelcreated->id.'">Find Matching Trips</a>
             </center>
             <br>Please ensure to make a payment as soon as transporter is matched for your parcel. <br />  <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
@@ -1379,8 +1309,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -1388,7 +1318,70 @@ class Api_model extends CI_Model {
 			$this->email->message($message);
 			$this->email->send(); 
 			$query = $this->db->query("SELECT * FROM `cms_parcels`  order by id desc limit 1"); 
-			//receiver email  
+			//receiver email 
+			$this->email->from("info@mycourierbuddy.com", 'mycourierbuddy');
+			$emailid=$res2->username;
+			$this->email->to($emailid.',admin@mycourierbuddy.com'); 
+			$this->email->subject('MCB: Parcel No '.$parcelcreated->ParcelID.' Created ');   
+			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
+    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
+    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
+        <div>
+            <div style="text-align:left">Dear '.$res2->name.'</div>
+            <p style="text-align:left;">Congratulations! You have successfully added a new parcel request.</p>
+            <div style="text-align:left; color:#2c4882;">
+                <table>
+                    <tr>
+                        <td> Parcel No </td><td>&nbsp;-&nbsp;</td>
+                        <td>'.$parcelcreated->ParcelID.'</td>
+                    </tr>
+                    <tr>
+                        <td>From </td><td>&nbsp;-&nbsp;</td>
+                        <td>'.$parcel['source'].'</td>
+                    </tr>
+                    <tr>
+                        <td>To </td><td>&nbsp;-&nbsp;</td>
+                        <td>'.$parcel['destination'].'</td>
+                    </tr>
+                    <tr>
+                        <td> Deliver Till </td><td>&nbsp;-&nbsp;</td>
+                        <td>'.$parcel['till_date'].'</td>
+                    </tr>
+                    <tr>
+                        <td> Weight </td><td>&nbsp;-&nbsp;</td>
+                        <td>'.$parcel['weight'].' Kg</td>
+                    </tr>
+                    <tr>
+                        <td> Details </td><td>&nbsp;-&nbsp;</td>
+                        <td>'.$parcel['description'].'</td>
+                    </tr>
+                    <tr>
+                        <td>Amount to Pay </td><td>&nbsp;-&nbsp;</td>
+                        <td>'.$parcel['payment'].'</td>
+                    </tr>
+                    <tr>
+                        <td>Receiver </td><td>&nbsp;-&nbsp;</td>
+                        <td>'.$res2->name.'</td>
+                    </tr>
+                </table>
+            </div> 
+            <br>Please ensure to make a payment as soon as transporter is matched for your parcel. <br />  <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
+        </div>
+        <br><b style="font-family:Calibri;">Note -  Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+    </div>
+    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
+        <table style="width:100%;padding:0 25px;">
+            <tr>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+            </tr>
+        </table>
+    </div>
+</div>';
+			$this->email->message($message);
+			$this->email->send();  
 			$data=new stdclass();
 			$data->status="success";
 			$data->response=$query->result()[0]; 		
@@ -1451,8 +1444,8 @@ class Api_model extends CI_Model {
 				$this->email->subject('Parcel No.'.$parceldata->ParcelID.' Is Cancelled By '.$parceluser->name.' Parcel .');   
 				$message=' <div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -1464,29 +1457,29 @@ class Api_model extends CI_Model {
                         <td>'.$parceldata->ParcelID.'</td>
                     </tr>
                     <tr>
-                        <td>Sender Name	-</td>
+                        <td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->name.'</td>
                     </tr>
                     <tr>
-                        <td>Transporter ID	-</td>
+                        <td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$transuser->UserID.'</td>
                     </tr> <tr>
-                        <td>Receiver	-</td>
+                        <td>Receiver	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr> <tr>
-                        <td>Delivery Date 	-</td>
+                        <td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$tripdata->arrival_time.'</td>
                     </tr>  
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
         The amount paid by you for this parcel is credit back in your Wallet. You can use it in your next parcel requests.
             </p> 
             <center>
-                <a href="https://mycourierbuddy.com/mywallet">Wallet Detail Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/mywallet">Wallet Detail Link</a>
             </center>
             <br> 
-			<p>Looking forward to serve you again.</p>
+			<p style="text-align:left;">Looking forward to serve you again.</p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
         <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from transporter at the time of receiving the parcel. This is to make sure transporter have delivered the parcel safely. </b>
@@ -1494,8 +1487,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -1509,8 +1502,8 @@ class Api_model extends CI_Model {
 				$this->email->subject('Parcel No.'.$parceldata->ParcelID.' Is Cancelled By '.$parceluser->name.'');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$transuser->name.'</div>
@@ -1518,30 +1511,30 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No</td>
+                        <td>Parcel No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceldata->ParcelID.'</td>
                     </tr>
                     <tr>
-                        <td>Sender Name	-</td>
+                        <td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->name.'</td>
                     </tr>
                     <tr>
-                        <td>Transporter ID	-</td>
+                        <td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$transuser->UserID.'</td>
                     </tr> <tr>
-                        <td>Receiver	-</td>
+                        <td>Receiver	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr> <tr>
-                        <td>Delivery Date 	-</td>
+                        <td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$tripdata->arrival_time.'</td>
                     </tr>  
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
          Your capacity booked with this parcel is available again. You can look for other parcels with your matching trip. 
             </p> 
             <center>
-                <a href="https://mycourierbuddy.com/viewtrip/'.$tripdata->id.'">Find Matching Parcel Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$tripdata->id.'">Find Matching Parcel Link</a>
             </center>
             <br> 
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -1551,8 +1544,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -1565,8 +1558,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Parcel No.'.$parceldata->ParcelID.' Is Cancelled By '.$parceluser->name.' Parcel .');   
 				$message=' <div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -1574,30 +1567,30 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceldata->ParcelID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> <tr>
-										<td>Receiver	-</td>
+										<td>Receiver	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$tripdata->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 						The amount paid by you for this parcel is credit back in Sender Wallet.
 							</p>  
 							<br> 
-							<p>Looking forward to serve you again.</p>
+							<p style="text-align:left;">Looking forward to serve you again.</p>
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
 						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from transporter at the time of receiving the parcel. This is to make sure transporter have delivered the parcel safely. </b>
@@ -1605,8 +1598,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -1692,8 +1685,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('Trip No. '.$tripdata->TripID.' Is Cancelled By '.$transuser->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -1701,32 +1694,32 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$tripdata->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$tripdata->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p> 
-							<p>In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
+							<p style="text-align:left;">In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
 							<center>
-								<a href="https://mycourierbuddy.com/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
+								<a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
 							</center>
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -1736,8 +1729,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -1751,8 +1744,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('Trip No. '.$tripdata->TripID.' Is Cancelled By '.$transuser->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -1760,27 +1753,27 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$tripdata->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$tripdata->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p>  
 							<br>  
@@ -1791,8 +1784,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -1807,8 +1800,8 @@ class Api_model extends CI_Model {
 				$this->email->subject('Trip No. '.$tripdata->TripID.' Is Cancelled By '.$transuser->name.'');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$transuser->name.'</div>
@@ -1816,31 +1809,31 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$tripdata->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$tripdata->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					  As you have cancelled the above mentioned Trip. All the parcels matched with this trip are removed from the Trip and any changes to the trip are locked.  
 							</p> 
 							<center>
-								<a href="https://mycourierbuddy.com/viewtrip/'.$tripdata->id.'">Trip Detail Link</a>
+								<a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$tripdata->id.'">Trip Detail Link</a>
 							</center>
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -1850,8 +1843,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -1915,8 +1908,8 @@ class Api_model extends CI_Model {
 				$this->email->subject('Trip No '.$res->TripID.' Is Approved by Admin Successfully');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$res1->name.'</div>
@@ -1924,56 +1917,52 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Trip ID - </td>
+                        <td>Trip ID </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->TripID.' </td>
                     </tr>
                     <tr>
-                        <td> From -</td>
+                        <td> From </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->source.' </td>
                     </tr>
                     <tr>
-                        <td> To - </td>
+                        <td> To </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->destination.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Departure Date	-
-                        </td>
+                            Departure Date</td><td>&nbsp;-&nbsp;</td>
                         <td>'. date("d-m-Y H:i:s", strtotime($res->dep_time)).'</td>
                     </tr>
                     <tr>
                         <td>
-                            Flight No 	-
-                        </td>
+                            Flight No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->flight_no.'</td>
                     </tr>
                     <tr>
                         <td>
-                            PNR No		-
-                        </td>
+                            PNR No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->pnr.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Capacity	-
-                        </td>
+                            Capacity</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->capacity.' Kg</td>
                     </tr>
                     <tr>
-                        <td>Comments - </td>
+                        <td>Comments </td><td>&nbsp;-&nbsp;</td>
                         <td>
                            '.$res->comment.'
                         </td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 Your trip is now visible to senders for booking parcels with you. You shall also be able to look for matching parcels now.
             </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewtrip/'.$res->id.'">View Trip Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$res->id.'">View Trip Link</a>
             </center>
-            <p>
+            <p style="text-align:left;">
                 <b>
                     Note - Please present your Photo ID to sender while collecting and handing over the parcel.
                 </b>
@@ -1988,8 +1977,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -2011,8 +2000,8 @@ class Api_model extends CI_Model {
 				$this->email->subject('MCB: Trip No. '.$res->TripID.' Is “On Hold”');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$res1->name.'</div>
@@ -2020,28 +2009,28 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Trip No 		-</td>
+                        <td>Trip No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->TripID.'</td>
                     </tr>
                     <tr>
-                        <td>Flight No	- </td>
+                        <td>Flight No	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->flight_no.'</td>
                     </tr>
                     <tr>
-                        <td>PNR No 	-</td>
+                        <td>PNR No 	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->pnr.'</td>
                     </tr> <tr>
-                        <td>reason-</td>
+                        <td>reason</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$request["reason"].'</td>
                     </tr>  
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
             We request you to upload the ticket for the verification purpose along with your Trip. This shall help us, to verify the trip and Approve.   
             </p>
-			<p>Please click on the below link to upload the ticket online -</p>
+			<p style="text-align:left;">Please click on the below link to upload the ticket online -</p>
             <center>
-                <a href="https://mycourierbuddy.com/viewtrip/'.$res->id.'">Upload Ticket To Trip Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$res->id.'">Upload Ticket To Trip Link</a>
             </center>
             <br> 
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -2051,8 +2040,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -2074,8 +2063,8 @@ class Api_model extends CI_Model {
 				$this->email->subject('MCB: Trip No. '.$res->TripID.' Is “Rejected”');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$res1->name.'</div>
@@ -2083,23 +2072,23 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Trip No -</td>
+                        <td>Trip No </td><td>&nbsp;-&nbsp;</td>
                         <td> '.$res->TripID.'</td>
                     </tr>
                     <tr>
-                        <td>Flight No	- </td>
+                        <td>Flight No	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->flight_no.'</td>
                     </tr>
                     <tr>
-                        <td>PNR No 	-</td>
+                        <td>PNR No 	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$res->pnr.'</td>
                     </tr> <tr>
-                        <td>reason -</td>
+                        <td>reason </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$request["reason"].'</td>
                     </tr> 
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
           Please get in touch with MCB Team for any further clarifications needed at admin@mycourierbuddy.com 
             </p> 
             <br> 
@@ -2110,8 +2099,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -2192,8 +2181,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('Trip No. '.$trip->TripID.' Is Cancelled By '.$transuser->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -2201,32 +2190,32 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p> 
-							<p>In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
+							<p style="text-align:left;">In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
 							<center>
-								<a href="https://mycourierbuddy.com/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
+								<a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
 							</center>
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -2236,8 +2225,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -2251,8 +2240,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('Trip No. '.$trip->TripID.' Is Cancelled By '.$transuser->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -2260,27 +2249,27 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p>  
 							<br>  
@@ -2291,8 +2280,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -2306,8 +2295,8 @@ class Api_model extends CI_Model {
 			  	$this->email->subject('Trip No. '.$trip->TripID.' Is Cancelled By '.$transuser->name.'');   
 			     $message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$transuser->name.'</div>
@@ -2315,31 +2304,31 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					  As you have cancelled the above mentioned Trip. All the parcels matched with this trip are removed from the Trip and any changes to the trip are locked.  
 							</p> 
 							<center>
-								<a href="https://mycourierbuddy.com/viewtrip/'.$trip->id.'">Trip Detail Link</a>
+								<a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$trip->id.'">Trip Detail Link</a>
 							</center>
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -2349,8 +2338,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -2386,8 +2375,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Parcel No '.$parcel->ParcelID.' Collected By Transporter '.$transuser->name.'');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -2395,34 +2384,31 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No 	-</td>
+                        <td>Parcel No 	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID</td><td>&nbsp;-&nbsp;</td>
                         <td> '.$transuser->UserID.' & '.$transuser->name.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Flight No	-
-                        </td>
+                            Flight No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->flight_no.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Arrival Time 	-
-                        </td>
+                            Arrival Time</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->arrival_time.'at Destination.
                         </td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 Do not forget to remind Receiver to receive the parcel as per the landing time at Destination or as per the agreement with Transporter.
             </p>
-            <p>
+            <p style="text-align:left;">
                 <b> Note - Please check the ID of transporter while handing over the parcel.</b>
             </p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -2432,8 +2418,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -2447,8 +2433,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Parcel No '.$parcel->ParcelID.' Collected By Transporter '.$transuser->name.'');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -2456,34 +2442,31 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No 	-</td>
+                        <td>Parcel No 	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID	</td><td>&nbsp;-&nbsp;</td>
                         <td> '.$transuser->UserID.' & '.$transuser->name.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Flight No	-
-                        </td>
+                            Flight No</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->flight_no.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Arrival Time 	-
-                        </td>
+                            Arrival Time</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->arrival_time.'at Destination.
                         </td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 Do not forget to remind Receiver to receive the parcel as per the landing time at Destination or as per the agreement with Transporter.
             </p>
-            <p>
+            <p style="text-align:left;">
                 <b> Note - Please check the ID of transporter while handing over the parcel.</b>
             </p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -2493,8 +2476,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -2508,8 +2491,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Parcel No '.$parcel->ParcelID.' Collected By Transporter '.$transuser->name.'');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$transuser->name.'</div>
@@ -2517,44 +2500,43 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel ID	-</td>
+                        <td>Parcel ID	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Sender 		-
-                        </td>
+                            Sender </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->UserID.'</td>
                     </tr>
                     <tr>
-                        <td>Sender Name - </td>
+                        <td>Sender Name </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->name.'</td>
                     </tr>
                     <tr>
-                        <td>Receiver -</td>
+                        <td>Receiver </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr>
                     <tr>
-                        <td>Trip ID	- </td>
+                        <td>Trip ID	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->TripID.'</td>
                     </tr>
                     <tr>
-                        <td>Departure Date	- </td>
+                        <td>Departure Date	</td><td>&nbsp;-&nbsp;</td>
                         <td>'. date("d-m-Y H:i:s", strtotime($trip->dep_time)).'</td>
                     </tr>
                     <tr>
-                        <td>Flight No - </td>
+                        <td>Flight No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->flight_no.'</td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 We appreciate your help for collecting the parcel and handing over to Receiver. Handle the parcel carefully and please get in touch with Receiver to deliver the parcel.
             </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewparcel/'.$trip->id.'">View Trip Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$trip->id.'">View Trip Link</a>
             </center>
-            <p>
+            <p style="text-align:left;">
                 <b>
                     Note - Please present your Photo ID to sender while collecting and handing over the parcel.
                 </b>
@@ -2569,8 +2551,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -2604,8 +2586,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Transporter '.$transuser->name.' Has Delivered the Parcel No. '.$parcel->ParcelID.'');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -2613,36 +2595,33 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No -</td>
+                        <td>Parcel No </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->TripID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Receiver	-
-                        </td>
+                            Receiver</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Delivery Date
-                        </td>
+                            Delivery Date</td><td>&nbsp;-&nbsp;</td>
                         <td>
                           '.date("Y-m-d H:i:s").'
                         </td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 Next Action - You can check with Receiver if he/she has received the parcel safely. And you can complete the status of parcel and rate the transporter by clicking the below link.
             </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewparcel/'.$parcel->id.'">Complete Order Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Complete Order Link</a>
             </center>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
@@ -2651,8 +2630,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -2666,8 +2645,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Transporter '.$transuser->name.' Has Delivered the Parcel No. '.$parcel->ParcelID.'');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -2676,37 +2655,33 @@ class Api_model extends CI_Model {
                 <table>
                     <tr>
                         <td>
-                            Sender Name	-
-                        </td>
+                            Sender Name	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->name.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$transuser->name.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Receiver	-
-                        </td>
+                            Receiver</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Delivery Date 	-
-                        </td>
+                            Delivery Date</td><td>&nbsp;-&nbsp;</td>
                         <td>
                            '.date("d-m-Y H:i:s").'
                         </td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 Next Action – Please complete the status of parcel and rate the transporter by clicking the below link -
             </p>
             <center>
-                <a href="https://mycourierbuddy.com/receiver">Complete Order Link </a>
+                <a href="http://dev9856.mycourierbuddy.in/receiver">Complete Order Link </a>
             </center>
 
             <br />
@@ -2719,8 +2694,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -2734,8 +2709,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Transporter '.$transuser->name.' Has Delivered the Parcel No. '.$parcel->ParcelID.'');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$transuser->name.'</div>
@@ -2743,38 +2718,36 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Trip ID 		- </td>
+                        <td>Trip ID 		</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$trip->TripID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Parcel ID	-
-                        </td>
+                            Parcel ID</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Sender 		-
-                        </td>
+                            Sender</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->UserID.'</td>
                     </tr>
                     <tr>
-                        <td>Sender Name - </td>
+                        <td>Sender Name </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parceluser->name.'</td>
                     </tr>
                     <tr>
-                        <td>Receiver - </td>
+                        <td>Receiver </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 We appreciate your help for delivering the parcel and handing over to Receiver. Receiver is going to confirm the receipt of parcel and share the feedback. On successful completion by Receiver/Sender your share of money will be credited in your Wallet.
             </p>
             <center>
-                <a href="https://mycourierbuddy.com/viewtrip/'.$trip->id.'">View Trip Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$trip->id.'">View Trip Link</a>
             </center>
-            <p>
+            <p style="text-align:left;">
                 <b>
                     Note - Please present your Photo ID to sender while collecting and handing over the parcel.
                 </b>
@@ -2789,8 +2762,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -2854,8 +2827,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('Parcel No. '.$parcel->ParcelID.' Booking Is Cancelled By '.$transuser->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -2863,32 +2836,32 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p> 
-							<p>In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
+							<p style="text-align:left;">In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
 							<center>
-								<a href="https://mycourierbuddy.com/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
+								<a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
 							</center>
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -2898,8 +2871,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -2913,8 +2886,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('Parcel No. '.$parcel->ParcelID.' Booking Is Cancelled By '.$transuser->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -2922,27 +2895,27 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p>   
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -2952,8 +2925,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -3023,8 +2996,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('Parcel No. '.$parcel->ParcelID.' Booking Is Cancelled By '.$processby->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -3032,32 +3005,32 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p> 
-							<p>In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
+							<p style="text-align:left;">In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
 							<center>
-								<a href="https://mycourierbuddy.com/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
+								<a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
 							</center>
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -3067,8 +3040,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -3082,8 +3055,8 @@ class Api_model extends CI_Model {
 				$this->email->subject('Parcel No. '.$parcel->ParcelID.' Booking Is Cancelled By '.$processby->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -3091,27 +3064,27 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p>  
 							<br>  
@@ -3122,8 +3095,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -3190,8 +3163,8 @@ class Api_model extends CI_Model {
 			    $this->email->subject('Parcel No. '.$parcel->ParcelID.' Is Cancelled By '.$parceluser->name.'');   
 			    $message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$transuser->name.'</div>
@@ -3199,31 +3172,31 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					  As you have cancelled the above mentioned Trip. All the parcels matched with this trip are removed from the Trip and any changes to the trip are locked.  
 							</p> 
 							<center>
-								<a href="https://mycourierbuddy.com/viewtrip/'.$trip->id.'">Trip Detail Link</a>
+								<a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$trip->id.'">Trip Detail Link</a>
 							</center>
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -3233,8 +3206,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -3248,8 +3221,8 @@ class Api_model extends CI_Model {
 				$this->email->subject('Parcel No. '.$parcel->ParcelID.' Is Cancelled By '.$parceluser->name.'');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -3257,27 +3230,27 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -3287,8 +3260,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -3302,8 +3275,8 @@ class Api_model extends CI_Model {
 				$this->email->subject('Parcel No. '.$parcel->ParcelID.' Is Cancelled By '.$parceluser->name.'');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -3311,32 +3284,32 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p> 
-							<p>In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
+							<p style="text-align:left;">In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
 							<center>
-								<a href="https://mycourierbuddy.com/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
+								<a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
 							</center>
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -3346,8 +3319,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -3399,8 +3372,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('Parcel No. '.$parcel->ParcelID.' Is Cancelled By '.$parceluser->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$transuser->name.'</div>
@@ -3408,31 +3381,31 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					  As you have cancelled the above mentioned Trip. All the parcels matched with this trip are removed from the Trip and any changes to the trip are locked.  
 							</p> 
 							<center>
-								<a href="https://mycourierbuddy.com/viewtrip/'.$trip->id.'">Trip Detail Link</a>
+								<a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$trip->id.'">Trip Detail Link</a>
 							</center>
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -3442,8 +3415,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -3457,8 +3430,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('Parcel No. '.$parcel->ParcelID.' Is Cancelled By '.$parceluser->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -3466,27 +3439,27 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -3496,8 +3469,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -3511,8 +3484,8 @@ class Api_model extends CI_Model {
 					$this->email->subject('Parcel No. '.$parcel->ParcelID.' Is Cancelled By '.$parceluser->name.'');   
 					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
 					<div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-						<img src="https://mycourierbuddy.com/images/logo.png" />
-					</div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+						<img src="http://mycourierbuddy.in/images/logo.png" />
+					</div><img src="http://mycourierbuddy.in/images/plane.jpg" />
 					<div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
 						<div>
 							<div style="text-align:left">Dear '.$parceluser->name.'</div>
@@ -3520,32 +3493,32 @@ class Api_model extends CI_Model {
 							<div style="text-align:left; color:#2c4882;">
 								<table>
 									<tr>
-										<td>Parcel No</td>
+										<td>Parcel No</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->TripID.'</td>
 									</tr>
 									<tr>
-										<td>Sender Name	-</td>
+										<td>Sender Name	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$parceluser->name.'</td>
 									</tr>
 									<tr>
-										<td>Transporter ID	-</td>
+										<td>Transporter ID	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$transuser->UserID.'</td>
 									</tr> 
 									<tr>
-										<td>Receiver -</td>
+										<td>Receiver </td><td>&nbsp;-&nbsp;</td>
 										<td>'.$receiveruser->name.'</td>
 									</tr> <tr>
-										<td>Delivery Date 	-</td>
+										<td>Delivery Date 	</td><td>&nbsp;-&nbsp;</td>
 										<td>'.$trip->arrival_time.'</td>
 									</tr>  
 								</table>
 							</div>
-							<p>
+							<p style="text-align:left;">
 					Your parcel are set to created status again. You can look for other transporter trips with your matching Parcel. Information for the cancellation of Trip is also send to MCB Team, they shall be looking for the other matching transporters at the earliest.  
 							</p> 
-							<p>In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
+							<p style="text-align:left;">In Case we are not able to find the transporter for your parcel, your money shall be credited to your Wallet.</p>
 							<center>
-								<a href="https://mycourierbuddy.com/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
+								<a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Find Matching Trip Link</a>
 							</center>
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -3555,8 +3528,8 @@ class Api_model extends CI_Model {
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
 							<tr>
-								<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-								<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+								<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+								<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
 							</tr>
 						</table>
 					</div>
@@ -3599,8 +3572,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Parcel '.$parcel->ParcelID.' Delivery Completed Successfully');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -3608,32 +3581,29 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No 	-</td>
+                        <td>Parcel No 	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$transuser->UserID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Receiver	-
-                        </td>
+                            Receiver</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Delivery Date 	-
-                        </td>
+                            Delivery Date</td><td>&nbsp;-&nbsp;</td>
                         <td>
                            '.date("d-m-Y H:i:s").'
                         </td>
                     </tr>
                 </table>
             </div>  
-            <p>
+            <p style="text-align:left;">
                 <b>
                     Note - Please present your Photo ID to sender while collecting and handing over the parcel.
                 </b>
@@ -3648,8 +3618,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div> ';
@@ -3662,8 +3632,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Parcel '.$parcel->ParcelID.' Delivery Completed Successfully');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$receiveruser->name.'</div>
@@ -3671,32 +3641,29 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No 	-</td>
+                        <td>Parcel No 	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$transuser->UserID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Receiver	-
-                        </td>
+                            Receiver</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Delivery Date 	-
-                        </td>
+                            Delivery Date</td><td>&nbsp;-&nbsp;</td>
                         <td>
                            '.date("d-m-Y H:i:s").'
                         </td>
                     </tr>
                 </table>
             </div>  
-            <p>
+            <p style="text-align:left;">
                 <b>
                     Note - Please present your Photo ID to sender while collecting and handing over the parcel.
                 </b>
@@ -3711,8 +3678,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div> ';		
@@ -3725,8 +3692,8 @@ class Api_model extends CI_Model {
 			$this->email->subject('Parcel '.$parcel->ParcelID.' Delivery Completed Successfully');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$transuser->name.'</div>
@@ -3734,38 +3701,35 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Parcel No 	-</td>
+                        <td>Parcel No 	</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$parcel->ParcelID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Transporter ID	-
-                        </td>
+                            Transporter ID</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$transuser->UserID.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Receiver	-
-                        </td>
+                            Receiver</td><td>&nbsp;-&nbsp;</td>
                         <td>'.$receiveruser->name.'</td>
                     </tr>
                     <tr>
                         <td>
-                            Delivery Date 	-
-                        </td>
+                            Delivery Date</td><td>&nbsp;-&nbsp;</td>
                         <td>
                            '.date("d-m-Y H:i:s").'
                         </td>
                     </tr>
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
                 Your wallet is credited with the amount rs '.$pricedata[0]->transportershare.'.
             </p>
             <center>
-                <a href="https://mycourierbuddy.com/mywallet">Check Wallet Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/mywallet">Check Wallet Link</a>
             </center>
-            <p>
+            <p style="text-align:left;">
                 <b>
                     Note - Please present your Photo ID to sender while collecting and handing over the parcel.
                 </b>
@@ -3780,8 +3744,8 @@ class Api_model extends CI_Model {
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>';	
@@ -3799,8 +3763,8 @@ class Api_model extends CI_Model {
 				$emailid=$res1->username; 
 				$this->email->from("info@mycourierbuddy.com", 'mycourierbuddy');
 				$this->email->to($email.',admin@mycourierbuddy.com'); 
-				$this->email->subject('Parcel #'.$request["id"].' Refunded Successfully | mycourierbuddy.com');   
-				$message=' <div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0"><img src="https://mycourierbuddy.com/images/logo.png" /></div><img src="https://mycourierbuddy.com/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$res1->name.'</div><p style="text-align:left;">Congratulations! You Parcel #'.$request["id"].' Refunded Successfully.</p> </div><div> </div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div> </div> <div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By <a href="http://mycourierbuddy.com/">mycourierbuddy.com</a></div> </div> ';
+				$this->email->subject('Parcel #'.$request["id"].' Refunded Successfully | mycourierbuddy.in');   
+				$message=' <div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0"><img src="http://mycourierbuddy.in/images/logo.png" /></div><img src="http://mycourierbuddy.in/images/plane.jpg" /><div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000"><div><div style="text-align:left">Dear '.$res1->name.'</div><p style="text-align:left;">Congratulations! You Parcel #'.$request["id"].' Refunded Successfully.</p> </div><div> </div> <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Warm Regards</b>,<br/>Team <b style="color:#3b5998;">MCB</b></span></div></div> </div> <div style=" color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">Terms and Condition Privacy Policy.<br/>  All Rights Reserved. 2016 &nbsp; &nbsp; Design By <a href="http://mycourierbuddy.in/">mycourierbuddy.in</a></div> </div> ';
 				$this->email->message($message);
 				$this->email->send(); 
 			}			
@@ -4008,9 +3972,9 @@ class Api_model extends CI_Model {
 			   $this->email->from("info@mycourierbuddy.com", 'mycourierbuddy');
 				$this->email->to($email.',admin@mycourierbuddy.com'); 
 				$this->email->subject('MCB: Password Change Successfully');   
-				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">        <img src="https://mycourierbuddy.com/images/logo.png" />    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">        <div>            <div style="text-align:left">Dear '.$user->name.'</div>            <p style="text-align:left;">You recently requested a password reset.</p>
-            <p style="text-align:left;">To change your MCB password, click here </p>             <center>                <a href="https://mycourierbuddy.com/forgetpassword">Change Password Link</a>            </center>			<p>The link will expire in 24 hours, so be sure to use it right away.</p>			<p>Thanks for using MCB!</p>            <br>             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>        </div>            </div>    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">        <table style="width:100%;padding:0 25px;">
-            <tr>                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>            </tr>        </table>    </div></div>';  $this->email->message($message);
+				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">        <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">        <div>            <div style="text-align:left">Dear '.$user->name.'</div>            <p style="text-align:left;">You recently requested a password reset.</p>
+            <p style="text-align:left;">To change your MCB password, click here </p>             <center>                <a href="http://dev9856.mycourierbuddy.in/forgetpassword">Change Password Link</a>            </center>			<p style="text-align:left;">The link will expire in 24 hours, so be sure to use it right away.</p>			<p style="text-align:left;">Thanks for using MCB!</p>            <br>             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>        </div>            </div>    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">        <table style="width:100%;padding:0 25px;">
+            <tr>                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>            </tr>        </table>    </div></div>';  $this->email->message($message);
 			$this->email->send();
 			$data1->status="success";
 			$data1->response="Password changed successfully";
@@ -4060,11 +4024,11 @@ class Api_model extends CI_Model {
 				{  		//email 
 						$this->email->from("info@mycourierbuddy.com", 'mycourierbuddy');
 						$this->email->to($email.',admin@mycourierbuddy.com'); 
-						$this->email->subject('MCB:User Invited You on mycourierbuddy.com');   
+						$this->email->subject('MCB:User Invited You on mycourierbuddy.in');   
 						$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$request['name'].'</div>
@@ -4073,23 +4037,23 @@ class Api_model extends CI_Model {
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
-                        <td>Your Login ID - </td>
+                        <td>Your Login ID </td><td>&nbsp;-&nbsp;</td>
                         <td><em>'.$request['email'].'</em></td>
                     </tr>
                     <tr>
-                        <td>Your Password -</td>
+                        <td>Your Password </td><td>&nbsp;-&nbsp;</td>
                         <td>'.$randomString.'</td>
                     </tr> 
                 </table>
             </div>
-            <p>
+            <p style="text-align:left;">
            MCB is a social peer to peer courier/parcel sending platform. We help in seamlessly connecting travelers (Transporter) with the senders to ship parcels faster. 
             </p>
-			<p>Please click on the below link to Register with us -</p>
+			<p style="text-align:left;">Please click on the below link to Register with us -</p>
             <center>
-                <a href="https://mycourierbuddy.com/dashboard">Register With Us Link</a>
+                <a href="http://dev9856.mycourierbuddy.in/dashboard">Register With Us Link</a>
             </center>
-			<p>Get in touch with MCB Team at admin@mycourierbuddy.com for more details.</p>
+			<p style="text-align:left;">Get in touch with MCB Team at admin@mycourierbuddy.com for more details.</p>
             <br> 
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
@@ -4102,8 +4066,8 @@ For Transporter– Please make sure you check the content of envelope or parcel 
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -4172,23 +4136,23 @@ For Transporter– Please make sure you check the content of envelope or parcel 
 			$this->email->subject('MCB: Please Verify Your Email');   
 			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
     </div>
-    <img src="https://mycourierbuddy.com/images/plane.jpg" />
+    <img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$request['firstName'].'</div>
             <p style="text-align:left;">Thank you for signing in to your MCB account. Once you validate your account, you can enjoy the full benefits of MCB</p>
-            <p>To confirm this is your email click the button below.</p>
+            <p style="text-align:left;">To confirm this is your email click the button below.</p>
             <center>
-                <a href="https://mycourierbuddy.com/verifyuser/'.$row->id.'/'.$randomString.'">Verify My Email</a>
+                <a href="http://dev9856.mycourierbuddy.in/verifyuser/'.$row->id.'/'.$randomString.'">Verify My Email</a>
             </center>            <br>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>        <br>
     </div>    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;"> 
 	<table style="width:100%;padding:0 25px;">            <tr>               
-	<td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>  
-	<td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>  
+	<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>  
+	<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>  
 	</tr>        </table>    </div>
 </div> ';
 			$this->email->message($message);
@@ -4217,13 +4181,13 @@ For Transporter– Please make sure you check the content of envelope or parcel 
 				$this->email->subject('MCB: Email Successfully Verified');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$row->name.'</div>
             <p style="text-align:left;">Congratulations! You have successfully register on mycourierbuddy.</p>
-             <p> Get in touch with MCB Team at admin@mycourierbuddy.com for more details. </p> 
+             <p style="text-align:left;"> Get in touch with MCB Team at admin@mycourierbuddy.com for more details. </p> 
           
             <br> 
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
@@ -4233,8 +4197,8 @@ For Transporter– Please make sure you check the content of envelope or parcel 
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>
@@ -4333,13 +4297,13 @@ For Transporter– Please make sure you check the content of envelope or parcel 
 					$this->email->to($email.',admin@mycourierbuddy.com'); 
 					
 					$this->email->subject('MCB: Please Verify Your Email');   
-					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">        <img src="https://mycourierbuddy.com/images/logo.png" />    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">        <div>          
+					$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;"><div style="text-align:center;margin: auto; background:#233151; padding:5px 0">        <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">        <div>          
 					<div style="text-align:left">Dear '.$row['name'].'</div>          
 					<p style="text-align:left;">Thank you for signing in to your MCB account. Once you validate your account, you can enjoy the full benefits of MCB</p> 
-					<p>To confirm this is your email click the button below.</p>             <center>         
-					<a href="https://mycourierbuddy.com/verifyuser/'.$row['id'].'/'.$row['verificationcode'].'">Verify My Email</a>            </center>            <br>    
+					<p style="text-align:left;">To confirm this is your email click the button below.</p>             <center>         
+					<a href="http://dev9856.mycourierbuddy.in/verifyuser/'.$row['id'].'/'.$row['verificationcode'].'">Verify My Email</a>            </center>            <br>    
 					<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div> 
-					</div>        <br>    </div>    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">        <table style="width:100%;padding:0 25px;">            <tr>                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>            </tr>        </table>    </div></div>';
+					</div>        <br>    </div>    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">        <table style="width:100%;padding:0 25px;">            <tr>                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>            </tr>        </table>    </div></div>';
 					 $this->email->message($message);
 					$this->email->send(); 
 					//end email
@@ -4392,8 +4356,8 @@ For Transporter– Please make sure you check the content of envelope or parcel 
 				$name=$user->name; 
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
-        <img src="https://mycourierbuddy.com/images/logo.png" />
-    </div><img src="https://mycourierbuddy.com/images/plane.jpg" />
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$user->name.'</div>
@@ -4402,7 +4366,7 @@ For Transporter– Please make sure you check the content of envelope or parcel 
             <center>
                <b>Email:</b>'.$email.'<br><br> <b>Password:</b>'.implode($pass).'<br>
             </center> 
-			<p>Thanks for using MCB!</p>
+			<p style="text-align:left;">Thanks for using MCB!</p>
             <br> 
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>        
@@ -4410,8 +4374,8 @@ For Transporter– Please make sure you check the content of envelope or parcel 
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
             <tr>
-                <td align="left"><a href="https://mycourierbuddy.com/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
-                <td align="right"><a href="https://mycourierbuddy.com/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
+                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>
+                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>
             </tr>
         </table>
     </div>

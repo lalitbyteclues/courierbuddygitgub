@@ -3,8 +3,8 @@
         <div class="logo"><a ui-sref="home" ui-sref-opts="{reload: true}"><img src="/images/logo.png" alt="logo"></a> </div>
         <div class="user-opt">
             <!--<a ui-sref="addparcel">Add Parcel</a>
-            <a ui-sref="addtrip">Add Trip</a>
-            <a ui-sref="pricelist">Price List</a>-->
+            <a ui-sref="addtrip">Add Trip</a>-->
+            <a ui-sref="pricelist">Price List</a>
             <a ng-hide="isAuth" ui-sref="login" ui-sref-opts="{reload: true}">Login</a>
             <a ng-hide="isAuth" ui-sref="register" ui-sref-opts="{reload: true}">Sign Up</a>
             <a ng-show="isAuth && chatchannelslist.length>0" href='javascript:void()' data-toggle='dropdown' class='dropdown-toggle'><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Messages({{totalmessages}})<b class='caret'></b></a> 
