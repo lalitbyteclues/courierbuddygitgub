@@ -76,12 +76,12 @@ angular.module('courier').controller("pricerangeController", function ($state, $
         $scope.errormessage = "";
         $scope.warningmessage = '';
         $scope.successmessage = "";
-        if (item.minweight > 10) {
-            $scope.errormessage = "Max weight 10 kg  !"; 
+        if (item.minweight > 30) {
+            $scope.errormessage = "Max weight 30 kg  !"; 
             return;
         }
-        if (item.maxweight > 10) {
-            $scope.errormessage = "Max weight 10 kg !"; 
+        if (item.maxweight > 30) {
+            $scope.errormessage = "Max weight 30 kg !"; 
             return;
         }
         if (item.minweight == item.maxweight) {
@@ -95,9 +95,9 @@ angular.module('courier').controller("pricerangeController", function ($state, $
             mintotal += parseFloat(Math.round($scope.list[i].minweight * 10) / 10);
             maxtotal += parseFloat(Math.round($scope.list[i].maxweight * 10) / 10);
         } 
-        if ((maxtotal - mintotal) != 10)
+        if ((maxtotal - mintotal) != 30)
         {
-            $scope.warningmessage = "Your range total is not 10kg kindly adjust other ranges !";  
+            $scope.warningmessage = "Your range total is not 30kg kindly adjust other ranges !";  
         }
         item.name = item.minweight + "-" + item.maxweight;
         AirportService.saveweightrangelist(item).then(function (results) {

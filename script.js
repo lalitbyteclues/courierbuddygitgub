@@ -1317,8 +1317,8 @@ angular.module('courier').controller("addtripsController", function ($rootScope,
 });
 angular.module('courier').controller("PricelistController", function ($rootScope, $scope, $location, ValiDatedTokenObject, AirportService, AuthService) {
     $scope.zonelist = [];
-    $scope.searchfromzoneid = 0;
-    $scope.searchtozoneid = 0; 
+    $scope.searchfromzoneid = 1;
+    $scope.searchtozoneid = 1; 
     $scope.weightrangelist = [];
     AirportService.getzonelist().then(function (results) {
         $scope.zonelist = results.data.response;
@@ -1327,7 +1327,7 @@ angular.module('courier').controller("PricelistController", function ($rootScope
         $scope.weightrangelist = results.data.response;
         $scope.checkgridlist();
     });
-    dTable = $('#example').DataTable({ searching: false, "paging": true });
+    dTable = $('#example').DataTable({ searching: false, "paging": true,"pageLength": 50 });
     $scope.checkgridlist = function () {
         $scope.successmessage = "";
         if ($scope.searchfromzoneid >= 0 && $scope.searchtozoneid >= 0) {
@@ -1339,7 +1339,7 @@ angular.module('courier').controller("PricelistController", function ($rootScope
                    if (datacount.length > 0) {
                         for (j = 0; j < datacount.length; j++) {
                             $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "transportershare": parseFloat(datacount[j].transportershare), "price": parseFloat(datacount[j].price), "id": datacount[j].id, "fromzoneid": datacount[j].fromzoneid, "tozoneid": datacount[j].tozoneid });
-                            dTable.row.add(["Zone " + datacount[j].fromzoneid, "Zone " + datacount[j].tozoneid, $scope.weightrangelist[i].name, parseFloat(datacount[j].price), parseFloat(datacount[j].transportershare)]).draw();;
+                            dTable.row.add([$scope.weightrangelist[i].name, parseFloat(datacount[j].price), parseFloat(datacount[j].transportershare)]).draw();;
                         }
                     } else {
                         $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "transportershare": 0, "price": 0, "id": 0, "fromzoneid": $scope.searchfromzoneid, "tozoneid": $scope.searchtozoneid });

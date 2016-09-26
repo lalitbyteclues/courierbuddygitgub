@@ -73,8 +73,7 @@ if(empty($posted['hash']) && sizeof($posted) > 0) {
   </head>
   <body  oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onLoad="submitPayuForm()">
      <?php if($formError) { ?>
-	
-      <span style="color:red">Please fill all mandatory fields.</span>
+	 
       <br/>
       <br/>
     <?php } ?>
@@ -86,12 +85,12 @@ if(empty($posted['hash']) && sizeof($posted) > 0) {
      <input type="hidden"  name="firstname" id="firstname" value="<?php echo (empty($posted['firstname'])) ? '' : $posted['firstname']; ?>" />
 	 <input type="hidden"  name="email" id="email" value="<?php echo (empty($posted['email'])) ? '' : $posted['email']; ?>" />
 	 <input type="hidden"  name="phone" value="<?php echo (empty($posted['phone'])) ? '' : $posted['phone']; ?>" />
-	 <textarea name="productinfo"><?php echo (empty($posted['productinfo'])) ? '' : $posted['productinfo'] ?></textarea>
+	 <textarea style="display:none;" name="productinfo"><?php echo (empty($posted['productinfo'])) ? '' : $posted['productinfo'] ?></textarea>
 	 <input type="hidden"  name="surl" value="<?php echo (empty($posted['surl'])) ? '' : $posted['surl'] ?>" size="64" />
 	 <input type="hidden"  name="furl" value="<?php echo (empty($posted['furl'])) ? '' : $posted['furl'] ?>" size="64" /> 
 	 <input type="hidden" name="service_provider" value="payu_paisa" size="64" /> 
           <?php if(!$hash) { ?>
-            <td colspan="4"><input type="submit" value="Submit" /></td>
+            <td colspan="4"><input style="display:none;" type="submit" value="Submit" /></td>
           <?php } ?>
          
     </form>

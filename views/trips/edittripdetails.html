@@ -121,10 +121,10 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="textinput"> Capacity (kg)<span class="red">*</span></label>
         <div class="col-md-8">
-            <input name="capacity" placeholder="Package carrying capacity in KG" required="required" class="form-control input-md" ng-model="capacity" type="number" min="0.01" step="0.01" max="10" id="TripCapacity" />
+            <input name="capacity" placeholder="Package carrying capacity in KG" required="required" class="form-control input-md" ng-model="capacity" type="number" min="0.01" step="0.01" max="30" id="TripCapacity" />
             <span class="error" ng-show="(addtripform.$submitted && addtripform.capacity.$error.required)">Required.</span>
             <span class="error" ng-show="addtripform.capacity.$error.min">Min 0.01 Kg.</span>
-            <span class="error" ng-show="addtripform.capacity.$error.max">Max 10 Kg.</span>
+            <span class="error" ng-show="addtripform.capacity.$error.max">Max 30 Kg.</span>
 
 
         </div>

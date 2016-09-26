@@ -4177,7 +4177,7 @@ For Transporter– Please make sure you check the content of envelope or parcel 
 				$this->db->update('users', $datanew);
 				$email=$row->username; 
 				$this->email->from("info@mycourierbuddy.com", 'mycourierbuddy');
-				$this->email->to($email.',admin@mycourierbuddy.com'); 
+				$this->email->to($user->username.',admin@mycourierbuddy.com'); 
 				$this->email->subject('MCB: Email Successfully Verified');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
