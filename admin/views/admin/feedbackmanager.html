@@ -65,32 +65,44 @@
                                     <tr>
                                         <th>
                                             ID<a ng-click="sort_by('id');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'id'"></i>
+										<i ng-show="predicate == 'id' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'id' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </th>
                                         <th>
                                             Name<a ng-click="sort_by('name');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'name'"></i>
+										<i ng-show="predicate == 'name' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'name' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </th>
                                         <th>
                                             Email<a ng-click="sort_by('email');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'email'"></i>
+										<i ng-show="predicate == 'email' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'email' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </th>
                                         <th>
                                             Phone<a ng-click="sort_by('phone');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'phone'"></i>
+										<i ng-show="predicate == 'phone' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'phone' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </th>
                                         <th>
                                             Message<a ng-click="sort_by('message');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'message'"></i>
+										<i ng-show="predicate == 'message' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'message' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </th>
                                         <th>
                                             Date<a ng-click="sort_by('created');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'created'"></i>
+										<i ng-show="predicate == 'created' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'created' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </th>
                                         <th>
@@ -128,7 +140,7 @@
                         </div>
                         <div class="col-md-12" ng-show="filteredItems == 0">
                             <div class="col-md-12">
-                                <h4>No Booking found</h4>
+                                <h4>No Record found</h4>
                             </div>
                         </div>
                         <div ng-show="totalItems>0" class="col-sm-12" style="">

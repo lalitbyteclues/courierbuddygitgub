@@ -19,11 +19,13 @@ angular.module('courier').controller("adminfeedbackmanagerController", function 
         return viewLocation === $location.path();
     }; 
     $scope.delete = function (id) {
+		 bootbox.confirm("Do you want to delete ?", function (result) {
+                if (result) {
         var data = { "id": id };
         ParcelService.deletetrip(data).then(function (results) {
             if (results.status == 200) {
             }
-        });
+		 });}});
     }
     $scope.approvetrip = function (data) {
         $scope.successMessage = "";

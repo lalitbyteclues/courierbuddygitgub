@@ -1,7 +1,7 @@
 /**
  * Created by Lalit on 21.05.2016.
  */
-angular.module('courier').controller("adminbookingmanagerController", function ($rootScope, $state, $scope, $location, AuthService, ParcelService, AddTripsService) {
+angular.module('courier').controller("adminbookingmanagerController", function ($rootScope, $state, $scope, $location, AuthService, ParcelService, AddTripsService,searchService) {
     $scope.errormessage = '';
     $scope.successMessage = "";
     $scope.TransporterID = "";
@@ -66,11 +66,13 @@ angular.module('courier').controller("adminbookingmanagerController", function (
         });
     }
     $scope.delete = function (id) {
+		 bootbox.confirm("Do you want to delete ?", function (result) {
+                if (result) {
         var data = { "id": id };
         ParcelService.deletetrip(data).then(function (results) {
             if (results.status == 200) {
             }
-        });
+		 });}});
     }
     $scope.tripslist = [];
 
@@ -121,4 +123,26 @@ angular.module('courier').controller("adminbookingmanagerController", function (
         //}
         //return false;
     };
+	   $scope.viewtripdetails = function (tripid) {
+            $scope.successmessage = "";
+            searchService.gettransporterdetails(tripid).then(function (response) {
+                if (response.data.status == "success") {
+                    $scope.transporter = response.data.response[0];
+                    var deptime = $scope.transporter.dep_time.split(" ");
+                    $scope.transporter.dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
+                    var deptime = $scope.transporter.arrival_time.split(" ");
+                    $scope.transporter.arrival_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
+                    $("#tripdetails").modal();
+                }}); 
+        };
+		 $scope.viewparceldetails = function (parcelid) {
+            $scope.successmessage = "";
+            ParcelService.getparceldetail(parcelid).then(function (response) {
+                if (response.data.status == "success") {
+                    $scope.parceldetails = response.data.response[0];
+                    var deptime = $scope.parceldetails.till_date;
+                    $scope.parceldetails.till_date = new Date(deptime.split("-")[1] + "/" + deptime.split("-")[2] + "/" + deptime.split("-")[0]); 
+                    $("#parceldetails").modal();
+                }}); 
+        };
 });

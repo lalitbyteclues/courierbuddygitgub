@@ -58,32 +58,44 @@
                                     <tr>
                                         <th>
                                             Booking ID<a ng-click="sort_by('id');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'id'"></i>
+										<i ng-show="predicate == 'id' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'id' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                             </a>
                                         </th>
                                         <th>
                                             Booking Date<a ng-click="sort_by('created');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'created'"></i>
+										<i ng-show="predicate == 'created' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'created' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                             </a>
                                         </th>
                                         <th>
                                             Transport ID<a ng-click="sort_by('transporterID');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'transporterID'"></i>
+										<i ng-show="predicate == 'transporterID' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'transporterID' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                             </a>
                                         </th>
                                         <th>
                                             Sender ID<a ng-click="sort_by('usr_id');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'usr_id'"></i>
+										<i ng-show="predicate == 'usr_id' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'usr_id' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                             </a>
                                         </th>
                                         <th>
                                             Booking Amt<a ng-click="sort_by('payment');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'payment'"></i>
+										<i ng-show="predicate == 'payment' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'payment' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                             </a>
                                         </th>
                                         <th>
                                             Order Number<a ng-click="sort_by('trans_payment');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'trans_payment'"></i>
+										<i ng-show="predicate == 'trans_payment' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'trans_payment' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                             </a>
                                         </th>
                                         <th>

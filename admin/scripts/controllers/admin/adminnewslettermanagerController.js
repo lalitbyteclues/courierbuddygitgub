@@ -54,8 +54,8 @@ angular.module('courier').controller("adminnewslettermanagerController", functio
         }
     });
     $scope.sendtoselectedall = function (field) {
-        bootbox.confirm(" Are you sure you want Send Newsletter?", function (result) {
-            if (result) {
+        bootbox.confirm("Do you want to delete ?", function (result) {
+                if (result) {
                 var datapost = { "id": field.id, "users": $scope.userslistemail };
                 UsersService.sendNewsletter(datapost).then(function (response) {
                     $scope.successmessage = "Newsletter Send Successfully";

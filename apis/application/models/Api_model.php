@@ -139,7 +139,7 @@ class Api_model extends CI_Model {
 	    $data=new stdclass(); 
 		$data->total=$this->db->count_all('parcels');
 		$limit = explode('-', $datapost["limit"]); 
-		$query = $this->db->query("SELECT a.*,prstatus.status as statusdescription from cms_parcels a left join cms_parcelstatus prstatus on a.status=prstatus.id  where (CAST(a.id as CHAR) LIKE '%". $datapost["id"]."%' or '".$datapost["id"]."'='' ) and (a.status='". $datapost["status"]."' or '".$datapost["status"]."'='' )and (a.till_date='". $datapost["till_date"]."' or '".$datapost["till_date"]."'='' ) order by a.id desc Limit ".$limit[0].",".$limit[1]); 
+		$query = $this->db->query("SELECT a.*,prstatus.status as statusdescription,ct.TripID,ct.id as tripprimaryid from cms_parcels a left join cms_parcelstatus prstatus on a.status=prstatus.id left join cms_bookings cb on a.id=cb.p_id and cb.status<>4 left join cms_trips ct on cb.t_id=ct.id  where (CAST(a.id as CHAR) LIKE '%". $datapost["id"]."%' or '".$datapost["id"]."'='' ) and (a.status='". $datapost["status"]."' or '".$datapost["status"]."'='' )and (a.till_date='". $datapost["till_date"]."' or '".$datapost["till_date"]."'='' ) order by a.id desc Limit ".$limit[0].",".$limit[1]); 
 		$data->status="success";
 		$data->response=$query->result();		
 		$json_response = json_encode($data); 
@@ -150,7 +150,7 @@ class Api_model extends CI_Model {
 			$data=new stdclass();
 			$data->total=$this->db->count_all('bookings');
 			$limit = explode('-', $datapost["limit"]); 
-			$query = $this->db->query("select a.*,b.payment,ps.id parcelstatusid,ps.status BookingStatus,trip.t_id as transporterID,b.usr_id,parceluser.UserID as SenderID,tripuser.UserID TransporteruserID  from cms_bookings a  inner join cms_trips trip on a.t_id=trip.id  left join cms_users tripuser on trip.t_id=tripuser.id  inner join cms_parcels  b on a.p_id =b.id left join cms_users parceluser on b.usr_id=parceluser.id inner join cms_tripstatus ps on a.status=ps.id where (DATEDIFF(CURDATE(),a.created)<=".$datapost["period"]." or ".$datapost["period"]."=0 ) order by a.id desc Limit ".$limit[0].",".$limit[1]); 
+			$query = $this->db->query("select a.*,b.payment,ps.id parcelstatusid,ps.status BookingStatus,trip.t_id as transporterID,b.usr_id,parceluser.UserID as SenderID,tripuser.UserID TransporteruserID,b.ParcelID,trip.TripID  from cms_bookings a  inner join cms_trips trip on a.t_id=trip.id  left join cms_users tripuser on trip.t_id=tripuser.id  inner join cms_parcels  b on a.p_id =b.id left join cms_users parceluser on b.usr_id=parceluser.id inner join cms_tripstatus ps on a.status=ps.id where (DATEDIFF(CURDATE(),a.created)<=".$datapost["period"]." or ".$datapost["period"]."=0 ) order by a.id desc Limit ".$limit[0].",".$limit[1]); 
 			$payment=$this->db->query("select sum(price) totalamount, sum(price)-sum(transportershare) as commission,sum(transportershare) as topay  from cms_zonepricelist a  inner join cms_weightrange b on a.weightrangeid=b.id  inner join cms_airports sou on a.fromzoneid=sou.zonelistid  inner join cms_airports dest on a.tozoneid=dest.zonelistid left join cms_parcels p on p.weight>b.minweight and  p.weight<=b.maxweight and sou.location=p.source and dest.location=p.destination where p.id in(select p_id from cms_bookings where status<>4)");
 			$data->status="success";
 			$data->response=$query->result();		
@@ -3816,7 +3816,7 @@ class Api_model extends CI_Model {
 	}
 	function getweightrangelist()
 	{   
-		$query = $this->db->query("SELECT * FROM `cms_weightrange` order by id"); 
+		$query = $this->db->query("SELECT * FROM `cms_weightrange` order by minweight"); 
 		$data=new stdclass();
 		$data->status="success";
 		$data->response=$query->result();
@@ -3897,7 +3897,7 @@ class Api_model extends CI_Model {
 	}
 	function saveweightrangelist($post)
 	{   
-		if(isset($post["id"]))
+		if(isset($post["id"]) && $post["id"]>0)
 		 { 
 			$data = array('name' =>$post["name"],'minweight' =>$post["minweight"],'maxweight' =>$post["maxweight"]);
 		   $this->db->update('weightrange', $data, "id =".$post["id"]);
@@ -3970,7 +3970,7 @@ class Api_model extends CI_Model {
 			 $query1=$this->db->get("users");
 			 $user=$query1->result()[0];  
 			   $this->email->from("info@mycourierbuddy.com", 'mycourierbuddy');
-				$this->email->to($email.',admin@mycourierbuddy.com'); 
+				$this->email->to($user->username.',admin@mycourierbuddy.com'); 
 				$this->email->subject('MCB: Password Change Successfully');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">        <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">        <div>            <div style="text-align:left">Dear '.$user->name.'</div>            <p style="text-align:left;">You recently requested a password reset.</p>
             <p style="text-align:left;">To change your MCB password, click here </p>             <center>                <a href="http://dev9856.mycourierbuddy.in/forgetpassword">Change Password Link</a>            </center>			<p style="text-align:left;">The link will expire in 24 hours, so be sure to use it right away.</p>			<p style="text-align:left;">Thanks for using MCB!</p>            <br>             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>        </div>            </div>    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">        <table style="width:100%;padding:0 25px;">
@@ -4177,7 +4177,7 @@ For Transporter– Please make sure you check the content of envelope or parcel 
 				$this->db->update('users', $datanew);
 				$email=$row->username; 
 				$this->email->from("info@mycourierbuddy.com", 'mycourierbuddy');
-				$this->email->to($user->username.',admin@mycourierbuddy.com'); 
+				$this->email->to($email.',admin@mycourierbuddy.com'); 
 				$this->email->subject('MCB: Email Successfully Verified');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
     <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">

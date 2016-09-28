@@ -66,13 +66,17 @@
                                     </td>
                                     <td>
                                         User ID &nbsp;<a ng-click="sort_by('UserID');">
-                                            <i class="glyphicon glyphicon-sort"></i>
+										 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'UserID'"></i>
+										<i ng-show="predicate == 'UserID' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'UserID' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                         </a>
                                     </td>
                                     <td>
                                         Name&nbsp;
                                         <a ng-click="sort_by('name');">
-                                            <i class="glyphicon glyphicon-sort"></i>
+                                            <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'name'"></i>
+										<i ng-show="predicate == 'name' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'name' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                         </a>
                                     </td>
                                     <td>
@@ -84,7 +88,9 @@
                                     <td>
                                         Status&nbsp;
                                         <a ng-click="sort_by('status');">
-                                            <i class="glyphicon glyphicon-sort"></i>
+                                            <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'status'"></i>
+										<i ng-show="predicate == 'status' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'status' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                         </a>
                                     </td>
                                     <th>

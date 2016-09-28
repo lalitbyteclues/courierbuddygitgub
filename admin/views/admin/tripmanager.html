@@ -72,45 +72,65 @@
                                         <tr>
                                             <th>
                                                 TripID<a ng-click="sort_by('id');">
-                                                    <i class="glyphicon glyphicon-sort"></i>
+												 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'id'"></i>
+										<i ng-show="predicate == 'id' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'id' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                                 </a>
                                             </th>
                                             <th>
-                                                MCBID<a ng-click="sort_by('UserID');"><i class="glyphicon glyphicon-sort"></i></a>
+                                                MCBID<a ng-click="sort_by('UserID');">
+												 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'UserID'"></i>
+										<i ng-show="predicate == 'UserID' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'UserID' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+												</a>
                                             </th>
                                             <th>
                                                 From<a ng-click="sort_by('source');">
-                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                    <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'source'"></i>
+										<i ng-show="predicate == 'source' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'source' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                                 </a>
                                             </th>
                                             <th>
                                                 To<a ng-click="sort_by('destination');">
-                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                    <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'destination'"></i>
+										<i ng-show="predicate == 'destination' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'destination' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                                 </a>
                                             </th>
                                             <th>
                                                 Date<a ng-click="sort_by('dep_time');">
-                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                     <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'dep_time'"></i>
+										<i ng-show="predicate == 'dep_time' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'dep_time' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                                 </a>
                                             </th>
                                             <th>
                                                 Flight No<a ng-click="sort_by('flight_no');">
-                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                    <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'flight_no'"></i>
+										<i ng-show="predicate == 'flight_no' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'flight_no' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                                 </a>
                                             </th>
                                             <th>
                                                 PNR No<a ng-click="sort_by('pnr');">
-                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                     <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'pnr'"></i>
+										<i ng-show="predicate == 'pnr' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'pnr' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                                 </a>
                                             </th>
                                             <th>
                                                 Reason<a ng-click="sort_by('reason');">
-                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                    <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'reason'"></i>
+										<i ng-show="predicate == 'reason' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'reason' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                                 </a>
                                             </th>
                                             <th>
                                                 Status<a ng-click="sort_by('status');">
-                                                    <i class="glyphicon glyphicon-sort"></i>
+                                                    <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'status'"></i>
+										<i ng-show="predicate == 'status' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'status' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                                 </a>
                                             </th>
                                             <th>
@@ -223,20 +243,20 @@
                                 </div>
                             </div><div class="clear">&nbsp;</div>
                         </div>
-                        <div role="dialog" tabindex="-1" id="tripdetails" class="modal modal-login">
+                        <div role="dialog" tabindex="-1" id="tripdetails" class="modal modal-video">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     </div>
                                     <div class="modal-body">
-                                        <h4>Trip #T{{transporter.id}} Details</h4>
+                                        <h4>Trip {{transporter.TripID}} Details</h4>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <table class="table table-striped table-bordered">
                                                     <tr>
                                                         <td>ID</td>
-                                                        <td>T{{transporter.id}}</td>
+                                                        <td>{{transporter.TripID}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>From</td>
@@ -273,6 +293,38 @@
 
                                                     </tr>
                                                 </table>
+                                            </div>
+                                        </div>
+										<div class="row">
+                                            <div ng-show="parcel.length>0">
+                                                <h1 style="margin:8px 15px;">Booking Detail</h1>
+                                                <div class="col-md-12" ng-show="parcel.length>0">
+                                                    <h4>Parcel Details</h4>
+                                                    <table class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                                                        <tr>
+                                                            <td><b>Booking ID</b></td>
+                                                            <td><b>Parcel ID</b></td>
+                                                            <td><b>Type</b></td>
+                                                            <td><b>Pkg. Weight</b></td>
+                                                            <td><b>Dimensions</b></td>
+                                                            <td><b>Name</b></td>
+                                                            <td><b>Sender Email</b></td>
+                                                            <td><b>Receiver Name</b></td>
+                                                            <td><b>Receiver Email</b></td> 
+                                                        </tr>
+                                                        <tr ng-repeat="par in parcel">
+                                                            <td>{{par.BookingID==0?"Payment Request Sent":par.BookingID}}</td>
+															 <td>{{par.ParcelID}}</td>
+                                                            <td>{{par.type=='E'?'Envelope':par.type=='B'?'Box':par.type=='P'?'Packet':par.type}} </td>
+                                                            <td>{{par.weight}}KG</td> 
+                                                            <td><span ng-show="par.type=='B'"> Height:{{par.height}} <br />Width:{{par.width}} <br />Length:{{par.length}}</span></td>
+                                                            <td>{{par.sendername}}</td>
+                                                            <td>{{par.senderemail}}</td>
+                                                            <td>{{par.receivername}}</td>
+                                                            <td>{{par.receiveremail}}</td> 
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

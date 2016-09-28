@@ -67,12 +67,14 @@ angular.module('courier').controller("admintripmanagerController", function ($ro
         }
     }
         $scope.delete = function (id) {
+			 bootbox.confirm("Do you want to delete ?", function (result) {
+                if (result) {
             var data = { "id": id };
             AddTripsService.deletetrip(data).then(function (results) {
                 if (results.status == 200) {
                     $scope.fillgrid();
                 }
-            });
+			 });}});
         }
         $scope.tripslist = [];
         $scope.fillgrid = function () {
@@ -119,6 +121,7 @@ angular.module('courier').controller("admintripmanagerController", function ($ro
             $scope.successmessage = "";
             searchService.gettransporterdetails(tripid).then(function (response) {
                 if (response.data.status == "success") {
+					$scope.parcel = response.data.parcel;
                     $scope.transporter = response.data.response[0];
                     var deptime = $scope.transporter.dep_time.split(" ");
                     $scope.transporter.dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);

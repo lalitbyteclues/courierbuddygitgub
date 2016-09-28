@@ -63,6 +63,8 @@ angular.module('courier').controller("adminusersController", function ($rootScop
         }, 10);
     };
     $scope.deleterecords = function (field) {
+		 bootbox.confirm("Do you want to delete ?", function (result) {
+                if (result) {
         AuthService.deleteairportlist(field).then(function (results) {
             $scope.list = results.data.response;
             $scope.filteredItems = $scope.list.length;
@@ -72,7 +74,7 @@ angular.module('courier').controller("adminusersController", function ($rootScop
             } else {
                 $scope.successmessage = "Deleted SuccessFully";
             }
-        });
+		 });}});
     };
     $scope.editAppKey = function (field) {
         $scope.successmessage = "";

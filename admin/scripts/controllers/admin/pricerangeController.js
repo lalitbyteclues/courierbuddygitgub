@@ -14,6 +14,8 @@ angular.module('courier').controller("pricerangeController", function ($state, $
     $scope.errormessage = '';
     $scope.warningmessage = '';
     $scope.successMessage = "";
+	$scope.singlenew={ "id": "0", "name": "", "minweight": "", "maxweight": "" };
+	$scope.newentry={ "id": "0", "name": "", "minweight": "", "maxweight": "" };
     $scope.edit = false;
     if (!AuthService.authentication.isAdministrator) {
         var path = $location.path();
@@ -32,11 +34,11 @@ angular.module('courier').controller("pricerangeController", function ($state, $
                 $scope.list[i].maxweight = parseFloat($scope.list[i].maxweight);
             }
             $scope.currentPage = 1;
-            $scope.entryLimit = 20;
+            $scope.entryLimit = 50;
             $scope.filteredItems = $scope.list.length;
-            $scope.totalItems = $scope.list.length;
-            $scope.sort_by("name");
-            $scope.sort_by("name"); 
+            $scope.totalItems = $scope.list.length;  
+			$scope.predicate="minweight";
+			$scope.reverse=false;
         });
     }
     $scope.fillgrid();
@@ -48,12 +50,14 @@ angular.module('courier').controller("pricerangeController", function ($state, $
             $scope.filteredItems = $scope.filtered.length;
         }, 10);
     };
-    $scope.addRow = function (index) {
-        $scope.currentPage = 1;
-        $scope.list.push({ editMode: true}); 
+    $scope.addRow = function (index) { 
+       $scope.newentry=$scope.singlenew;
+	   $("#userdetails").modal();
     };
     $scope.deleterecords = function (field) {
-        AirportService.deletepricerecord(field).then(function (results) {
+ bootbox.confirm("Do you want to delete ?", function (result) {
+                if (result) {
+	AirportService.deletepricerecord(field).then(function (results) {
             $scope.list = results.data.response; 
             for (i = 0; i < $scope.list.length; i++) { 
                 $scope.list[i].minweight = parseFloat($scope.list[i].minweight);
@@ -66,28 +70,40 @@ angular.module('courier').controller("pricerangeController", function ($state, $
             } else {
                 $scope.successmessage = "Deleted SuccessFully";
             } 
-        }); 
+ }); }});	
     };
     $scope.editAppKey = function (field) {
         $scope.successmessage = "";
-        $scope.errormessage = "";
+        $scope.errormessage = ""; 
+		$scope.newentry=field;
+		$("#userdetails").modal();
     }
-    $scope.saverecords = function (item) {
+    $scope.saverecords = function () {
         $scope.errormessage = "";
         $scope.warningmessage = '';
         $scope.successmessage = "";
-        if (item.minweight > 30) {
+        if ($scope.newentry.minweight > 30) {
             $scope.errormessage = "Max weight 30 kg  !"; 
             return;
         }
-        if (item.maxweight > 30) {
+        if ($scope.newentry.maxweight > 30) {
             $scope.errormessage = "Max weight 30 kg !"; 
             return;
         }
-        if (item.minweight == item.maxweight) {
+        if ($scope.newentry.minweight == $scope.newentry.maxweight) {
             $scope.errormessage = "Min weight and max weight same !";  
             return;
         }
+		if ($scope.newentry.minweight > $scope.newentry.maxweight) {
+            $scope.errormessage = "min weight is less than max weight !";  
+            return;
+        }
+		for (i = 0; i < $scope.list.length; i++) { 
+		  if(parseFloat($scope.list[i].minweight)>=parseFloat($scope.newentry.minweight) && parseFloat($scope.list[i].maxweight)<=parseFloat($scope.newentry.maxweight) && $scope.list[i].id!=$scope.newentry.id){
+			   $scope.errormessage = "This weight range is already exists !";  
+            return;
+		  }
+		}
         var mintotal = 0;
         var maxtotal = 0;
         for (i = 0; i < $scope.list.length; i++)
@@ -99,8 +115,8 @@ angular.module('courier').controller("pricerangeController", function ($state, $
         {
             $scope.warningmessage = "Your range total is not 30kg kindly adjust other ranges !";  
         }
-        item.name = item.minweight + "-" + item.maxweight;
-        AirportService.saveweightrangelist(item).then(function (results) {
+        $scope.newentry.name = $scope.newentry.minweight + "-" + $scope.newentry.maxweight;
+        AirportService.saveweightrangelist($scope.newentry).then(function (results) {
             $scope.list = results.data.response; 
             for (i = 0; i < $scope.list.length; i++) { 
                 $scope.list[i].minweight = parseFloat($scope.list[i].minweight);
@@ -108,7 +124,8 @@ angular.module('courier').controller("pricerangeController", function ($state, $
             }
             $scope.currentPage = 1;   
             $scope.filteredItems = $scope.list.length;  
-            $scope.totalItems = $scope.list.length;
+            $scope.totalItems = $scope.list.length; 
+			$("#userdetails").modal("hide");
             $scope.successmessage = "Updated SuccessFully"; 
         });
     };

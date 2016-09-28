@@ -46,23 +46,28 @@
                                     <tr>
                                         <th>
                                             Title&nbsp;<a ng-click="sort_by('title');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'title'"></i>
+										<i ng-show="predicate == 'title' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'title' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                             </a>
                                         </th>
                                         <th>
-                                            Image&nbsp;<a ng-click="sort_by('name');">
-                                            </a>
+                                            Image&nbsp; 
                                         </th>
                                         <th>
                                             Created&nbsp;
                                             <a ng-click="sort_by('created');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                              <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'created'"></i>
+										<i ng-show="predicate == 'created' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'created' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                             </a>
                                         </th>
                                         <th>
                                             Status&nbsp;
                                             <a ng-click="sort_by('status');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'status'"></i>
+										<i ng-show="predicate == 'status' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'status' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i> 
                                             </a>
                                         </th>
                                         <th>

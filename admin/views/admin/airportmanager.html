@@ -49,30 +49,40 @@
                                     <tr>
                                         <td>
                                             Airport&nbsp;<a ng-click="sort_by('location');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                  <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'location'"></i>
+										<i ng-show="predicate == 'location' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'location' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </td>
                                         <th>
                                             Code&nbsp;<a ng-click="sort_by('code');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                 <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'code'"></i>
+										<i ng-show="predicate == 'code' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'code' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </th>
                                         <td>
                                             Category&nbsp;
                                             <a ng-click="sort_by('type');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                  <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'type'"></i>
+										<i ng-show="predicate == 'type' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'type' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </td>
                                         <td>
                                             Price Zone&nbsp;
                                             <a ng-click="sort_by('Zonename');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                  <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'Zonename'"></i>
+										<i ng-show="predicate == 'Zonename' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'Zonename' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </td>
                                         <td>
                                             Status&nbsp;
                                             <a ng-click="sort_by('status');">
-                                                <i class="glyphicon glyphicon-sort"></i>
+                                                  <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'status'"></i>
+										<i ng-show="predicate == 'status' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'status' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </td>
                                         <td></td>

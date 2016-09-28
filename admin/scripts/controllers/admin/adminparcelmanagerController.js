@@ -1,7 +1,7 @@
 /**
  * Created by Lalit on 21.05.2016.
  */
-angular.module('courier').controller("adminparcelmanagerController", function ($rootScope, $state, $scope, $location, AuthService, ParcelService, AddTripsService) {
+angular.module('courier').controller("adminparcelmanagerController", function ($rootScope, $state, $scope, $location, AuthService, ParcelService, AddTripsService,searchService) {
     $scope.errormessage = '';
     $scope.successMessage = "";
     $scope.TransporterID = "";
@@ -92,12 +92,14 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
         });
     }
     $scope.delete = function (id) {
+	 bootbox.confirm("Do you want to delete ?", function (result) {
+                if (result) {
         $scope.successMessage = "";
         var data = { "id": id };
         ParcelService.deletetrip(data).then(function (results) {
             if (results.status == 200) {
             }
-        });
+	 });}});
     }
     $scope.tripslist = [];
 
@@ -161,5 +163,16 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
     $scope.maxDate = date.setDate((new Date()).getDate() + 900);
     $scope.open0 = function ($event) { $event.preventDefault(); $event.stopPropagation(); $scope.status0.opened = true; };
     $scope.status0 = { opened: false };
-
+	$scope.viewtripdetails = function (tripid) {
+            $scope.successmessage = "";
+            searchService.gettransporterdetails(tripid).then(function (response) {
+                if (response.data.status == "success") {
+                    $scope.transporter = response.data.response[0];
+                    var deptime = $scope.transporter.dep_time.split(" ");
+                    $scope.transporter.dep_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
+                    var deptime = $scope.transporter.arrival_time.split(" ");
+                    $scope.transporter.arrival_time = new Date(deptime[0].split("-")[1] + "/" + deptime[0].split("-")[2] + "/" + deptime[0].split("-")[0] + " " + deptime[1]);
+                    $("#tripdetails").modal();
+                }}); 
+        };
 });

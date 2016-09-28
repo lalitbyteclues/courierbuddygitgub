@@ -29,11 +29,13 @@ angular.module('courier').controller("adminsliderController", function ($rootSco
      }
      $scope.fill();
      $scope.deleteAppKey = function (field) {
+		 bootbox.confirm("Do you want to delete ?", function (result) {
+                if (result) { 
          UsersService.deleteslider(field).then(function (response) {
              $scope.successmessage = "Deleted Successfully";
              $scope.fill();
              $("#userdetails").modal("hide");
-         });
+         });}});
      }
      $scope.addRow = function () {
          $scope.contentsingle = { "title": "", "name": "", "created":new Date(), "status": "Y" };

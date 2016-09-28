@@ -13,8 +13,8 @@ angular.module('courier').filter('startFrom', function () {
 angular.module('courier').controller("adminpricelistController", function ($http, $state, $scope, $location, AirportService, AuthService) {
     $scope.errormessage = '';
     $scope.successMessage = "";
-    $scope.searchfromzoneid = 0;
-    $scope.searchtozoneid = 0;
+    $scope.searchfromzoneid = 1;
+    $scope.searchtozoneid = 1;
     $scope.currentPage = 1;   
     $scope.entryLimit = 10;  
     $scope.edit = false;
@@ -52,7 +52,7 @@ angular.module('courier').controller("adminpricelistController", function ($http
                     }
                 }
                 $scope.currentPage = 1; //current page
-                $scope.entryLimit = 10; //max no of items to display in a page
+                $scope.entryLimit = 50; //max no of items to display in a page
                 $scope.filteredItems = $scope.list.length; //Initially for no filter  
                 $scope.totalItems = $scope.list.length;  
                 $scope.reverse = true;
@@ -78,6 +78,8 @@ angular.module('courier').controller("adminpricelistController", function ($http
         });
     };
     $scope.deletepricelist = function (field) {
+		 bootbox.confirm("Do you want to delete ?", function (result) {
+                if (result) {
         AirportService.deleteairportlist(field).then(function (results) {
             $scope.list = results.data.response;
             $scope.filteredItems = $scope.list.length;
@@ -87,7 +89,7 @@ angular.module('courier').controller("adminpricelistController", function ($http
             } else {
                 $scope.successmessage = "Deleted SuccessFully";
             }
-        });
+		 });}});
     };
     $scope.editAppKey = function (field) {
         $scope.successmessage = "";

@@ -41,6 +41,8 @@ angular.module('courier').controller("adminseomanagerController", function ($htt
          $scope.list.push({ editMode: true,created:new Date() });
      };
      $scope.deleterecords = function (field) { 
+	  bootbox.confirm("Do you want to delete ?", function (result) {
+                if (result) {
          AirportService.deleteseolist(field).then(function (results) {
              $scope.list =results.data.response;
              $scope.filteredItems = $scope.list.length;
@@ -50,7 +52,7 @@ angular.module('courier').controller("adminseomanagerController", function ($htt
              } else {
                  $scope.successmessage = "Deleted SuccessFully";
              }
-         });
+	  });}});
      };
      $scope.editAppKey = function (field) { 
          $scope.successmessage = "";

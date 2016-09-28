@@ -25,7 +25,7 @@
                                         <label> From Zone</label>
                                         <select data-ng-model="searchfromzoneid" class="form-control">
                                             <option value="0">All</option>
-                                            <option ng-repeat="price in zonelist" ng-selected="data.zonelistid==price.id" value="{{price.id}}">{{price.Zonename}}</option>
+                                            <option ng-repeat="price in zonelist" ng-selected="searchfromzoneid==price.id" value="{{price.id}}">{{price.Zonename}}</option>
                                         </select>
                                     </p>
                                 </div>
@@ -36,7 +36,7 @@
                                     <label> To Zone</label>
                                     <select data-ng-model="searchtozoneid" class="form-control">
                                         <option value="0">All</option>
-                                        <option ng-repeat="price in zonelist" ng-selected="data.zonelistid==price.id" value="{{price.id}}">{{price.Zonename}}</option>
+                                        <option ng-repeat="price in zonelist" ng-selected="searchtozoneid==price.id" value="{{price.id}}">{{price.Zonename}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2" style="float:left;">
@@ -48,7 +48,7 @@
                     <div ng-show="successmessage.length" class="alert alert-success">{{successmessage}}</div>
                     <div ng-show="errormessage.length" class="alert alert-danger">{{errormessage}}</div>
                     <div class="clear">&nbsp;</div>
-                    <div class="col-md-1" style="padding-left:5px;padding-right:5px;">
+                    <div class="col-md-1" style="padding-left:12px;padding-right:0px;">
                         <p class="input-group" style="width:100%;">
                             <select ng-model="entryLimit" class="form-control">
                                 <option>5</option>
@@ -66,28 +66,38 @@
                                 <tr>
                                     <td>
                                         From Zone<a ng-click="sort_by('fromzoneid');">
-                                            <i class="glyphicon glyphicon-sort"></i>
+                                            <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'fromzoneid'"></i>
+										<i ng-show="predicate == 'fromzoneid' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'fromzoneid' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                         </a>
                                     </td>
                                     <td>
                                         To Zone<a ng-click="sort_by('tozoneid');">
-                                            <i class="glyphicon glyphicon-sort"></i>
+                                             <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'tozoneid'"></i>
+										<i ng-show="predicate == 'tozoneid' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'tozoneid' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                         </a>
                                     </td>
                                     <td>
                                         Weight Range(kg.)&nbsp;<a ng-click="sort_by('weightrangename');">
-                                            <i class="glyphicon glyphicon-sort"></i>
+                                            <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'weightrangename'"></i>
+										<i ng-show="predicate == 'weightrangename' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'weightrangename' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                         </a>
                                     </td>
                                     <td>
                                         Price&nbsp;<a ng-click="sort_by('price');">
-                                            <i class="glyphicon glyphicon-sort"></i>
+                                             <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'price'"></i>
+										<i ng-show="predicate == 'price' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'price' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                         </a>
                                     </td>
                                     <td>
                                         Transporter Share
                                         &nbsp;<a ng-click="sort_by('transportershare');">
-                                            <i class="glyphicon glyphicon-sort"></i>
+                                            <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'transportershare'"></i>
+										<i ng-show="predicate == 'transportershare' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'transportershare' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                         </a>
                                     </td>
                                 </tr>

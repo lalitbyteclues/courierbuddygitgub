@@ -1786,8 +1786,13 @@ angular.module('courier').controller("dashboardController", function ($rootScope
         $scope.userdetails.country_code = $('#mobile').intlTelInput("getSelectedCountryData").dialCode;
         AuthService.updateuserdetails($scope.userdetails).then(function (results) {
             if (results.status == 200) {
-                $scope.successMessage = "Profile Updated successfully";
-                $scope.edit = false;
+				    var return_url = sessionStorage.getItem("return_url");
+                    if (return_url != null) {
+                        sessionStorage.removeItem("return_url");
+                        $location.path(return_url);
+                    }  
+					$scope.successMessage = "Profile Updated successfully";
+					$scope.edit = false;
             }
         });
     }
@@ -4214,7 +4219,19 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
             $('#accept-and-pay').submit();
         }
     }
-    $scope.generateordernumber = function () {
+    $scope.generateordernumber = function () { 
+		if($scope.loginuser.mobile.length<3)
+		{
+			 bootbox.confirm("Please complete your Profile", function (result) {
+			 if (result) {
+				  var path = $location.path();
+				sessionStorage.setItem("return_url", path);
+				$state.transitionTo('dashboard'); 
+				  return;
+			 }else{
+				  return;
+			 }});
+		}
         if ($scope.usewalletamount && $scope.parcel.payment > $scope.loginuser.wallet) {
             $scope.orderlist = [{ Amount: $scope.parcel.payment - $scope.loginuser.wallet, ordernumber: "" }];
             return;
