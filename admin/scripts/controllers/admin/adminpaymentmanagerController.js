@@ -50,6 +50,8 @@ angular.module('courier').controller("adminpaymentmanagerController", function (
                                 $scope.entryLimit = 10; //max no of items to display in a page
                                 $scope.filteredItems = $scope.tripslist.length; //Initially for no filter  
                                 $scope.totalItems = $scope.tripslist.length;
+								$scope.reverse = true;
+								$scope.sort_by("UserID");
                             }
                         });
                     }
@@ -82,6 +84,8 @@ angular.module('courier').controller("adminpaymentmanagerController", function (
             $scope.entryLimit = 10; //max no of items to display in a page
             $scope.filteredItems = $scope.tripslist.length; //Initially for no filter  
             $scope.totalItems = $scope.tripslist.length;
+			$scope.reverse = true;
+			$scope.sort_by("UserID");
         }
     });
     $scope.setPage = function (pageNo) {

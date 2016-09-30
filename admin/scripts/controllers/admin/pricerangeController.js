@@ -11,10 +11,9 @@ angular.module('courier').filter('startFrom', function () {
     }
 });
 angular.module('courier').controller("pricerangeController", function ($state, $scope, $location, AirportService, AuthService, $timeout) {
-    $scope.errormessage = '';
-    $scope.warningmessage = '';
-    $scope.successMessage = "";
-	$scope.singlenew={ "id": "0", "name": "", "minweight": "", "maxweight": "" };
+    $scope.errormessage = "";
+    $scope.warningmessage = "";
+    $scope.successmessage = "";
 	$scope.newentry={ "id": "0", "name": "", "minweight": "", "maxweight": "" };
     $scope.edit = false;
     if (!AuthService.authentication.isAdministrator) {
@@ -50,11 +49,17 @@ angular.module('courier').controller("pricerangeController", function ($state, $
             $scope.filteredItems = $scope.filtered.length;
         }, 10);
     };
-    $scope.addRow = function (index) { 
-       $scope.newentry=$scope.singlenew;
+    $scope.addRow = function () { 
+	 $scope.errormessage = "";
+    $scope.warningmessage = "";
+    $scope.successmessage = "";
+       $scope.newentry={ "id": "0", "name": "", "minweight": "", "maxweight": "" };
 	   $("#userdetails").modal();
     };
     $scope.deleterecords = function (field) {
+		 $scope.errormessage = "";
+    $scope.warningmessage = "";
+    $scope.successmessage = "";
  bootbox.confirm("Do you want to delete ?", function (result) {
                 if (result) {
 	AirportService.deletepricerecord(field).then(function (results) {
@@ -70,18 +75,30 @@ angular.module('courier').controller("pricerangeController", function ($state, $
             } else {
                 $scope.successmessage = "Deleted SuccessFully";
             } 
+			var mintotal = 0;
+			var maxtotal = 0;
+			for (i = 0; i < $scope.list.length; i++)
+			{
+				mintotal += parseFloat(Math.round($scope.list[i].minweight * 10) / 10);
+				maxtotal += parseFloat(Math.round($scope.list[i].maxweight * 10) / 10);
+			}  
+			if ((maxtotal - mintotal) != 30)
+			{
+				$scope.warningmessage = "Your range total is not 30kg kindly adjust other ranges !";  
+			}
  }); }});	
     };
     $scope.editAppKey = function (field) {
-        $scope.successmessage = "";
-        $scope.errormessage = ""; 
-		$scope.newentry=field;
+   $scope.errormessage = "";
+    $scope.warningmessage = "";
+    $scope.successmessage = "";
+		 $scope.newentry={ "id": field.id, "name": field.name, "minweight": field.minweight, "maxweight": field.maxweight}; 
 		$("#userdetails").modal();
     }
     $scope.saverecords = function () {
-        $scope.errormessage = "";
-        $scope.warningmessage = '';
-        $scope.successmessage = "";
+       $scope.errormessage = "";
+    $scope.warningmessage = "";
+    $scope.successmessage = "";
         if ($scope.newentry.minweight > 30) {
             $scope.errormessage = "Max weight 30 kg  !"; 
             return;
@@ -97,24 +114,13 @@ angular.module('courier').controller("pricerangeController", function ($state, $
 		if ($scope.newentry.minweight > $scope.newentry.maxweight) {
             $scope.errormessage = "min weight is less than max weight !";  
             return;
-        }
-		for (i = 0; i < $scope.list.length; i++) { 
-		  if(parseFloat($scope.list[i].minweight)>=parseFloat($scope.newentry.minweight) && parseFloat($scope.list[i].maxweight)<=parseFloat($scope.newentry.maxweight) && $scope.list[i].id!=$scope.newentry.id){
+        } 
+		for (i = 0; i < $scope.list.length; i++) {  
+		   if(($scope.filterrange($scope.newentry.minweight,$scope.list[i]) || $scope.filterrange($scope.newentry.maxweight,$scope.list[i])) && $scope.list[i].id != $scope.newentry.id){
 			   $scope.errormessage = "This weight range is already exists !";  
             return;
 		  }
-		}
-        var mintotal = 0;
-        var maxtotal = 0;
-        for (i = 0; i < $scope.list.length; i++)
-        {
-            mintotal += parseFloat(Math.round($scope.list[i].minweight * 10) / 10);
-            maxtotal += parseFloat(Math.round($scope.list[i].maxweight * 10) / 10);
-        } 
-        if ((maxtotal - mintotal) != 30)
-        {
-            $scope.warningmessage = "Your range total is not 30kg kindly adjust other ranges !";  
-        }
+		} 
         $scope.newentry.name = $scope.newentry.minweight + "-" + $scope.newentry.maxweight;
         AirportService.saveweightrangelist($scope.newentry).then(function (results) {
             $scope.list = results.data.response; 
@@ -122,6 +128,17 @@ angular.module('courier').controller("pricerangeController", function ($state, $
                 $scope.list[i].minweight = parseFloat($scope.list[i].minweight);
                 $scope.list[i].maxweight = parseFloat($scope.list[i].maxweight);
             }
+		var mintotal = 0;
+        var maxtotal = 0;
+        for (i = 0; i < $scope.list.length; i++)
+        {
+            mintotal += parseFloat(Math.round($scope.list[i].minweight * 10) / 10);
+            maxtotal += parseFloat(Math.round($scope.list[i].maxweight * 10) / 10);
+        }  
+        if ((maxtotal - mintotal) != 30)
+        {
+            $scope.warningmessage = "Your range total is not 30kg kindly adjust other ranges !";  
+        }
             $scope.currentPage = 1;   
             $scope.filteredItems = $scope.list.length;  
             $scope.totalItems = $scope.list.length; 
@@ -133,4 +150,7 @@ angular.module('courier').controller("pricerangeController", function ($state, $
         $scope.predicate = predicate;
         $scope.reverse = !$scope.reverse;
     };
+	$scope.filterrange = function(val,list) {
+	  return (val >= list.minweight && val <= list.maxweight);
+	};
 });

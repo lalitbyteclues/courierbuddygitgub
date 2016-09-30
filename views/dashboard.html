@@ -50,7 +50,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td valign="top"><i class="fa fa-location-arrow fa-2x"></i>&nbsp;&nbsp;{{ userdetails.addr1=="" && userdetails.addr2=="" && userdetails.addr3 && userdetails.altr_mobile==""?"empty":userdetails.addr1+", "+userdetails.addr2+", "+userdetails.addr3 +", "+userdetails.altr_mobile}} </td>
+                                                    <td valign="top"><i class="fa fa-location-arrow fa-2x"></i>&nbsp;&nbsp;{{ userdetails.addr1=="" && userdetails.addr2=="" && userdetails.addr3 && userdetails.altr_mobile==""?"empty":(userdetails.addr1==""?"":userdetails.addr1+", ")+(userdetails.addr2==""?"":userdetails.addr2+", ")+(userdetails.addr3==""?"":userdetails.addr3 +", ")+userdetails.altr_mobile}} </td>
                                                 </tr>
                                             </table>
                                             <div ng-show="edit">

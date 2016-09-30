@@ -45,6 +45,8 @@ angular.module('courier').controller("adminfeedbackmanagerController", function 
                 for (i = 0; i < $scope.tripslist.length; i++) {
                     $scope.tripslist[i].created = new Date($scope.tripslist[i].created);
                 }
+				 $scope.reverse = true;
+				$scope.sort_by("id"); 
             }
         });
 

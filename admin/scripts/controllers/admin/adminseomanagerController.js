@@ -28,6 +28,8 @@ angular.module('courier').controller("adminseomanagerController", function ($htt
          $scope.entryLimit = 10; //max no of items to display in a page
          $scope.filteredItems = $scope.list.length; //Initially for no filter  
          $scope.totalItems = $scope.list.length;
+		  $scope.reverse = true;
+		  $scope.sort_by("page"); 
      });
      $scope.setPage = function (pageNo) {
          $scope.currentPage = pageNo;
@@ -52,6 +54,8 @@ angular.module('courier').controller("adminseomanagerController", function ($htt
              } else {
                  $scope.successmessage = "Deleted SuccessFully";
              }
+			  $scope.reverse = true;
+		  $scope.sort_by("page");
 	  });}});
      };
      $scope.editAppKey = function (field) { 
@@ -68,6 +72,8 @@ angular.module('courier').controller("adminseomanagerController", function ($htt
              $scope.totalItems = $scope.list.length;
              $scope.successmessage = "Updated SuccessFully";
              $scope.errormessage = "";
+			  $scope.reverse = true;
+		  $scope.sort_by("page");
          }); 
      };
      $scope.sort_by = function (predicate) {

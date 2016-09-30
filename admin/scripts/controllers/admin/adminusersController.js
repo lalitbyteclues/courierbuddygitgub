@@ -39,6 +39,8 @@ angular.module('courier').controller("adminusersController", function ($rootScop
             $scope.entryLimit = 10; //max no of items to display in a page
             $scope.filteredItems = $scope.list.length; //Initially for no filter  
             $scope.totalItems = $scope.list.length;
+			$scope.reverse = true;
+				$scope.sort_by("UserID"); 
         });
     }
     $scope.searchusersdays = function (day) {
@@ -50,6 +52,8 @@ angular.module('courier').controller("adminusersController", function ($rootScop
                 $scope.entryLimit = 10; //max no of items to display in a page
                 $scope.filteredItems = $scope.list.length; //Initially for no filter  
                 $scope.totalItems = $scope.list.length;
+				$scope.reverse = true;
+				$scope.sort_by("UserID"); 
 
             });
         }
@@ -74,6 +78,8 @@ angular.module('courier').controller("adminusersController", function ($rootScop
             } else {
                 $scope.successmessage = "Deleted SuccessFully";
             }
+			$scope.reverse = true;
+			$scope.sort_by("UserID"); 
 		 });}});
     };
     $scope.editAppKey = function (field) {

@@ -45,10 +45,10 @@ angular.module('courier').controller("adminpricelistController", function ($http
                     console.log(datacount);
                     if (datacount.length > 0) {
                         for (j = 0; j < datacount.length; j++) { 
-                            $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "transportershare": parseFloat(datacount[j].transportershare), "price": parseFloat(datacount[j].price), "id": datacount[j].id, "fromzoneid": datacount[j].fromzoneid, "tozoneid": datacount[j].tozoneid });
+                            $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "minweight":parseFloat($scope.weightrangelist[i].minweight), "transportershare": parseFloat(datacount[j].transportershare), "price": parseFloat(datacount[j].price), "id": datacount[j].id, "fromzoneid": datacount[j].fromzoneid, "tozoneid": datacount[j].tozoneid });
                         }
                     } else {
-                        $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "transportershare": 0, "price": 0, "id": 0, "fromzoneid": $scope.searchfromzoneid, "tozoneid": $scope.searchtozoneid });
+                        $scope.list.push({ "weightrangeid": parseInt($scope.weightrangelist[i].id), "weightrangename": $scope.weightrangelist[i].name, "minweight":parseFloat($scope.weightrangelist[i].minweight), "transportershare": 0, "price": 0, "id": 0, "fromzoneid": $scope.searchfromzoneid, "tozoneid": $scope.searchtozoneid });
                     }
                 }
                 $scope.currentPage = 1; //current page
@@ -56,7 +56,7 @@ angular.module('courier').controller("adminpricelistController", function ($http
                 $scope.filteredItems = $scope.list.length; //Initially for no filter  
                 $scope.totalItems = $scope.list.length;  
                 $scope.reverse = true;
-                $scope.sort_by("weightrangeid"); 
+                $scope.sort_by("minweight"); 
             });
 
         } else {

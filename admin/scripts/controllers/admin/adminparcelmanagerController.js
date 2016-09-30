@@ -30,8 +30,8 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
                     $scope.tripslist[i].payment = parseInt($scope.tripslist[i].payment); 
                     $scope.tripslist[i].weight = parseFloat($scope.tripslist[i].weight);  
                 }
-                $scope.sort_by("status"); $scope.sort_by("status");
-                $scope.sort_by("status"); $scope.sort_by("status");
+				$scope.reverse = true;
+				$scope.sort_by("ParcelID"); 
             }
         });
     }
@@ -104,9 +104,7 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
     $scope.tripslist = [];
 
     $scope.$watch('currentPage', function (newPage) {
-        if (newPage != NaN) {
-            $scope.searchdatabyuser();
-        }
+         
     });
     $scope.searchdatabyuser = function () {
         $scope.successMessage = "";
@@ -115,7 +113,7 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
         if (!(typeof $("#tilldate").val() == 'undefined') && $("#tilldate").val() != "") {
             tilldate = $("#tilldate").val().split("-")[2] + "/" + $("#tilldate").val().split("-")[1] + "/" + $("#tilldate").val().split("-")[0];
         }
-        var datapost = { "limit": $scope.entryrange, "id": $scope.TransporterID, "status": $scope.status, "till_date": tilldate };
+        var datapost = { "limit":"0-9999999", "id": $scope.TransporterID, "status": $scope.status, "till_date": tilldate };
         ParcelService.getParcelListall(datapost).then(function (results) {
             if (results.status == 200) {
                 $scope.listexportcsv = [];
@@ -129,7 +127,8 @@ angular.module('courier').controller("adminparcelmanagerController", function ($
                 }
                 $scope.filteredItems = results.data.total; //Initially for no filter  
                 $scope.totalItems = results.data.total;
-                $scope.sort_by("status"); $scope.sort_by("status");
+               $scope.reverse = true;
+				$scope.sort_by("ParcelID"); 
             }
         });
 

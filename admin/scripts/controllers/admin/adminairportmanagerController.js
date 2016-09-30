@@ -34,6 +34,8 @@ angular.module('courier').controller("adminairportmanagerController", function (
         $scope.entryLimit = 10; //max no of items to display in a page
         $scope.filteredItems = $scope.list.length; //Initially for no filter  
         $scope.totalItems = $scope.list.length;
+		$scope.reverse = true;
+		  $scope.sort_by("location");
     });
     $scope.setPage = function (pageNo) {
         $scope.currentPage = pageNo;
@@ -54,6 +56,8 @@ angular.module('courier').controller("adminairportmanagerController", function (
                     $scope.entryLimit = 10; //max no of items to display in a page
                     $scope.filteredItems = $scope.list.length; //Initially for no filter  
                     $scope.totalItems = $scope.list.length;
+					$scope.reverse = true;
+					$scope.sort_by("location");
                     $scope.successmessage = "Saved SuccessFully";
                     $("#addairport").modal("hide");
                     $scope.data = { "location": "", "zone": 0, "type": "", "code": "", "zonelistid": 0, "status": "Y" };
@@ -73,6 +77,8 @@ angular.module('courier').controller("adminairportmanagerController", function (
             $scope.list = results.data.response;
             $scope.filteredItems = $scope.list.length;
             $scope.totalItems = $scope.list.length;
+			 $scope.reverse = true;
+		  $scope.sort_by("location");
             if (results.data.status == 'error') {
                 $scope.errormessage = results.data.response;
             } else {
@@ -93,6 +99,8 @@ angular.module('courier').controller("adminairportmanagerController", function (
             $scope.totalItems = $scope.list.length;
             $scope.successmessage = "Updated SuccessFully";
             $scope.errormessage = "";
+			$scope.reverse = true;
+		  $scope.sort_by("location");
         });
     };
     $scope.sort_by = function (predicate) {
@@ -119,6 +127,8 @@ angular.module('courier').controller("adminairportmanagerController", function (
                                 if (airportlist.length == i + 1) {
                                     $("#login-modal").modal("hide");
                                 }
+								$scope.reverse = true;
+								$scope.sort_by("location");
                             });
                         } else {
                             if (airportlist.length == i + 1) {

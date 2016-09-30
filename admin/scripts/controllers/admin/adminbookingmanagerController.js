@@ -30,6 +30,8 @@ angular.module('courier').controller("adminbookingmanagerController", function (
                     $scope.tripslist[i].till_date = new Date($scope.tripslist[i].till_date);
                     $scope.tripslist[i].status = parseInt($scope.tripslist[i].status); 
                 }
+				$scope.reverse = true;
+			$scope.sort_by("id");
             }
         });
     }
@@ -96,6 +98,8 @@ angular.module('courier').controller("adminbookingmanagerController", function (
                 }
                 $scope.filteredItems = results.data.total; //Initially for no filter  
                 $scope.totalItems = results.data.total;
+				$scope.reverse = true;
+			$scope.sort_by("id");
             }
         });
 

@@ -24,6 +24,8 @@ angular.module('courier').controller("adminsliderController", function ($rootSco
                  $scope.entryLimit = 10; //max no of items to display in a page
                  $scope.filteredItems = $scope.list.length; //Initially for no filter  
                  $scope.totalItems = $scope.list.length;
+				 $scope.reverse = true;
+				$scope.sort_by("title"); 
              }
          });
      }

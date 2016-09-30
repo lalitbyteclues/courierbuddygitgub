@@ -221,7 +221,7 @@ class Api_model extends CI_Model {
 						<br> 
 						<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 					</div>
-					<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+					<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 				</div>
 				<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 					<table style="width:100%;padding:0 25px;">
@@ -326,7 +326,7 @@ class Api_model extends CI_Model {
                 <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span>
             </div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -439,10 +439,10 @@ class Api_model extends CI_Model {
             <center>
                 <a href="http://dev9856.mycourierbuddy.in/viewtrip/'.$tripcreated->id.'">Check Trip Status Link</a>
             </center>
-            <b>Note - Please present your Photo ID to sender while collecting and handing over the parcel.</b>
+            <p style="text-align:left;"><b>Note - Please present your Photo ID to sender while collecting and handing over the parcel.</b></p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b>
+       <p style="text-align:left;"> <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -568,10 +568,10 @@ class Api_model extends CI_Model {
                 <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Chat Link</a>
             </center>
             <br>
-            <b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b>
+            <p style="text-align:left;"><b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b></p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -632,10 +632,10 @@ class Api_model extends CI_Model {
                 <a href="http://dev9856.mycourierbuddy.in/receiver">Chat Link</a>
             </center>
             <br>
-            <b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b>
+            <p style="text-align:left;"><b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b></p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -714,7 +714,7 @@ class Api_model extends CI_Model {
                 <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b> 
             </div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -866,10 +866,10 @@ class Api_model extends CI_Model {
                 <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcel->id.'">Chat Link</a>
             </center>
             <br>
-            <b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b>
+            <p style="text-align:left;"><b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b></p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -932,10 +932,10 @@ class Api_model extends CI_Model {
                 <a href="http://dev9856.mycourierbuddy.in/receiver">Chat Link</a>
             </center>
             <br>
-            <b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b>
+            <p style="text-align:left;"><b>Note - Please check the ID of transporter while handing over the parcel. You can also take selfie or Photo at the time of handover of parcel.</b></p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -1014,7 +1014,7 @@ class Api_model extends CI_Model {
                 <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b> 
             </div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+    <p style="text-align:left;">    <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -1302,9 +1302,10 @@ class Api_model extends CI_Model {
             <center>
                 <a href="http://dev9856.mycourierbuddy.in/viewparcel/'.$parcelcreated->id.'">Find Matching Trips</a>
             </center>
-            <br>Please ensure to make a payment as soon as transporter is matched for your parcel. <br />  <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
+           <p style="text-align:left;"> <br>Please ensure to make a payment as soon as transporter is matched for your parcel. <br /> </p>
+		   <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note -  Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+       <p style="text-align:left;"> <br><b style="font-family:Calibri;">Note -  Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -1367,9 +1368,10 @@ class Api_model extends CI_Model {
                     </tr>
                 </table>
             </div> 
-            <br>Please ensure to make a payment as soon as transporter is matched for your parcel. <br />  <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
+           <p style="text-align:left;"> <br>Please ensure to make a payment as soon as transporter is matched for your parcel.</p> <br />
+		   <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note -  Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b>
+        <br><p style="text-align:left;"><b style="font-family:Calibri;">Note -  Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -1482,7 +1484,7 @@ class Api_model extends CI_Model {
 			<p style="text-align:left;">Looking forward to serve you again.</p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from transporter at the time of receiving the parcel. This is to make sure transporter have delivered the parcel safely. </b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from transporter at the time of receiving the parcel. This is to make sure transporter have delivered the parcel safely. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -1539,7 +1541,7 @@ class Api_model extends CI_Model {
             <br> 
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -1593,7 +1595,7 @@ class Api_model extends CI_Model {
 							<p style="text-align:left;">Looking forward to serve you again.</p>
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from transporter at the time of receiving the parcel. This is to make sure transporter have delivered the parcel safely. </b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from transporter at the time of receiving the parcel. This is to make sure transporter have delivered the parcel safely. </b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -1724,7 +1726,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -1779,7 +1781,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -1838,7 +1840,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -1972,7 +1974,7 @@ class Api_model extends CI_Model {
                 <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span>
             </div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.  </b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.  </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -2035,7 +2037,7 @@ class Api_model extends CI_Model {
             <br> 
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -2094,7 +2096,7 @@ class Api_model extends CI_Model {
             <br> 
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+       <p style="text-align:left;"> <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -2220,7 +2222,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -2275,7 +2277,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -2333,7 +2335,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -2413,7 +2415,7 @@ class Api_model extends CI_Model {
             </p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -2471,7 +2473,7 @@ class Api_model extends CI_Model {
             </p>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b>
+       <p style="text-align:left;"> <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -2546,7 +2548,7 @@ class Api_model extends CI_Model {
                 <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span>
             </div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. </b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -2625,7 +2627,7 @@ class Api_model extends CI_Model {
             </center>
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b>
+       <p style="text-align:left;"> <br><b style="font-family:Calibri;">Note - Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case they do not feel safe to collect and deliver the parcel content.</b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -2689,7 +2691,7 @@ class Api_model extends CI_Model {
                 <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span>
             </div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from transporter at the time of receiving the parcel. This is to make sure transporter have delivered the parcel safely. </b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from transporter at the time of receiving the parcel. This is to make sure transporter have delivered the parcel safely. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -2757,7 +2759,7 @@ class Api_model extends CI_Model {
                 <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b> 
             </div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. </b>
+       <p style="text-align:left;"> <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -2866,7 +2868,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -2920,7 +2922,7 @@ class Api_model extends CI_Model {
 							</p>   
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -3035,7 +3037,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -3090,7 +3092,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -3201,7 +3203,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -3255,7 +3257,7 @@ class Api_model extends CI_Model {
 							</p>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -3314,7 +3316,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -3410,7 +3412,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -3464,7 +3466,7 @@ class Api_model extends CI_Model {
 							</p>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -3523,7 +3525,7 @@ class Api_model extends CI_Model {
 							<br>  
 							<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
 						</div>
-						<br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b>
+						<p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.</b></p>
 					</div>
 					<div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
 						<table style="width:100%;padding:0 25px;">
@@ -3613,7 +3615,7 @@ class Api_model extends CI_Model {
                 <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span>
             </div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. </b>
+        <p style="text-align:left;"><br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -3673,7 +3675,7 @@ class Api_model extends CI_Model {
                 <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span>
             </div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. </b>
+      <p style="text-align:left;">  <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -3739,7 +3741,7 @@ class Api_model extends CI_Model {
                 <b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span>
             </div>
         </div>
-        <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. </b>
+       <p style="text-align:left;"> <br><b style="font-family:Calibri;">Note - Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. </b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">
@@ -3973,8 +3975,15 @@ class Api_model extends CI_Model {
 				$this->email->to($user->username.',admin@mycourierbuddy.com'); 
 				$this->email->subject('MCB: Password Change Successfully');   
 				$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">        <img src="http://mycourierbuddy.in/images/logo.png" />    </div><img src="http://mycourierbuddy.in/images/plane.jpg" />    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">        <div>            <div style="text-align:left">Dear '.$user->name.'</div>            <p style="text-align:left;">You recently requested a password reset.</p>
-            <p style="text-align:left;">To change your MCB password, click here </p>             <center>                <a href="http://dev9856.mycourierbuddy.in/forgetpassword">Change Password Link</a>            </center>			<p style="text-align:left;">The link will expire in 24 hours, so be sure to use it right away.</p>			<p style="text-align:left;">Thanks for using MCB!</p>            <br>             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>        </div>            </div>    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">        <table style="width:100%;padding:0 25px;">
-            <tr>                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>                <td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>            </tr>        </table>    </div></div>';  $this->email->message($message);
+            <p style="text-align:left;">To change your MCB password, click here </p>             <center>              
+			<a href="http://dev9856.mycourierbuddy.in/forgetpassword">Change Password Link</a>            </center>			
+			<p style="text-align:left;">The link will expire in 24 hours, so be sure to use it right away.</p>			
+			<p style="text-align:left;">Thanks for using MCB!</p>            <br>             
+			<div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>   
+			</div>            </div>    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;"> 
+			<table style="width:100%;padding:0 25px;">
+            <tr>                <td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td> 
+			<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>            </tr>        </table>    </div></div>';  $this->email->message($message);
 			$this->email->send();
 			$data1->status="success";
 			$data1->response="Password changed successfully";
@@ -4057,11 +4066,11 @@ class Api_model extends CI_Model {
             <br> 
             <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
         </div>
-        <br><b style="font-family:Calibri;">Note:  <br>
+      <p style="text-align:left;">  <br><b style="font-family:Calibri;">Note:  <br>
 For Sender– Please make sure you disclose the content of envelope or parcel to transporter at the collection. This is make sure the safety of transporter and parcel. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content. 
 <br>
 For Transporter– Please make sure you check the content of envelope or parcel from sender at the time of collection. This is to make sure the safety of transporter as he/she is responsible to deliver the parcel safely to Receiver. Transporters have the authority to reject the parcel in case he/she does not feel safe to collect and deliver the parcel content.
-</b>
+</b></p>
     </div>
     <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;">
         <table style="width:100%;padding:0 25px;">

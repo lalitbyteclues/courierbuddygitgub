@@ -141,7 +141,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="data in filtered = (tripslist | filter:search | orderBy : predicate :reverse) | startFrom:(1-1)*entryLimit | limitTo:entryLimit">
+                                <tr ng-repeat="data in filtered = (tripslist | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
                                     <th>
                                         {{data.ParcelID}}
                                     </th> 
