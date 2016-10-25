@@ -385,7 +385,7 @@ class Api_model extends CI_Model {
     <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
         <div>
             <div style="text-align:left">Dear '.$res1->name.'</div>
-            <p style="text-align:left;">Congratulations! You have successfully booked your added your trip.</p>
+            <p style="text-align:left;">Congratulations! You have successfully added your trip.</p>
             <div style="text-align:left; color:#2c4882;">
                 <table>
                     <tr>
