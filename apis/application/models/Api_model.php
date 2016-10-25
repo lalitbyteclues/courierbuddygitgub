@@ -3860,7 +3860,7 @@ class Api_model extends CI_Model {
 	{   
 		if(isset($post["id"]))
 		 { 
-			$data = array('location' =>$post["location"],'status' =>$post["status"],'type' =>$post["type"],'zonelistid' =>$post["zonelistid"]);
+			$data = array('location' =>$post["location"],'status' =>$post["status"],'city' =>$post["city"],'type' =>$post["type"],'zonelistid' =>$post["zonelistid"]);
 			  if(isset($post["code"])){
 				$data["code"]=$post["code"];
 			} 
@@ -3868,7 +3868,7 @@ class Api_model extends CI_Model {
 		 }
 		 else
 		 {
-			$data = array('location' =>$post["location"],'status' =>$post["status"],'type' =>$post["type"],'zonelistid' =>$post["zonelistid"]);
+			$data = array('location' =>$post["location"],'status' =>$post["status"],'city' =>$post["city"],'type' =>$post["type"],'zonelistid' =>$post["zonelistid"]);
 			 if(isset($post["code"])){
 				$data["code"]=$post["code"];
 			} 
@@ -3933,6 +3933,16 @@ class Api_model extends CI_Model {
 			$this->db->where('id', $id);
 			$this->db->delete('airports'); 
 		 } 
+	}
+	function gettopcountrytrips()
+	{ 
+		$query = $this->db->query("SELECT a.id,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,a.created,a.status,art.city,a.processed_by,'update' FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id left join cms_airports art on a.source=art.location where (a.status=1 or a.status=3 or a.status=2)  group by art.city ORDER BY count(art.city) limit 4");
+		$response = $query->result(); 
+		$data=new stdclass();
+		$data->status="success";
+		$data->response=$response;
+		$json_response = json_encode($data);   
+		print_r($json_response);  
 	}	
     function searchhome($post)
 	{ 

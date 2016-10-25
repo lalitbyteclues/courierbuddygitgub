@@ -14,7 +14,7 @@ angular.module('courier').controller("adminairportmanagerController", function (
     $scope.errormessage = '';
     $scope.successMessage = "";
     $scope.edit = false;
-    $scope.data = { "location": "", "zone": 0, "type": "", "code": "", "zonelistid": 0, "status": "Y" };
+    $scope.data = { "location": "", "zone": 0, "type": "","city": "", "code": "", "zonelistid": 0, "status": "Y" };
     $scope.zonelist = [];
     AirportService.getzonelist().then(function (results) {
         $scope.zonelist = results.data.response;
@@ -60,7 +60,7 @@ angular.module('courier').controller("adminairportmanagerController", function (
 					$scope.sort_by("location");
                     $scope.successmessage = "Saved SuccessFully";
                     $("#addairport").modal("hide");
-                    $scope.data = { "location": "", "zone": 0, "type": "", "code": "", "zonelistid": 0, "status": "Y" };
+                    $scope.data = { "location": "", "zone": 0, "type": "","city": "", "code": "", "zonelistid": 0, "status": "Y" };
                     $scope.errormessage = "";
                 });
             } else {
@@ -115,7 +115,7 @@ angular.module('courier').controller("adminairportmanagerController", function (
                 if (angular.isDefined(airportlist[i].Name) && angular.isDefined(airportlist[i].Zone) && angular.isDefined(airportlist[i].type)) {
                     if ($.grep($scope.list, function (air) { return air.location.trim().toLowerCase() == airportlist[i].Name.trim().toLowerCase() || (air.code==null || air.code.trim().toLowerCase() == airportlist[i].Code.trim().toLowerCase()) }).length == 0) {
                         if ($.grep($scope.zonelist, function (zone) { return zone.Zonename.trim().toLowerCase() == airportlist[i].Zone.trim().toLowerCase(); }).length > 0) {
-                            var item = { "location": airportlist[i].Name, "zone": 0, "type": airportlist[i].type, "zonelistid": $.grep($scope.zonelist, function (zone) { return zone.Zonename.trim().toLowerCase() == airportlist[i].Zone.trim().toLowerCase(); })[0].id, "status": "Y", "code": airportlist[i].Code };
+                            var item = { "location": airportlist[i].Name, "zone": 0, "type": airportlist[i].type, "city": airportlist[i].city, "zonelistid": $.grep($scope.zonelist, function (zone) { return zone.Zonename.trim().toLowerCase() == airportlist[i].Zone.trim().toLowerCase(); })[0].id, "status": "Y", "code": airportlist[i].Code };
                             AirportService.saveairportdate(item).then(function (results) {
                                 $scope.list = results.data.response;
                                 $scope.currentPage = 1; //current page

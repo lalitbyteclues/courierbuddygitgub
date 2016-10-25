@@ -32,6 +32,11 @@ class Api extends CI_Controller{
 		 $transporter = $this->api_model->gettransporterdetail($transporterid);		 
 		 echo $transporter;
 	} 
+	public function gettopcountrytrips()
+	{
+		 $transporter = $this->api_model->gettopcountrytrips();		 
+		 echo $transporter;
+	} 
 	public function getparceldetail($parcelid)
 	{
 		 $transporter = $this->api_model->getparceldetail($parcelid);		 

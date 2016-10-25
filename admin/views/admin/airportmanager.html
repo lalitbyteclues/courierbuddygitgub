@@ -54,6 +54,13 @@
 										<i  ng-show="predicate == 'location' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                                             </a>
                                         </td>
+										 <td>
+                                            City&nbsp;<a ng-click="sort_by('city');">
+                                                  <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'city'"></i>
+										<i ng-show="predicate == 'city' && !reverse" class="glyphicon glyphicon-sort-by-attributes"></i> 
+										<i  ng-show="predicate == 'city' && reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                                            </a>
+                                        </td>
                                         <th>
                                             Code&nbsp;<a ng-click="sort_by('code');">
                                                  <i class="glyphicon glyphicon-sort" ng-hide="predicate == 'code'"></i>
@@ -93,6 +100,10 @@
                                         <td>
                                             <span data-ng-hide="editMode">{{data.location}}</span>
                                             <input type="text" data-ng-show="editMode" class="form-control" data-ng-model="data.location" data-ng-required />
+                                        </td>
+										 <td>
+                                            <span data-ng-hide="editMode">{{data.city}}</span>
+                                            <input type="text" data-ng-show="editMode" class="form-control" data-ng-model="data.city" />
                                         </td>
                                         <td>
                                             <span data-ng-hide="editMode">{{data.code}}</span>
@@ -163,6 +174,10 @@
                                                 <div class="clear">&nbsp;</div>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" placeholder="Airport Code" data-ng-model="data.code" data-ng-required />
+                                                </div>
+												<div class="clear">&nbsp;</div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="City" data-ng-model="data.city" />
                                                 </div>
                                                 <div class="clear">&nbsp;</div>
                                                 <div class="form-group">
