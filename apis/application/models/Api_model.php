@@ -350,7 +350,10 @@ class Api_model extends CI_Model {
 		{
 			$data["source"]=$trip['source'];
 			$data["destination"]=$trip['destination'];
-			$data["image"]=$trip['ticket'];
+			if(isset($trip['ticket']))
+			{
+				$data["image"]=$trip['ticket'];
+			}
 			$data["dep_time"]=$trip['d_date'];
 			$data["arrival_time"]=$trip['a_date'];
 			$data["flight_no"]=$trip['flight_no'];
@@ -501,6 +504,8 @@ class Api_model extends CI_Model {
 					$this->db->where("id",$TripID); 
 					$tripquery=$this->db->get("trips");
 					$trip=$tripquery->result()[0]; 
+					$sql = "update cms_bookings a set a.status=4 where p_id=".$ParcelID.";"; 
+					$this->db->query($sql);
 					$data["t_id"]=$TripID;
 					$data["p_id"]=$ParcelID;
 					$data["weight"]=$parcel->weight;
@@ -726,6 +731,8 @@ class Api_model extends CI_Model {
     </div>
 </div>';	$this->email->message($message);
 					$this->email->send();  
+					$sql = "update cms_chatchannel a set a.isactive=0 where parcelid=".$order['ParcelID'].";"; 
+					$this->db->query($sql);
 					$chatchannelcreate=array("receiverid"=>$receiveruser->id,"transporterid"=>$transuser->id,"senderid"=>$parceluser->id,"parcelid"=>$order['ParcelID'],"tripid"=>$order["TransID"]);
 					$this->db->insert('chatchannel', $chatchannelcreate);
 					$data=new stdclass();
@@ -798,6 +805,8 @@ class Api_model extends CI_Model {
 			$this->db->where("id",$TripID); 
 			$tripquery=$this->db->get("trips");
 			$trip=$tripquery->result()[0]; 
+			$sql = "update cms_bookings a set a.status=4 where p_id=".$ParcelID.";"; 
+			$this->db->query($sql);
 			$data["t_id"]=$TripID;
 			$data["p_id"]=$ParcelID;
 			$data["weight"]=$parcel->weight;
@@ -1027,6 +1036,8 @@ class Api_model extends CI_Model {
 </div>';	
 			$this->email->message($message);
 			$this->email->send();  
+			$sql = "update cms_chatchannel a set a.isactive=0 where parcelid=".$ParcelID.";"; 
+			$this->db->query($sql);
 			$chatchannelcreate=array("receiverid"=>$receiveruser->id,"transporterid"=>$transuser->id,"senderid"=>$parceluser->id,"parcelid"=>$ParcelID,"tripid"=>$TripID);
 			$this->db->insert('chatchannel', $chatchannelcreate);
 			$data=new stdclass();
@@ -1636,7 +1647,10 @@ class Api_model extends CI_Model {
     }
 	function updatetripticket($trip)
 	{  
-			$data["image"]=$trip['ticket']; 
+			if(isset($trip['ticket']))
+			{
+				$data["image"]=$trip['ticket']; 
+			} 
 			$data["processed_by"]=$trip["t_id"];			
 			$this->db->where('id', $trip["id"]);
 			$this->db->update('trips', $data);   
@@ -3353,7 +3367,7 @@ class Api_model extends CI_Model {
 				$this->db->query($sql); 
 				$sql = "update cms_trips a set status=1,processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.p_id=".$request["id"]." and b.status!=3) and (select count(*) from cms_bookings where t_id in(select t_id from cms_bookings b where b.p_id=".$request["id"]." ) and status=3)=0	"; 
 				$this->db->query($sql);  
-				$sql = "update cms_chatchannel a set a.isactive=0,processed_by=".$request["process_by"]." where parcelid=".$request["id"].";"; 
+				$sql = "update cms_chatchannel a set a.isactive=0  where parcelid=".$request["id"].";"; 
 				$this->db->query($sql);					 
 				$this->db->where("id",$parcel->usr_id);  
 				$query2=$this->db->get("users");
@@ -4128,6 +4142,9 @@ For Transporter– Please make sure you check the content of envelope or parcel 
 			$data["l_name"]=$request['lastName'];
 			//$data["passportno"]=$request['passportno'];
 			$data["username"]=$request['email'];
+			if(isset($request['photo'])){
+				$data["photo"]=$request['photo'];
+			}
 			$email=$request['email'];
 		//	$data["country_code"]=$request['countrycode'];
 			$data["role_id"]='2';

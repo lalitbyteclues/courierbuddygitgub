@@ -208,14 +208,15 @@ class Api extends CI_Controller{
 				$input_data = json_decode(trim(file_get_contents('php://input')), true);  
 				if(isset($input_data))
 				{
-					if($input_data["ticket"]==""){$input_data["ticket"]="";}else{
+					if(isset($input_data["ticket"])){
+					if($input_data["ticket"]=="" || $input_data["ticket"]==null){$input_data["ticket"]="";}else{
 					$imageData = base64_decode($input_data["ticket"]);
 					$source = imagecreatefromstring($imageData);
 					$rotate = imagerotate($source,0, 0); 
 					$new_name = uniqid();
 					$imageSave = imagejpeg($rotate,'./uploads/'.$new_name.'.jpg',100);
 					imagedestroy($source);
-					$input_data["ticket"]='/uploads/'.$new_name.'.jpg';  }
+					$input_data["ticket"]='/uploads/'.$new_name.'.jpg';  }}else{$input_data["ticket"]="";}
 					$rand = rand(0,9999);  
 					$today = date("Ymd"); 
 					$input_data["processed_by"] =  $today.$rand; 
@@ -532,6 +533,7 @@ class Api extends CI_Controller{
 		{ 
 			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
 			if(isset($input_data)){
+				if(isset($input_data["ticket"]) || $input_data["ticket"]==null){
 				if($input_data["ticket"]==""){$input_data["ticket"]="";}else{
 				$imageData = base64_decode($input_data["ticket"]);
 				$source = imagecreatefromstring($imageData);
@@ -540,11 +542,14 @@ class Api extends CI_Controller{
 				$imageSave = imagejpeg($rotate,'./uploads/'.$new_name.'.jpg',100);
 				imagedestroy($source);
 				$input_data["ticket"]='/uploads/'.$new_name.'.jpg';  } 
+				}else{
+					$input_data["ticket"]="";
+				}
 				$this->api_model->updatetripticket($input_data); 
 			}else{
 				$errormessage=new stdclass();
 				$errormessage->status="Error";
-				$errormessage->errorMessage="No Trip added";
+				$errormessage->errorMessage="No Trip Updated";
 				$json_response = json_encode($errormessage); 
 				echo $json_response;  
 			}  
