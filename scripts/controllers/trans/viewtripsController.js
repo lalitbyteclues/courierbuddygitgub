@@ -178,7 +178,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $f
     }
     $scope.senderbooknow = function (id) { 
 		if (!($.grep($scope.parcellist, function (parcel) { return parcel.id == id })[0].weight <= (parseFloat($scope.transporter.awailableweight==null?$scope.transporter.capacity:$scope.transporter.awailableweight) + (parseFloat($scope.transporter.awailableweight==null?$scope.transporter.capacity:$scope.transporter.awailableweight) * .2)))) {
-            bootbox.alert("You can't book parcel having weight mare than 20% of your available capacity !", function () { 
+            bootbox.alert("You can't book parcel having weight more than 20% of your available capacity !", function () { 
             });
             return false;
         } 

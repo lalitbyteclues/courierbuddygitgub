@@ -1,14 +1,13 @@
 var socket  = require( 'socket.io' );
-var http = require('https');
+var http = require('http');
 var fs = require('fs');
 var Client = require('node-rest-client').Client; 
 var client = new Client();
 var express = require('express');
 var app     = express(); 
-var options = { key: fs.readFileSync('/home/mcbcourier/certs/www.mycourierbuddy.com.key'),cert: fs.readFileSync('/home/mcbcourier/certs/212d2ffba57898b0.crt')}; 
-var server  = require('https').createServer(options);
+var server  = require('http').createServer();
 var io      = socket.listen( server );
-var port    = process.env.PORT || 3000;
+var port    = process.env.PORT || 4000;
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });

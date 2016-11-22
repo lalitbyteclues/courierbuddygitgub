@@ -68,9 +68,9 @@
                                     <div class="form-group p-size">
                                         <label class="col-md-4 control-label" for="textinput">Size (kg) <span class="red">*</span></label>
                                         <div class="col-md-8">
-                                            <input name="weight" class="form-control input-md" required="required" placeholder="Weight" step="0.01" min="0.01" max="{{maxcapicity}}" type="number" ng-model="ParcelWeight" id="ParcelWeight" />
+                                            <input name="weight" class="form-control input-md" required="required" placeholder="Weight" step="0.01" min="0.01" max="{{maxcapacity}}" type="number" ng-model="ParcelWeight" id="ParcelWeight" />
                                             <span class="error" ng-show="frmaddparcel.weight.$error.min">Min 0.01 Kg.</span>
-                                            <span class="error" ng-show="frmaddparcel.weight.$error.max">Max {{maxcapicity}} Kg.</span>
+                                            <span class="error" ng-show="frmaddparcel.weight.$error.max">Max {{maxcapacity}} Kg.</span>
                                             <span class="error" ng-show="(frmaddparcel.$submitted && frmaddparcel.weight.$error.required)">Required.</span>
                                         </div>
                                     </div>

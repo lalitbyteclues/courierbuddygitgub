@@ -8,7 +8,7 @@ angular.module('courier').controller("transbookingController", function (ParcelS
             $scope.transporter = response.data.response[0];
             $scope.parcelfromloation = $scope.transporter.source;
             $scope.parceltoloation = $scope.transporter.destination;
-            $scope.maxcapicity = $scope.transporter.awailableweight;
+            $scope.maxcapacity = $scope.transporter.awailableweight;
             $scope.deliverytill = $scope.transporter.arrival_time;
         }
     });

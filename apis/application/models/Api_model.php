@@ -67,7 +67,7 @@ class Api_model extends CI_Model {
 	function triplist($userID)
 	{
 			$data=new stdclass();
-			$query = $this->db->query("SELECT a . * , (a.capacity - c.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink  FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id  left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2) =al.code WHERE a.status not IN (4) AND a.arrival_time >= CURDATE() AND a.t_id =".$userID.""); 
+			$query = $this->db->query("SELECT a . * , (a.capacity - ifnull(c.totalweight,0)) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink  FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id  left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2) =al.code WHERE a.status not IN (4) AND a.arrival_time >= CURDATE() AND a.t_id =".$userID.""); 
 			$data->status="success";
 			$data->response=$query->result();		
 			$json_response = json_encode($data); 
@@ -1243,7 +1243,8 @@ class Api_model extends CI_Model {
 		    $pricedata=$query->result(); 
 			$parcel['payment']=$pricedata[0]->price; 
 			$parcel['processed_by']=$parcel['usr_id']; 
-			$this->db->insert('parcels', $parcel); 
+			$parcel["created"]=date("Y-m-d H:i:s");
+			$this->db->insert('parcels', $parcel);  
 			if(isset($parcel["trans_id"]))
 			{
 				$sql = "update cms_trips a set status=2,processed_by=".$parcel['usr_id']." where id=".$parcel["trans_id"]; 
@@ -3950,7 +3951,7 @@ class Api_model extends CI_Model {
 	}
 	function gettopcountrytrips()
 	{ 
-		$query = $this->db->query("SELECT a.id,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,a.created,a.status,art.city,a.processed_by,'update' FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id left join cms_airports art on a.source=art.location where (a.status=1 or a.status=3 or a.status=2)  group by art.city ORDER BY count(art.city) limit 4");
+		$query = $this->db->query("SELECT a.id,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,a.created,a.status,art.city,a.processed_by,'update' FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id left join cms_airports art on a.source=art.location where (a.status=1 or a.status=3 or a.status=2) and a.arrival_time >= CURDATE()  group by art.city ORDER BY count(art.city) limit 4");
 		$response = $query->result(); 
 		$data=new stdclass();
 		$data->status="success";

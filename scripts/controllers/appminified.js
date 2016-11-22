@@ -2731,7 +2731,7 @@ angular.module('courier').controller("transbookingController", function (ParcelS
             $scope.transporter = response.data.response[0];
             $scope.parcelfromloation = $scope.transporter.source;
             $scope.parceltoloation = $scope.transporter.destination;
-            $scope.maxcapicity = $scope.transporter.awailableweight;
+            $scope.maxcapacity = $scope.transporter.awailableweight;
             $scope.deliverytill = $scope.transporter.arrival_time;
         }
     });
@@ -3347,7 +3347,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
     $scope.createcourierrequest = function (id) {
         console.log($.grep($scope.tripsmatch, function (a) { return a.id == id })[0]);
         if (parseInt($.grep($scope.tripsmatch, function (a) { return a.id == id })[0].capacity) < parseInt($scope.parcel.weight)) {
-            bootbox.confirm("Trip weight capicity is less than your need. Do you want to Book with quantity:" + $.grep($scope.tripsmatch, function (a) { return a.id == id })[0].capacity + "?", function (result) {
+            bootbox.confirm("Trip weight capacity is less than your need. Do you want to Book with quantity:" + $.grep($scope.tripsmatch, function (a) { return a.id == id })[0].capacity + "?", function (result) {
                 if (result) {
                     $scope.parcel.weight = $.grep($scope.tripsmatch, function (a) { return a.id == id })[0].capacity;
                     var data = { "weight": $scope.parcel.weight, "id": $scope.parcel.id };
@@ -3826,7 +3826,7 @@ angular.module('courier').controller("viewtripsController", function ($scope, $f
     }
     $scope.senderbooknow = function (id) {
         if (!($.grep($scope.parcellist, function (parcel) { return parcel.id == id })[0].weight <= (parseFloat($scope.transporter.awailableweight == null ? $scope.transporter.capacity : $scope.transporter.awailableweight) + (parseFloat($scope.transporter.awailableweight == null ? $scope.transporter.capacity : $scope.transporter.awailableweight) * .2)))) {
-            bootbox.alert("You can't book parcel having weight mare than 20% of your available capacity !", function () {
+            bootbox.alert("You can't book parcel having weight more than 20% of your available capacity !", function () {
             });
             return false;
         }

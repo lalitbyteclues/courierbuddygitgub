@@ -118,7 +118,7 @@ angular.module('courier').controller("viewparcelController", function ($http, $s
     $scope.createcourierrequest = function (id) {
         console.log($.grep($scope.tripsmatch, function (a) { return a.id == id })[0]);
         if (parseInt($.grep($scope.tripsmatch, function (a) { return a.id == id })[0].capacity) < parseInt($scope.parcel.weight)) {
-            bootbox.confirm("Trip weight capicity is less than your need. Do you want to Book with quantity:" + $.grep($scope.tripsmatch, function (a) { return a.id == id })[0].capacity + "?", function (result) {
+            bootbox.confirm("Trip weight capacity is less than your need. Do you want to Book with quantity:" + $.grep($scope.tripsmatch, function (a) { return a.id == id })[0].capacity + "?", function (result) {
                 if (result) {
                     $scope.parcel.weight = $.grep($scope.tripsmatch, function (a) { return a.id == id })[0].capacity;
                     var data = { "weight": $scope.parcel.weight, "id": $scope.parcel.id };
