@@ -9,7 +9,8 @@ class Api_model extends CI_Model {
     }
 	function checkregisteruser($email) 
 	{
-		$this->db->where("username",$email);          
+		$this->db->where("username",$email);
+		$this->db->where('password !=', "");	      
         $query=$this->db->get("users");
         if($query->num_rows()>0)
         { return false;            
@@ -27,12 +28,12 @@ class Api_model extends CI_Model {
     }
 	function gettransporterdetail($transporterid)
 	{      $data=new stdclass();
-		   $tripquery = $this->db->query("SELECT a.*, (a.capacity - awailableweight.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )awailableweight ON a.id = awailableweight.t_id left join cms_tripstatus trstatus on a.status=trstatus.id  left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2)=al.code where a.id=".$transporterid); 
+		   $tripquery = $this->db->query("SELECT a.*, (a.capacity - awailableweight.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink,IFNULL(b.username,'') as transporteremail,IFNULL(b.name,'') as transportername  FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )awailableweight ON a.id = awailableweight.t_id left join cms_tripstatus trstatus on a.status=trstatus.id  left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2)=al.code left join cms_users b on a.t_id=b.id where a.id=".$transporterid); 
 		   $trip=$tripquery->result();
 		   $tp=$trip[0];
 			if( $tp->status==3 || $tp->status==2 || $tp->status==6)
 			{ 
-			  $booking = $this->db->query("SELECT a.*,IFNULL(b.username,'') as senderemail,IFNULL(b.name,'') as sendername,IFNULL(c.username,'') as receiveremail ,IFNULL(c.name,'') as receivername,d.BookingID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid FROM cms_parcels a left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid left join cms_users b on a.usr_id=b.id left join cms_users c on a.recv_id=c.id inner join (select par.id ParcelID,ifnull(bk.id,0) BookingID,par.trans_id as t_id from cms_parcels par left join cms_bookings bk on par.id=bk.p_id and bk.status<>4 where par.status<>0) d on a.id=d.ParcelID left join cms_parcelstatus prstatus on a.status=prstatus.id where `t_id`=".$tp->id.""); 
+			  $booking = $this->db->query("SELECT a.*,IFNULL(b.username,'') as senderemail,IFNULL(b.mobile,'') as sendermobile,IFNULL(b.name,'') as sendername,IFNULL(c.username,'') as receiveremail,IFNULL(c.mobile,'') as receivermobile ,IFNULL(c.name,'') as receivername,d.BookingID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid FROM cms_parcels a left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid left join cms_users b on a.usr_id=b.id left join cms_users c on a.recv_id=c.id inner join (select par.id ParcelID,ifnull(bk.id,0) BookingID,par.trans_id as t_id from cms_parcels par left join cms_bookings bk on par.id=bk.p_id and bk.status<>4 where par.status<>0) d on a.id=d.ParcelID left join cms_parcelstatus prstatus on a.status=prstatus.id where `t_id`=".$tp->id.""); 
 			  $data->parcel=$booking->result();
 			}
 			if($tp->status==1 || $tp->status==2 || $tp->status==3){ 
@@ -52,12 +53,15 @@ class Api_model extends CI_Model {
 			$parcel=$query->result(); 
 			$tp=$parcel[0]; 			
 			if( $tp->status==2 || $tp->status==3 || $tp->status==4 || $tp->status==5)
-			{ $booking = $this->db->query("SELECT a.*,IFNULL(b.username,'') as transporteremail,IFNULL(b.name,'') as transportername,d.id as BookingID FROM cms_trips a left join cms_users b on a.t_id=b.id inner join cms_bookings d on a.id=d.t_id where d.p_id=".$tp->id.""); 
+			{    $booking = $this->db->query("SELECT a.*,IFNULL(b.username,'') as transporteremail,IFNULL(b.name,'') as transportername,d.id as BookingID FROM cms_trips a left join cms_users b on a.t_id=b.id inner join cms_bookings d on a.id=d.t_id where d.p_id=".$tp->id.""); 
 				 $data->trip=$booking->result();
 			}else{
 				if($tp->status==0){
-				$booking = $this->db->query("SELECT id,a.TripID,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,created,status,processed_by,'update' FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id where (a.status=1 or a.status=3) and destination='".$tp->destination."' and source='".$tp->source."' and arrival_time<='".$tp->till_date." 23:59' and arrival_time >= CURDATE()  "); 
+				$booking = $this->db->query("SELECT id,a.TripID,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,created,status,processed_by,'update',ifnull(ratingcheck.rate,0)as rate FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id  left join(select (sum(cms_parcels.rating)/count(cms_parcels.rating)*5)as rate,cms_trips.t_id as user_id from cms_trips inner join cms_parcels ON cms_trips.id=cms_parcels.trans_id where cms_parcels.rating>0 group  by cms_trips.t_id)ratingcheck on a.t_id=ratingcheck.user_id  where (a.status=1 or a.status=3) and destination='".$tp->destination."' and source='".$tp->source."' and arrival_time<='".$tp->till_date." 23:59' and arrival_time >= CURDATE()  "); 
 				 $data->tripsmatch=$booking->result();
+			}else if($tp->status==1){ 
+				 $booking = $this->db->query("SELECT a.*,IFNULL(b.username,'') as transporteremail,IFNULL(b.name,'') as transportername FROM cms_trips a left join cms_users b on a.t_id=b.id where a.id=".$tp->trans_id.""); 
+				 $data->trip=$booking->result();
 			} }
 			$data->status="success";
 			$data->response=$parcel;
@@ -67,7 +71,7 @@ class Api_model extends CI_Model {
 	function triplist($userID)
 	{
 			$data=new stdclass();
-			$query = $this->db->query("SELECT a . * , (a.capacity - ifnull(c.totalweight,0)) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink  FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id  left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2) =al.code WHERE a.status not IN (4) AND a.arrival_time >= CURDATE() AND a.t_id =".$userID.""); 
+			$query = $this->db->query("SELECT a . * , (a.capacity - ifnull(c.totalweight,0)) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink  FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id  left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2) =al.code WHERE a.status not IN (4) AND a.arrival_time >= CURDATE() AND a.t_id =".$userID." order by `update` desc"); 
 			$data->status="success";
 			$data->response=$query->result();		
 			$json_response = json_encode($data); 
@@ -119,7 +123,7 @@ class Api_model extends CI_Model {
 	}
 	function parcellist($userID)
 	{
-		$query = $this->db->query("SELECT a.*,IFNULL(b.username,'') as receiveremail,IFNULL(b.UserID,'') as MCBreceiverID,IFNULL(c.username,'') as transemail,IFNULL(c.UserID,'') as MCBTransporterID,IFNULL(c.id,0) as transporterID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid FROM cms_parcels a left join cms_users b on a.recv_id=b.id left join cms_trips trip on a.trans_id=trip.id left join cms_users c on trip.t_id=c.id left join cms_parcelstatus prstatus on a.status=prstatus.id  left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid  where a.status not in(6,8) AND a.till_date >= CURDATE() and  a.usr_id=".$userID." "); 
+		$query = $this->db->query("SELECT a.*,IFNULL(b.username,'') as receiveremail,IFNULL(b.UserID,'') as MCBreceiverID,IFNULL(c.username,'') as transemail,IFNULL(c.UserID,'') as MCBTransporterID,IFNULL(c.id,0) as transporterID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid FROM cms_parcels a left join cms_users b on a.recv_id=b.id left join cms_trips trip on a.trans_id=trip.id left join cms_users c on trip.t_id=c.id left join cms_parcelstatus prstatus on a.status=prstatus.id  left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid  where a.status not in(6,8) AND a.till_date >= CURDATE() and  a.usr_id=".$userID." order by updated desc"); 
 		$data=new stdclass();
 		$data->status="success";
 		$data->response=$query->result();		
@@ -128,7 +132,7 @@ class Api_model extends CI_Model {
 	}
 	function triplistall(){
 		$data=new stdclass();
-		$query = $this->db->query("SELECT a . * ,user.UserID, (a.capacity - c.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2) =al.code left join cms_users user on a.t_id =user.id order by a.status"); 
+		$query = $this->db->query("SELECT a . * ,user.UserID, (a.capacity - c.totalweight) AS awailableweight,trstatus.status as statusdescription,al.link airlinelink FROM cms_trips a LEFT JOIN (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id )c ON a.id = c.t_id left join cms_tripstatus trstatus on a.status=trstatus.id left join cms_airlineinfo al on SUBSTR(a.flight_no,1,2) =al.code left join cms_users user on a.t_id =user.id order by a.update,a.status"); 
 		$data->status="success";
 		$data->response=$query->result();		
 		$json_response = json_encode($data); 
@@ -139,7 +143,7 @@ class Api_model extends CI_Model {
 	    $data=new stdclass(); 
 		$data->total=$this->db->count_all('parcels');
 		$limit = explode('-', $datapost["limit"]); 
-		$query = $this->db->query("SELECT a.*,prstatus.status as statusdescription,ct.TripID,ct.id as tripprimaryid from cms_parcels a left join cms_parcelstatus prstatus on a.status=prstatus.id left join cms_bookings cb on a.id=cb.p_id and cb.status<>4 left join cms_trips ct on cb.t_id=ct.id  where (CAST(a.id as CHAR) LIKE '%". $datapost["id"]."%' or '".$datapost["id"]."'='' ) and (a.status='". $datapost["status"]."' or '".$datapost["status"]."'='' )and (a.till_date='". $datapost["till_date"]."' or '".$datapost["till_date"]."'='' ) order by a.id desc Limit ".$limit[0].",".$limit[1]); 
+		$query = $this->db->query("SELECT a.*,prstatus.status as statusdescription,ct.TripID,ct.id as tripprimaryid from cms_parcels a left join cms_parcelstatus prstatus on a.status=prstatus.id left join cms_bookings cb on a.id=cb.p_id and cb.status<>4 left join cms_trips ct on cb.t_id=ct.id  where (CAST(a.id as CHAR) LIKE '%". $datapost["id"]."%' or '".$datapost["id"]."'='' ) and (a.status='". $datapost["status"]."' or '".$datapost["status"]."'='' )and (a.till_date='". $datapost["till_date"]."' or '".$datapost["till_date"]."'='' ) order by a.updated desc Limit ".$limit[0].",".$limit[1]); 
 		$data->status="success";
 		$data->response=$query->result();		
 		$json_response = json_encode($data); 
@@ -262,9 +266,9 @@ class Api_model extends CI_Model {
 			$this->db->where("id",$tripid); 
 			$query1=$this->db->get("trips");
 			$tripdetails=$query1->result()[0]; 
-		     $sql = "update `cms_parcels` set  status=1,processed_by=".$tripdetails->t_id.",trans_id=".$tripid." where id=".$senderid.";";
+		     $sql = "update `cms_parcels` set  status=1,updated='".date("Y-m-d H:i:s")."',processed_by=".$tripdetails->t_id.",trans_id=".$tripid." where id=".$senderid.";";
 		     $this->db->query($sql);
-			 $sql = "update cms_trips a set status=2,processed_by=".$tripdetails->t_id." where id=".$tripid; 
+			 $sql = "update cms_trips a set status=2,`update`='".date("Y-m-d H:i:s")."',processed_by=".$tripdetails->t_id." where id=".$tripid; 
 			 $this->db->query($sql);   
 			$this->db->where("id",$senderid); 
 			$query=$this->db->get("parcels");	
@@ -494,7 +498,7 @@ class Api_model extends CI_Model {
 					$this->db->where("id",$ParcelID); 
 					$query=$this->db->get("parcels");   
 					$parcel=$query->result()[0];
-					$sql = "update `cms_parcels` set  trans_id=".$TripID.",processed_by=".$parcel->usr_id.",status=2 where id=".$ParcelID.";";
+					$sql = "update `cms_parcels` set  trans_id=".$TripID.",updated='".date("Y-m-d H:i:s")."',processed_by=".$parcel->usr_id.",status=2 where id=".$ParcelID.";";
 					$this->db->query($sql);
 					$sql = "update `cms_trips` set status=3,processed_by=".$parcel->usr_id." where id=".$TripID.";";
 					$this->db->query($sql);
@@ -798,7 +802,7 @@ class Api_model extends CI_Model {
 			$this->db->where("id",$ParcelID); 
 			$query=$this->db->get("parcels");   
 			$parcel=$query->result()[0];
-			$sql = "update `cms_parcels` set  trans_id=".$TripID.",processed_by=".$parcel->usr_id.",status=2 where id=".$ParcelID.";";
+			$sql = "update `cms_parcels` set  trans_id=".$TripID.",updated='".date("Y-m-d H:i:s")."',processed_by=".$parcel->usr_id.",status=2 where id=".$ParcelID.";";
 			$this->db->query($sql);
 			$sql = "update `cms_trips` set status=3,processed_by=".$parcel->usr_id." where id=".$TripID.";";
 			$this->db->query($sql); 
@@ -1196,6 +1200,17 @@ class Api_model extends CI_Model {
 				print_r($json_response);
 			}
 		}
+		function deleteidentitytype($sliders)
+		{  if(isset( $sliders["id"]))
+			{   $this->db->where('id', $sliders["id"]);
+				$this->db->delete('identitytype'); 
+				$data=new stdclass();
+				$data->status="success";
+				$data->response="Updated Successfully"; 		
+				$json_response = json_encode($data); 
+				print_r($json_response);
+			}
+		}
 		function addsliderimage($sliders)
 		{ 
 		if(isset( $sliders["id"]))
@@ -1217,6 +1232,36 @@ class Api_model extends CI_Model {
 			$json_response = json_encode($data); 
 			print_r($json_response);
 			}
+		}
+		function addidentitytype($sliders)
+		{ 
+			if(isset( $sliders["id"]))
+			{
+				 $this->db->where('id', $sliders["id"]);
+				$this->db->update('identitytype', $sliders); 
+				$data=new stdclass();
+				$data->status="success";
+				$data->response="Updated Successfully"; 		
+				$json_response = json_encode($data); 
+				print_r($json_response);
+			}
+			else
+			{
+				$this->db->insert('identitytype', $sliders); 
+				$data=new stdclass();
+				$data->status="success";
+				$data->response="Created Successfully"; 		
+				$json_response = json_encode($data); 
+				print_r($json_response);
+				}
+		}
+		function identitytypelist()
+		{   $query = $this->db->query("SELECT * FROM `cms_identitytype` order by id desc"); 
+			$data=new stdclass();
+			$data->status="success";
+			$data->response=$query->result();
+			$json_response = json_encode($data);  
+			echo $json_response;   
 		}
 		function sliderimagelist()
 		{   $query = $this->db->query("SELECT * FROM `cms_sliders` order by id"); 
@@ -1247,7 +1292,7 @@ class Api_model extends CI_Model {
 			$this->db->insert('parcels', $parcel);  
 			if(isset($parcel["trans_id"]))
 			{
-				$sql = "update cms_trips a set status=2,processed_by=".$parcel['usr_id']." where id=".$parcel["trans_id"]; 
+				$sql = "update cms_trips a set status=2,`update`='".date("Y-m-d H:i:s")."',processed_by=".$parcel['usr_id']." where id=".$parcel["trans_id"]; 
 				$this->db->query($sql); 	
 			}	
 			$sql = "update cms_parcels set ParcelID=concat('P',id) ORDER BY `id` DESC LIMIT 10 ;"; 
@@ -1415,15 +1460,16 @@ class Api_model extends CI_Model {
 			$parceldata=$query->result()[0];			
 	       $this->db->where('id', $parcel["id"]);
 		   $parcel["processed_by"]=$parceldata->usr_id;
+		   $parcel["updated"]=date("Y-m-d H:i:s"); 
 			$this->db->update('parcels', $parcel);   
 	}
 	function updateparcel($parcel){  
 		if(!empty($parcel['source']) && !empty($parcel['destination']) && !empty($parcel['till_date']) && !empty($parcel['type']) && !empty($parcel['recv_id']) && !empty($parcel['description'])  ) {
 			 $sql = "update `cms_bookings` set  status=4,process_by=".$parcel["usr_id"]." where p_id=".$parcel["id"].";";
 			 $this->db->query($sql);
-			 $sql = "update cms_trips a set status=1,processed_by=".$parcel["usr_id"]."  where exists(select t_id from cms_bookings b where b.t_id=a.id and b.p_id=".$parcel["id"]." and status !=3) "; 
+			 $sql = "update cms_trips a set status=1,`update`='".date("Y-m-d H:i:s")."',processed_by=".$parcel["usr_id"]."  where exists(select t_id from cms_bookings b where b.t_id=a.id and b.p_id=".$parcel["id"]." and status !=3) "; 
 			 $this->db->query($sql); 
-			  $sql = "update cms_trips a set status=1,processed_by=".$parcel["usr_id"]."  where exists(select trans_id from cms_parcels b where b.trans_id=a.id and b.id=".$parcel["id"]." and b.status =1)"; 
+			  $sql = "update cms_trips a set status=1,`update`='".date("Y-m-d H:i:s")."',processed_by=".$parcel["usr_id"]."  where exists(select trans_id from cms_parcels b where b.trans_id=a.id and b.id=".$parcel["id"]." and b.status =1)"; 
 			 $this->db->query($sql); 
 			 $query = $this->db->query("select price from cms_zonepricelist a  inner join cms_weightrange b on a.weightrangeid=b.id  inner join cms_airports sou on a.fromzoneid=sou.zonelistid  inner join cms_airports dest on a.tozoneid=dest.zonelistid  
 			where ".$parcel['weight'].">b.minweight  and ".$parcel['weight']."<=b.maxweight and 
@@ -1630,6 +1676,7 @@ class Api_model extends CI_Model {
 				$parcel['trans_id']=0;				
 			}
 			$this->db->where('id', $parcel["id"]);
+			 $parcel["updated"]=date("Y-m-d H:i:s");
 			$this->db->update('parcels', $parcel);   
 			$this->db->where("id",$parcel["id"]); 
 			$query=$this->db->get("parcels");			
@@ -1652,12 +1699,15 @@ class Api_model extends CI_Model {
 			{
 				$data["image"]=$trip['ticket']; 
 			} 
-			$data["processed_by"]=$trip["t_id"];			
+			if(isset($trip["t_id"])){
+				$data["processed_by"]=$trip["t_id"];		
+			} 	
+			$trip["update"]=date("Y-m-d H:i:s");
 			$this->db->where('id', $trip["id"]);
 			$this->db->update('trips', $data);   
 			$data=new stdclass();
 			$data->status="success";
-			$data->response="Trip added successfully.";		
+			$data->response="Trip updated successfully.";		
 			$json_response = json_encode($data); 
 			print_r($json_response); 
     }
@@ -1670,6 +1720,7 @@ class Api_model extends CI_Model {
 			$data["flight_no"]=$trip['flight_no'];
 		   $data["processed_by"]=$trip["t_id"];	
 			$data["pnr"]=$trip['pnr'];
+			$trip["update"]=date("Y-m-d H:i:s");
 			if($trip['status']==3)
 			{ 
 			    $this->db->where("id", $trip["id"]); 
@@ -1877,18 +1928,19 @@ class Api_model extends CI_Model {
 		   if(isset($trip['duration'])){
 			$data["duration"]=$trip['duration'];
 			} 
-			$sql = "update cms_parcels a set status=0,trans_id=0,processed_by=".$trip["t_id"]." where exists(select p_id from cms_bookings b where b.p_id=a.id and status=3 and b.t_id=".$trip["id"].") "; 
+			$sql = "update cms_parcels a set status=0,trans_id=0,updated='".date("Y-m-d H:i:s")."',processed_by=".$trip["t_id"]." where exists(select p_id from cms_bookings b where b.p_id=a.id and status=3 and b.t_id=".$trip["id"].") "; 
 			 $this->db->query($sql);
 			$sql = "update `cms_bookings` set  status=4,process_by=".$trip["t_id"]." where t_id=".$trip["id"]." and status=3;";
 			$this->db->query($sql); 
 			$data["status"]=0;  
 			$this->db->where('id', $trip["id"]);
+			 $data["update"]=date("Y-m-d H:i:s");
 			$this->db->update('trips', $data);   
 			$this->db->where("id",$trip["id"]); 
 			$query=$this->db->get("trips");			
 			$data=new stdclass();
 			$data->status="success";
-			$data->response="Trip added successfully.";		
+			$data->response="Trip updated successfully.";		
 			$json_response = json_encode($data); 
 			print_r($json_response);
 		} else {
@@ -1910,6 +1962,7 @@ class Api_model extends CI_Model {
 					$data["requirement"]=$request["reason"];
 			}
 			$this->db->where('id', $request["id"]);
+			 $data["update"]=date("Y-m-d H:i:s");
 			$this->db->update('trips', $data); 
 			if($request["status"]=="1")
 			{ 
@@ -2144,9 +2197,9 @@ class Api_model extends CI_Model {
 		$data1=new stdclass(); 
 		if($query->num_rows()>0)
         {   if($request["status"]==6)
-			{   $sql = "update cms_parcels a set status=4,processed_by=".$request["process_by"]." where id=".$request["parcelid"]; 
+			{   $sql = "update cms_parcels a set status=4,updated='".date("Y-m-d H:i:s")."',processed_by=".$request["process_by"]." where id=".$request["parcelid"]; 
 			 	$this->db->query($sql);	
-				$sql = "update cms_trips a set status=6,processed_by=".$request["process_by"]." where (SELECT COUNT( * ) FROM cms_parcels WHERE trans_id =".$request["id"]." AND STATUS in(2,3))=0 and id=".$request["id"]; 
+				$sql = "update cms_trips a set status=6,`update`='".date("Y-m-d H:i:s")."',processed_by=".$request["process_by"]." where (SELECT COUNT( * ) FROM cms_parcels WHERE trans_id =".$request["id"]." AND STATUS in(2,3))=0 and id=".$request["id"]; 
 				$this->db->query($sql); 
 			}
 			else
@@ -2155,11 +2208,12 @@ class Api_model extends CI_Model {
 				$data["processed_by"]=$request["process_by"];
 				$data["requirement"]=$request["reason"];
 				$this->db->where('id', $request["id"]);
+				 $data["update"]=date("Y-m-d H:i:s");
 				$this->db->update('trips', $data);
 			}
 			if($request["status"]==4)
 			{  
-				 $sql = "update cms_parcels a set status=0,trans_id=0,processed_by=".$request["process_by"]." where exists(select p_id from cms_bookings b where b.p_id=a.id and b.t_id=".$request["id"]." and b.status=3) "; 
+				 $sql = "update cms_parcels a set status=0,updated='".date("Y-m-d H:i:s")."',trans_id=0,processed_by=".$request["process_by"]." where exists(select p_id from cms_bookings b where b.p_id=a.id and b.t_id=".$request["id"]." and b.status=3) "; 
 			 	 $this->db->query($sql);
 				 $sql = "update `cms_bookings` set  status=4,process_by=".$request["process_by"]." where t_id=".$request["id"].";"; 
 			 	 $this->db->query($sql);	
@@ -2368,7 +2422,7 @@ class Api_model extends CI_Model {
 			//parcel collected
 			if($request["status"]==3 && $request["reason"]=="Parcel Collected")
 			{ 
-				$sql = "update cms_parcels a set status=3,processed_by=".$request["process_by"]." where id=".$request["parcelid"]." "; 
+				$sql = "update cms_parcels a set status=3,updated='".date("Y-m-d H:i:s")."',processed_by=".$request["process_by"]." where id=".$request["parcelid"]." "; 
 			 	$this->db->query($sql);
 				$this->db->where("id",$request["parcelid"]); 
 				$query=$this->db->get("parcels");   
@@ -2822,7 +2876,7 @@ class Api_model extends CI_Model {
 				$this->db->where("id",$trip->t_id);  
 				$transquery=$this->db->get("users");
 				$transuser=$transquery->result()[0]; 
-				$sql = "update cms_parcels a set a.status=9,trans_id=0,reason='".$request["reason"]."',processed_by=".$request["process_by"]." where id=".$request["parcelid"].";"; 
+				$sql = "update cms_parcels a set a.status=9,trans_id=0,updated='".date("Y-m-d H:i:s")."',reason='".$request["reason"]."',processed_by=".$request["process_by"]." where id=".$request["parcelid"].";"; 
 				$this->db->query($sql);	  
 				$sql = "update `cms_bookings` set  status=4,process_by=".$request["process_by"]." where p_id=".$request["parcelid"].";"; 
 				$this->db->query($sql);					 
@@ -2832,7 +2886,7 @@ class Api_model extends CI_Model {
 			   $this->db->query($sql);
 			  $booking = $this->db->query("SELECT a.*,IFNULL(b.username,'') as senderemail,IFNULL(b.name,'') as sendername,IFNULL(c.username,'') as receiveremail ,IFNULL(c.name,'') as receivername,d.id as BookingID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid FROM cms_parcels a left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid left join cms_users b on a.usr_id=b.id left join cms_users c on a.recv_id=c.id inner join (select * from cms_bookings where status in(3,6)) d on a.id=d.p_id left join cms_parcelstatus prstatus on a.status=prstatus.id where `t_id`=".$request["id"]."")->num_rows(); 
 			  if($booking ==0){
-				  $sql = "update cms_trips a set a.status=1,requirement='".$request["reason"]."',processed_by=".$request["process_by"]." where id=".$request["id"].";"; 
+				  $sql = "update cms_trips a set a.status=1,`update`='".date("Y-m-d H:i:s")."',requirement='".$request["reason"]."',processed_by=".$request["process_by"]." where id=".$request["id"].";"; 
 				$this->db->query($sql);	  
 			  }
 			   $walletstatement=array("comment"=>"Parcel #P".$parcel->id." Booking Cancelled by Transporter .","parcelid"=> $parcel->id,"tripid"=>$request["id"],"weight"=>$parcel->weight,"insertdate"=>date("Y-m-d H:i:s"),"amount"=>$parcel->payment,"credit"=>$parcel->payment,"debit"=>0,"userid"=>$parceluser->id);
@@ -2991,7 +3045,7 @@ class Api_model extends CI_Model {
 				$peocessbyquery=$this->db->get("users");
 				$processby=$query2->result()[0]; 
 				
-				$sql = "update cms_parcels a set a.status=0,trans_id=0,reason='".$request["reason"]."',processed_by=".$request["process_by"]." where id=".$request["id"].";"; 
+				$sql = "update cms_parcels a set a.status=0,trans_id=0,updated='".date("Y-m-d H:i:s")."',reason='".$request["reason"]."',processed_by=".$request["process_by"]." where id=".$request["id"].";"; 
 				$this->db->query($sql);	  
 				$sql = "update `cms_bookings` set  status=4,process_by=".$request["process_by"]." where p_id=".$request["id"].";"; 
 				$this->db->query($sql);					 
@@ -3001,7 +3055,7 @@ class Api_model extends CI_Model {
 			   $this->db->query($sql);
 			  $booking = $this->db->query("SELECT a.*,IFNULL(b.username,'') as senderemail,IFNULL(b.name,'') as sendername,IFNULL(c.username,'') as receiveremail ,IFNULL(c.name,'') as receivername,d.id as BookingID,prstatus.status as statusdescription,IFNULL(channel.id,0) as channelid FROM cms_parcels a left join (select * from cms_chatchannel where isactive=1) channel on a.id=channel.parcelid left join cms_users b on a.usr_id=b.id left join cms_users c on a.recv_id=c.id inner join (select * from cms_bookings where status in(3,6)) d on a.id=d.p_id left join cms_parcelstatus prstatus on a.status=prstatus.id where `t_id`=".$parcel->trans_id."")->num_rows(); 
 			  if($booking ==0){
-				  $sql = "update cms_trips a set a.status=1,requirement='".$request["reason"]."',processed_by=".$request["process_by"]." where id=".$request["id"].";"; 
+				  $sql = "update cms_trips a set a.status=1,`update`='".date("Y-m-d H:i:s")."',requirement='".$request["reason"]."',processed_by=".$request["process_by"]." where id=".$request["id"].";"; 
 				$this->db->query($sql);	  
 			  }
 			   $walletstatement=array("comment"=>"Parcel #P".$parcel->id." Booking Cancelled by Admin .","parcelid"=> $parcel->id,"tripid"=>$request["id"],"weight"=>$parcel->weight,"insertdate"=>date("Y-m-d H:i:s"),"amount"=>$parcel->payment,"credit"=>$parcel->payment,"debit"=>0,"userid"=>$parceluser->id);
@@ -3153,13 +3207,14 @@ class Api_model extends CI_Model {
 		       $data["processed_by"]=$request["process_by"];
 		       $data["reason"]=$request["reason"];
 			   $this->db->where('id', $request["id"]);
+			    $data["updated"]=date("Y-m-d H:i:s");
 		       $this->db->update('parcels', $data); 
 			   //email after cancel if booked with trip
 			   $sql = "update cms_bookings set status=4 , process_by=".$request["process_by"]." where p_id=".$request["id"]; 
 			 $this->db->query($sql); 
 			 $sql = "update cms_chatchannel a set a.isactive=0 where parcelid=".$request["id"].";"; 
 			   $this->db->query($sql);	
-				  $sql = "update cms_trips a set status=1,processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.p_id=".$request["id"]." and b.status!=3) and (select count(*) from cms_bookings where t_id in(select t_id from cms_bookings b where b.p_id=".$request["id"]." ) and status=3)=0	"; 
+				  $sql = "update cms_trips a set status=1,`update`='".date("Y-m-d H:i:s")."',processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.p_id=".$request["id"]." and b.status!=3) and (select count(*) from cms_bookings where t_id in(select t_id from cms_bookings b where b.p_id=".$request["id"]." ) and status=3)=0	"; 
 			 	 $this->db->query($sql);   
 				$this->db->where("id",$parcel->usr_id);  
 				$query2=$this->db->get("users");
@@ -3350,13 +3405,17 @@ class Api_model extends CI_Model {
 		{
 	        $data=array('status'=>$request["status"]);
 			if($request["status"]==0)
-			{    $sql = "update cms_trips a set status=1,processed_by=".$request["process_by"]." where id=".$parcel->trans_id; 
+			{    $sql = "update cms_trips a set status=1,`update`='".date("Y-m-d H:i:s")."',processed_by=".$request["process_by"]." where id=".$parcel->trans_id; 
 			 	 $this->db->query($sql);   
 				 $data["trans_id"]="0";
 			}
 		    $data["processed_by"]=$request["process_by"];
 		    $data["reason"]=$request["reason"];
 			$this->db->where('id', $request["id"]);
+			if(isset($request["rating"])){
+				 $data["rating"]=$request["rating"];
+			}
+			$data["updated"]=date("Y-m-d H:i:s");
 			$this->db->update('parcels', $data);
 		}
 		if($request["status"]==6)
@@ -3366,7 +3425,7 @@ class Api_model extends CI_Model {
 				$this->db->update('chatchannel', $chatchannelcreate);
 				$sql = "update cms_bookings set status=4 , process_by=".$request["process_by"]." where p_id=".$request["id"]; 
 				$this->db->query($sql); 
-				$sql = "update cms_trips a set status=1,processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.p_id=".$request["id"]." and b.status!=3) and (select count(*) from cms_bookings where t_id in(select t_id from cms_bookings b where b.p_id=".$request["id"]." ) and status=3)=0	"; 
+				$sql = "update cms_trips a set status=1,`update`='".date("Y-m-d H:i:s")."',processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.p_id=".$request["id"]." and b.status!=3) and (select count(*) from cms_bookings where t_id in(select t_id from cms_bookings b where b.p_id=".$request["id"]." ) and status=3)=0	"; 
 				$this->db->query($sql);  
 				$sql = "update cms_chatchannel a set a.isactive=0  where parcelid=".$request["id"].";"; 
 				$this->db->query($sql);					 
@@ -3558,7 +3617,7 @@ class Api_model extends CI_Model {
 			if($request["status"]==5)
 			{   $sql = "update cms_bookings set status=6 , process_by=".$request["process_by"]." where p_id=".$request["id"]; 
 			 	$this->db->query($sql); 
-				$sql = "update cms_trips a set status=7,processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.t_id=a.id and b.p_id=".$request["id"]." and b.status=6) and not exists(select t_id from cms_bookings b where b.t_id=a.id and b.p_id=".$request["id"]."  and b.status=3) "; 
+				$sql = "update cms_trips a set status=7,`update`='".date("Y-m-d H:i:s")."',processed_by=".$request["process_by"]." where exists(select t_id from cms_bookings b where b.t_id=a.id and b.p_id=".$request["id"]." and b.status=6) and not exists(select t_id from cms_bookings b where b.t_id=a.id and b.p_id=".$request["id"]."  and b.status=3) "; 
 			 	$this->db->query($sql); 
 				//email after receiver 
 				$this->db->where("id",$request["id"]); 
@@ -3951,7 +4010,7 @@ class Api_model extends CI_Model {
 	}
 	function gettopcountrytrips()
 	{ 
-		$query = $this->db->query("SELECT a.id,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,a.created,a.status,art.city,a.processed_by,'update' FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id left join cms_airports art on a.source=art.location where (a.status=1 or a.status=3 or a.status=2) and a.arrival_time >= CURDATE()  group by art.city ORDER BY count(art.city) limit 4");
+		$query = $this->db->query("SELECT COUNT(art.city) AS totaltrips,a.id,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,a.created,a.status,art.city,a.processed_by,'update' FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id left join cms_airports art on a.source=art.location where (a.status=1 or a.status=3 or a.status=2) and a.arrival_time >= CURDATE()  group by art.city ORDER BY count(art.city)desc limit 4");
 		$response = $query->result(); 
 		$data=new stdclass();
 		$data->status="success";
@@ -3965,7 +4024,7 @@ class Api_model extends CI_Model {
 		if($param["type"]=="Transporter")
 		{
 			//and (a.capacity-COALESCE(c.totalweight,0))>0 
-		    $query = $this->db->query("SELECT id,source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,created,status,processed_by,'update' FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id where (a.status=1 or a.status=3 or a.status=2) and (a.source like '%".$param["locationfrom"]."%' or '".$param["locationfrom"]."'='') and (a.destination like '%".$param["locationto"]."%' or '".$param["locationto"]."'='') and (a.dep_time >= '".$param["dateFrom"]."' or '".$param["dateFrom"]."'='') and (a.dep_time <= '".$param["dateTo"]." 23:59' or '".$param["dateTo"]."'='')and a.arrival_time >= CURDATE()  ");
+		    $query = $this->db->query("SELECT a.id,a.source,destination,dep_time,arrival_time,image,flight_no,pnr,comment,(a.capacity-COALESCE(c.totalweight,0)) capacity,a.t_id,a.created,a.status,a.processed_by,'update',ifnull(ratingcheck.rate,0)as rate FROM `cms_trips` a left join (SELECT SUM( weight ) AS totalweight, trans_id as t_id FROM  `cms_parcels` WHERE STATUS not in(6,0) GROUP BY trans_id)c on a.id=c.t_id left join cms_airports art on a.source=art.location left join(select (sum(cms_parcels.rating)/count(cms_parcels.rating)*5)as rate,cms_trips.t_id as user_id from cms_trips inner join cms_parcels ON cms_trips.id=cms_parcels.trans_id where cms_parcels.rating>0 group  by cms_trips.t_id)ratingcheck on a.t_id=ratingcheck.user_id where (a.status=1 or a.status=3 or a.status=2) and (a.source like '%".$param["locationfrom"]."%' or '".$param["locationfrom"]."'='') and (a.destination like '%".$param["locationto"]."%' or '".$param["locationto"]."'='') and (a.dep_time >= '".$param["dateFrom"]."' or '".$param["dateFrom"]."'='') and (a.dep_time <= '".$param["dateTo"]." 23:59' or '".$param["dateTo"]."'='') and (art.city='".(isset($param["city"])?$param["city"]:"")."' or '".(isset($param["city"])?$param["city"]:"")."'='') and a.arrival_time >= CURDATE()  ");
 			$response = $query->result();  
 		}
 		else
@@ -4138,15 +4197,72 @@ For Transporter– Please make sure you check the content of envelope or parcel 
 			} 
 	}
 	function registeruser($request)
-	{   
+	{  		 $email=$request['email'];
+			$this->db->where("username",$email);
+			$query=$this->db->get("users");
+			if($query->num_rows()>0)
+			{ 
+				$datanew=array('status'=>'N');
+				if(isset($request['photo'])){
+					$datanew["photo"]=$request['photo'];
+				}
+					$characters = '0123456789';
+			$charactersLength = strlen($characters);
+			$datanew["password"]=md5("DYhG93b0xzczxyJfIxfs2guVoUubWwvniR2G0FgaC9mi".$request['password']);  
+			$randomString = '';
+			for ($i = 0; $i < 5; $i++) {
+				$randomString .= $characters[rand(0, $charactersLength - 1)];
+			}
+			$datanew["verificationcode"]=$randomString; 
+				$this->db->where('username',$email);
+				$this->db->update('users', $datanew);
+				$this->db->where("username",$email);
+			$query=$this->db->get("users"); 
+			foreach ($query->result() as $row)
+			{ 
+			//email 
+			$this->email->from("info@mycourierbuddy.com", 'mycourierbuddy');
+			$this->email->to($email.',admin@mycourierbuddy.com'); 
+			$this->email->subject('MCB: Please Verify Your Email');   
+			$message='<div style="text-align:center; width:600px;font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#fff;  margin:auto; position:relative;">
+    <div style="text-align:center;margin: auto; background:#233151; padding:5px 0">
+        <img src="http://mycourierbuddy.in/images/logo.png" />
+    </div>
+    <img src="http://mycourierbuddy.in/images/plane.jpg" />
+    <div style="clear:both; padding:35px; border:1px solid #ccc; border-top:0; border-bottom:0; font-size:15px; color:#000">
+        <div>
+            <div style="text-align:left">Dear '.$request['firstName'].'</div>
+            <p style="text-align:left;">Thank you for signing in to your MCB account. Once you validate your account, you can enjoy the full benefits of MCB</p>
+            <p style="text-align:left;">To confirm this is your email click the button below.</p>
+            <center>
+                <a href="http://dev9856.mycourierbuddy.in/verifyuser/'.$row->id.'/'.$randomString.'">Verify My Email</a>
+            </center>            <br>
+            <div style="text-align:left; font-size:13px; margin-top:50px;"><b>Thanks and Regards</b>,<br /><b style="color:#3b5998;">MCB Team</b></span></div>
+        </div>        <br>
+    </div>    <div style="color:#fff; font-size:11px; text-align:center; font-family:Arial, Helvetica, sans-serif; background:#3b5998; padding:15px 0;"> 
+	<table style="width:100%;padding:0 25px;">            <tr>               
+	<td align="left"><a href="http://dev9856.mycourierbuddy.in/contact" style="color:#fff;text-decoration: none;">Contact us</a></td>  
+	<td align="right"><a href="http://dev9856.mycourierbuddy.in/termsandcondition" style="color:#fff;text-decoration: none;">Terms and Condition</a></td>  
+	</tr>        </table>    </div>
+</div> ';
+			$this->email->message($message);
+			$this->email->send(); 
+			//end email 
+				$data=new stdclass();
+				$data->status="success";
+				$data->response=$query->result();
+				$json_response = json_encode($data); 
+				return $json_response;
+			}
+		
+			}else{
 			$data["name"]=$request['firstName'];
 			$data["l_name"]=$request['lastName'];
 			//$data["passportno"]=$request['passportno'];
 			$data["username"]=$request['email'];
 			if(isset($request['photo'])){
 				$data["photo"]=$request['photo'];
-			}
-			$email=$request['email'];
+			} 
 		//	$data["country_code"]=$request['countrycode'];
 			$data["role_id"]='2';
 			$data["status"]='N';
@@ -4200,7 +4316,7 @@ For Transporter– Please make sure you check the content of envelope or parcel 
 				$data->response=$query->result();
 				$json_response = json_encode($data); 
 				return $json_response;
-			} 
+			} }	
 	}
 	function verifyuser($request)
 	{    $this->db->where("id",$request["id"]);     
@@ -4301,6 +4417,107 @@ For Transporter– Please make sure you check the content of envelope or parcel 
 		$data->response=$query->result();
 		$json_response = json_encode($data); 
 		return $json_response;
+	}
+	function getuserloginfacebook($datafac)
+    {
+		if(isset($datafac["facebookid"])&& isset($datafac["email"])&& isset($datafac["firstName"])&& isset($datafac["lastName"])){
+			$email=$datafac['email']; 
+			$this->db->where("facebookid",$datafac["facebookid"]); 
+			$query=$this->db->get("users");
+			if($query->num_rows()>0)
+			{	
+					foreach ($query->result_array() as $row)
+					{
+						if($row['activation_code']!="N")
+						{
+							$datafacn=new stdclass();
+							$datafacn->status="success";
+							$datafacn->response=$query->result();
+							$json_response = json_encode($datafacn); 
+							return $json_response;
+						}
+						else if($row['activation_code']=="N")
+						{  
+							$data1=new stdclass();
+							$data1->status="Error";
+							$data1->errorMessage="Blocked by admin";
+							$json_response = json_encode($data1); 
+							return $json_response;
+						}   	 
+				  }
+			}else{
+			$this->db->where("username",$email);
+			 $query=$this->db->get("users");
+			if($query->num_rows()>0)
+			{   
+		
+					foreach ($query->result_array() as $row)
+					{
+						if($row['activation_code']!="N")
+						{
+							$datafacn=new stdclass();
+							$datafacn->status="success";
+							$datafacn->response=$query->result();
+							$json_response = json_encode($datafacn); 
+							return $json_response;
+						}
+						else if($row['activation_code']=="N")
+						{  
+							$data1=new stdclass();
+							$data1->status="Error";
+							$data1->errorMessage="Blocked by admin";
+							$json_response = json_encode($data1); 
+							return $json_response;
+						}   	 
+				  } 
+			}else{ 
+			$data["name"]=$datafac['firstName'];
+			$data["l_name"]=$datafac['lastName']; 
+			$data["username"]=$datafac['email'];
+			$path= 'https://graph.facebook.com/1336000846445189/picture';
+			$type = pathinfo($path, PATHINFO_EXTENSION);
+			$datar = file_get_contents($path);
+			$data["photo"]=base64_encode($datar);  
+			$data["role_id"]='2';
+			$data["status"]='Y'; 
+			$data["mobile"]="123456";  
+			$data["created"]= date("Y-m-d H:i:s");  
+			$this->db->insert('users', $data); 
+			$sql = "update cms_users set UserID=concat('MCB',id) ORDER BY `id` DESC LIMIT 10 ;"; 
+			$this->db->query($sql);					
+					$this->db->where("username",$email);
+					$query=$this->db->get("users"); 
+					foreach ($query->result_array() as $row)
+					{
+						if($row['activation_code']!="N")
+						{
+							$datafacn=new stdclass();
+							$datafacn->status="success";
+							$datafacn->response=$query->result();
+							$json_response = json_encode($datafacn); 
+							return $json_response;
+						}
+						else if($row['activation_code']=="N")
+						{  
+							$data1=new stdclass();
+							$data1->status="Error";
+							$data1->errorMessage="Blocked by admin";
+							$json_response = json_encode($data1); 
+							return $json_response;
+						}   	 
+				  }
+				
+			   }
+			}		
+		}
+		else
+		{
+			$data1=new stdclass();
+			$data1->status="Error";
+			$data1->errorMessage="The email and password you entered don't match";
+			$json_response = json_encode($data1); 
+			return $json_response;
+		}  
 	}
 	function getuserlogin($email,$password)
     {

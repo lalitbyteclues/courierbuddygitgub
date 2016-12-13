@@ -36,3 +36,8 @@ var clientId = "P600Us6Y476QiK331u5yEzb22dpX_y6NS75!9I-a";
         }])
 })();
 
+angular.module('courier').filter('capitalize', function() {
+    return function(input) {
+      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    }
+});

@@ -60,6 +60,12 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider, $loca
            data: {
                pageTitle: 'admin seo manager'
            }
+       }).state('adminidentitytype', {
+           url: "/admin/identitytype",
+           templateUrl: "admin/views/admin/identitytype.html",
+           data: {
+               pageTitle: 'admin seo manager'
+           }
        }).state('adminparcellist', {
            url: "/admin/parcellist",
            templateUrl: "admin/views/admin/parcelmanager.html",

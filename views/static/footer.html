@@ -50,7 +50,7 @@
                     <button data-widget="remove" ng-click="minimizechat($index)" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-minus"></i></button>
                 </div>
                 <div class="clear">  </div>
-                Welcome {{users.transportername}},{{users.sendername}},{{users.receivername}}.
+                Welcome {{users.transportername | limitTo : 8 | capitalize}}/{{users.sendername | limitTo : 8 | capitalize}}/{{users.receivername | limitTo : 8 | capitalize}}.
             </div>
             <div class="popup-messages" id="popupmessagesscroller" scroll="popupmessagesscroller">
                 <div class="direct-chat-messages">

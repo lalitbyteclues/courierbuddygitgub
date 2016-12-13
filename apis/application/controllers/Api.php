@@ -351,6 +351,23 @@ class Api extends CI_Controller{
 			echo $json_response;  
 		}
 	}
+	public function deleteidentitytype()
+	{    try 
+			{ 
+			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
+			if(isset($input_data))
+			{  $this->api_model->deleteidentitytype($input_data); 
+			}   
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="No Slider added";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
 	public function deletesliderimage()
 	{    try 
 			{ 
@@ -364,6 +381,30 @@ class Api extends CI_Controller{
 			$errormessage=new stdclass();
 			$errormessage->status="Error";
 			$errormessage->errorMessage="No Slider added";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
+	public function addidentitytype()
+	{    try 
+			{ 
+			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
+			if(isset($input_data))
+			{  $this->api_model->addidentitytype($input_data); 
+			}else
+			{
+				$errormessage=new stdclass();
+				$errormessage->status="Error";
+				$errormessage->errorMessage="No identity added";
+				$json_response = json_encode($errormessage); 
+				echo $json_response;  
+			}  
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="No identity added";
 			$json_response = json_encode($errormessage); 
 			echo $json_response;  
 		}
@@ -409,6 +450,20 @@ class Api extends CI_Controller{
 	{    try 
 		{ 
 		$this->api_model->sliderimagelist();  
+		}
+		catch (Exception $e)
+		{ 
+			$errormessage=new stdclass();
+			$errormessage->status="Error";
+			$errormessage->errorMessage="No Result Found";
+			$json_response = json_encode($errormessage); 
+			echo $json_response;  
+		}
+	}
+	public function identitytypelist()
+	{    try 
+		{ 
+		$this->api_model->identitytypelist();  
 		}
 		catch (Exception $e)
 		{ 
@@ -490,6 +545,17 @@ class Api extends CI_Controller{
 			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
 			if(isset($input_data))
 			{ 
+		if(isset($input_data["parcelimageupdate"])){
+				if($input_data["parcelimageupdate"]=="" || $input_data["parcelimageupdate"]==null){$input_data["parcelimageupdate"]="";}else{
+					$imageData = base64_decode($input_data["parcelimageupdate"]);
+					$source = imagecreatefromstring($imageData);
+					$rotate = imagerotate($source,0, 0); 
+					$new_name = uniqid();
+					$imageSave = imagejpeg($rotate,'./uploads/'.$new_name.'.jpg',100);
+					imagedestroy($source);
+					$input_data["parcelimage"]='/uploads/'.$new_name.'.jpg';
+					unset($input_data['parcelimageupdate']);
+		}}
 				$this->api_model->addparcel($input_data); 
 			}else
 			{
@@ -621,6 +687,17 @@ class Api extends CI_Controller{
 			$input_data = json_decode(trim(file_get_contents('php://input')), true);  
 			if(isset($input_data))
 			{ 
+		if(isset($input_data["parcelimageupdate"])){ 
+				if($input_data["parcelimageupdate"]=="" || $input_data["parcelimageupdate"]==null){$input_data["parcelimageupdate"]="";}else{
+					$imageData = base64_decode($input_data["parcelimageupdate"]);
+					$source = imagecreatefromstring($imageData);
+					$rotate = imagerotate($source,0, 0); 
+					$new_name = uniqid();
+					$imageSave = imagejpeg($rotate,'./uploads/'.$new_name.'.jpg',100);
+					imagedestroy($source);
+					$input_data["parcelimage"]='/uploads/'.$new_name.'.jpg';
+					unset($input_data['parcelimageupdate']);
+		}}
 				$this->api_model->updateparcel($input_data); 
 			}
 			else
@@ -1020,6 +1097,10 @@ class Api extends CI_Controller{
 	 {  try 
 		{
 			$input_data = json_decode(trim(file_get_contents('php://input')), true); 
+			if(isset($input_data['facebookid']))
+			{ 
+				echo $this->api_model->getuserloginfacebook($input_data); 
+			}else
 			if(isset($input_data['email'])and isset($input_data['password'])){
 				 echo $this->api_model->getuserlogin($input_data['email'],$input_data['password']);
 			}
@@ -1074,6 +1155,17 @@ public function updateuserdetails()
 	try 
 	{ 
 	    $input_data = json_decode(trim(file_get_contents('php://input')), true); 
+		if(isset($input_data["identityimageupdate"])){ 
+		if($input_data["identityimageupdate"]=="" || $input_data["identityimageupdate"]==null){$input_data["identityimageupdate"]="";}else{
+					$imageData = base64_decode($input_data["identityimageupdate"]);
+					$source = imagecreatefromstring($imageData);
+					$rotate = imagerotate($source,0, 0); 
+					$new_name = uniqid();
+					$imageSave = imagejpeg($rotate,'./uploads/'.$new_name.'.jpg',100);
+					imagedestroy($source);
+					$input_data["identityimage"]='/uploads/'.$new_name.'.jpg';
+					unset($input_data['identityimageupdate']);
+					}}
 	    $this->api_model->updateuserdetails($input_data); 
 	}
 	catch (Exception $e)
@@ -1089,10 +1181,19 @@ public function updateuserdetails()
  public function chatsubmit()
 {
 	$this->form_validation->set_rules('channelid', '<b>channelid</b>', 'trim|required|max_length[100]');
-	$this->form_validation->set_rules('messageuserid', '<b>messageuserid</b>', 'trim|required|max_length[100]'); 
-	$this->form_validation->set_rules('message', '<b>message</b>', 'trim|required');
+	$this->form_validation->set_rules('messageuserid', '<b>messageuserid</b>', 'trim|required|max_length[100]');  
 	$arr['channelid'] = $this->input->post('channelid');
 	$arr['messageuserid'] = $this->input->post('messageuserid'); 
+	if(isset($this->input->post["chatimageupdate"])){
+			if($this->input->post["parcelimageupdate"]=="" || $this->input->post["parcelimageupdate"]==null){ }else{
+				$imageData = base64_decode($this->input->post["parcelimageupdate"]);
+				$source = imagecreatefromstring($imageData);
+				$rotate = imagerotate($source,0, 0); 
+				$new_name = uniqid();
+				$imageSave = imagejpeg($rotate,'./uploads/'.$new_name.'.jpg',100);
+				imagedestroy($source);
+				$arr["chatimage"]='/uploads/'.$new_name.'.jpg'; 
+	}}
 	$arr['message'] = $this->input->post('message');
 	if ($this->form_validation->run() == FALSE) {
 		$arr['success'] = false;
@@ -1107,7 +1208,7 @@ public function updateuserdetails()
 	else
 	{
 		$this->db->insert('chatmessages',$arr); 
- 		 $detail =$this->db->query("select a.id,a.channelid,message,a.created,a.readstatus,a.messageuserid,u.name as username,cchannel.parcelid,cchannel.senderid,cchannel.transporterid,cchannel.receiverid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where a.id=".$this->db->insert_id()."")->result()[0];
+ 		 $detail =$this->db->query("select a.id,a.channelid,message,chatimage,a.created,a.readstatus,a.messageuserid,u.name as username,cchannel.parcelid,cchannel.senderid,cchannel.transporterid,cchannel.receiverid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where a.id=".$this->db->insert_id()."")->result()[0];
 		 $arr['channelid'] = $detail->channelid;
 		 $arr['parcelid'] = $detail->parcelid;
 		 $arr['senderid'] = $detail->senderid;
@@ -1115,6 +1216,7 @@ public function updateuserdetails()
 		 $arr['receiverid'] = $detail->receiverid;
 		$arr['username'] = $detail->username;
 		$arr['message'] = $detail->message;
+		$arr['message'] = $detail->chatimage;
 		$arr['created'] = $detail->created;
 		$arr['id'] = $detail->messageuserid;
 		$arr['new_count_message'] = $this->db->where('readstatus',0)->count_all_results('chatmessages');
@@ -1125,7 +1227,7 @@ public function updateuserdetails()
  }
  public function getchannelmessageslist($channelid)
  {   
-	 $query=$this->db->query("select a.messageuserid as id,a.channelid,message,a.created,a.readstatus,u.name as username,cchannel.parcelid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where channelid=".$channelid." ");
+	 $query=$this->db->query("select a.messageuserid as id,a.channelid,message,a.chatimage,a.created,a.readstatus,u.name as username,cchannel.parcelid from cms_chatmessages a INNER JOIN cms_chatchannel cchannel on a.channelid=cchannel.id INNER JOIN cms_users u on a.messageuserid=u.id where channelid=".$channelid." ");
 	$data['message']=$query->result();
 	$query=$this->db->query("SELECT  trans.name transportername,send.name sendername,recv.name receivername FROM  `cms_chatchannel` ch inner join cms_users trans on  ch.`transporterid`=trans.id inner join cms_users send on  ch.`senderid`=send.id inner join cms_users recv on  ch.`receiverid`=recv.id where ch.id=".$channelid."");
 	$data['users']=$query->result();
