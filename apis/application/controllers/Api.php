@@ -1166,6 +1166,17 @@ public function updateuserdetails()
 					$input_data["identityimage"]='/uploads/'.$new_name.'.jpg';
 					unset($input_data['identityimageupdate']);
 					}}
+				 if(isset($input_data["photoupdate"])){ 
+		if($input_data["photoupdate"]=="" || $input_data["photoupdate"]==null){$input_data["photoupdate"]="";}else{
+					$imageData = base64_decode($input_data["photoupdate"]);
+					$source = imagecreatefromstring($imageData);
+					$rotate = imagerotate($source,0, 0); 
+					$new_name = uniqid();
+					$imageSave = imagejpeg($rotate,'./uploads/'.$new_name.'.jpg',100);
+					imagedestroy($source);
+					$input_data["photo"]='/uploads/'.$new_name.'.jpg';
+					unset($input_data['photoupdate']);
+					}}
 	    $this->api_model->updateuserdetails($input_data); 
 	}
 	catch (Exception $e)
@@ -1182,11 +1193,11 @@ public function updateuserdetails()
 {
 	$this->form_validation->set_rules('channelid', '<b>channelid</b>', 'trim|required|max_length[100]');
 	$this->form_validation->set_rules('messageuserid', '<b>messageuserid</b>', 'trim|required|max_length[100]');  
-	$arr['channelid'] = $this->input->post('channelid');
+	$arr['channelid'] = $this->input->post('channelid'); 
 	$arr['messageuserid'] = $this->input->post('messageuserid'); 
-	if(isset($this->input->post["chatimageupdate"])){
-			if($this->input->post["parcelimageupdate"]=="" || $this->input->post["parcelimageupdate"]==null){ }else{
-				$imageData = base64_decode($this->input->post["parcelimageupdate"]);
+	if(isset($_POST["chatimageupdate"])){
+			if($_POST["chatimageupdate"]=="" || $_POST["chatimageupdate"]==null){ }else{
+				$imageData = base64_decode($_POST["chatimageupdate"]);
 				$source = imagecreatefromstring($imageData);
 				$rotate = imagerotate($source,0, 0); 
 				$new_name = uniqid();
@@ -1195,6 +1206,10 @@ public function updateuserdetails()
 				$arr["chatimage"]='/uploads/'.$new_name.'.jpg'; 
 	}}
 	$arr['message'] = $this->input->post('message');
+	if(!isset($_POST["chatimageupdate"]) && $arr['message'] == ""){ 
+		$arr['success'] = false;
+		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-danger alert-dismissable"><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Message required</div>';
+	} 
 	if ($this->form_validation->run() == FALSE) {
 		$arr['success'] = false;
 		$arr['notif'] = '<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 alert alert-danger alert-dismissable"><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . validation_errors() . '</div>';
@@ -1216,7 +1231,7 @@ public function updateuserdetails()
 		 $arr['receiverid'] = $detail->receiverid;
 		$arr['username'] = $detail->username;
 		$arr['message'] = $detail->message;
-		$arr['message'] = $detail->chatimage;
+		$arr['chatimage'] = $detail->chatimage;
 		$arr['created'] = $detail->created;
 		$arr['id'] = $detail->messageuserid;
 		$arr['new_count_message'] = $this->db->where('readstatus',0)->count_all_results('chatmessages');
